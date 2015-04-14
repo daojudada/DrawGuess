@@ -1,0 +1,52 @@
+# view AndroidManifest.xml #generated:80
+-keep class com.drawguess.activity.AboutActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:71
+-keep class com.drawguess.activity.ChooseAvatarActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:59
+-keep class com.drawguess.activity.ConnectModeActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:88
+-keep class com.drawguess.activity.DrawTabActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:67
+-keep class com.drawguess.activity.GameRoomActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:54
+-keep class com.drawguess.activity.LoginActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:84
+-keep class com.drawguess.activity.ProfileActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:75
+-keep class com.drawguess.activity.SettingActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:44
+-keep class com.drawguess.activity.WelcomeActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:63
+-keep class com.drawguess.activity.WifiapActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:36
+-keep class com.drawguess.base.BaseApplication { <init>(...); }
+
+# view res/layout/fragment_draw.xml #generated:7
+-keep class com.drawguess.view.DrawView { <init>(...); }
+
+# view res/layout/diloag_loading.xml #generated:9
+-keep class com.drawguess.view.FlippingImageView { <init>(...); }
+
+# view res/layout/activity_gameroom.xml #generated:108
+-keep class com.drawguess.view.MultiListView { <init>(...); }
+
+# view res/layout/activity_settting.xml #generated:127
+# view res/layout/activity_settting.xml #generated:74
+-keep class com.drawguess.view.SettingSwitchButton { <init>(...); }
+
+# view res/layout/activity_draw.xml #generated:8
+-keep class com.drawsomething.draw.DrawView { <init>(...); }
+
+# view res/layout/actionbar_tab_layout.xml #generated:15
+-keep class com.readystatesoftware.viewbadger.BadgeView { <init>(...); }
+

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/background_normal"
+	android:orientation="vertical" >
+
+    <LinearLayout
+		android:id="@+id/login_linearlayout_main"
+		android:gravity="center"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:orientation="vertical" >
+		
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:gravity="top|center"
+			android:orientation="vertical" >
+			
+			<TextView
+				android:id="@+id/chooes_connect_mode"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="80dp"
+				android:text="@string/connect_mode"
+				android:textSize="32sp" />
+	
+			
+			<Button
+				android:id="@+id/btn_wifi"
+				android:layout_width="225dp"
+				android:layout_height="50dp"
+				android:layout_marginTop="50dp"
+				android:layout_below="@id/chooes_connect_mode"
+				android:background="@drawable/btn_default"
+				android:text="@string/connect_wifi"
+				android:textColor="#636363"
+				android:textSize="20sp" />
+			
+			<Button
+				android:id="@+id/btn_bluetooth"
+				android:layout_width="225dp"
+				android:layout_height="50dp"
+				android:layout_marginTop="30dp"
+				android:layout_below="@id/btn_wifi"
+				android:background="@drawable/btn_default"
+				android:text="@string/connect_bluetooth"
+				android:textColor="#636363"
+				android:textSize="20sp" />
+		</RelativeLayout>
+	</LinearLayout>
+	
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@drawable/bg_unlogin_bar"
+		android:gravity="center_vertical"
+		android:orientation="horizontal"
+		android:paddingBottom="4dp"
+		android:paddingLeft="8dp"
+		android:paddingRight="8dp"
+		android:paddingTop="4dp" >
+
+
+		<Button
+			android:id="@+id/btn_back"
+			android:layout_width="0dp"
+			android:layout_height="42dip"
+			android:layout_marginLeft="9dip"
+			android:layout_marginRight="9dip"
+			android:layout_weight="1"
+			android:background="@drawable/btn_bottombar"
+			android:gravity="center"
+			android:text="@string/btn_back"
+			android:textColor="@drawable/profile_bottom_text_color"
+			style="?android:attr/borderlessButtonStyle"
+			android:textSize="14sp" />
+	</LinearLayout>
+
+	
+</LinearLayout>
