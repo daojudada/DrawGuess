@@ -119,7 +119,7 @@ public class UDPMsgThread implements Runnable {
             if (BaseApplication.isDebugmode) {
             	switch(command){
             	case MSGConst.BR_ENTRY:
-            		sendUDPdata(MSGConst.REANSENTRY,senderIp);
+            		sendUDPdata(MSGConst.REANSENTRY,senderIp,senderIp);
             		break;
             	case MSGConst.REANSENTRY:
             		serverIP = msgRes.getAddStr();
@@ -130,7 +130,7 @@ public class UDPMsgThread implements Runnable {
                 {
                 	switch(command){
                 	case MSGConst.BR_ENTRY:
-                		sendUDPdata(MSGConst.REANSENTRY,senderIp);
+                		sendUDPdata(MSGConst.REANSENTRY,senderIp,senderIp);
                 		break;
                 	case MSGConst.REANSENTRY:
                 		serverIP = msgRes.getAddStr();
@@ -254,7 +254,7 @@ public class UDPMsgThread implements Runnable {
                 try {
                     InetAddress targetAddr = InetAddress.getByName(targetIP); // 目的地址
                     sendBuffer = ipmsgProtocol.getProtocolJSON().getBytes("gbk");
-                    sendDatagramPacket = new DatagramPacket(sendBuffer, sendBuffer.length,targetAddr, MSGConst.PORT);
+                    sendDatagramPacket = new DatagramPacket(sendBuffer, sendBuffer.length, targetAddr, MSGConst.PORT);
                     UDPSocket.send(sendDatagramPacket);
                     LogUtils.i(TAG, "sendUDPdata() 数据发送成功");
                 }
