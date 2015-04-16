@@ -13,10 +13,6 @@ import android.content.Context;
 public class ActivitiesManager {
 
     private static Stack<BaseActivity> queue;
-    public static void init(Context context) {
-        queue = new Stack<BaseActivity>();
-    }
-
     public static void addActivity(BaseActivity activity) {
         queue.add(activity);
     }
@@ -46,6 +42,10 @@ public class ActivitiesManager {
             return queue.lastElement();
         }
         return null;
+    }
+
+    public static void init(Context context) {
+        queue = new Stack<BaseActivity>();
     }
 
 

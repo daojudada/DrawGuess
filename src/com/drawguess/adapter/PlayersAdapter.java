@@ -24,12 +24,19 @@ import com.squareup.picasso.Picasso;
  *
  */
 public class PlayersAdapter extends BaseObjectListAdapter {
-    public PlayersAdapter(Context context, List<? extends Entity> datas) {
-        super(context, datas);
+    class ViewHolder {
+        TextView mHtvDevice;
+        TextView mHtvLastMsg;
+        TextView mHtvName;
+        TextView mHtvTime;
+        ImageView mIvAvatar;
+        ImageView mIvGender;
+        ImageView mIvReady;
+        LinearLayout mLayoutGender;
     }
 
-    public void setData(List<? extends Entity> datas) {
-        super.setData(datas);
+    public PlayersAdapter(Context context, List<? extends Entity> datas) {
+        super(context, datas);
     }
 
     @Override
@@ -68,14 +75,7 @@ public class PlayersAdapter extends BaseObjectListAdapter {
         return convertView;
     }
 
-    class ViewHolder {
-        ImageView mIvAvatar;
-        TextView mHtvDevice;
-        TextView mHtvName;
-        LinearLayout mLayoutGender;
-        ImageView mIvGender;
-        TextView mHtvTime;
-        TextView mHtvLastMsg;
-        ImageView mIvReady;
+    public void setData(List<? extends Entity> datas) {
+        super.setData(datas);
     }
 }

@@ -16,20 +16,18 @@ import android.os.Vibrator;
  */
 public class BaseApplication extends Application {
 
+    private static BaseApplication instance;
     public static boolean isDebugmode = false;
-    private boolean isPrintLog = true;
 
     /** 静音、震动默认开关 **/
     private static boolean isSlient = false;
     private static boolean isVIBRATE = true;
 
+    private static SoundPool notiMediaplayer;
     /** 新消息提醒 **/
     private static int notiSoundPoolID;
-    private static SoundPool notiMediaplayer;
     private static Vibrator notiVibrator;
 
-
-    private static BaseApplication instance;
 
     /**
      * <p>
@@ -41,6 +39,47 @@ public class BaseApplication extends Application {
      */
     public static BaseApplication getInstance() {
         return instance;
+    }
+
+    /* 设置声音提醒 */
+    public static boolean getSoundFlag() {
+        return !isSlient;
+    }
+
+    /* 设置震动提醒 */
+    public static boolean getVibrateFlag() {
+        return isVIBRATE;
+    }
+
+  
+
+    /**
+     * 新消息提醒 - 声音提醒、振动提醒
+     */
+    public static void playNotification() {
+        if (!isSlient) {
+            notiMediaplayer.play(notiSoundPoolID, 1, 1, 0, 0, 1);
+        }
+        if (isVIBRATE) {
+            notiVibrator.vibrate(200);
+        }
+
+    }
+
+    public static void setSoundFlag(boolean pIsSlient) {
+        isSlient = pIsSlient;
+    }
+
+    public static void setVibrateFlag(boolean pIsvibrate) {
+        isVIBRATE = pIsvibrate;
+    }
+
+    private boolean isPrintLog = true;
+
+    private void initNotification() {
+        notiMediaplayer = new SoundPool(3, AudioManager.STREAM_SYSTEM, 5);
+        notiSoundPoolID = notiMediaplayer.load(this, R.raw.crystalring, 1);
+        notiVibrator = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
     }
 
     @Override
@@ -57,14 +96,6 @@ public class BaseApplication extends Application {
 
     }
 
-  
-
-    private void initNotification() {
-        notiMediaplayer = new SoundPool(3, AudioManager.STREAM_SYSTEM, 5);
-        notiSoundPoolID = notiMediaplayer.load(this, R.raw.crystalring, 1);
-        notiVibrator = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
-    }
-
     @Override
     public void onLowMemory() {
         super.onLowMemory();
@@ -75,36 +106,5 @@ public class BaseApplication extends Application {
     public void onTerminate() {
         super.onTerminate();
         LogUtils.e("BaseApplication", "onTerminate");
-    }
-
-    /* 设置声音提醒 */
-    public static boolean getSoundFlag() {
-        return !isSlient;
-    }
-
-    public static void setSoundFlag(boolean pIsSlient) {
-        isSlient = pIsSlient;
-    }
-
-    /* 设置震动提醒 */
-    public static boolean getVibrateFlag() {
-        return isVIBRATE;
-    }
-
-    public static void setVibrateFlag(boolean pIsvibrate) {
-        isVIBRATE = pIsvibrate;
-    }
-
-    /**
-     * 新消息提醒 - 声音提醒、振动提醒
-     */
-    public static void playNotification() {
-        if (!isSlient) {
-            notiMediaplayer.play(notiSoundPoolID, 1, 1, 0, 0, 1);
-        }
-        if (isVIBRATE) {
-            notiVibrator.vibrate(200);
-        }
-
     }
 }

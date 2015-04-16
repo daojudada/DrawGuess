@@ -15,18 +15,16 @@ import com.drawguess.drawop.Operation.Op;
  */
 public class OperationManage {
 	
+	public enum DrawMode{ADD,RE}
 	/**
 	 * operation list
 	 */
 	private LinkedList<Operation> listDraw;
 	/**
-	 * operation stack
+	 * 绘图模式
+	 * RE：重绘画布
 	 */
-	private Stack<Operation> stOperation;
-	/**
-	 * undo operation recycle stack
-	 */
-	private Stack<Operation> stRecycle;
+	private DrawMode mode;
 	
 	/**
 	 * now draw stack
@@ -34,14 +32,14 @@ public class OperationManage {
 	private Stack<OpDraw> stNowDraw;
 
 	
-	public enum DrawMode{RE,ADD,FILL};
 	/**
-	 * 绘图模式
-	 * RE：重绘画布
-	 * ADD：增量绘制
-	 * NOW：重绘当前路径
+	 * operation stack
 	 */
-	private DrawMode mode;
+	private Stack<Operation> stOperation;;
+	/**
+	 * undo operation recycle stack
+	 */
+	private Stack<Operation> stRecycle;
 	
 	public OperationManage() {
 		listDraw = new LinkedList<Operation>();
@@ -51,14 +49,77 @@ public class OperationManage {
 		mode = DrawMode.RE;
 	}
 	
-	/**
-	 * push in list
-	 * @param op
-	 */
-	public void pushOp(Operation op)
+	public void clear()
 	{
-		stOperation.push(op);
+		stOperation.clear();
+		stRecycle.clear();
+		stNowDraw.clear();
+		listDraw.clear();
+		
 	}
+	
+	public Iterator<Operation> getDrawIterator()
+	{
+		return listDraw.iterator();
+	}
+	
+	public Operation getDrawLast()
+	{
+		if(listDraw.isEmpty())
+			return null;
+		else{
+			Operation last = listDraw.getLast();
+			if(last.getType() == Op.FILL)
+				return last;
+			else
+				return getNowDraw();
+		}
+	}
+	
+	public DrawMode getMode()
+	{
+		return mode;
+	}
+	
+	public OpDraw getNowDraw()
+	{
+		if(stNowDraw.isEmpty())
+			return null;
+		else
+			return stNowDraw.lastElement();
+	}
+	
+	/**
+	 * pop out listDraw
+	 * @param op
+	 * @return stOperation.Last
+	 */
+	public Operation popDraw()
+	{
+		Operation op = listDraw.getLast();
+		listDraw.removeLast();
+		stNowDraw.pop();
+		return op;
+	}
+
+	/**
+	 * pop out opFill
+	 * @param op
+	 * @return stOperation.Last
+	 */
+	public Operation popFill()
+	{
+		Operation op = listDraw.getLast();
+		listDraw.removeLast();
+		return op;
+	}
+	
+	public Operation popNowDraw()
+	{
+		return stNowDraw.pop();
+	}
+
+	
 	
 	/**
 	 * pop out list
@@ -81,14 +142,6 @@ public class OperationManage {
 		stNowDraw.push(op);
 	}
 	
-	/**
-	 * push in listDraw
-	 * @param listDraw
-	 */
-	public void pushNowDraw(OpDraw op)
-	{
-		stNowDraw.push(op);
-	}
 	
 	/**
 	 * push in listDraw
@@ -100,85 +153,21 @@ public class OperationManage {
 	}
 	
 	/**
-	 * pop out listDraw
-	 * @param op
-	 * @return stOperation.Last
+	 * push in listDraw
+	 * @param listDraw
 	 */
-	public Operation popDraw()
+	public void pushNowDraw(OpDraw op)
 	{
-		Operation op = listDraw.getLast();
-		listDraw.removeLast();
-		stNowDraw.pop();
-		return op;
-	}
-
-	public Operation popNowDraw()
-	{
-		return stNowDraw.pop();
+		stNowDraw.push(op);
 	}
 	
 	/**
-	 * pop out opFill
+	 * push in list
 	 * @param op
-	 * @return stOperation.Last
 	 */
-	public Operation popFill()
+	public void pushOp(Operation op)
 	{
-		Operation op = listDraw.getLast();
-		listDraw.removeLast();
-		return op;
-	}
-
-	
-	
-	public OpDraw getNowDraw()
-	{
-		if(stNowDraw.isEmpty())
-			return null;
-		else
-			return stNowDraw.lastElement();
-	}
-	
-	public Operation getDrawLast()
-	{
-		if(listDraw.isEmpty())
-			return null;
-		else
-			return listDraw.getLast();
-	}
-	
-	
-	public Iterator<Operation> getDrawIterator()
-	{
-		return listDraw.iterator();
-	}
-	
-	/**
-	 * 绘图模式
-	 */
-	public void setMode(DrawMode m)
-	{
-		mode = m;
-	}
-	
-	public DrawMode getMode()
-	{
-		return mode;
-	}
-	
-	public void clear()
-	{
-		stOperation.clear();
-		stRecycle.clear();
-		stNowDraw.clear();
-		listDraw.clear();
-		
-	}
-	
-	public int size()
-	{
-		return stOperation.size();
-		
+		stOperation.push(op);
 	}
 	
 	public void redo()
@@ -191,6 +180,20 @@ public class OperationManage {
 			op.Redo();
 			pushOp(op);
 		}
+	}
+	
+	/**
+	 * 绘图模式
+	 */
+	public void setMode(DrawMode m)
+	{
+		mode = m;
+	}
+	
+	public int size()
+	{
+		return stOperation.size();
+		
 	}
 	
 	public void undo()

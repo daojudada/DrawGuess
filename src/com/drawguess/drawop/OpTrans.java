@@ -10,12 +10,12 @@ import android.graphics.Path;
  */
 public class OpTrans extends Operation{
 	
-	private OpDraw opDraw;
-	private Path oldPath,newPath;
 	private float angel;
-	private float scale;
-	private Matrix mM,rM,sM;
 	private boolean isRedo;
+	private Matrix mM,rM,sM;
+	private Path oldPath,newPath;
+	private OpDraw opDraw;
+	private float scale;
 	
 	public OpTrans() {
 		type = Op.TRANS;
@@ -30,30 +30,6 @@ public class OpTrans extends Operation{
 		scale = 1;
 	}
 	
-	/**
-	 * 得到路径
-	 * @return
-	 */
-	public Path getPath()
-	{
-		return oldPath;
-	}
-	
-	public void init()
-	{
-		angel = 0;
-		scale = 1;
-	}
-	
-	public Operation getDraw()
-	{
-		return opDraw;
-	}
-	
-	public void setIsRedo(boolean b)
-	{
-		isRedo = b;
-	}
 	/**
 	 * 平移
 	 * @param x
@@ -87,15 +63,26 @@ public class OpTrans extends Operation{
 		sM.setScale(suo/scale, suo/scale,sx,sy);
 		scale=suo;
 	}
-		
 	
-
-
-	@Override
-	public void Undo() {
-		opDraw.setPath(oldPath);
+	public Operation getDraw()
+	{
+		return opDraw;
 	}
-
+	/**
+	 * 得到路径
+	 * @return
+	 */
+	public Path getPath()
+	{
+		return oldPath;
+	}
+	
+	public void init()
+	{
+		angel = 0;
+		scale = 1;
+	}
+	
 	@Override
 	public void Redo() {
 		if(!isRedo)
@@ -117,5 +104,18 @@ public class OpTrans extends Operation{
 		}
 		else
 			opDraw.setPath(newPath);
+	}
+		
+	
+
+
+	public void setIsRedo(boolean b)
+	{
+		isRedo = b;
+	}
+
+	@Override
+	public void Undo() {
+		opDraw.setPath(oldPath);
 	}
 }

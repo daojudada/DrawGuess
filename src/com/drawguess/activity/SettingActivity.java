@@ -32,35 +32,26 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
     private Button mBackButton;
     private Button mExitApplicationButton;
 
-    private ImageView mSettingInfoButton;
-    private SettingSwitchButton mSoundSwitchButton;
-    private SettingSwitchButton mVibrateSwitchButton;
-    private RelativeLayout mSettingInfoLayoutButton;
-
     private BaseDialog mExitDialog;
+    private ImageView mSettingInfoButton;
+    private RelativeLayout mSettingInfoLayoutButton;
+    private SettingSwitchButton mSoundSwitchButton;
+
+    private SettingSwitchButton mVibrateSwitchButton;
 
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settting);
-        initViews();
-        initEvents();
-        init();
+    protected void init() {
+
+        mExitDialog = BaseDialog.getDialog(this, R.string.dialog_tips,
+                getString(R.string.setting_dialog_logout_confirm),
+                getString(R.string.setting_dialog_logout_cancel), this,
+                getString(R.string.setting_dialog_logout_ok), this);
+
+        mSoundSwitchButton.setChecked(BaseApplication.getSoundFlag());
+        mVibrateSwitchButton.setChecked(BaseApplication.getVibrateFlag());
     }
     
-    @Override
-    protected void initViews() {
-        mSettingInfoButton = (ImageView) findViewById(R.id.btn_setting_my_information);
-        mSettingInfoLayoutButton = (RelativeLayout) findViewById(R.id.setting_my_info_layout);
-        mSoundSwitchButton = (SettingSwitchButton) findViewById(R.id.checkbox_sound);
-        mVibrateSwitchButton = (SettingSwitchButton) findViewById(R.id.checkbox_vibration);
-        mBackButton = (Button) findViewById(R.id.btn_back);
-        mAboutUsButton = (Button) findViewById(R.id.btn_about_us);
-        mExitApplicationButton = (Button) findViewById(R.id.btn_exit_application);
-    }
-
     @Override
     protected void initEvents() {
         mSettingInfoButton.setOnClickListener(this);
@@ -73,43 +64,18 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
 
     }
 
-    
-    protected void init() {
-
-        mExitDialog = BaseDialog.getDialog(this, R.string.dialog_tips,
-                getString(R.string.setting_dialog_logout_confirm),
-                getString(R.string.setting_dialog_logout_cancel), this,
-                getString(R.string.setting_dialog_logout_ok), this);
-
-        mSoundSwitchButton.setChecked(BaseApplication.getSoundFlag());
-        mVibrateSwitchButton.setChecked(BaseApplication.getVibrateFlag());
-    }
-
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-
-            case R.id.setting_my_info_layout:
-                startActivity(new Intent(this, ProfileActivity.class));
-                break;
-
-            case R.id.btn_back:
-                finish();
-                break;
-
-            case R.id.btn_about_us:
-                startActivity(new Intent(this, AboutActivity.class));
-                break;
-
-            case R.id.btn_exit_application:
-                mExitDialog.show();
-                break;
-
-            default:
-                break;
-        }
+    protected void initViews() {
+        mSettingInfoButton = (ImageView) findViewById(R.id.btn_setting_my_information);
+        mSettingInfoLayoutButton = (RelativeLayout) findViewById(R.id.setting_my_info_layout);
+        mSoundSwitchButton = (SettingSwitchButton) findViewById(R.id.checkbox_sound);
+        mVibrateSwitchButton = (SettingSwitchButton) findViewById(R.id.checkbox_vibration);
+        mBackButton = (Button) findViewById(R.id.btn_back);
+        mAboutUsButton = (Button) findViewById(R.id.btn_about_us);
+        mExitApplicationButton = (Button) findViewById(R.id.btn_exit_application);
     }
 
+    
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         switch (buttonView.getId()) {
@@ -138,14 +104,42 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+            case R.id.setting_my_info_layout:
+                startActivity(new Intent(this, ProfileActivity.class));
+                break;
+
+            case R.id.btn_back:
+                finish();
+                break;
+
+            case R.id.btn_about_us:
+                startActivity(new Intent(this, AboutActivity.class));
+                break;
+
+            case R.id.btn_exit_application:
+                mExitDialog.show();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settting);
+        initViews();
+        initEvents();
+        init();
+    }
+
     private void setAsyncTask() {
         putAsyncTask(new AsyncTask<Void, Void, Boolean>() {
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                mExitDialog.dismiss();
-            }
-
             @Override
             protected Boolean doInBackground(Void... params) {
 				return true;
@@ -155,6 +149,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener,
             protected void onPostExecute(Boolean result) {
                 super.onPostExecute(result);
                 ActivitiesManager.finishAllActivities();
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                mExitDialog.dismiss();
             }
         });
     }

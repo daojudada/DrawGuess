@@ -24,6 +24,13 @@ public class LoadingDialog extends BaseDialog {
 		init();
 	}
 
+	@Override
+	public void dismiss() {
+		if (isShowing()) {
+			super.dismiss();
+		}
+	}
+
 	private void init() {
 		setContentView(R.layout.diloag_loading);
 		mFivIcon = (FlippingImageView) findViewById(R.id.loadingdialog_fiv_icon);
@@ -35,12 +42,5 @@ public class LoadingDialog extends BaseDialog {
 	public void setText(String text) {
 		mText = text;
 		mHtvText.setText(mText);
-	}
-
-	@Override
-	public void dismiss() {
-		if (isShowing()) {
-			super.dismiss();
-		}
 	}
 }

@@ -24,10 +24,16 @@ import android.widget.TextView;
  *
  */
 public class WifiapAdapter extends BaseAdapter {
-    private LayoutInflater mInflater;
-    private List<ScanResult> mDatas;
-    private Context mContext;
+    public static class ViewHolder {
+        public TextView desc;
+        public ImageView rssi;
+        public TextView ssid;
+    }
     private boolean isWifiConnected;
+    private Context mContext;
+    private List<ScanResult> mDatas;
+
+    private LayoutInflater mInflater;
 
     public WifiapAdapter(Context context, List<ScanResult> list) {
         super();
@@ -35,11 +41,6 @@ public class WifiapAdapter extends BaseAdapter {
         this.mInflater = LayoutInflater.from(context);
         this.mContext = context;
         this.isWifiConnected = false;
-    }
-
-    // 新加的一个函数，用来更新数据
-    public void setData(List<ScanResult> list) {
-        this.mDatas = list;
     }
 
     @Override
@@ -50,6 +51,29 @@ public class WifiapAdapter extends BaseAdapter {
         return mDatas.size();
     }
 
+    private String getDesc(ScanResult ap) {
+        String desc = "";
+        if (ap.SSID.startsWith(WifiApConst.WIFI_AP_HEADER)) {
+            desc = "专用网络，可以直接连接";
+        }
+        else {
+            String descOri = ap.capabilities;
+            if (descOri.toUpperCase(Locale.getDefault()).contains("WPA-PSK")
+                    || descOri.toUpperCase(Locale.getDefault()).contains("WPA2-PSK")) {
+                desc = "受到密码保护";
+            }
+            else {
+                desc = "未受保护的网络";
+            }
+        }
+
+        // 是否连接此热点
+        if (isWifiConnected) {
+            desc = "已连接";
+        }
+        return desc;
+    }
+
     @Override
     public Object getItem(int position) {
         return mDatas.get(position);
@@ -58,6 +82,32 @@ public class WifiapAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    private int getRssiImgId(ScanResult ap) {
+        int imgId;
+        if (isWifiConnected) {
+            imgId = R.drawable.ic_connected;
+        }
+        else {
+            int rssi = Math.abs(ap.level);
+            if (rssi > 100) {
+                imgId = R.drawable.ic_small_wifi_rssi_0;
+            }
+            else if (rssi > 80) {
+                imgId = R.drawable.ic_small_wifi_rssi_1;
+            }
+            else if (rssi > 70) {
+                imgId = R.drawable.ic_small_wifi_rssi_2;
+            }
+            else if (rssi > 60) {
+                imgId = R.drawable.ic_small_wifi_rssi_3;
+            }
+            else {
+                imgId = R.drawable.ic_small_wifi_rssi_4;
+            }
+        }
+        return imgId;
     }
 
     @Override
@@ -88,58 +138,8 @@ public class WifiapAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private String getDesc(ScanResult ap) {
-        String desc = "";
-        if (ap.SSID.startsWith(WifiApConst.WIFI_AP_HEADER)) {
-            desc = "专用网络，可以直接连接";
-        }
-        else {
-            String descOri = ap.capabilities;
-            if (descOri.toUpperCase(Locale.getDefault()).contains("WPA-PSK")
-                    || descOri.toUpperCase(Locale.getDefault()).contains("WPA2-PSK")) {
-                desc = "受到密码保护";
-            }
-            else {
-                desc = "未受保护的网络";
-            }
-        }
-
-        // 是否连接此热点
-        if (isWifiConnected) {
-            desc = "已连接";
-        }
-        return desc;
-    }
-
-    private int getRssiImgId(ScanResult ap) {
-        int imgId;
-        if (isWifiConnected) {
-            imgId = R.drawable.ic_connected;
-        }
-        else {
-            int rssi = Math.abs(ap.level);
-            if (rssi > 100) {
-                imgId = R.drawable.ic_small_wifi_rssi_0;
-            }
-            else if (rssi > 80) {
-                imgId = R.drawable.ic_small_wifi_rssi_1;
-            }
-            else if (rssi > 70) {
-                imgId = R.drawable.ic_small_wifi_rssi_2;
-            }
-            else if (rssi > 60) {
-                imgId = R.drawable.ic_small_wifi_rssi_3;
-            }
-            else {
-                imgId = R.drawable.ic_small_wifi_rssi_4;
-            }
-        }
-        return imgId;
-    }
-
-    public static class ViewHolder {
-        public ImageView rssi;
-        public TextView ssid;
-        public TextView desc;
+    // 新加的一个函数，用来更新数据
+    public void setData(List<ScanResult> list) {
+        this.mDatas = list;
     }
 }

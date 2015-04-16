@@ -80,15 +80,12 @@
 	<string name="setting_btn_back">返回</string>
 	<string name="setting_btn_aboutus">关 于 我 们</string>
 	<string name="setting_btn_closeapp">退 出</string>
-	<string name="setting_dialog_chatlog_delete_ok">确 定</string>
-	<string name="setting_dialog_chatlog_delete_cancel">取 消</string>	
-	<string name="setting_dialog_toast_delect_failue">操作失败,请尝试重启程序。</string>
 	<string name="setting_dialog_logout_confirm">确定要退出软件?</string>
 	<string name="setting_dialog_logout_ok">确 定</string>
 	<string name="setting_dialog_logout_cancel">取 消</string>	
 	
 	
-	<string name="aboutus_copyright">Copyright © 2015 By \nGuoJun,Yujing,Dandan，Renqiu,Jianyan,Zongqiang</string>
+	<string name="aboutus_copyright">Copyright © 2015 By \nGuoJun,Yujing,Dandan,Renqiu,Jianyan,Zongqiang</string>
 	<string name="aboutus_text">腾讯安卓课大作业一枚，喵！</string>
 	<string name="aboutus_text2">欢迎各位指正，谢谢\nBy GuoJun,Yujing,Dandan
 	    							\nRenqiu,Jianyan,Zongqiang</string>
@@ -97,6 +94,11 @@
 	
     <string name="maintab_text_draw">绘图</string>
 	<string name="maintab_text_message">消息</string>
-	<string name="maintab_text_setting">设置</string>		
+	<string name="maintab_text_result">积分</string>
 	<string name="maintab_toast_logout">再按一次退出程序</string>
+	
+	<string name="paint_width">宽度</string>
+	<string name="paint_alpha">透明度</string>
+	<string name="paint_style">样式</string>
+	
 </resources>

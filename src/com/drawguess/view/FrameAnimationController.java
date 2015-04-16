@@ -10,15 +10,23 @@ import android.os.Message;
  *
  */
 public class FrameAnimationController {
-    private static final int MSG_ANIMATE = 1000;
+    private static class AnimationHandler extends Handler {
+        public void handleMessage(Message m) {
+            switch (m.what) {
+                case MSG_ANIMATE:
+                    if (m.obj != null) {
+                        ((Runnable) m.obj).run();
+                    }
+                    break;
+            }
+        }
+    }
 
     public static final int ANIMATION_FRAME_DURATION = 1000 / 60;
 
     private static final Handler mHandler = new AnimationHandler();
 
-    private FrameAnimationController() {
-        throw new UnsupportedOperationException();
-    }
+    private static final int MSG_ANIMATE = 1000;
 
     public static void requestAnimationFrame(Runnable runnable) {
         Message message = new Message();
@@ -34,15 +42,7 @@ public class FrameAnimationController {
         mHandler.sendMessageDelayed(message, delay);
     }
 
-    private static class AnimationHandler extends Handler {
-        public void handleMessage(Message m) {
-            switch (m.what) {
-                case MSG_ANIMATE:
-                    if (m.obj != null) {
-                        ((Runnable) m.obj).run();
-                    }
-                    break;
-            }
-        }
+    private FrameAnimationController() {
+        throw new UnsupportedOperationException();
     }
 }

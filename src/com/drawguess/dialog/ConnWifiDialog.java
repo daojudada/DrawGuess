@@ -27,10 +27,10 @@ import android.widget.EditText;
  */
 public class ConnWifiDialog extends BaseDialog {
 
-    private EditText mEtConnectPwd;
     private CheckBox mCkShowPwd;
-    private ScanResult mScanResult;
+    private EditText mEtConnectPwd;
     private Handler mHandler;
+    private ScanResult mScanResult;
 
     public ConnWifiDialog(Context context, Handler handler) {
         super(context);
@@ -41,9 +41,13 @@ public class ConnWifiDialog extends BaseDialog {
 
     }
 
-    private void initViews() {
-        mEtConnectPwd = (EditText) findViewById(R.id.dialog_et_connectWifi);
-        mCkShowPwd = (CheckBox) findViewById(R.id.dialog_cb_showpwd);
+    private void clearInput() {
+        this.mEtConnectPwd.setText("");
+        this.mCkShowPwd.setChecked(false);
+    }
+
+    public String getWifiPwd() {
+        return mEtConnectPwd.getText().toString().trim();
     }
 
     private void initEvents() {
@@ -107,6 +111,16 @@ public class ConnWifiDialog extends BaseDialog {
         mEtConnectPwd.addTextChangedListener(new TextWatcher() {
 
             @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (TextUtils.isEmpty(s)) {
                     mCkShowPwd.setEnabled(false);
@@ -117,16 +131,6 @@ public class ConnWifiDialog extends BaseDialog {
                     ConnWifiDialog.this.setButton1Clickable(true);
 
                 }
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
             }
         });
 
@@ -153,8 +157,9 @@ public class ConnWifiDialog extends BaseDialog {
 
     }
 
-    public String getWifiPwd() {
-        return mEtConnectPwd.getText().toString().trim();
+    private void initViews() {
+        mEtConnectPwd = (EditText) findViewById(R.id.dialog_et_connectWifi);
+        mCkShowPwd = (CheckBox) findViewById(R.id.dialog_cb_showpwd);
     }
 
     public void setBtn1ClickListener(DialogInterface.OnClickListener listener) {
@@ -164,10 +169,5 @@ public class ConnWifiDialog extends BaseDialog {
 
     public void setScanResult(ScanResult scanResult) {
         this.mScanResult = scanResult;
-    }
-
-    private void clearInput() {
-        this.mEtConnectPwd.setText("");
-        this.mCkShowPwd.setChecked(false);
     }
 }

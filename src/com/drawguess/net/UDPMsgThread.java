@@ -8,8 +8,6 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -17,12 +15,10 @@ import java.util.concurrent.Executors;
 import com.drawguess.base.BaseApplication;
 import com.drawguess.interfaces.MSGListener;
 import com.drawguess.msgbean.Entity;
-import com.drawguess.msgbean.Users;
 import com.drawguess.util.LogUtils;
 import com.drawguess.util.SessionUtils;
 
 import android.content.Context;
-import android.os.Message;
 
 /**
  * UDP连接的线程
@@ -31,34 +27,24 @@ import android.os.Message;
  */
 public class UDPMsgThread implements Runnable {
 
-    private static final String TAG = "UDPMessageListener";
+    /**
+     * 新消息处理接口
+     */
+    public interface OnNewMsgListener {
+        public void processMessage(android.os.Message pMsg);
+    }
     private static final String BROADCASTIP = "255.255.255.255";
-    private static final int POOL_SIZE = 5; // 单个CPU线程池大小
     private static final int BUFFERLENGTH = 4096; // 缓冲大小
-
-    private static byte[] sendBuffer = new byte[BUFFERLENGTH];
-    private static byte[] receiveBuffer = new byte[BUFFERLENGTH];
-    
-    private Thread receiveUDPThread;
-    private boolean isThreadRunning;
-    private List<OnNewMsgListener> mListenerList;
-    private MSGListener msgListener;
-    private String serverIP;
     private static ExecutorService executor;
-    private static DatagramSocket UDPSocket;
-    private static DatagramPacket sendDatagramPacket;
-    private DatagramPacket receiveDatagramPacket;
 
     private static UDPMsgThread instance;
-
-    public UDPMsgThread() {
-
-        mListenerList = new ArrayList<OnNewMsgListener>();
-
-        int cpuNums = Runtime.getRuntime().availableProcessors();
-        executor = Executors.newFixedThreadPool(cpuNums * POOL_SIZE); // 根据CPU数目初始化线程池
-    }
-
+    private static final int POOL_SIZE = 5; // 单个CPU线程池大小
+    
+    private static byte[] receiveBuffer = new byte[BUFFERLENGTH];
+    private static byte[] sendBuffer = new byte[BUFFERLENGTH];
+    private static DatagramPacket sendDatagramPacket;
+    private static final String TAG = "UDPMessageListener";
+    private static DatagramSocket UDPSocket;
     /**
      * <p>
      * 获取UDPSocketThread实例
@@ -74,11 +60,118 @@ public class UDPMsgThread implements Runnable {
         }
         return instance;
     }
-
-    public void setMSGListener(MSGListener msgListener){
-    	this.msgListener = msgListener;
+    public static void sendUDPdata(int commandNo, InetAddress targetIP) {
+        sendUDPdata(commandNo, targetIP, null);
     }
+    public static void sendUDPdata(int commandNo, InetAddress targetIP, Object addData) {
+        sendUDPdata(commandNo, targetIP.getHostAddress(), addData);
+    }
+    /**
+     * 发送UDP数据包
+     * 
+     * @param commandNo
+     *            消息命令
+     * @param targetIP
+     *            目标地址
+     * @param addData
+     *            附加数据
+     * @see MSGConst
+     */
+    public static void sendUDPdata(int commandNo, String targetIP) {
+        sendUDPdata(commandNo, targetIP, null);
+    }
+
+    public static void sendUDPdata(int commandNo, String targetIP, Object addData) {
+        MSGProtocol ipmsgProtocol = null;
+        String imei = SessionUtils.getIMEI();
+
+        if (addData == null) {
+            ipmsgProtocol = new MSGProtocol(imei, commandNo);
+        }
+        else if (addData instanceof Entity) {
+            ipmsgProtocol = new MSGProtocol(imei, commandNo, (Entity) addData);
+        }
+        else if (addData instanceof String) {
+            ipmsgProtocol = new MSGProtocol(imei, commandNo, (String) addData);
+        }
+        sendUDPdata(ipmsgProtocol, targetIP);
+    }
+
+    public static void sendUDPdata(final MSGProtocol ipmsgProtocol, final String targetIP) {
+        executor.execute(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    InetAddress targetAddr = InetAddress.getByName(targetIP); // 目的地址
+                    sendBuffer = ipmsgProtocol.getProtocolJSON().getBytes("gbk");
+                    sendDatagramPacket = new DatagramPacket(sendBuffer, sendBuffer.length, targetAddr, MSGConst.PORT);
+                    UDPSocket.send(sendDatagramPacket);
+                    LogUtils.i(TAG, "sendUDPdata() 数据发送成功");
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                    LogUtils.e(TAG, "sendUDPdata() 发送UDP数据包失败");
+                }
+
+            }
+        });
+
+    }
+
+    private boolean isThreadRunning;
+
+    private List<OnNewMsgListener> mListenerList;
     
+    private MSGListener msgListener;
+
+    
+
+
+	private DatagramPacket receiveDatagramPacket;
+
+    private Thread receiveUDPThread;
+
+    private String serverIP;
+
+    public UDPMsgThread() {
+
+        mListenerList = new ArrayList<OnNewMsgListener>();
+
+        int cpuNums = Runtime.getRuntime().availableProcessors();
+        executor = Executors.newFixedThreadPool(cpuNums * POOL_SIZE); // 根据CPU数目初始化线程池
+    }
+
+    public void addMsgListener(OnNewMsgListener listener) {
+        this.mListenerList.add(listener);
+    }
+
+
+    /** 建立Socket连接 **/
+    public void connectUDPSocket() {
+        try {
+            // 绑定端口
+            if (UDPSocket == null)
+                UDPSocket = new DatagramSocket(MSGConst.PORT);
+
+            
+            LogUtils.i(TAG, "connectUDPSocket() 绑定端口成功");
+
+            // 创建数据接受包
+            if (receiveDatagramPacket == null)
+                receiveDatagramPacket = new DatagramPacket(receiveBuffer, BUFFERLENGTH);
+
+            startUDPSocketThread();
+        }
+        catch (SocketException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeMsgListener(OnNewMsgListener listener) {
+        this.mListenerList.remove(listener);
+    }
+
     @Override
     public void run() {
         while (isThreadRunning) {
@@ -154,28 +247,8 @@ public class UDPMsgThread implements Runnable {
 
     }
 
-    
-
-
-	/** 建立Socket连接 **/
-    public void connectUDPSocket() {
-        try {
-            // 绑定端口
-            if (UDPSocket == null)
-                UDPSocket = new DatagramSocket(MSGConst.PORT);
-
-            
-            LogUtils.i(TAG, "connectUDPSocket() 绑定端口成功");
-
-            // 创建数据接受包
-            if (receiveDatagramPacket == null)
-                receiveDatagramPacket = new DatagramPacket(receiveBuffer, BUFFERLENGTH);
-
-            startUDPSocketThread();
-        }
-        catch (SocketException e) {
-            e.printStackTrace();
-        }
+    public void setMSGListener(MSGListener msgListener){
+    	this.msgListener = msgListener;
     }
 
     /** 开始监听线程 **/
@@ -187,7 +260,6 @@ public class UDPMsgThread implements Runnable {
         isThreadRunning = true;
         LogUtils.i(TAG, "startUDPSocketThread() 线程启动成功");
     }
-
     /** 暂停监听线程 **/
     public void stopUDPSocketThread() {
         isThreadRunning = false;
@@ -196,82 +268,6 @@ public class UDPMsgThread implements Runnable {
         receiveUDPThread = null;
         instance = null; // 置空, 消除静态变量引用
         LogUtils.i(TAG, "stopUDPSocketThread() 线程停止成功");
-    }
-
-    public void addMsgListener(OnNewMsgListener listener) {
-        this.mListenerList.add(listener);
-    }
-
-    public void removeMsgListener(OnNewMsgListener listener) {
-        this.mListenerList.remove(listener);
-    }
-
-
-    /**
-     * 发送UDP数据包
-     * 
-     * @param commandNo
-     *            消息命令
-     * @param targetIP
-     *            目标地址
-     * @param addData
-     *            附加数据
-     * @see MSGConst
-     */
-    public static void sendUDPdata(int commandNo, String targetIP) {
-        sendUDPdata(commandNo, targetIP, null);
-    }
-
-    public static void sendUDPdata(int commandNo, InetAddress targetIP) {
-        sendUDPdata(commandNo, targetIP, null);
-    }
-
-    public static void sendUDPdata(int commandNo, InetAddress targetIP, Object addData) {
-        sendUDPdata(commandNo, targetIP.getHostAddress(), addData);
-    }
-
-    public static void sendUDPdata(int commandNo, String targetIP, Object addData) {
-        MSGProtocol ipmsgProtocol = null;
-        String imei = SessionUtils.getIMEI();
-
-        if (addData == null) {
-            ipmsgProtocol = new MSGProtocol(imei, commandNo);
-        }
-        else if (addData instanceof Entity) {
-            ipmsgProtocol = new MSGProtocol(imei, commandNo, (Entity) addData);
-        }
-        else if (addData instanceof String) {
-            ipmsgProtocol = new MSGProtocol(imei, commandNo, (String) addData);
-        }
-        sendUDPdata(ipmsgProtocol, targetIP);
-    }
-
-    public static void sendUDPdata(final MSGProtocol ipmsgProtocol, final String targetIP) {
-        executor.execute(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    InetAddress targetAddr = InetAddress.getByName(targetIP); // 目的地址
-                    sendBuffer = ipmsgProtocol.getProtocolJSON().getBytes("gbk");
-                    sendDatagramPacket = new DatagramPacket(sendBuffer, sendBuffer.length, targetAddr, MSGConst.PORT);
-                    UDPSocket.send(sendDatagramPacket);
-                    LogUtils.i(TAG, "sendUDPdata() 数据发送成功");
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                    LogUtils.e(TAG, "sendUDPdata() 发送UDP数据包失败");
-                }
-
-            }
-        });
-
-    }
-    /**
-     * 新消息处理接口
-     */
-    public interface OnNewMsgListener {
-        public void processMessage(android.os.Message pMsg);
     }
 
 }

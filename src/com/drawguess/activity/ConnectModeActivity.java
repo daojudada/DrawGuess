@@ -22,19 +22,18 @@ public class ConnectModeActivity extends BaseActivity implements OnClickListener
 
 
    
+    private long ExitTime; // 延时退出时间变量
     private Button mBtnBack;
-    private Button mBtnWiFi;
     private Button mBtnBlueTooth;
 
     
-    private long ExitTime; // 延时退出时间变量
+    private Button mBtnWiFi;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_connectmode);
-        initViews();
-        initEvents();
+    protected void initEvents() {
+        mBtnBack.setOnClickListener(this);
+        mBtnWiFi.setOnClickListener(this);
+        mBtnBlueTooth.setOnClickListener(this); 
     }
 
     @Override
@@ -46,14 +45,6 @@ public class ConnectModeActivity extends BaseActivity implements OnClickListener
         
        
     }
-
-    @Override
-    protected void initEvents() {
-        mBtnBack.setOnClickListener(this);
-        mBtnWiFi.setOnClickListener(this);
-        mBtnBlueTooth.setOnClickListener(this); 
-    }
-
 
     @Override
     public void onClick(View v) {
@@ -71,6 +62,15 @@ public class ConnectModeActivity extends BaseActivity implements OnClickListener
                 finish();
                 break;
         }
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_connectmode);
+        initViews();
+        initEvents();
     }
     
     @Override

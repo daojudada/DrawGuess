@@ -4,21 +4,21 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 public abstract class Operation {
-	public enum Op{DRAW,FILL,TRANS,COPY,DELETE}
+	public enum Op{COPY,DELETE,DRAW,FILL,TRANS}
 	
-	protected static Canvas canvas;
 	protected static Bitmap bitmap;
+	protected static Canvas canvas;
 	protected static OperationManage opManage;
 	
-	public Op type;
-	
-
 	public static void setPro(Canvas c,Bitmap b,OperationManage o)
 	{
 		canvas = c;
 		bitmap = b;
 		opManage = o;
 	}
+	
+
+	public Op type;
 	
 	/**
 	 * 得到类型
@@ -30,12 +30,12 @@ public abstract class Operation {
 	}
 	
 	/**
-	 * undo操作
-	 */
-	public abstract void Undo();
-	/**
 	 * redo操作
 	 */
 	public abstract void Redo();
+	/**
+	 * undo操作
+	 */
+	public abstract void Undo();
 	
 }

@@ -11,11 +11,11 @@ import android.graphics.Point;
  */
 public class OpFill extends Operation{
 	
-	private int x;
-	private int y;
 	private int color;
 	private LinkedList<int[]> fillArea;
 	private boolean isFill,isFirst;
+	private int x;
+	private int y;
 	
 
 	public OpFill(int x,int y,int color) {
@@ -28,9 +28,20 @@ public class OpFill extends Operation{
 		fillArea = new LinkedList<int[]>();
 	}
 	
-	public float[] getPosition()
+	public void draw()
 	{
-		return new float[]{x,y};
+		if(isFill)
+		{
+			if(isFirst)
+			{
+				ScanFill();
+				isFirst = false;
+			}
+			else
+			{
+				redoFill();
+			}
+		}
 	}
 	
 	public int getColor()
@@ -40,6 +51,28 @@ public class OpFill extends Operation{
 	
 	
 	
+	public float[] getPosition()
+	{
+		return new float[]{x,y};
+	}
+
+	@Override
+	public void Redo() {
+		opManage.pushFill(this);
+	}
+	
+	private void redoFill()
+	{
+		for(int[] f:fillArea)
+		{
+			for(int sx = f[0]; sx <= f[1]; sx++)
+			{
+				bitmap.setPixel(sx, f[2], color);
+			}
+		}
+	}
+
+
 	/**
 	 * 扫描线填充算法
 	 * @param bitmap
@@ -148,41 +181,8 @@ public class OpFill extends Operation{
 		}
 	}
 
-	private void redoFill()
-	{
-		for(int[] f:fillArea)
-		{
-			for(int sx = f[0]; sx <= f[1]; sx++)
-			{
-				bitmap.setPixel(sx, f[2], color);
-			}
-		}
-	}
-	
-	public void draw()
-	{
-		if(isFill)
-		{
-			if(isFirst)
-			{
-				ScanFill();
-				isFirst = false;
-			}
-			else
-			{
-				redoFill();
-			}
-		}
-	}
-
-
 	@Override
 	public void Undo() {
 		opManage.popFill();
-	}
-
-	@Override
-	public void Redo() {
-		opManage.pushFill(this);
 	}
 }

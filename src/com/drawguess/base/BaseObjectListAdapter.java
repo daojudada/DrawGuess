@@ -19,8 +19,8 @@ import android.widget.Toast;
 public class BaseObjectListAdapter extends BaseAdapter {
 
     protected Context mContext;
-    protected LayoutInflater mInflater;
     protected List<? extends Entity> mDatas = new ArrayList<Entity>();
+    protected LayoutInflater mInflater;
 
     public BaseObjectListAdapter(Context context, List<? extends Entity> datas) {
         mContext = context;
@@ -33,6 +33,10 @@ public class BaseObjectListAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         return mDatas.size();
+    }
+
+    public List<? extends Entity> getDatas() {
+        return mDatas;
     }
 
     @Override
@@ -48,10 +52,6 @@ public class BaseObjectListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         return null;
-    }
-
-    public List<? extends Entity> getDatas() {
-        return mDatas;
     }
 
     public void setData(List<? extends Entity> datas) {

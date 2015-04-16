@@ -18,22 +18,22 @@ import android.widget.BaseAdapter;
 public class BaseArrayListAdapter extends BaseAdapter {
 
 	protected Context mContext;
-	protected LayoutInflater mInflater;
 	protected List<String> mDatas = new ArrayList<String>();
-
-	public BaseArrayListAdapter(Context context, String... datas) {
-		mContext = context;
-		mInflater = LayoutInflater.from(context);
-		if (datas != null && datas.length > 0) {
-			mDatas = Arrays.asList(datas);
-		}
-	}
+	protected LayoutInflater mInflater;
 
 	public BaseArrayListAdapter(Context context, List<String> datas) {
 		mContext = context;
 		mInflater = LayoutInflater.from(context);
 		if (datas != null && datas.size() > 0) {
 			mDatas = datas;
+		}
+	}
+
+	public BaseArrayListAdapter(Context context, String... datas) {
+		mContext = context;
+		mInflater = LayoutInflater.from(context);
+		if (datas != null && datas.length > 0) {
+			mDatas = Arrays.asList(datas);
 		}
 	}
 

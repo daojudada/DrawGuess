@@ -14,21 +14,6 @@ public class TextUtils {
    
 
     /**
-     * 判断文本框的内容是否为空
-     * 
-     * @param editText
-     *            需要判断是否为空的EditText对象
-     * @return boolean 返回是否为空,空(true),非空(false)
-     */
-    public static boolean isNull(EditText editText) {
-        String text = editText.getText().toString().trim();
-        if (text != null && text.length() > 0) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * 返回指定长度的一串数字
      * 
      * @param NumLen
@@ -44,6 +29,21 @@ public class TextUtils {
             str.append(num);
         }
         return str.toString();
+    }
+
+    /**
+     * 判断文本框的内容是否为空
+     * 
+     * @param editText
+     *            需要判断是否为空的EditText对象
+     * @return boolean 返回是否为空,空(true),非空(false)
+     */
+    public static boolean isNull(EditText editText) {
+        String text = editText.getText().toString().trim();
+        if (text != null && text.length() > 0) {
+            return false;
+        }
+        return true;
     }
 
 }

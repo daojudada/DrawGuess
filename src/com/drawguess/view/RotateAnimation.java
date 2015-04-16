@@ -12,22 +12,19 @@ import android.view.animation.Transformation;
  */
 public class RotateAnimation extends Animation {
 
+	public enum Mode {
+		X, Y, Z;
+	}
 	private Camera mCamera;
 	private float mCenterX;
 	private float mCenterY;
+
 	private Mode mMode;
 
 	public RotateAnimation(float centerX, float centerY, Mode mode) {
 		mCenterX = centerX;
 		mCenterY = centerY;
 		mMode = mode;
-	}
-
-	@Override
-	public void initialize(int width, int height, int parentWidth,
-			int parentHeight) {
-		super.initialize(width, height, parentWidth, parentHeight);
-		mCamera = new Camera();
 	}
 
 	@Override
@@ -49,7 +46,10 @@ public class RotateAnimation extends Animation {
 
 	}
 
-	public enum Mode {
-		X, Y, Z;
+	@Override
+	public void initialize(int width, int height, int parentWidth,
+			int parentHeight) {
+		super.initialize(width, height, parentWidth, parentHeight);
+		mCamera = new Camera();
 	}
 }

@@ -36,17 +36,46 @@ import android.widget.Toast;
  */
 public abstract class BaseActivity extends Activity {
 
-    protected Context mContext;
     protected ActionBar mActionBar;
-    protected LoadingDialog mLoadingDialog;
+    protected List<AsyncTask<Void, Void, Boolean>> mAsyncTasks = new ArrayList<AsyncTask<Void, Void, Boolean>>();
+    protected Context mContext;
 
+    protected float mDensity;
+    protected LoadingDialog mLoadingDialog;
+    protected int mScreenHeight;
     /**
      * 屏幕的宽度、高度、密度
      */
     protected int mScreenWidth;
-    protected int mScreenHeight;
-    protected float mDensity;
-    protected List<AsyncTask<Void, Void, Boolean>> mAsyncTasks = new ArrayList<AsyncTask<Void, Void, Boolean>>();
+
+    /** 清理异步处理事件 */
+    protected void clearAsyncTask() {
+        Iterator<AsyncTask<Void, Void, Boolean>> iterator = mAsyncTasks.iterator();
+        while (iterator.hasNext()) {
+            AsyncTask<Void, Void, Boolean> asyncTask = iterator.next();
+            if (asyncTask != null && !asyncTask.isCancelled()) {
+                asyncTask.cancel(true);
+            }
+        }
+        mAsyncTasks.clear();
+    }
+
+    protected void dismissLoadingDialog() {
+        if (mLoadingDialog.isShowing()) {
+            mLoadingDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+    }
+    
+    /** 初始化事件 **/
+    protected abstract void initEvents();
+    
+    /** 初始化视图 **/
+    protected abstract void initViews();  
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +95,13 @@ public abstract class BaseActivity extends Activity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.actionbar_common, menu);
+        return true;
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         clearAsyncTask();
@@ -73,85 +109,48 @@ public abstract class BaseActivity extends Activity {
 
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-    }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.actionbar_common, menu);
-        return true;
-    }
-    
     @Override  
     public boolean onOptionsItemSelected(MenuItem item) {  
         switch (item.getItemId()) {  
         case R.id.menu_set:  
-        	startActivity(new Intent(this,SettingActivity.class));
-        	
+        	startActivity(SettingActivity.class);
             return true;  
         default:  
             return super.onOptionsItemSelected(item);  
         }  
-    }  
-
-    /** 初始化视图 **/
-    protected abstract void initViews();
-
-    /** 初始化事件 **/
-    protected abstract void initEvents();
-
-    protected void putAsyncTask(AsyncTask<Void, Void, Boolean> asyncTask) {
-        mAsyncTasks.add(asyncTask.execute());
-    }
-
-    /** 清理异步处理事件 */
-    protected void clearAsyncTask() {
-        Iterator<AsyncTask<Void, Void, Boolean>> iterator = mAsyncTasks.iterator();
-        while (iterator.hasNext()) {
-            AsyncTask<Void, Void, Boolean> asyncTask = iterator.next();
-            if (asyncTask != null && !asyncTask.isCancelled()) {
-                asyncTask.cancel(true);
-            }
-        }
-        mAsyncTasks.clear();
     }
 
 
 	
-    protected void showLoadingDialog(String text) {
-        if (text != null) {
-            mLoadingDialog.setText(text);
-        }
-        mLoadingDialog.show();
+    protected void putAsyncTask(AsyncTask<Void, Void, Boolean> asyncTask) {
+        mAsyncTasks.add(asyncTask.execute());
     }
 
-    protected void dismissLoadingDialog() {
-        if (mLoadingDialog.isShowing()) {
-            mLoadingDialog.dismiss();
-        }
+    /** 含有标题和内容的对话框 **/
+    protected AlertDialog showAlertDialog(String title, String message) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle(title).setMessage(message)
+                .show();
+        return alertDialog;
     }
     
-    /** 短暂显示Toast提示(来自res) **/
-    protected void showShortToast(int resId) {
-        Toast.makeText(this, getString(resId), Toast.LENGTH_SHORT).show();
+    /** 含有标题、内容、图标、两个按钮的对话框 **/
+    protected AlertDialog showAlertDialog(String title, String message, int icon,
+            String positiveText, DialogInterface.OnClickListener onPositiveClickListener,
+            String negativeText, DialogInterface.OnClickListener onNegativeClickListener) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle(title).setMessage(message)
+                .setIcon(icon).setPositiveButton(positiveText, onPositiveClickListener)
+                .setNegativeButton(negativeText, onNegativeClickListener).show();
+        return alertDialog;
     }
 
-    /** 短暂显示Toast提示(来自String) **/
-    protected void showShortToast(String text) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-    }
-
-    /** 长时间显示Toast提示(来自res) **/
-    protected void showLongToast(int resId) {
-        Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
-    }
-
-    /** 长时间显示Toast提示(来自String) **/
-    protected void showLongToast(String text) {
-        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+    /** 含有标题、内容、两个按钮的对话框 **/
+    protected AlertDialog showAlertDialog(String title, String message, String positiveText,
+            DialogInterface.OnClickListener onPositiveClickListener, String negativeText,
+            DialogInterface.OnClickListener onNegativeClickListener) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle(title).setMessage(message)
+                .setPositiveButton(positiveText, onPositiveClickListener)
+                .setNegativeButton(negativeText, onNegativeClickListener).show();
+        return alertDialog;
     }
 
     /** 显示自定义Toast提示(来自res) **/
@@ -176,6 +175,33 @@ public abstract class BaseActivity extends Activity {
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(toastRoot);
         toast.show();
+    }
+
+    protected void showLoadingDialog(String text) {
+        if (text != null) {
+            mLoadingDialog.setText(text);
+        }
+        mLoadingDialog.show();
+    }
+
+    /** 长时间显示Toast提示(来自res) **/
+    protected void showLongToast(int resId) {
+        Toast.makeText(this, getString(resId), Toast.LENGTH_LONG).show();
+    }
+
+    /** 长时间显示Toast提示(来自String) **/
+    protected void showLongToast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+    }
+
+    /** 短暂显示Toast提示(来自res) **/
+    protected void showShortToast(int resId) {
+        Toast.makeText(this, getString(resId), Toast.LENGTH_SHORT).show();
+    }
+
+    /** 短暂显示Toast提示(来自String) **/
+    protected void showShortToast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
     /** 通过Class跳转界面 **/
@@ -206,32 +232,5 @@ public abstract class BaseActivity extends Activity {
             intent.putExtras(bundle);
         }
         startActivity(intent);
-    }
-
-    /** 含有标题和内容的对话框 **/
-    protected AlertDialog showAlertDialog(String title, String message) {
-        AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle(title).setMessage(message)
-                .show();
-        return alertDialog;
-    }
-
-    /** 含有标题、内容、两个按钮的对话框 **/
-    protected AlertDialog showAlertDialog(String title, String message, String positiveText,
-            DialogInterface.OnClickListener onPositiveClickListener, String negativeText,
-            DialogInterface.OnClickListener onNegativeClickListener) {
-        AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle(title).setMessage(message)
-                .setPositiveButton(positiveText, onPositiveClickListener)
-                .setNegativeButton(negativeText, onNegativeClickListener).show();
-        return alertDialog;
-    }
-
-    /** 含有标题、内容、图标、两个按钮的对话框 **/
-    protected AlertDialog showAlertDialog(String title, String message, int icon,
-            String positiveText, DialogInterface.OnClickListener onPositiveClickListener,
-            String negativeText, DialogInterface.OnClickListener onNegativeClickListener) {
-        AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle(title).setMessage(message)
-                .setIcon(icon).setPositiveButton(positiveText, onPositiveClickListener)
-                .setNegativeButton(negativeText, onNegativeClickListener).show();
-        return alertDialog;
     }
 }

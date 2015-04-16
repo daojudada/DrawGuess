@@ -28,12 +28,6 @@ public class OpCopy extends Operation{
 
 
 	@Override
-	public void Undo() {
-		opManage.popDraw();
-	}
-
-
-	@Override
 	public void Redo() {
 		if(opDraw!=null)
 		{
@@ -44,5 +38,11 @@ public class OpCopy extends Operation{
 			opDraw = newOpDraw;
 			opManage.pushDraw(opDraw);
 		}
+	}
+
+
+	@Override
+	public void Undo() {
+		opManage.popDraw();
 	}
 }

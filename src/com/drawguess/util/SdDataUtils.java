@@ -13,25 +13,13 @@ import android.content.SharedPreferences;
  */
 public class SdDataUtils {
     private static final String GlobalSharedName = "LocalUserInfo";
-    private SharedPreferences mSP;
     private SharedPreferences.Editor mEditor;
+    private SharedPreferences mSP;
 
     public SdDataUtils() {
     	BaseApplication instance = BaseApplication.getInstance();
         mSP = instance.getSharedPreferences(GlobalSharedName,Context.MODE_PRIVATE);
         mEditor = mSP.edit();
-    }
-
-    public SharedPreferences.Editor getEditor() {
-        return mEditor;
-    }
-
-    public String getIMEI() {
-        return mSP.getString(Users.IMEI, "");
-    }
-
-    public String getNickname() {
-        return mSP.getString(Users.NICKNAME, "");
     }
 
     public int getAvatarId() {
@@ -42,9 +30,21 @@ public class SdDataUtils {
         return mSP.getString(Users.BIRTHDAY, "000000");
     }
 
+    public SharedPreferences.Editor getEditor() {
+        return mEditor;
+    }
 
     public String getGender() {
         return mSP.getString(Users.GENDER, "获取失败");
+    }
+
+    public String getIMEI() {
+        return mSP.getString(Users.IMEI, "");
+    }
+
+
+    public boolean getIsFirst(){
+    	return mSP.getBoolean("FIRST",true);
     }
 
 
@@ -52,5 +52,7 @@ public class SdDataUtils {
         return mSP.getString(Users.LOGINTIME, "获取失败");
     }
 
-    
+    public String getNickname() {
+        return mSP.getString(Users.NICKNAME, "");
+    }
 }

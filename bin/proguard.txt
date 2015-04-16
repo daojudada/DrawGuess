@@ -31,12 +31,14 @@
 # view AndroidManifest.xml #generated:36
 -keep class com.drawguess.base.BaseApplication { <init>(...); }
 
-# view res/layout/fragment_draw.xml #generated:7
+# view res/layout/activity_drawtabs.xml #generated:116
 -keep class com.drawguess.view.DrawView { <init>(...); }
 
 # view res/layout/diloag_loading.xml #generated:9
 -keep class com.drawguess.view.FlippingImageView { <init>(...); }
 
+# view res/layout/activity_drawtabs.xml #generated:327
+# view res/layout/activity_drawtabs.xml #generated:353
 # view res/layout/activity_gameroom.xml #generated:108
 -keep class com.drawguess.view.MultiListView { <init>(...); }
 
@@ -44,8 +46,8 @@
 # view res/layout/activity_settting.xml #generated:74
 -keep class com.drawguess.view.SettingSwitchButton { <init>(...); }
 
-# view res/layout/activity_draw.xml #generated:8
--keep class com.drawsomething.draw.DrawView { <init>(...); }
+# view res/layout/dialog_paint.xml #generated:8
+-keep class com.drawguess.view.ShowPaintView { <init>(...); }
 
 # view res/layout/actionbar_tab_layout.xml #generated:15
 -keep class com.readystatesoftware.viewbadger.BadgeView { <init>(...); }

@@ -9,11 +9,16 @@ import com.alibaba.fastjson.annotation.JSONField;
  */
 public class Message extends Entity {
 
-    private String senderIMEI;
-    private String sendTime;
-    private String MsgContent;
+    /** 消息内容类型 **/
+    public enum CONTENT_TYPE {
+        DATA, TEXT;
+    }
     private CONTENT_TYPE contentType;
+    private String MsgContent;
     private int percent;
+    private String senderIMEI;
+
+    private String sendTime;
 
     public Message() {
     }
@@ -26,29 +31,14 @@ public class Message extends Entity {
         this.contentType = paramContentType;
     }
 
-    /** 消息内容类型 **/
-    public enum CONTENT_TYPE {
-        TEXT, DATA;
-    }
-
     /**
-     * 获取消息发送方IMEI
+     * 克隆对象
      * 
-     * @return
+     * @param
      */
 
-    public String getSenderIMEI() {
-        return senderIMEI;
-    }
-
-    /**
-     * 设置消息发送方IMEI
-     * 
-     * @param paramSenderIMEI
-     * 
-     */
-    public void setSenderIMEI(String paramSenderIMEI) {
-        this.senderIMEI = paramSenderIMEI;
+    public Message clone() {
+        return new Message(senderIMEI, sendTime, MsgContent, contentType);
     }
 
     /**
@@ -62,13 +52,27 @@ public class Message extends Entity {
     }
 
     /**
-     * 设置消息内容类型
+     * 获取消息内容
      * 
-     * @param paramContentType
-     * @see CONTENT_TYPE
+     * @return
      */
-    public void setContentType(CONTENT_TYPE paramContentType) {
-        this.contentType = paramContentType;
+    public String getMsgContent() {
+        return MsgContent;
+    }
+
+    @JSONField(serialize = false)
+    public int getPercent() {
+        return percent;
+    }
+
+    /**
+     * 获取消息发送方IMEI
+     * 
+     * @return
+     */
+
+    public String getSenderIMEI() {
+        return senderIMEI;
     }
 
     /**
@@ -81,22 +85,13 @@ public class Message extends Entity {
     }
 
     /**
-     * 设置消息发送时间
+     * 设置消息内容类型
      * 
-     * @param paramSendTime
-     *            发送时间,格式 xx年xx月xx日 xx:xx:xx
+     * @param paramContentType
+     * @see CONTENT_TYPE
      */
-    public void setSendTime(String paramSendTime) {
-        this.sendTime = paramSendTime;
-    }
-
-    /**
-     * 获取消息内容
-     * 
-     * @return
-     */
-    public String getMsgContent() {
-        return MsgContent;
+    public void setContentType(CONTENT_TYPE paramContentType) {
+        this.contentType = paramContentType;
     }
 
     /**
@@ -108,23 +103,28 @@ public class Message extends Entity {
         this.MsgContent = paramMsgContent;
     }
 
-    /**
-     * 克隆对象
-     * 
-     * @param
-     */
-
-    public Message clone() {
-        return new Message(senderIMEI, sendTime, MsgContent, contentType);
-    }
-
-    @JSONField(serialize = false)
-    public int getPercent() {
-        return percent;
-    }
-
     public void setPercent(int percent) {
         this.percent = percent;
+    }
+
+    /**
+     * 设置消息发送方IMEI
+     * 
+     * @param paramSenderIMEI
+     * 
+     */
+    public void setSenderIMEI(String paramSenderIMEI) {
+        this.senderIMEI = paramSenderIMEI;
+    }
+
+    /**
+     * 设置消息发送时间
+     * 
+     * @param paramSendTime
+     *            发送时间,格式 xx年xx月xx日 xx:xx:xx
+     */
+    public void setSendTime(String paramSendTime) {
+        this.sendTime = paramSendTime;
     }
 
 }

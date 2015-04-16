@@ -17,17 +17,17 @@ public class OpDelete extends Operation{
 
 
 	@Override
-	public void Undo() {
-		opDraw.setIsDraw(true);
-		opManage.pushNowDraw(opDraw);
-	}
-
-
-	@Override
 	public void Redo() {
 		opDraw = opManage.getNowDraw();
 		if(opDraw!=null)
 			opDraw.setIsDraw(false);
 		opManage.popNowDraw();
+	}
+
+
+	@Override
+	public void Undo() {
+		opDraw.setIsDraw(true);
+		opManage.pushNowDraw(opDraw);
 	}
 }

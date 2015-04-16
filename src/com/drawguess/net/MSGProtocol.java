@@ -29,27 +29,27 @@ import com.drawguess.util.LogUtils;
  * 
  */
 public class MSGProtocol {
-    private static final String TAG = "IPMSGPProtocol";
-    private static final String PACKETNO = "packetNo";
-    private static final String COMMANDNO = "commandNo";
+    public enum ADDITION_TYPE {
+        MSG, STRING, USER
+    }
     private static final String ADDOBJECT = "addObject";
     private static final String ADDSTR = "addStr";
     private static final String ADDTYPE = "addType";
+    private static final String COMMANDNO = "commandNo";
+    private static final String PACKETNO = "packetNo";
 
     
-    private String packetNo;// 数据包编号
-    private String senderIMEI; // 发送者IMEI
-    private int commandNo; // 命令
-    private ADDITION_TYPE addType; // 附加数据类型
+    private static final String TAG = "IPMSGPProtocol";
     private Entity addObject; // 附加对象
     private String addStr; // 附加信息
+    private ADDITION_TYPE addType; // 附加数据类型
+    private int commandNo; // 命令
+    private String packetNo;// 数据包编号
+
+    private String senderIMEI; // 发送者IMEI
 
     public MSGProtocol() {
         this.packetNo = getSeconds();
-    }
-
-    public enum ADDITION_TYPE {
-        USER, MSG, STRING
     }
 
     // 根据协议字符串初始化
@@ -92,6 +92,13 @@ public class MSGProtocol {
         }
     }
 
+    public MSGProtocol(String paramSenderIMEI, int paramCommandNo) {
+        super();
+        this.packetNo = getSeconds();
+        this.senderIMEI = paramSenderIMEI;
+        this.commandNo = paramCommandNo;
+    }
+
     public MSGProtocol(String paramSenderIMEI, int paramCommandNo, Entity paramObject) {
         super();
         this.packetNo = getSeconds();
@@ -115,56 +122,9 @@ public class MSGProtocol {
         this.addType = ADDITION_TYPE.STRING;
     }
 
-    public MSGProtocol(String paramSenderIMEI, int paramCommandNo) {
-        super();
-        this.packetNo = getSeconds();
-        this.senderIMEI = paramSenderIMEI;
-        this.commandNo = paramCommandNo;
-    }
-
-    @JSONField(name = PACKETNO)
-    public String getPacketNo() {
-        return this.packetNo;
-    }
-
-    public void setPacketNo(String paramPacketNo) {
-        this.packetNo = paramPacketNo;
-    }
-
-    @JSONField(name = Users.IMEI)
-    public String getSenderIMEI() {
-        return this.senderIMEI;
-    }
-
-    public void setSenderIMEI(String paramSenderIMEI) {
-        this.senderIMEI = paramSenderIMEI;
-    }
-
-    @JSONField(name = ADDTYPE)
-    public ADDITION_TYPE getAddType() {
-        return this.addType;
-    }
-
-    public void setAddType(ADDITION_TYPE paramType) {
-        this.addType = paramType;
-    }
-
-    @JSONField(name = COMMANDNO)
-    public int getCommandNo() {
-        return this.commandNo;
-    }
-
-    public void setCommandNo(int paramCommandNo) {
-        this.commandNo = paramCommandNo;
-    }
-
     @JSONField(name = ADDOBJECT)
     public Entity getAddObject() {
         return this.addObject;
-    }
-
-    public void setAddObject(Entity paramObject) {
-        this.addObject = paramObject;
     }
 
     @JSONField(name = ADDSTR)
@@ -172,10 +132,20 @@ public class MSGProtocol {
         return this.addStr;
     }
 
-    public void setAddStr(String paramStr) {
-        this.addStr = paramStr;
+    @JSONField(name = ADDTYPE)
+    public ADDITION_TYPE getAddType() {
+        return this.addType;
     }
-    
+
+    @JSONField(name = COMMANDNO)
+    public int getCommandNo() {
+        return this.commandNo;
+    }
+
+    @JSONField(name = PACKETNO)
+    public String getPacketNo() {
+        return this.packetNo;
+    }
 
     // 输出协议JSON串
     @JSONField(serialize = false)
@@ -188,6 +158,36 @@ public class MSGProtocol {
     private String getSeconds() {
         Date nowDate = new Date();
         return Long.toString(nowDate.getTime());
+    }
+
+    @JSONField(name = Users.IMEI)
+    public String getSenderIMEI() {
+        return this.senderIMEI;
+    }
+
+    public void setAddObject(Entity paramObject) {
+        this.addObject = paramObject;
+    }
+
+    public void setAddStr(String paramStr) {
+        this.addStr = paramStr;
+    }
+
+    public void setAddType(ADDITION_TYPE paramType) {
+        this.addType = paramType;
+    }
+
+    public void setCommandNo(int paramCommandNo) {
+        this.commandNo = paramCommandNo;
+    }
+    
+
+    public void setPacketNo(String paramPacketNo) {
+        this.packetNo = paramPacketNo;
+    }
+
+    public void setSenderIMEI(String paramSenderIMEI) {
+        this.senderIMEI = paramSenderIMEI;
     }
 
 }

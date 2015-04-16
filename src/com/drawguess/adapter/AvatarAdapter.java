@@ -22,9 +22,13 @@ import com.squareup.picasso.Picasso;
  */
 public class AvatarAdapter extends BaseAdapter {
 
-    private LayoutInflater mInflater;
-    private List<Avatar> mDatas;
+    private static class ViewHolder {
+        public ImageView ivAvatar;
+    }
     private Context mContext;
+    private List<Avatar> mDatas;
+
+    private LayoutInflater mInflater;
 
     public AvatarAdapter(int[] images, Context context) {
         super();
@@ -73,9 +77,5 @@ public class AvatarAdapter extends BaseAdapter {
         Picasso.with(mContext).load(((Avatar) mDatas.get(position)).getImageId())
                 .into(holder.ivAvatar);
         return convertView;
-    }
-
-    private static class ViewHolder {
-        public ImageView ivAvatar;
     }
 }

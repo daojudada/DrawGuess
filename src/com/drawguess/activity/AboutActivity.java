@@ -14,10 +14,10 @@ import android.view.MenuItem;
 public class AboutActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
-        initEvents();
+    protected void initEvents() {
+        setTitle(getString(R.string.setting_text_sysconfig_aboutus));
+        mActionBar = getActionBar();
+        mActionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -25,10 +25,10 @@ public class AboutActivity extends BaseActivity {
     }
 
     @Override
-    protected void initEvents() {
-        setTitle(getString(R.string.setting_text_sysconfig_aboutus));
-        mActionBar = getActionBar();
-        mActionBar.setDisplayHomeAsUpEnabled(true);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_about);
+        initEvents();
     }
 
     // actionBar的监听

@@ -36,39 +36,94 @@ import com.squareup.picasso.*;
 public class LoginActivity extends BaseActivity implements OnClickListener{
 
 
-    private LinearLayout mLlayoutMain; // 首次登陆主界面
-    private EditText mEtNickname;
+    private int mAvatar;
+    private Button mBtnChangeUser;
 
-    private LinearLayout mLlayoutExMain; // 二次登陆页面
-    private ImageView mImgExAvatar;
-    private TextView mTvExNickmame;
-    private LinearLayout mLayoutExGender; // 性别根布局
-    private ImageView mIvExGender;
-    private TextView mTvExLogintime; // 上次登录时间
-    private ImageView mIvAvatar;
-    
     private Button mBtnExit;
     private Button mBtnNext;
-    private Button mBtnChangeUser;
-    private RadioGroup mRgGender;
-    private TelephonyManager mTelephonyManager;
-
-    private int mAvatar;
-    private String mLogintime;
     private String mDevice;
+    private EditText mEtNickname;
     private String mGender;
     private String mIMEI;
+    private ImageView mImgExAvatar;
+    
+    private ImageView mIvAvatar;
+    private ImageView mIvExGender;
     private String mLastLogintime; // 上次登录时间
+    private LinearLayout mLayoutExGender; // 性别根布局
+    private LinearLayout mLlayoutExMain; // 二次登陆页面
+
+    private LinearLayout mLlayoutMain; // 首次登陆主界面
+    private String mLogintime;
     private String mNickname = "";
+    private RadioGroup mRgGender;
+    private TelephonyManager mTelephonyManager;
+    private TextView mTvExLogintime; // 上次登录时间
+    private TextView mTvExNickmame;
+
+    /**
+     * 执行下一步跳转
+     * <p>
+     * 同时获取客户端的IMIE信息
+     */
+    private void doLoginNext() {
+        if (mNickname.length() == 0) {
+            if ((!isValidated())) {
+                return;
+            }
+        }
+        
+        try {
+            mIMEI = mTelephonyManager.getDeviceId(); // 获取IMEI
+            mDevice = getPhoneModel();
+            mLogintime = DateUtils.getNowtime();
+            
+            // 设置用户Session信息
+            SessionUtils.setIMEI(mIMEI);
+            SessionUtils.setDevice(mDevice);
+            SessionUtils.setNickname(mNickname);
+            SessionUtils.setGender(mGender);
+            SessionUtils.setAvatar(mAvatar);
+            SessionUtils.setLoginTime(mLogintime);
+            
+            // 在SD卡中存储登陆信息
+            SdDataUtils mSPutUtils = new SdDataUtils();
+            SharedPreferences.Editor mEditor = mSPutUtils.getEditor();
+            
+            mEditor.putString(Users.IMEI, mIMEI)
+            	.putString(Users.DEVICE, mDevice)
+            	.putString(Users.NICKNAME, mNickname)
+            	.putString(Users.GENDER, mGender)
+                .putString(Users.LOGINTIME, mLogintime)
+        		.putInt(Users.AVATAR, mAvatar);
+            mEditor.commit();
+            
+            startActivity(ConnectModeActivity.class);
+            
+        }
+        catch (Exception e) {
+            showShortToast(R.string.login_toast_loginfailue);
+            e.printStackTrace();
+        }
+        
+
+    }
+
+    public String getPhoneModel() {
+        String str1 = Build.BRAND;
+        String str2 = Build.MODEL;
+        str2 = str1 + "_" + str2;
+        return str2;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        mTelephonyManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-        initViews();
-        initEvents();
+    protected void initEvents() {
+    	mIvAvatar.setOnClickListener(this);
+        mBtnExit.setOnClickListener(this);
+        mBtnNext.setOnClickListener(this);
+        mBtnChangeUser.setOnClickListener(this);
     }
+
 
     @Override
     protected void initViews() {
@@ -118,64 +173,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         }
     }
 
-    @Override
-    protected void initEvents() {
-    	mIvAvatar.setOnClickListener(this);
-        mBtnExit.setOnClickListener(this);
-        mBtnNext.setOnClickListener(this);
-        mBtnChangeUser.setOnClickListener(this);
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            // 更换用户,清空数据
-            case R.id.login_btn_changeUser:
-                mNickname = "";
-                mGender = null;
-                mIMEI = null;
-                mAvatar = 0;
-                SessionUtils.clearSession(); // 清空Session数据
-                mLlayoutMain.setVisibility(View.VISIBLE);
-                mLlayoutExMain.setVisibility(View.GONE);
-                break;
-            case R.id.setting_my_avatar_img:
-                Intent intent = new Intent(this, ChooseAvatarActivity.class);
-                startActivityForResult(intent, 0);
-                break;
-                
-            case R.id.login_btn_exit:
-                ActivitiesManager.finishAllActivities();
-                break;
-
-            case R.id.login_btn_next:
-                doLoginNext();
-                break;
-        }
-    }
-
-    @Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data_intent){
-		super.onActivityResult(requestCode, resultCode, data_intent);
-		if(resultCode == RESULT_CANCELED)
-			setTitle("cancel");
-		else if (resultCode == RESULT_OK){
-			int result = data_intent.getExtras().getInt("result");
-            mAvatar = result + 1;
-            Picasso.with(mContext).load(ImageUtils.getImageID(Users.AVATAR + mAvatar)).into(mIvAvatar);
-       }
-	}
-
- 
-    
-    public String getPhoneModel() {
-        String str1 = Build.BRAND;
-        String str2 = Build.MODEL;
-        str2 = str1 + "_" + str2;
-        return str2;
-    }
-    
     /**
      * 登录资料完整性验证，不完整则无法登陆，完整则记录输入的信息。
      * 
@@ -212,51 +209,54 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         return true;
     }
 
-    /**
-     * 执行下一步跳转
-     * <p>
-     * 同时获取客户端的IMIE信息
-     */
-    private void doLoginNext() {
-        if (mNickname.length() == 0) {
-            if ((!isValidated())) {
-                return;
-            }
-        }
-        
-        try {
-            mIMEI = mTelephonyManager.getDeviceId(); // 获取IMEI
-            mDevice = getPhoneModel();
-            mLogintime = DateUtils.getNowtime();
-            
-            // 设置用户Session信息
-            SessionUtils.setIMEI(mIMEI);
-            SessionUtils.setDevice(mDevice);
-            SessionUtils.setNickname(mNickname);
-            SessionUtils.setGender(mGender);
-            SessionUtils.setAvatar(mAvatar);
-            SessionUtils.setLoginTime(mLogintime);
-            
-            // 在SD卡中存储登陆信息
-            SdDataUtils mSPutUtils = new SdDataUtils();
-            SharedPreferences.Editor mEditor = mSPutUtils.getEditor();
-            
-            mEditor.putString(Users.IMEI, mIMEI)
-            	.putString(Users.DEVICE, mDevice)
-            	.putString(Users.NICKNAME, mNickname)
-            	.putString(Users.GENDER, mGender)
-                .putString(Users.LOGINTIME, mLogintime)
-        		.putInt(Users.AVATAR, mAvatar);
-            mEditor.commit();
-            
-            startActivity(ConnectModeActivity.class);
-            
-        }
-        catch (Exception e) {
-            showShortToast(R.string.login_toast_loginfailue);
-            e.printStackTrace();
-        }
-        
+ 
+    
+    @Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data_intent){
+		super.onActivityResult(requestCode, resultCode, data_intent);
+		if(resultCode == RESULT_CANCELED)
+			setTitle("cancel");
+		else if (resultCode == RESULT_OK){
+			int result = data_intent.getExtras().getInt("result");
+            mAvatar = result + 1;
+            Picasso.with(mContext).load(ImageUtils.getImageID(Users.AVATAR + mAvatar)).into(mIvAvatar);
+       }
+	}
+    
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            // 更换用户,清空数据
+            case R.id.login_btn_changeUser:
+                mNickname = "";
+                mGender = null;
+                mIMEI = null;
+                mAvatar = 0;
+                SessionUtils.clearSession(); // 清空Session数据
+                mLlayoutMain.setVisibility(View.VISIBLE);
+                mLlayoutExMain.setVisibility(View.GONE);
+                break;
+            case R.id.setting_my_avatar_img:
+                Intent intent = new Intent(this, ChooseAvatarActivity.class);
+                startActivityForResult(intent, 0);
+                break;
+                
+            case R.id.login_btn_exit:
+                ActivitiesManager.finishAllActivities();
+                break;
 
+            case R.id.login_btn_next:
+                doLoginNext();
+                break;
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        mTelephonyManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+        initViews();
+        initEvents();
     }
 }

@@ -3,6 +3,7 @@ package com.drawguess.net;
 import java.io.*;
 import java.net.*;
 
+import com.drawguess.base.Constant;
 import com.drawguess.interfaces.MSGListener;
 import com.drawguess.util.LogUtils;
 
@@ -15,38 +16,19 @@ import com.drawguess.util.LogUtils;
  *
  */
 public class Client implements Runnable {
-	private static final String TAG = "Client";
-    private static final int BUFFERLENGTH = 4096; // 缓冲大小
-    private static byte[] sendBuffer = new byte[BUFFERLENGTH];
+	private static final int BUFFERLENGTH = 4096; // 缓冲大小
     private static byte[] receiveBuffer = new byte[BUFFERLENGTH];
+    private static byte[] sendBuffer = new byte[BUFFERLENGTH];
+    private static Socket serverSocket = null;
+	private static final String TAG = "Client";
 	private InetAddress address = null;
-	private static Socket serverSocket = null;
-	private OutputStream dos = null;
 	private InputStream dis = null;
+	private OutputStream dos = null;
 	private boolean isConnect = false;
 	private MSGListener msgListener;
 
 	public Client() {
 		connect();
-	}
-
-	public void run() {
-		while (isConnect) {
-			try {
-				receive();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public void setMsgListener(MSGListener msgListener){
-		this.msgListener = msgListener;
-	}
-	
-	public void startGame() {
-		Thread thread = new Thread(this);
-		thread.start();
 	}
 
 	void connect() {
@@ -61,7 +43,6 @@ public class Client implements Runnable {
 			exit();
 		}
 	}
-
 
 	private void exit() {
 		System.out.println("Close Client");
@@ -80,19 +61,6 @@ public class Client implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
-
-
-	public void sendToServer(MSGProtocol ipmsg) {
-		try {
-			sendBuffer = ipmsg.getProtocolJSON().getBytes("gbk");
-			dos.write(sendBuffer);
-			dos.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 	
 	private void receive() throws IOException {
 		try{
@@ -113,6 +81,39 @@ public class Client implements Runnable {
 		MSGProtocol msg = new MSGProtocol(resStr);
 		
 		
+	}
+
+	public void run() {
+		while (isConnect) {
+			try {
+				receive();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+
+	public void sendToServer(MSGProtocol ipmsg) {
+		try {
+			sendBuffer = ipmsg.getProtocolJSON().getBytes("gbk");
+			dos.write(sendBuffer);
+			dos.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+
+	public void setMsgListener(MSGListener msgListener){
+		this.msgListener = msgListener;
+	}
+
+	
+	public void startGame() {
+		Thread thread = new Thread(this);
+		thread.start();
 	}
 
 }

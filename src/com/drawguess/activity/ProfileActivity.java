@@ -26,84 +26,18 @@ import android.widget.RadioGroup;
  *
  */
 public class ProfileActivity extends BaseActivity implements OnClickListener {
-    private ImageView mIvAvatar;
-    private EditText mEtNickname;
+    private int mAvatar;
     private Button mBtnBack;
     private Button mBtnSave;
-    private RadioGroup mRgGender;
-    private RadioButton mRbGirl;
-    private RadioButton mRbBoy;
-    
-    private int mAvatar;
+    private EditText mEtNickname;
     private String mGender;
+    private ImageView mIvAvatar;
     private String mNickname = "";
     
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
-        initViews();
-        initEvents();
-        initProfile();
-    }
-
-    @Override
-    protected void initViews() {
-
-    	mIvAvatar = (ImageView) findViewById(R.id.profile_my_avatar_img);
-        mEtNickname = (EditText) findViewById(R.id.profile_et_nickname);
-        mRgGender = (RadioGroup) findViewById(R.id.profile_baseinfo_rg_gender);
-        
-        mRbBoy = (RadioButton) findViewById(R.id.profile_baseinfo_rb_male);
-        mRbGirl = (RadioButton) findViewById(R.id.profile_baseinfo_rb_female);
-        mBtnSave = (Button) findViewById(R.id.profile_btn_save);
-        mBtnBack = (Button) findViewById(R.id.profile_btn_back);
-        
-
-    }
-
-    @Override
-    protected void initEvents() {
-
-        setTitle(getString(R.string.setting_text_profile));
-        
-        mIvAvatar.setOnClickListener(this);
-        mBtnSave.setOnClickListener(this);
-        mBtnBack.setOnClickListener(this);
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.profile_my_avatar_img:
-                Intent intent = new Intent(this, ChooseAvatarActivity.class);
-                startActivityForResult(intent, 0);
-                break;
-                
-            case R.id.profile_btn_back:
-                finish();
-                break;
-
-            case R.id.profile_btn_save:
-                doLoginNext();
-                break;
-        }
-    }
+    private RadioButton mRbBoy;
+    private RadioButton mRbGirl;
+    private RadioGroup mRgGender;
     
-    @Override
-   	protected void onActivityResult(int requestCode, int resultCode, Intent data_intent){
-   		super.onActivityResult(requestCode, resultCode, data_intent);
-   		if(resultCode == RESULT_CANCELED)
-   			setTitle("cancel");
-   		else if (resultCode == RESULT_OK){
-   			int result = data_intent.getExtras().getInt("result");
-               mAvatar = result + 1;
-               Picasso.with(mContext).load(ImageUtils.getImageID(Users.AVATAR + mAvatar)).into(mIvAvatar);
-          }
-   	}
-    
-
     /**
      * 执行下一步跳转
      * <p>
@@ -143,6 +77,50 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 
     }
 
+    @Override
+    protected void initEvents() {
+
+        setTitle(getString(R.string.setting_text_profile));
+        
+        mIvAvatar.setOnClickListener(this);
+        mBtnSave.setOnClickListener(this);
+        mBtnBack.setOnClickListener(this);
+    }
+
+    private void initProfile() {
+
+        SdDataUtils sp = new SdDataUtils();
+        mNickname = sp.getNickname();
+    	mAvatar = sp.getAvatarId();
+    	mGender = sp.getGender();
+    	
+    	mEtNickname.setText(mNickname);
+    	Picasso.with(mContext).load(ImageUtils.getImageID(Users.AVATAR + mAvatar)).into(mIvAvatar);
+    	if ("女".equals(mGender)) {
+    		mRgGender.check(mRbGirl.getId());
+        }
+        else {
+        	mRgGender.check(mRbBoy.getId());
+        }
+        
+    }
+
+
+    @Override
+    protected void initViews() {
+
+    	mIvAvatar = (ImageView) findViewById(R.id.profile_my_avatar_img);
+        mEtNickname = (EditText) findViewById(R.id.profile_et_nickname);
+        mRgGender = (RadioGroup) findViewById(R.id.profile_baseinfo_rg_gender);
+        
+        mRbBoy = (RadioButton) findViewById(R.id.profile_baseinfo_rb_male);
+        mRbGirl = (RadioButton) findViewById(R.id.profile_baseinfo_rb_female);
+        mBtnSave = (Button) findViewById(R.id.profile_btn_save);
+        mBtnBack = (Button) findViewById(R.id.profile_btn_back);
+        
+
+    }
+    
     /**
      * 登录资料完整性验证，不完整则无法登陆，完整则记录输入的信息。
      * 
@@ -173,22 +151,44 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
         return true;
     }
     
-    private void initProfile() {
 
-        SdDataUtils sp = new SdDataUtils();
-        mNickname = sp.getNickname();
-    	mAvatar = sp.getAvatarId();
-    	mGender = sp.getGender();
-    	
-    	mEtNickname.setText(mNickname);
-    	Picasso.with(mContext).load(ImageUtils.getImageID(Users.AVATAR + mAvatar)).into(mIvAvatar);
-    	if ("女".equals(mGender)) {
-    		mRgGender.check(mRbGirl.getId());
+    @Override
+   	protected void onActivityResult(int requestCode, int resultCode, Intent data_intent){
+   		super.onActivityResult(requestCode, resultCode, data_intent);
+   		if(resultCode == RESULT_CANCELED)
+   			setTitle("cancel");
+   		else if (resultCode == RESULT_OK){
+   			int result = data_intent.getExtras().getInt("result");
+               mAvatar = result + 1;
+               Picasso.with(mContext).load(ImageUtils.getImageID(Users.AVATAR + mAvatar)).into(mIvAvatar);
+          }
+   	}
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.profile_my_avatar_img:
+                Intent intent = new Intent(this, ChooseAvatarActivity.class);
+                startActivityForResult(intent, 0);
+                break;
+                
+            case R.id.profile_btn_back:
+                finish();
+                break;
+
+            case R.id.profile_btn_save:
+                doLoginNext();
+                break;
         }
-        else {
-        	mRgGender.check(mRbBoy.getId());
-        }
-        
+    }
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_profile);
+        initViews();
+        initEvents();
+        initProfile();
     }
 
 }

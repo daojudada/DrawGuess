@@ -18,14 +18,32 @@ import android.widget.GridView;
  *
  */
 public class ChooseAvatarActivity extends BaseActivity implements OnItemClickListener {
-    private GridView gridView;
-    AvatarAdapter adapter;
-
     // 图片ID数组
     private final static int[] images = new int[] { R.drawable.avatar1, R.drawable.avatar2,
             R.drawable.avatar3, R.drawable.avatar4, R.drawable.avatar5, R.drawable.avatar6,
             R.drawable.avatar7, R.drawable.avatar8, R.drawable.avatar9, R.drawable.avatar10,
             R.drawable.avatar11, R.drawable.avatar12, };
+    AvatarAdapter adapter;
+
+    private GridView gridView;
+
+    private void initData() {
+        setTitle(getString(R.string.choose_avatar));
+        adapter = new AvatarAdapter(images, this);
+        gridView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void initEvents() {
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        gridView.setOnItemClickListener(this);
+    }
+
+    @Override
+    protected void initViews() {
+        gridView = (GridView) findViewById(R.id.gridview);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,24 +61,6 @@ public class ChooseAvatarActivity extends BaseActivity implements OnItemClickLis
         intent.putExtra("result", position);
         setResult(RESULT_OK, intent);
         finish();
-    }
-
-    @Override
-    protected void initViews() {
-        gridView = (GridView) findViewById(R.id.gridview);
-    }
-
-    private void initData() {
-        setTitle(getString(R.string.choose_avatar));
-        adapter = new AvatarAdapter(images, this);
-        gridView.setAdapter(adapter);
-    }
-
-    @Override
-    protected void initEvents() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        gridView.setOnItemClickListener(this);
     }
 
     // actionBar的监听

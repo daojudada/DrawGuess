@@ -29,15 +29,6 @@ public class DateUtils {
     }
 
     /**
-     * 返回此时时间
-     * 
-     * @return String: XXX年XX月XX日 XX:XX:XX
-     */
-    public static String getNowtime() {
-        return new SimpleDateFormat(FORMATTIMESTR,Locale.getDefault()).format(new Date());
-    }
-
-    /**
      * 格式化输出指定时间点与现在的差
      * 
      * @param paramTime
@@ -73,5 +64,14 @@ public class DateUtils {
             returnStr = "TimeError"; // 错误提示
         }
         return returnStr;
+    }
+
+    /**
+     * 返回此时时间
+     * 
+     * @return String: XXX年XX月XX日 XX:XX:XX
+     */
+    public static String getNowtime() {
+        return new SimpleDateFormat(FORMATTIMESTR,Locale.getDefault()).format(new Date());
     }
 }

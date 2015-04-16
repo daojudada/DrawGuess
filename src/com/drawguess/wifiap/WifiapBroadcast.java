@@ -13,8 +13,17 @@ import android.net.wifi.WifiManager;
  */
 public class WifiapBroadcast extends BroadcastReceiver {
 
-    private NetworkInfo mNetworkInfo;
+    public static abstract interface NetWorkChangeListener {
+
+        /** Wifi连接成功 **/
+        public abstract void WifiConnected();
+        
+        /** Wifi状态改变 **/
+        public abstract void wifiStatusChange();
+    }
     private NetWorkChangeListener mListener;
+
+    private NetworkInfo mNetworkInfo;
 
     public WifiapBroadcast(NetWorkChangeListener listener) {
         mListener = listener;
@@ -46,14 +55,5 @@ public class WifiapBroadcast extends BroadcastReceiver {
             }
         }
 
-    }
-
-    public static abstract interface NetWorkChangeListener {
-
-        /** Wifi连接成功 **/
-        public abstract void WifiConnected();
-        
-        /** Wifi状态改变 **/
-        public abstract void wifiStatusChange();
     }
 }

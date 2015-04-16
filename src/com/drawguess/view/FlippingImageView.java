@@ -31,20 +31,6 @@ public class FlippingImageView extends ImageView {
 		super(context, attrs, defStyle);
 	}
 
-	private void setRotateAnimation() {
-		if (mIsHasAnimation == false && getWidth() > 0
-				&& getVisibility() == View.VISIBLE) {
-			mIsHasAnimation = true;
-			mAnimation = new RotateAnimation(getWidth() / 2.0F,
-					getHeight() / 2.0F, Mode.Y);
-			mAnimation.setDuration(1000L);
-			mAnimation.setInterpolator(new LinearInterpolator());
-			mAnimation.setRepeatCount(-1);
-			mAnimation.setRepeatMode(Animation.RESTART);
-			setAnimation(mAnimation);
-		}
-	}
-
 	private void clearRotateAnimation() {
 		if (mIsHasAnimation) {
 			mIsHasAnimation = false;
@@ -74,12 +60,6 @@ public class FlippingImageView extends ImageView {
 		}
 	}
 
-	public void startAnimation() {
-		if (mIsHasAnimation) {
-			super.startAnimation(mAnimation);
-		}
-	}
-
 	@Override
 	protected void onVisibilityChanged(View changedView, int visibility) {
 		super.onVisibilityChanged(changedView, visibility);
@@ -87,6 +67,26 @@ public class FlippingImageView extends ImageView {
 			clearRotateAnimation();
 		} else {
 			setRotateAnimation();
+		}
+	}
+
+	private void setRotateAnimation() {
+		if (mIsHasAnimation == false && getWidth() > 0
+				&& getVisibility() == View.VISIBLE) {
+			mIsHasAnimation = true;
+			mAnimation = new RotateAnimation(getWidth() / 2.0F,
+					getHeight() / 2.0F, Mode.Y);
+			mAnimation.setDuration(1000L);
+			mAnimation.setInterpolator(new LinearInterpolator());
+			mAnimation.setRepeatCount(-1);
+			mAnimation.setRepeatMode(Animation.RESTART);
+			setAnimation(mAnimation);
+		}
+	}
+
+	public void startAnimation() {
+		if (mIsHasAnimation) {
+			super.startAnimation(mAnimation);
 		}
 	}
 }

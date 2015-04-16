@@ -7,17 +7,10 @@ package com.drawguess.wifiap;
  */
 public abstract class TimerCheck {
     private int mCount = 0;
-    private int mTimeOutCount = 1;
-    private int mSleepTime = 1000; // 1s
     private boolean mExitFlag = false;
+    private int mSleepTime = 1000; // 1s
     private Thread mThread = null;
-
-    /**
-     * Do not process UI work in this.
-     */
-    public abstract void doTimerCheckWork();
-
-    public abstract void doTimeOutWork();
+    private int mTimeOutCount = 1;
 
     public TimerCheck() {
         mThread = new Thread(new Runnable() {
@@ -46,6 +39,17 @@ public abstract class TimerCheck {
         });
     }
 
+    public abstract void doTimeOutWork();
+
+    /**
+     * Do not process UI work in this.
+     */
+    public abstract void doTimerCheckWork();
+
+    public void exit() {
+        mExitFlag = true;
+    }
+
     /**
      * start
      * @param times 
@@ -56,10 +60,6 @@ public abstract class TimerCheck {
         mSleepTime = sleepTime;
 
         mThread.start();
-    }
-
-    public void exit() {
-        mExitFlag = true;
     }
 
 }
