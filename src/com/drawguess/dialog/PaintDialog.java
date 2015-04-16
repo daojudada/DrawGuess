@@ -1,37 +1,24 @@
 package com.drawguess.dialog;
 
 import com.drawguess.R;
-import com.drawguess.base.Constant;
-import com.drawguess.interfaces.ColorChangedListener;
 import com.drawguess.interfaces.PaintChangedListener;
 
-import android.R.color;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Paint;
-import android.graphics.RectF;
-import android.graphics.Shader;
-import android.graphics.SweepGradient;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.SeekBar;
 
 /**
- * 笔刷设置
+ * 笔刷
  * @author GuoJun
  *
  */
 public class PaintDialog extends Dialog {
 	
 	Context context;
+	SeekBar seekPaint,seekWidsh;
 	private int paintWidth;
 	private int paintAlpha;
 	private int paintStyle;
@@ -68,6 +55,11 @@ public class PaintDialog extends Dialog {
         Window dialogWindow = this.getWindow();          
         dialogWindow.setGravity(Gravity.CENTER);       
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        
+
+        seekPaint=(SeekBar)findViewById(R.id.);
+		seekWidth=(SeekBar)findViewById(R.id.seekbar2);
+        
     }
 	
     

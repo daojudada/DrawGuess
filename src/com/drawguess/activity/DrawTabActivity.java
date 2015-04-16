@@ -18,9 +18,11 @@ import com.drawguess.R;
 import com.drawguess.base.ActivitiesManager;
 import com.drawguess.base.BaseActivity;
 import com.drawguess.dialog.ColorDialog;
+import com.drawguess.dialog.PaintDialog;
 import com.drawguess.dialog.ShapeDialog;
 import com.drawguess.drawop.OpDraw.Shape;
 import com.drawguess.interfaces.ColorChangedListener;
+import com.drawguess.interfaces.PaintChangedListener;
 import com.drawguess.interfaces.ShapeChangedListener;
 import com.drawguess.view.DrawView;
 
@@ -317,11 +319,14 @@ public class DrawTabActivity extends BaseActivity implements OnClickListener{
 			
 		case R.id.paint:
 			//画笔设置，对话框
-			Paint
-			bundle.putInt("paintWidth", drawView.getPaintWidth());
-			bundle.putInt("paintAlpha", drawView.getPaintAlpha());
-			intent.putExtras(bundle);    
-			startActivityForResult(intent,0);
+			new PaintDialog(this, drawView.getPaintWidth(), drawView.getPaintAlpha(), drawView.getPaintStyle(),new PaintChangedListener(){
+					@Override
+					public void paintChanged(int width, int alpha, int style) {
+						drawView.setPaintWidth(width);
+						drawView.setPaintAlpha(alpha);
+						drawView.setPaintStyle(style);
+					}
+			}).show();
 			break;
 		case R.id.undo:
 			//撤销

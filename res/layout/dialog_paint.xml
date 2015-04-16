@@ -20,7 +20,7 @@
 		    android:text="@string/paint_width"/>
 	    
 	    <SeekBar
-	        android:id="@+id/timeline"
+	        android:id="@+id/seekpaintwidth"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:focusable="true"
@@ -47,7 +47,7 @@
 	    
 	    
 	    <SeekBar
-	        android:id="@+id/timeline"
+	        android:id="@+id/seekpaintalpha"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:focusable="true"

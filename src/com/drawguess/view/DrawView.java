@@ -58,6 +58,9 @@ public class DrawView extends View
 	private OpTrans opTrans;
 	private Paint paint;
 	private int paintWidth;
+	private int paintAlpha;
+	private int paintStyle;
+	
 	private Path path;
 	private PaintFlagsDrawFilter pfd;
 	private float px,py;
@@ -68,12 +71,13 @@ public class DrawView extends View
 	private float suol=1,suols=1;//缩放比例;
 	private int wx,hy;//图像大小
 	
-	public DrawView(Context context,AttributeSet attrs) 
-	{
+	public DrawView(Context context,AttributeSet attrs){
 		super(context,attrs);
 		
 		ds = DrawState.Draw;
 		paintWidth = 5;
+		paintAlpha = 255;
+		paintStyle = 1;
 		EraseWidth = paintWidth+20; 
 		isMove = false;
 		
@@ -100,13 +104,11 @@ public class DrawView extends View
 
 	  
 	@Override
-	public boolean dispatchTouchEvent(MotionEvent event) 
-	{
+	public boolean dispatchTouchEvent(MotionEvent event){
 		float x=event.getX(0)/suol;//画图时的坐标转换
 		float y=event.getY(0)/suol;
 		
-		switch (ds) 
-		{
+		switch (ds) {
 		case Draw://绘图模式
 			OpDraw opDraw = null;	
 			switch (event.getAction() & MotionEvent.ACTION_MASK) 
@@ -348,10 +350,8 @@ public class DrawView extends View
 		return true;
 	}
 	
-	private void drawOp(Operation op)
-	{
-		switch (op.type) 
-		{
+	private void drawOp(Operation op){
+		switch (op.type) {
 		case FILL://填充
 			((OpFill)op).draw();
 			break;
@@ -364,58 +364,28 @@ public class DrawView extends View
 		}
 	}
 	
-	/**
-	 * 返回笔刷透明度
-	 * @return paintAlpha
-	 */
-	public int getPaintAlpha()
-	{
-		return paint.getAlpha();
-	}
 
 
-	
 	/**
-	 * 返回笔刷颜色
-	 * @return paintWidth
+	 * 初始化位图
 	 */
-	public int getPaintColor()
-	{
-		return paint.getColor();
-	}
-	
-	/**
-	 * 返回笔刷宽度
-	 * @return paintWidth
-	 */
-	public int getPaintWidth()
-	{
-		return (int) paint.getStrokeWidth();
-	}
-	
-	
-	
-	private void initBitmap()
-	{
+	private void initBitmap(){
 		cacheBitmap= Bitmap.createBitmap(wx, hy, Config.ARGB_8888);
 		cacheCanvas.setBitmap(cacheBitmap);
 		Operation.setPro(cacheCanvas, cacheBitmap, opManage);
 		saveCacheBitmap();
 	}
 	
-	
-	
-	
-/**..................................................................................................................................................**/	
-	
-	public void initPaint()
-	{
-		bmpPaint = new Paint(Paint.FILTER_BITMAP_FLAG);
+	/**
+	 * 初始化笔刷
+	 */
+	private void initPaint(){
+		bmpPaint = new Paint();
 		bmpPaint.setAntiAlias(true); 
 		
 		paint=new Paint(Paint.FILTER_BITMAP_FLAG);
 		paint.setStrokeWidth(paintWidth);
-		paint.setAlpha(255);
+		paint.setAlpha(paintAlpha);
 		paint.setAntiAlias(true); 
 		paint.setColor(Color.BLACK);
 		paint.setStyle(Paint.Style.STROKE);
@@ -448,7 +418,7 @@ public class DrawView extends View
 				
 				canvas.scale(suol, suol);
 				canvas.drawColor(Color.TRANSPARENT, Mode.CLEAR);//清屏
-				canvas.drawColor(Color.rgb(132, 132, 132));
+				canvas.drawColor(Color.rgb(128, 128, 128));
 				canvas.drawBitmap(cacheBitmap,moveX,moveY,bmpPaint);
 			}
 			else if(opManage.getMode() == DrawMode.ADD)
@@ -465,7 +435,7 @@ public class DrawView extends View
 				
 				canvas.scale(suol, suol);
 				canvas.drawColor(Color.TRANSPARENT, Mode.CLEAR);//清屏
-				canvas.drawColor(Color.rgb(132, 132, 132));
+				canvas.drawColor(Color.rgb(128, 128, 128));
 				canvas.drawBitmap(cacheBitmap,moveX,moveY,bmpPaint);
 				
 			}
@@ -478,6 +448,42 @@ public class DrawView extends View
 	
 	private void saveCacheBitmap(){
 		earlyBitmap = cacheBitmap.copy(Config.ARGB_8888, true);
+	}
+	
+/**.........................public...............................................................................**/	
+	
+	/**
+	 * 返回笔刷颜色
+	 * @return paintWidth
+	 */
+	public int getPaintColor(){
+		return paint.getColor();
+	}
+	
+	/**
+	 * 返回笔刷宽度
+	 * @return paintWidth
+	 */
+	public int getPaintWidth(){
+		return paintWidth;
+	}
+	
+
+	/**
+	 * 返回笔刷样式
+	 * @return paintStyle
+	 */
+	public int getPaintStyle(){
+		return paintStyle;
+	}
+	
+
+	/**
+	 * 返回笔刷透明度
+	 * @return paintAlpha
+	 */
+	public int getPaintAlpha(){
+		return paintAlpha;
 	}
 	
 	/**
@@ -566,8 +572,7 @@ public class DrawView extends View
 	/**
 	 * 设置填充模式
 	 */
-	public void setPack()
-	{
+	public void setPack(){
 		if(shape != Shape.FILL)
 			shape = Shape.FILL;
 		else
@@ -578,26 +583,33 @@ public class DrawView extends View
 	/**
 	 * 设置画笔透明度
 	 */
-	public void setPaintAlpha(int alpha)
-	{
-		paint.setAlpha(alpha);
+	public void setPaintAlpha(int alpha){
+		paintAlpha = alpha;
+		paint.setAlpha(paintAlpha);
 	}
 	
 	/**
 	 * 设置画笔宽度
 	 */
-	public void setPaintWidth(int width)
-	{
+	public void setPaintWidth(int width){
 		paintWidth = width;
 		EraseWidth = paintWidth + 20;
 		paint.setStrokeWidth(width);
 	}
 	
 	/**
+	 * 设置画笔样式
+	 * @param style
+	 */
+	public void setPaintStyle(int style){
+		paintStyle = style;
+		
+	}
+	
+	/**
 	 * 设置redo
 	 */
-	public void setRedo()
-	{
+	public void setRedo(){
 		opManage.setMode(DrawMode.RE);
 		initBitmap();
 		opManage.redo();
@@ -607,8 +619,7 @@ public class DrawView extends View
 	/**
 	 * 保存
 	 */
-	public void setSave()
-	{
+	public void setSave(){
 		File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/DrawSomething", DateFormat.SECOND_FIELD+".png");
 		if (f.exists()) {
 			f.delete();
@@ -628,16 +639,14 @@ public class DrawView extends View
 	/**
 	 * 设置形状类型
 	 */
-	public void setShape(Shape shape)
-	{
+	public void setShape(Shape shape){
 		this.shape=shape;
 	}
 	
 	/**
 	 * 几何变换
 	 */
-	public boolean setTrans()
-	{
+	public boolean setTrans(){
 		if(ds != DrawState.Path)
 		{
 			ds = DrawState.Path;
@@ -653,8 +662,7 @@ public class DrawView extends View
 	/**
 	 * 设置undo
 	 */
-	public void setUndo()
-	{
+	public void setUndo(){
 		opManage.setMode(DrawMode.RE);
 		initBitmap();
 		opManage.undo();
