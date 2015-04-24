@@ -40,8 +40,7 @@ public class WifiUtils {
         WIFICIPHER_INVALID, WIFICIPHER_NOPASS, WIFICIPHER_WEP, WIFICIPHER_WPA
     }
     private static Context mContext = BaseApplication.getInstance();
-    private static WifiManager mWifiManager = (WifiManager) mContext
-            .getSystemService(Context.WIFI_SERVICE);
+    private static WifiManager mWifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
 
     private static final String TAG = "WifiUtils";
 
@@ -88,9 +87,6 @@ public class WifiUtils {
     /**
      * Function: 连接Wifi热点 <br>
      * 
-     * @date 2015年2月14日 上午11:17
-     * @change hillfly
-     * @version 1.0
      * @param SSID
      * @param Password
      * @param Type

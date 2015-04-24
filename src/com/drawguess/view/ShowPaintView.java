@@ -2,18 +2,15 @@ package com.drawguess.view;
 
 
 import com.drawguess.base.Constant;
-import com.drawguess.dialog.ColorDialog;
-
 import android.content.Context;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
+import android.graphics.EmbossMaskFilter;
+import android.graphics.MaskFilter;
 import android.graphics.Paint;
-import android.graphics.RectF;
-import android.graphics.Shader;
-import android.graphics.SweepGradient;
+import android.graphics.Path;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -21,280 +18,118 @@ import android.view.View;
  * @author GuoJun
  *
  */
-public class ShowPaintView extends View {
+public class ShowPaintView extends View{
 
-	private float centerRadius;
-	private boolean downInCircle = true;
-	private boolean downInRect;
-	private boolean highlightCenter;
-	
-	private boolean highlightCenterLittle;
-	private Paint mCenterPaint;
-	private final int[] mCircleColors;
 	private int mHeight;
-	private Paint mLinePaint;
-    
-	private Paint mPaint;
-	private final int[] mRectColors;
-	
-	private Paint mRectPaint;
 	private int mWidth;
-	private float r;
-	private float rectBottom;
-	
-	private float rectLeft;
-	private float rectRight;
-	private Shader rectShader;
-	private float rectTop;
-	
-	private RectF rf1,rf2;
+	private int hX;
+	private int hY;
+	private Path mPath;
+	private Paint mPaint,rectPaint,linePaint;
 	
 	
 	public ShowPaintView(Context context) {
 		super(context);
-		this.mHeight = (int) (Constant.WIN_Y * 0.6f);
-		this.mWidth = (int) (Constant.WIN_X * 0.7f);
+		init();
+	}
+
+
+
+	public ShowPaintView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		init();
+	}
+
+	public ShowPaintView(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+		init();
+	}
+	
+	public void init(){
+		this.mHeight = (int) (Constant.WIN_Y * 0.15f);
+		this.mWidth = (int) (260 * Constant.DENSITY);
+		hX = mWidth / 2;
+		hY = mHeight / 2;
 		setMinimumHeight(mHeight);
 		setMinimumWidth(mWidth);
 		
-    	mCircleColors = new int[] {0xFFFF0000, 0xFFFF00FF, 0xFF0000FF, 
-    			0xFF00FFFF, 0xFF00FF00,0xFFFFFF00, 0xFFFF0000};
-    	Shader s = new SweepGradient(0, 0, mCircleColors, null);
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setShader(s);
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(100);
-        r = mWidth / 2 * 0.8f - mPaint.getStrokeWidth() * 0.5f;
-        
-        mCenterPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        
-        mCenterPaint.setStrokeWidth(5);
-        centerRadius = (r - mPaint.getStrokeWidth() / 2 ) * 0.7f;
-        
-        mLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mLinePaint.setColor(Color.parseColor("#72A1D1"));
-        mLinePaint.setStrokeWidth(4);
-        
-        mRectColors = new int[]{0xFF000000, mCenterPaint.getColor(), 0xFFFFFFFF};
-        mRectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mRectPaint.setStrokeWidth(5);
-        rectLeft = -r - mPaint.getStrokeWidth() * 0.5f;
-        rectTop = r + mPaint.getStrokeWidth() * 0.5f + 
-        		mLinePaint.getStrokeMiter() * 0.5f + 100;
-        rectRight = r + mPaint.getStrokeWidth() * 0.5f;
-        rectBottom = rectTop + 100;
-        
-        rectShader = new LinearGradient(rectLeft, 0, rectRight, 0, mRectColors, null, Shader.TileMode.MIRROR);
-		rf1 = new RectF(-centerRadius, -centerRadius, centerRadius, centerRadius);
-		rf2 = new RectF(-r, -r, r, r);
+		mPaint.setStrokeJoin(Paint.Join.ROUND);  
+		mPaint.setStrokeCap(Paint.Cap.ROUND);  
 		
+        rectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        rectPaint.setColor(Color.WHITE);
+        linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        linePaint.setStyle(Paint.Style.STROKE);
+        linePaint.setStrokeWidth(8);
+        linePaint.setColor(0xff04a8e3);
+        
+		mPath = new Path();
 		
+		float dx = mWidth / 2 * 0.6f;
+		float dy = mHeight /2 ;
+		mPath.moveTo(-dx, 0);
+		mPath.cubicTo( -dx/3, dy, dx/3,  -dy, dx, 0);
 	}
-
-
-	private int ave(int s, int d, float p) {
-        return s + Math.round(p * (d - s));
-    }
 	
-	@Override
-	public boolean dispatchTouchEvent(MotionEvent event) {
-		float x = event.getX() - mWidth / 2;
-        float y = event.getY() - mHeight / 2 + 150;
-        boolean inCircle = inColorCircle(x, y, 
-        		r + mPaint.getStrokeWidth() / 2, r - mPaint.getStrokeWidth() / 2);
-        boolean inCenter = inCenter(x, y, centerRadius);
-        boolean inRect = inRect(x, y);
-        
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-            	downInCircle = inCircle;
-            	downInRect = inRect;
-            	highlightCenter = inCenter;
-            case MotionEvent.ACTION_MOVE:
-            	if(downInCircle && inCircle) {
-            		float angle = (float) Math.atan2(y, x);
-                    float unit = (float) (angle / (2 * Math.PI));
-                    if (unit < 0) {
-                        unit += 1;
-                    }
-               		mCenterPaint.setColor(interpCircleColor(mCircleColors, unit));
-                	mRectColors[1] = mCenterPaint.getColor();
-                    rectShader = new LinearGradient(rectLeft, 0, rectRight, 0, mRectColors, null, Shader.TileMode.MIRROR);
-            	}else if(downInRect && inRect) {
-            		mCenterPaint.setColor(interpRectColor(mRectColors, x));
-            	}
-            	if((highlightCenter && inCenter) || (highlightCenterLittle && inCenter)) {
-            		highlightCenter = true;
-            		highlightCenterLittle = false;
-            	} else if(highlightCenter || highlightCenterLittle) {
-            		highlightCenter = false;
-            		highlightCenterLittle = true;
-            	} else {
-            		highlightCenter = false;
-            		highlightCenterLittle = false;
-            	}
-               	invalidate();
-            	break;
-            case MotionEvent.ACTION_UP:
-            	if(highlightCenter && inCenter) {
-            		
-            	}
-            	if(downInCircle) {
-            		downInCircle = false;
-            	}
-            	if(downInRect) {
-            		downInRect = false;
-            	}
-            	if(highlightCenter) {
-            		highlightCenter = false;
-            	}
-            	if(highlightCenterLittle) {
-            		highlightCenterLittle = false;
-            	}
-            	invalidate();
-                break;
-        }
-        return true;
-	}
-
-	/**
-	 * @param x 
-	 * @param y
-	 * @param centerRadius 
-	 * @return is
-	 */
-	private boolean inCenter(float x, float y, float centerRadius) {
-		double centerCircle = Math.PI * centerRadius * centerRadius;
-		double fingerCircle = Math.PI * (x * x + y * y);
-		if(fingerCircle < centerCircle) {
-			return true;
-		}else {
-			return false;
+	public void setPaint(int w, int a,int s, int c){
+        mPaint.setStrokeWidth(w);
+        mPaint.setColor(c);
+        mPaint.setAlpha(a);
+        MaskFilter maskFilter = null;
+		switch (s) {
+		case 0:
+			maskFilter=null;
+			mPaint.setMaskFilter(maskFilter);
+			break;
+		case 1:
+			if(w<=1)
+				maskFilter = null;
+			else if(w<=8&&w>1)
+				maskFilter = new BlurMaskFilter(w-1, BlurMaskFilter.Blur.SOLID);
+			else
+				maskFilter = new BlurMaskFilter((float) (Math.sqrt(w)*3), BlurMaskFilter.Blur.SOLID);
+			mPaint.setMaskFilter(maskFilter);
+			break;
+		case 2:	
+			if(w<=1)
+				maskFilter = null;
+			else if(w<=8&&w>1)
+				maskFilter = new BlurMaskFilter(w-1, BlurMaskFilter.Blur.NORMAL);
+			else
+				maskFilter = new BlurMaskFilter((float) (Math.sqrt(w)*3), BlurMaskFilter.Blur.NORMAL);
+			mPaint.setMaskFilter(maskFilter);
+			break;
+		case 3:
+			if(w<=1)
+				maskFilter = null;
+			else if(w<=8&&w>1)
+				maskFilter = new EmbossMaskFilter(new float[]{1.0f,1.0f,1.0f},0.4f,6,w-1);
+			else
+				maskFilter = new EmbossMaskFilter(new float[]{1.0f,1.0f,1.0f},0.4f,6,(float) (Math.sqrt(w)*3));
+			mPaint.setMaskFilter(maskFilter);
+			break;
+		default:
+			break;
 		}
+        this.invalidate();
 	}
 
-	/**
-	 * @param x
-	 * @param y
-	 * @param outRadius 
-	 * @param inRadius 
-	 * @return is
-	 */
-	private boolean inColorCircle(float x, float y, float outRadius, float inRadius) {
-		double outCircle = Math.PI * outRadius * outRadius;
-		double inCircle = Math.PI * inRadius * inRadius;
-		double fingerCircle = Math.PI * (x * x + y * y);
-		if(fingerCircle < outCircle && fingerCircle > inCircle) {
-			return true;
-		}else {
-			return false;
-		}
-	}
-	
-	/**
-	 * @param x
-	 * @param y
-	 * @return is
-	 */
-	private boolean inRect(float x, float y) {
-		if( x <= rectRight && x >=rectLeft && y <= rectBottom && y >=rectTop) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	/**
-	 * @param colors
-	 * @param unit
-	 * @return color
-	 */
-	private int interpCircleColor(int colors[], float unit) {
-        if (unit <= 0) {
-            return colors[0];
-        }
-        if (unit >= 1) {
-            return colors[colors.length - 1];
-        }
-        
-        float p = unit * (colors.length - 1);
-        int i = (int)p;
-        p -= i;
-
-        int c0 = colors[i];
-        int c1 = colors[i+1];
-        int a = ave(Color.alpha(c0), Color.alpha(c1), p);
-        int r = ave(Color.red(c0), Color.red(c1), p);
-        int g = ave(Color.green(c0), Color.green(c1), p);
-        int b = ave(Color.blue(c0), Color.blue(c1), p);
-        
-        return Color.argb(a, r, g, b);
-    }
-	
-	/**
-	 * @param colors
-	 * @param x
-	 * @return color
-	 */
-	private int interpRectColor(int colors[], float x) {
-		int a, r, g, b, c0, c1;
-    	float p;
-    	if (x < 0) {
-    		c0 = colors[0]; 
-    		c1 = colors[1];
-    		p = (x + rectRight) / rectRight;
-    	} else {
-    		c0 = colors[1];
-    		c1 = colors[2];
-    		p = x / rectRight;
-    	}
-    	a = ave(Color.alpha(c0), Color.alpha(c1), p);
-    	r = ave(Color.red(c0), Color.red(c1), p);
-    	g = ave(Color.green(c0), Color.green(c1), p);
-    	b = ave(Color.blue(c0), Color.blue(c1), p);
-    	return Color.argb(a, r, g, b);
-	}
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
-        canvas.translate(mWidth / 2, mHeight / 2 - 150);
-        canvas.drawCircle(0, 0, centerRadius,  mCenterPaint);
-        if (highlightCenter || highlightCenterLittle) {
-            int c = mCenterPaint.getColor();
-            mCenterPaint.setStyle(Paint.Style.STROKE);
-            if(highlightCenter) {
-            	mCenterPaint.setAlpha(0xFF);
-            }else if(highlightCenterLittle) {
-            	mCenterPaint.setAlpha(0x90);
-            }
-            canvas.drawCircle(0, 0, centerRadius + mCenterPaint.getStrokeWidth(),  mCenterPaint);
-            
-            mCenterPaint.setStyle(Paint.Style.FILL);
-            mCenterPaint.setColor(c);
-        }
-        else
-        {
-        	int c = mCenterPaint.getColor();
-        	mCenterPaint.setStyle(Paint.Style.STROKE);
-        	mCenterPaint.setColor(Color.WHITE);
-        	rf1.set(-centerRadius, -centerRadius, centerRadius, centerRadius);
-        	canvas.drawOval(rf1,  mCenterPaint);
-        	mCenterPaint.setStyle(Paint.Style.FILL);
-        	mCenterPaint.setColor(c);
-        }
-        rf2.set(-r, -r, r, r);
-        canvas.drawOval(rf2, mPaint);
-        mRectPaint.setShader(rectShader);
-        canvas.drawRect(rectLeft, rectTop, rectRight, rectBottom, mRectPaint);
-        float offset = mLinePaint.getStrokeWidth() / 2;
-        canvas.drawLine(rectLeft - offset, rectTop - offset * 2, 
-        		rectLeft - offset, rectBottom + offset * 2, mLinePaint);
-        canvas.drawLine(rectLeft - offset * 2, rectTop - offset, 
-        		rectRight + offset * 2, rectTop - offset, mLinePaint);
-        canvas.drawLine(rectRight + offset, rectTop - offset * 2, 
-        		rectRight + offset, rectBottom + offset * 2, mLinePaint);
-        canvas.drawLine(rectLeft - offset * 2, rectBottom + offset, 
-        		rectRight + offset * 2, rectBottom + offset, mLinePaint);
+		
+        canvas.translate(hX, hY);
+        int w = (int) (linePaint.getStrokeWidth() / 2);
+        canvas.drawRect(-hX * 0.8f, -hY * 0.8f, hX * 0.8f, hY * 0.8f, rectPaint);
+        canvas.drawLine(-hX * 0.8f, -hY * 0.8f - w, -hX * 0.8f, hY * 0.8f + w, linePaint);
+        canvas.drawLine(-hX * 0.8f - w,  hY * 0.8f,  hX * 0.8f + w, hY * 0.8f, linePaint);
+        canvas.drawLine( hX * 0.8f,  hY * 0.8f + w,  hX * 0.8f,-hY * 0.8f - w, linePaint);
+        canvas.drawLine( hX * 0.8f + w, -hY * 0.8f, -hX * 0.8f - w,-hY * 0.8f, linePaint);
+
+        canvas.drawPath(mPath, mPaint);
+        
 		super.onDraw(canvas);
 	}
 	
@@ -302,6 +137,5 @@ public class ShowPaintView extends View {
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(mWidth, mHeight);
 	}
-	
 	
 }

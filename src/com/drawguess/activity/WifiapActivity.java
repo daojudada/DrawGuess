@@ -154,7 +154,8 @@ public class WifiapActivity extends BaseActivity implements OnClickListener, Net
             this.handler = handler;
         }
 
-        public void run() {
+        @Override
+		public void run() {
             while (!WifiUtils.isWifiApEnabled()) {
                 if (!this.running)
                     return;
@@ -189,6 +190,7 @@ public class WifiapActivity extends BaseActivity implements OnClickListener, Net
     }
 
     private static final String TAG = "WifiapActivity";
+    private static ApHandler mHandler;
     private boolean isRespond = true;
     private String localIPaddress; // 本地WifiIP
     private Button mBtnBack;
@@ -196,7 +198,6 @@ public class WifiapActivity extends BaseActivity implements OnClickListener, Net
     private Button mBtnNext;
     private ConnWifiDialog mConnWifiDialog; // 连接热点窗口
 
-    private ApHandler mHandler;
     private BaseDialog mHintDialog; // 提示窗口
     private LinearLayout mLlApInfo;
     private ListView mLvWifiList;
@@ -339,7 +340,8 @@ public class WifiapActivity extends BaseActivity implements OnClickListener, Net
     }
 
     /** 初始化视图 获取控件对象 **/
-    protected void initViews() {
+    @Override
+	protected void initViews() {
         mLlApInfo = (LinearLayout) findViewById(R.id.wifiap_lv_create_ok);
         mTvStatusInfo = (TextView) findViewById(R.id.wifiap_tv_wifistatus);
         mTvApSSID = (TextView) findViewById(R.id.wifiap_tv_createap_ssid);

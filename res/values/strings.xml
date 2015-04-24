@@ -100,5 +100,9 @@
 	<string name="paint_width">宽度</string>
 	<string name="paint_alpha">透明度</string>
 	<string name="paint_style">样式</string>
+	<string name="paint_pencil">铅笔</string>
+	<string name="paint_brush">画笔</string>
+	<string name="paint_crany">水彩</string>
+	<string name="paint_relief">浮雕</string>
 	
 </resources>

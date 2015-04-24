@@ -37,7 +37,8 @@ public class Message extends Entity {
      * @param
      */
 
-    public Message clone() {
+    @Override
+	public Message clone() {
         return new Message(senderIMEI, sendTime, MsgContent, contentType);
     }
 

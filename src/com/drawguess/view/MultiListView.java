@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
@@ -361,14 +362,14 @@ public class MultiListView extends ListView implements OnScrollListener {
 
         Interpolator _Interpolator = new LinearInterpolator();
 
-        mArrowAnim = new RotateAnimation(0, -180, RotateAnimation.RELATIVE_TO_SELF, 0.5f,
-                RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+        mArrowAnim = new RotateAnimation(0, -180, Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f);
         mArrowAnim.setInterpolator(_Interpolator);
         mArrowAnim.setDuration(_Duration);
         mArrowAnim.setFillAfter(true);
 
-        mArrowReverseAnim = new RotateAnimation(-180, 0, RotateAnimation.RELATIVE_TO_SELF, 0.5f,
-                RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+        mArrowReverseAnim = new RotateAnimation(-180, 0, Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f);
         mArrowReverseAnim.setInterpolator(_Interpolator);
         mArrowReverseAnim.setDuration(_Duration);
         mArrowReverseAnim.setFillAfter(true);
@@ -516,7 +517,8 @@ public class MultiListView extends ListView implements OnScrollListener {
         }
     }
 
-    public boolean onTouchEvent(MotionEvent event) {
+    @Override
+	public boolean onTouchEvent(MotionEvent event) {
         if (mCanRefresh) {
             if (mCanLoadMore && mEndState == ENDINT_LOADING) {
                 // 如果开启了加载更多功能，并且当前正在加载更多，默认不允许下拉刷新，必须加载完毕后才能使用。

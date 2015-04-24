@@ -74,7 +74,7 @@ public class AvatarAdapter extends BaseAdapter {
         else {
             holder = (ViewHolder) convertView.getTag();
         }
-        Picasso.with(mContext).load(((Avatar) mDatas.get(position)).getImageId())
+        Picasso.with(mContext).load(mDatas.get(position).getImageId())
                 .into(holder.ivAvatar);
         return convertView;
     }

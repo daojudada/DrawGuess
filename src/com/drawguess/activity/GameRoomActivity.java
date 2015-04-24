@@ -370,7 +370,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 			        }
 			            break;
 			        case MSGConst.SENDREADY:{//收到准备请求
-			        	String imei = (String)ipmsg.getAddStr();
+			        	String imei = ipmsg.getAddStr();
 						Users user = mUsersMap.get(imei);
 						mReadyList.add(imei);
 						user.setOrder(mReadyList.size());
@@ -381,7 +381,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 			        }
 			            break;
 			        case MSGConst.ANSREADY:{//收到未准备请求
-			        	String imei = (String)ipmsg.getAddStr();
+			        	String imei = ipmsg.getAddStr();
 						Users user = mUsersMap.get(imei);
 						mReadyList.add(imei);
 						user.setOrder(-1);

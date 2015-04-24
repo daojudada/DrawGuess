@@ -29,7 +29,8 @@ public class WifiapBroadcast extends BroadcastReceiver {
         mListener = listener;
     }
 
-    public void onReceive(Context paramContext, Intent paramIntent) {
+    @Override
+	public void onReceive(Context paramContext, Intent paramIntent) {
 
         // wifi开关
         if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(paramIntent.getAction())) {

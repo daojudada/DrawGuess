@@ -13,8 +13,11 @@ import com.drawguess.drawop.OperationManage.DrawMode;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.EmbossMaskFilter;
+import android.graphics.MaskFilter;
 import android.graphics.Paint;
 import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.Path;
@@ -37,8 +40,7 @@ import com.drawguess.util.LogUtils;
  * @author GuoJun
  *
  */
-public class DrawView extends View
-{
+public class DrawView extends View {
 	public enum DrawState{Canvas,Draw,Path}
 	private final static String TAG = "DrawView";
 	private Paint bmpPaint;
@@ -57,8 +59,16 @@ public class DrawView extends View
 	
 	private OpTrans opTrans;
 	private Paint paint;
+	private int paintColor;
 	private int paintWidth;
 	private int paintAlpha;
+	/**
+	 * 笔刷样式
+	 * 0  铅笔
+	 * 1  画笔
+	 * 2  水彩
+	 * 3  浮雕
+	 */
 	private int paintStyle;
 	
 	private Path path;
@@ -73,11 +83,13 @@ public class DrawView extends View
 	
 	public DrawView(Context context,AttributeSet attrs){
 		super(context,attrs);
+		setLayerType(LAYER_TYPE_SOFTWARE, null);
 		
 		ds = DrawState.Draw;
-		paintWidth = 5;
+		paintWidth = 10;
 		paintAlpha = 255;
-		paintStyle = 1;
+		paintStyle = 0;
+		paintColor = Color.BLACK;
 		EraseWidth = paintWidth+20; 
 		isMove = false;
 		
@@ -381,7 +393,6 @@ public class DrawView extends View
 	 */
 	private void initPaint(){
 		bmpPaint = new Paint();
-		bmpPaint.setAntiAlias(true); 
 		
 		paint=new Paint(Paint.FILTER_BITMAP_FLAG);
 		paint.setStrokeWidth(paintWidth);
@@ -457,7 +468,7 @@ public class DrawView extends View
 	 * @return paintWidth
 	 */
 	public int getPaintColor(){
-		return paint.getColor();
+		return paintColor;
 	}
 	
 	/**
@@ -499,9 +510,10 @@ public class DrawView extends View
 	/**
 	 * 设置颜色
 	 */
-	public void setColor(int color)
+	public void setPaintColor(int color)
 	{
-		paint.setColor(color);
+		paintColor = color;
+		paint.setColor(paintColor);
 	}
 	
 	/**
@@ -542,12 +554,12 @@ public class DrawView extends View
 		//判断是否按下
 		if(isEraser)
 		{
-			paint.setXfermode(new PorterDuffXfermode(Mode.DST_OUT));
+			paint.setColor(Color.WHITE);
 			paint.setStrokeWidth(EraseWidth);
 		}
 		else 
 		{
-			paint.setXfermode(new PorterDuffXfermode(Mode.DST_OVER));
+			paint.setColor(paintColor);
 			paint.setStrokeWidth(paintWidth);
 		}
 	}
@@ -603,7 +615,32 @@ public class DrawView extends View
 	 */
 	public void setPaintStyle(int style){
 		paintStyle = style;
-		
+		MaskFilter maskFilter = null;
+		switch (style) {
+		case 0:
+			maskFilter=null;
+			paint.setMaskFilter(maskFilter);
+			break;
+		case 1:
+			if(paintWidth<=8&&paintWidth>1)
+				maskFilter = new BlurMaskFilter(paintWidth-1, BlurMaskFilter.Blur.SOLID);
+			else if(paintWidth<=1)
+				maskFilter = null;
+			else
+				maskFilter = new BlurMaskFilter(8, BlurMaskFilter.Blur.SOLID);
+			paint.setMaskFilter(maskFilter);
+			break;
+		case 2:	
+			maskFilter = new BlurMaskFilter(8, BlurMaskFilter.Blur.NORMAL);
+			paint.setMaskFilter(maskFilter);
+			break;
+		case 3:
+			maskFilter =new EmbossMaskFilter(new float[]{1.0f,1.0f,1.0f},0.4f,6,5f);
+			paint.setMaskFilter(maskFilter);
+
+		default:
+			break;
+		}
 	}
 	
 	/**

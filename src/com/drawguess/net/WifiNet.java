@@ -63,15 +63,18 @@ public class WifiNet{
     	mClient.getKryo().register(RegisterIMEI.class);
     	
     	mClient.addListener(new Listener() {
+			@Override
 			public void connected (Connection connection) {
 				RegisterIMEI ri = new RegisterIMEI();
 				ri.imei = SessionUtils.getIMEI();
 				sendToServer(ri,SocketMode.TCP);
 			}
 
+			@Override
 			public void disconnected (Connection connection) {
 				
 			}
+			@Override
 			public void received (Connection connection, Object object) {
 				if (object instanceof MSGProtocol) {
 					MSGProtocol ipmsg = (MSGProtocol)object;
@@ -87,7 +90,8 @@ public class WifiNet{
     public void createServer() throws IOException{
     	isServer = true;
     	mServer = new Server(){
-    		protected Connection newConnection(){
+    		@Override
+			protected Connection newConnection(){
     			return new PlayerConnection();
     		}
     	};
@@ -96,9 +100,11 @@ public class WifiNet{
     	mServer.getKryo().register(RegisterIMEI.class);
     	
     	mServer.addListener(new Listener() {
+			@Override
 			public void disconnected (Connection c) {
 				
 			}
+			@Override
 			public void received (Connection c, Object object) {
 				PlayerConnection connection = (PlayerConnection)c;
 				if (object instanceof MSGProtocol){

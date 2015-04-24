@@ -32,7 +32,7 @@ public class LoadingDialog extends BaseDialog {
 	}
 
 	private void init() {
-		setContentView(R.layout.diloag_loading);
+		setContentView(R.layout.dialog_loading);
 		mFivIcon = (FlippingImageView) findViewById(R.id.loadingdialog_fiv_icon);
 		mHtvText = (TextView) findViewById(R.id.loadingdialog_htv_text);
 		mFivIcon.startAnimation();

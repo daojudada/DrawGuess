@@ -113,13 +113,43 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent" >
 				
-		    <com.drawguess.view.DrawView
-		        android:id="@+id/drawview"
+		    <LinearLayout
 		        android:layout_width="match_parent"
-		        android:layout_height="match_parent">
-		    </com.drawguess.view.DrawView>
+		        android:layout_height="match_parent"
+		        android:orientation="vertical">
+		        
+			    <com.drawguess.view.DrawView
+			        android:id="@+id/drawview"
+			        android:layout_width="match_parent"
+			        android:layout_height="match_parent">
+			    </com.drawguess.view.DrawView>
+			    
+			    
+			    <LinearLayout
+			        android:id="@+id/edit_text_layout"
+			        android:layout_width="match_parent"
+			        android:layout_height="52dp"
+			        android:orientation="horizontal">
+			        
+					    <EditText
+					        android:id="@+id/chat_textditor_eet_editer"
+					        android:layout_width="0dip"
+					        android:layout_height="wrap_content"
+					        android:layout_weight="1"
+					        android:background="@drawable/edittext_sendmsg"
+					        android:gravity="center_vertical"
+					        android:imeOptions="flagNoExtractUi"
+					        android:maxHeight="120dip"
+					        android:maxLength="4000"
+					        android:minHeight="46dip"
+					        android:paddingTop="3dip"
+					        android:hint="@null"/>
+					    
+			    </LinearLayout>
+		    </LinearLayout>
 		
 		    <LinearLayout
+		        android:id="@+id/draw_button_layout"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:orientation="vertical">

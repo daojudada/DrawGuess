@@ -75,7 +75,8 @@ public class PlayersAdapter extends BaseObjectListAdapter {
         return convertView;
     }
 
-    public void setData(List<? extends Entity> datas) {
+    @Override
+	public void setData(List<? extends Entity> datas) {
         super.setData(datas);
     }
 }

@@ -261,7 +261,8 @@ public class BaseDialog extends Dialog implements android.view.View.OnClickListe
         }
     }
 
-    public void setTitle(CharSequence text) {
+    @Override
+	public void setTitle(CharSequence text) {
         if (text != null) {
             mLayoutTitle.setVisibility(View.VISIBLE);
             mHtvTitle.setText(text);

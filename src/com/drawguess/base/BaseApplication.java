@@ -5,6 +5,7 @@ import com.drawguess.util.LogUtils;
 
 import android.app.Application;
 import android.app.Service;
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Vibrator;
@@ -79,7 +80,7 @@ public class BaseApplication extends Application {
     private void initNotification() {
         notiMediaplayer = new SoundPool(3, AudioManager.STREAM_SYSTEM, 5);
         notiSoundPoolID = notiMediaplayer.load(this, R.raw.crystalring, 1);
-        notiVibrator = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
+        notiVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
     }
 
     @Override

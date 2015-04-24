@@ -27,35 +27,38 @@ import com.drawguess.interfaces.ShapeChangedListener;
 import com.drawguess.view.DrawView;
 
 public class DrawTabActivity extends BaseActivity implements OnClickListener{
-    public static class MyHandler extends Handler{
-
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                
-
-                default:
-                    break;
-            }
-        }
-    }
+    /**
+     * 延时退出时间变量
+     */
+    private long ExitTime; 
+    /**
+     * 消息传递类
+     */
+    public MyHandler handler = new MyHandler();
+    /**
+     * 绘图状态
+     */
+    private Boolean isPack,isEraser,isTrans;
+    /**
+     * 是否是服务器
+     */
+    private Boolean isServer;
 	private int[] colorSource = new int[]{
     		R.drawable.btn_black1,R.drawable.btn_red1,R.drawable.btn_blue1,R.drawable.btn_green1,
     		R.drawable.btn_yellow1,R.drawable.btn_purple1,R.drawable.btn_ching1,
     		R.drawable.btn_black2,R.drawable.btn_red2,R.drawable.btn_blue2,R.drawable.btn_green2,
     		R.drawable.btn_yellow2,R.drawable.btn_purple2,R.drawable.btn_ching2
     };
-    
+    /**
+     * 绘图显示类
+     */
     private DrawView drawView;
-    private long ExitTime; // 延时退出时间变量
-    public MyHandler handler = new MyHandler();
-    private Boolean isPack,isEraser,isTrans;
     private ImageButton[] mBtColors = new ImageButton[7];
     private LinearLayout mDrawTab,mChatTab,mResultTab;
     private ImageButton mIbErase,mIbColor,mIbPaint,mIbFill,mIbShape,mIbRedo,mIbUndo,mIbMenu,mIbEdit;
     private LinearLayout mLayoutChat,mLayoutResult;
     private FrameLayout mLayoutDraw;
-
+    private LinearLayout mLayoutChatTab,mLayoutDrawButton;
     private View mVDraw,mVChat,mVResult;
 
 
@@ -85,9 +88,11 @@ public class DrawTabActivity extends BaseActivity implements OnClickListener{
     	mLayoutDraw = (FrameLayout)findViewById(R.id.drawlayout);
     	mLayoutChat = (LinearLayout)findViewById(R.id.chatlayout);
     	mLayoutResult = (LinearLayout)findViewById(R.id.resultlayout);
-		mVDraw = (View)findViewById(R.id.drawtabview);
-		mVChat = (View)findViewById(R.id.chattabview);
-		mVResult = (View)findViewById(R.id.resulttabview);
+    	mLayoutChatTab = (LinearLayout)findViewById(R.id.chattab);
+    	mLayoutDrawButton = (LinearLayout)findViewById(R.id.draw_button_layout);
+		mVDraw = findViewById(R.id.drawtabview);
+		mVChat = findViewById(R.id.chattabview);
+		mVResult = findViewById(R.id.resulttabview);
 		mDrawTab = (LinearLayout)findViewById(R.id.drawtab);
 		mChatTab = (LinearLayout)findViewById(R.id.chattab);
 		mResultTab = (LinearLayout)findViewById(R.id.resulttab);
@@ -143,43 +148,43 @@ public class DrawTabActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.black:
 			m=0;
-			drawView.setColor(0xFF000000);
+			drawView.setPaintColor(0xFF000000);
 			mBtColors[m].setBackgroundResource(colorSource[m+7]);
 			setColorBack(m);
 			break;
 		case R.id.red:
 			m=1;
-			drawView.setColor(0xFFFF0000);
+			drawView.setPaintColor(0xFF000000);
 			mBtColors[m].setBackgroundResource(colorSource[m+7]);
 			setColorBack(m);
 			break;
 		case R.id.blue:
 			m=2;
-			drawView.setColor(0xFF0000FF);
+			drawView.setPaintColor(0xFF000000);
 			mBtColors[m].setBackgroundResource(colorSource[m+7]);
 			setColorBack(m);
 			break;
 		case R.id.green:
 			m=3;
-			drawView.setColor(0xFF00FF00);
+			drawView.setPaintColor(0xFF000000);
 			mBtColors[m].setBackgroundResource(colorSource[m+7]);
 			setColorBack(m);
 			break;
 		case R.id.yellow:
 			m=4;
-			drawView.setColor(0xFFFFFF00);
+			drawView.setPaintColor(0xFF000000);
 			mBtColors[m].setBackgroundResource(colorSource[m+7]);
 			setColorBack(m);
 			break;
 		case R.id.purple:
 			m=5;
-			drawView.setColor(0xFFFF00FF);
+			drawView.setPaintColor(0xFF000000);
 			mBtColors[m].setBackgroundResource(colorSource[m+7]);
 			setColorBack(m);
 			break;
 		case R.id.ching:
 			m=6;
-			drawView.setColor(0xFF00FFFF);
+			drawView.setPaintColor(0xFF000000);
 			mBtColors[m].setBackgroundResource(colorSource[m+7]);
 			setColorBack(m);
 			break;
@@ -311,22 +316,25 @@ public class DrawTabActivity extends BaseActivity implements OnClickListener{
 				new ColorDialog(this, drawView.getPaintColor(), "color", new ColorChangedListener() {
 					@Override
 					public void colorChanged(int color) {
-						drawView.setColor(color);
+						drawView.setPaintColor(color);
 						setColorBack(-1);
-					}}).show();
+					}}
+				).show();
 			}
 			break;
 			
 		case R.id.paint:
 			//画笔设置，对话框
-			new PaintDialog(this, drawView.getPaintWidth(), drawView.getPaintAlpha(), drawView.getPaintStyle(),new PaintChangedListener(){
-					@Override
-					public void paintChanged(int width, int alpha, int style) {
-						drawView.setPaintWidth(width);
-						drawView.setPaintAlpha(alpha);
-						drawView.setPaintStyle(style);
-					}
-			}).show();
+			new PaintDialog(this, drawView.getPaintWidth(), drawView.getPaintAlpha(), drawView.getPaintStyle(),drawView.getPaintColor(),
+					new PaintChangedListener(){
+						@Override
+						public void paintChanged(int width, int alpha, int style) {
+							drawView.setPaintWidth(width);
+							drawView.setPaintAlpha(alpha);
+							drawView.setPaintStyle(style);
+						}
+				}
+			).show();
 			break;
 		case R.id.undo:
 			//撤销
@@ -351,6 +359,7 @@ public class DrawTabActivity extends BaseActivity implements OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawtabs);
+        isServer = true;
         isPack = false;
 		isEraser = false;
 		isTrans = false;
@@ -362,7 +371,7 @@ public class DrawTabActivity extends BaseActivity implements OnClickListener{
     //创建菜单
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(Menu.NONE, 1, 1, "分享");
+		menu.add(Menu.NONE, 1, 1, "调试");
 		menu.add(Menu.NONE, 2, 2, "清屏");
 		menu.add(Menu.NONE, 3, 3, "保存");
 		menu.add(Menu.NONE, 4, 4, "退出");
@@ -375,8 +384,8 @@ public class DrawTabActivity extends BaseActivity implements OnClickListener{
 
     }
 	
-	
     @Override
+    //按2下返回退出
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if ((System.currentTimeMillis() - ExitTime) > 2000) {
@@ -396,7 +405,16 @@ public class DrawTabActivity extends BaseActivity implements OnClickListener{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case 1:
-			
+			if(isServer){
+				isServer = false;
+				mLayoutChatTab.setVisibility(View.GONE);
+		    	mLayoutDrawButton.setVisibility(View.GONE);
+			}
+			else{
+				isServer = true;
+				mLayoutChatTab.setVisibility(View.VISIBLE);
+		    	mLayoutDrawButton.setVisibility(View.VISIBLE);
+			}
 			break;
 		case 2:
 			drawView.setClear();
@@ -412,6 +430,7 @@ public class DrawTabActivity extends BaseActivity implements OnClickListener{
 		}
 		return true;
 	}
+    
     private void setColorBack(int m){
 		for(int i=0;i<7;i++){
 			if(i!=m)
@@ -420,6 +439,18 @@ public class DrawTabActivity extends BaseActivity implements OnClickListener{
 	}
     
 
+    public static class MyHandler extends Handler{
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                
+
+                default:
+                    break;
+            }
+        }
+    }
 
 
 }

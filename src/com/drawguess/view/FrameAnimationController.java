@@ -11,7 +11,8 @@ import android.os.Message;
  */
 public class FrameAnimationController {
     private static class AnimationHandler extends Handler {
-        public void handleMessage(Message m) {
+        @Override
+		public void handleMessage(Message m) {
             switch (m.what) {
                 case MSG_ANIMATE:
                     if (m.obj != null) {

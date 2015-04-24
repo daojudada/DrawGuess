@@ -26,7 +26,8 @@ import android.widget.CheckBox;
  */
 public class SettingSwitchButton extends CheckBox {
     private final class PerformClick implements Runnable {
-        public void run() {
+        @Override
+		public void run() {
             performClick();
         }
     }
@@ -205,7 +206,8 @@ public class SettingSwitchButton extends CheckBox {
         mXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
     }
 
-    public boolean isChecked() {
+    @Override
+	public boolean isChecked() {
         return mChecked;
     }
 
@@ -304,7 +306,8 @@ public class SettingSwitchButton extends CheckBox {
      * @param checked
      *            true to check the button, false to uncheck it
      */
-    public void setChecked(boolean checked) {
+    @Override
+	public void setChecked(boolean checked) {
 
         if (mChecked != checked) {
             mChecked = checked;
@@ -359,7 +362,8 @@ public class SettingSwitchButton extends CheckBox {
      * @param listener
      *            the callback to call on checked state change
      */
-    public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
+    @Override
+	public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
         mOnCheckedChangeListener = listener;
     }
 
@@ -387,7 +391,8 @@ public class SettingSwitchButton extends CheckBox {
         mAnimating = false;
     }
 
-    public void toggle() {
+    @Override
+	public void toggle() {
         setChecked(!mChecked);
     }
 }

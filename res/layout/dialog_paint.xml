@@ -1,66 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    
-	<com.drawguess.view.ShowPaintView 
-	    android:layout_width="wrap_content"
-    	android:layout_height="wrap_content">
-   	</com.drawguess.view.ShowPaintView>
    	
+    <com.drawguess.view.ShowPaintView
+        android:id="@+id/showpaintview"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="15dp"
+	    android:layout_gravity="center_horizontal">
+    </com.drawguess.view.ShowPaintView>
+        
 	<LinearLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
+	    android:layout_marginTop="15dp"
+	    android:layout_marginBottom="5dp"
 	    android:orientation="horizontal">	    
 	    <TextView 
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="20dp"
+		    android:layout_weight="1"
+		    android:textSize="20sp"
 		    android:text="@string/paint_width"/>
-	    
-	    <SeekBar
-	        android:id="@+id/seekpaintwidth"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:focusable="true"
-	        android:maxHeight="2.0dip"
-	        android:minHeight="2.0dip"
-	        android:progressDrawable="@drawable/seekbar_po"
-	        android:thumb="@drawable/seekbar_thumb" />
 	    
 	    <TextView 
 	        android:id="@+id/paint_width"
 		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"/>
+		    android:layout_height="wrap_content"
+		    android:textSize="20sp"
+		    android:layout_weight="1"/>
+	    
     </LinearLayout>
     
+	
+	    
+    <SeekBar
+        android:id="@+id/seekwidth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+	    android:layout_gravity="center_horizontal"
+        android:focusable="true"
+	    android:layout_marginTop="5dp"
+	    android:layout_marginBottom="15dp"
+	    android:layout_marginLeft="10dp"
+	    android:layout_marginRight="10dp"
+        android:maxHeight="2.0dip"
+        android:minHeight="2.0dip"
+        android:paddingLeft="16.0dip"
+        android:paddingRight="16.0dip"
+       	android:max="100"
+        android:progressDrawable="@drawable/seekbar_po"
+        android:thumb="@drawable/seekbar_thumb" />
+	    
 	<LinearLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
+	    android:layout_marginTop="15dp"
+	    android:layout_marginBottom="5dp"
 	    android:orientation="horizontal">
 	    
 	    <TextView 
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="20dp"
+		    android:layout_weight="1"
+		    android:textSize="20sp"
 		    android:text="@string/paint_alpha"/>
 	    
-	    
-	    <SeekBar
-	        android:id="@+id/seekpaintalpha"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:focusable="true"
-	        android:maxHeight="2.0dip"
-	        android:minHeight="2.0dip""
-	        android:progressDrawable="@drawable/seekbar_po"
-	        android:thumb="@drawable/seekbar_thumb" />
 	    
 	    <TextView 
 	        android:id="@+id/paint_alpha"
 		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"/>
+		    android:layout_height="wrap_content"
+		    android:textSize="20sp"
+		    android:layout_weight="1"/>
+	    
+	    
     </LinearLayout>
 	    
+    <SeekBar
+        android:id="@+id/seekalpha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+	    android:layout_gravity="center_horizontal"
+	    android:layout_marginTop="5dp"
+	    android:layout_marginBottom="15dp"
+	    android:layout_marginLeft="10dp"
+	    android:layout_marginRight="10dp"
+        android:focusable="true"
+        android:maxHeight="2.0dip"
+        android:minHeight="2.0dip"
+        android:paddingLeft="16.0dip"
+        android:paddingRight="16.0dip"
+       	android:max="255"
+        android:progressDrawable="@drawable/seekbar_po"
+        android:thumb="@drawable/seekbar_thumb" />
 	
+    <LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="10dp"
+	    android:layout_marginBottom="10dp"
+	    android:orientation="horizontal">
+	    
+	    <TextView 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="20dp"
+		    android:layout_weight="1"
+		    android:textSize="20sp"
+		    android:text="@string/paint_style"/>
+	    
+	    
+	    <TextView 
+	        android:id="@+id/paint_style"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:textSize="20sp"
+		    android:layout_weight="1"/>
+	    
+    </LinearLayout>
+    
+    <RadioGroup
+		android:id="@+id/paint_style_group"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" 
+	    android:layout_marginLeft="10dp"
+	    android:layout_marginRight="10dp"
+	    android:layout_marginBottom="15dp"
+		android:gravity="center"
+		android:orientation="horizontal" >
+
+	        
+		<RadioButton
+			android:id="@+id/paint_style_pencil"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/paint_pencil"
+			android:textColor="@color/light_notes_color"
+			android:textSize="15sp"
+			android:layout_marginRight="5.0dp" />
+	
+		
+		<RadioButton
+			android:id="@+id/paint_style_brush"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/paint_brush"
+			android:textColor="@color/light_notes_color"
+			android:textSize="15sp"
+			android:layout_marginRight="5.0dp" />
+
+		<RadioButton
+			android:id="@+id/paint_style_crany"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/paint_crany"
+			android:textColor="@color/light_notes_color"
+			android:textSize="15sp"
+			android:layout_marginRight="5.0dp"/>
+		
+		<RadioButton
+			android:id="@+id/paint_style_relief"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/paint_relief"
+			android:textColor="@color/light_notes_color"
+			android:textSize="15sp"
+			android:layout_marginRight="5.0dp"/>
+
+	</RadioGroup>
+			
 </LinearLayout>
