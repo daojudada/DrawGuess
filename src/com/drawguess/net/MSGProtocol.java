@@ -8,8 +8,8 @@ import org.json.JSONObject;
 
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.drawguess.msgbean.DataDraw;
 import com.drawguess.msgbean.Entity;
-import com.drawguess.msgbean.Message;
 import com.drawguess.msgbean.Users;
 import com.drawguess.util.JsonUtils;
 import com.drawguess.util.LogUtils;
@@ -29,8 +29,9 @@ import com.drawguess.util.LogUtils;
  * 
  */
 public class MSGProtocol {
+    private static final String TAG = "IPMSGPProtocol";
     public enum ADDITION_TYPE {
-        MSG, STRING, USER
+    	STRING, USER , DATADRAW
     }
     private static final String ADDOBJECT = "addObject";
     private static final String ADDSTR = "addStr";
@@ -39,12 +40,11 @@ public class MSGProtocol {
     private static final String PACKETNO = "packetNo";
 
     
-    private static final String TAG = "IPMSGPProtocol";
     private Entity addObject; // 附加对象
     private String addStr; // 附加信息
     private ADDITION_TYPE addType; // 附加数据类型
     private int commandNo; // 命令
-    private String packetNo;// 数据包编号
+    private String packetNo;// 数据包序号，以发送时系统时间为序号
 
     private String senderIMEI; // 发送者IMEI
 
@@ -72,10 +72,10 @@ public class MSGProtocol {
                         addObject = JsonUtils.getObject(addJSONStr, Users.class);
                         break;
 
-                    case MSG: // 为消息数据
-                        addObject = JsonUtils.getObject(addJSONStr, Message.class);
+                    case DATADRAW: // 为消息数据
+                        addObject = JsonUtils.getObject(addJSONStr, DataDraw.class);
                         break;
-
+                        
                     case STRING: // 为String数据
                         addStr = addJSONStr;
                         break;
@@ -105,10 +105,10 @@ public class MSGProtocol {
         this.senderIMEI = paramSenderIMEI;
         this.commandNo = paramCommandNo;
         this.addObject = paramObject;
-        if (paramObject instanceof Message) { // 若为Message对象
-            this.addType = ADDITION_TYPE.MSG;
+        if (paramObject instanceof DataDraw) { // 若为DATADRAW对象
+            this.addType = ADDITION_TYPE.DATADRAW;
         }
-        if (paramObject instanceof Users) { // 若为NearByPeople对象
+        if (paramObject instanceof Users) { // 若为People对象
             this.addType = ADDITION_TYPE.USER;
         }
     }

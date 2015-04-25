@@ -4,7 +4,6 @@ import com.drawguess.R;
 import com.drawguess.util.LogUtils;
 
 import android.app.Application;
-import android.app.Service;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.drawguess.base.Constant;
@@ -21,7 +22,6 @@ import android.graphics.MaskFilter;
 import android.graphics.Paint;
 import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.Path;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.Bitmap.Config;
 import android.graphics.Path.Direction;
 import android.graphics.PorterDuff.Mode;
@@ -33,7 +33,10 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.drawguess.drawop.*;
+import com.drawguess.msgbean.DataDraw.TOUCH_TYPE;
+import com.drawguess.net.NetManage;
 import com.drawguess.util.LogUtils;
+import com.drawguess.util.SessionUtils;
 
 /**
  * 画板View，实现绘图的基本功能
@@ -43,6 +46,9 @@ import com.drawguess.util.LogUtils;
 public class DrawView extends View {
 	public enum DrawState{Canvas,Draw,Path}
 	private final static String TAG = "DrawView";
+	private NetManage netmanage;
+	private ArrayList<String> orderList;
+	
 	private Paint bmpPaint;
 	private Bitmap cacheBitmap,earlyBitmap;
 	private Canvas cacheCanvas;
@@ -56,8 +62,9 @@ public class DrawView extends View {
 	private float moveX,moveY,mX,mY;
 	
 	private OperationManage opManage;
-	
-	private OpTrans opTrans;
+
+	private OpDraw opDraw = null;	
+	private OpTrans opTrans = null;
 	private Paint paint;
 	private int paintColor;
 	private int paintWidth;
@@ -86,7 +93,7 @@ public class DrawView extends View {
 		setLayerType(LAYER_TYPE_SOFTWARE, null);
 		
 		ds = DrawState.Draw;
-		paintWidth = 10;
+		paintWidth = 5;
 		paintAlpha = 255;
 		paintStyle = 0;
 		paintColor = Color.BLACK;
@@ -102,7 +109,6 @@ public class DrawView extends View {
 		pfd = new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG);
 		
 		opManage=new OperationManage();
-		opTrans = null;
 		shape = Shape.FREE;
 		
 		moveX=0;
@@ -111,257 +117,123 @@ public class DrawView extends View {
 		
 		initPaint();
 		initBitmap();
+		
+		
 	}
 	
 
 	  
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent event){
-		float x=event.getX(0)/suol;//画图时的坐标转换
-		float y=event.getY(0)/suol;
-		
-		switch (ds) {
-		case Draw://绘图模式
-			OpDraw opDraw = null;	
-			switch (event.getAction() & MotionEvent.ACTION_MASK) 
-			{
-			case MotionEvent.ACTION_DOWN:
-				//删掉列表中当前项后面的数据……
-				mode = 1;
-
-				//缓存位图
-				saveCacheBitmap();
-				
-				isFirstMove = true;
-				startTime = System.nanoTime();  //開始時間
-				
-				switch (shape) 
+		//如果当前绘图顺序处于首位
+		if(SessionUtils.getOrder() == 1){
+			float x=event.getX(0)/suol;//画图时的坐标转换
+			float y=event.getY(0)/suol;
+			
+			switch (ds) {
+			case Draw://绘图模式
+				switch (event.getAction() & MotionEvent.ACTION_MASK) 
 				{
-				case FILL:
-					OpFill opFill = new OpFill((int)(x-moveX),(int)(y-moveY),getPaintColor());
-					opFill.Redo();
-					opManage.pushOp(opFill);
-					//this.invalidate();
-					this.invalidate();
+				case MotionEvent.ACTION_DOWN:
+					
+					doDraw(TOUCH_TYPE.DOWN1,x,y,-1,-1);
+					
+					startTime = System.nanoTime();  //開始時間
+					
 					break;
-				default:
-					break;
-				}
-				
-				break;
-
-			case MotionEvent.ACTION_POINTER_DOWN:
-				//设置为双点模式
-				mode = 2;
-				
-				l=(float) Math.sqrt((event.getX(0)-event.getX(1))*(event.getX(0)-event.getX(1))+(event.getY(0)-event.getY(1))*(event.getY(0)-event.getY(1)));
-
-				mX=x;
-				mY=y;
-				
-				//取消Draw操作
-				if(!isFirstMove){
-					opManage.popOp();
-					opManage.popDraw();
-					this.invalidate();
-				}
-
-				break;
-			case MotionEvent.ACTION_MOVE:
-				isMove = true;
-				if(mode == 1)
-				{
-					if(isFirstMove){
-						switch (shape) 
-						{
-						case FREE:
-							path.moveTo(x-moveX, y-moveY);
-							px=x-moveX;
-							py=y-moveY;
-							opDraw = new OpDraw(path, paint);
-							opDraw.Redo();
-							opManage.pushOp(opDraw);
-							break;
-						case LINE:
-							path.moveTo(x-moveX, y-moveY);
-							px=x-moveX;
-							py=y-moveY;
-							opDraw = new OpDraw(path, paint);
-							opDraw.Redo();
-							opManage.pushOp(opDraw);
-							break;
-						case RECT:
-							path.moveTo(x-moveX, y-moveY);
-							px=x-moveX;
-							py=y-moveY;
-							opDraw = new OpDraw(path, paint);
-							opDraw.Redo();
-							opManage.pushOp(opDraw);
-							break;
-						case OVAL:
-							path.moveTo(x-moveX, y-moveY);
-							px=x-moveX;
-							py=y-moveY;
-							opDraw = new OpDraw(path, paint);
-							opDraw.Redo();
-							opManage.pushOp(opDraw);
-							break;
-						default:
-							break;
-						}
-						isFirstMove = false;
-					}
-					else{
-						switch (shape) 
-						{
-						case FREE:
-							path.quadTo(px,py,((x-moveX)+px)/2, ((y-moveY)+py)/2);
-							px=x-moveX;
-							py=y-moveY;
-							break;
-						case LINE:
-							path.reset();
-							path.moveTo(px, py);
-							path.lineTo(x-moveX, y-moveY);
-							break;
-						case RECT://矩形
-							path.reset();
-							path.moveTo(px, py);
-							RectF rectf1=new RectF(px,py,x-moveX,y-moveY);
-							path.addRect(rectf1, Direction.CW);
-							break;
-						case OVAL://圆形
-							path.reset();
-							path.moveTo(px, py);
-							RectF rectf2=new RectF(px,py,x-moveX,y-moveY);
-							path.addOval(rectf2, Direction.CW);
-							break;
-						
-						default:
-							break;
-						}
-					}
-				}
-				else if(mode == 2){
-					ls=(float) Math.sqrt((event.getX(0)-event.getX(1))*(event.getX(0)-event.getX(1))+(event.getY(0)-event.getY(1))*(event.getY(0)-event.getY(1)));
-					suol=ls/l*suols;	
-
-					moveX+=(x-mX);
-					moveY+=(y-mY);
+	
+				case MotionEvent.ACTION_POINTER_DOWN:
+					
+					doDraw(TOUCH_TYPE.DOWN2,-1,-1,-1,-1);
+					
+					l=(float) Math.sqrt((event.getX(0)-event.getX(1))*(event.getX(0)-event.getX(1))+(event.getY(0)-event.getY(1))*(event.getY(0)-event.getY(1)));
 					mX=x;
-					mY=y;	
+					mY=y;
+					
+					break;
+				case MotionEvent.ACTION_MOVE:
+					if(mode == 1)
+						doDraw(TOUCH_TYPE.MOVE,x,y,-1,-1);
+					else{
+						ls=(float) Math.sqrt(
+								(event.getX(0)-event.getX(1))*(event.getX(0)-event.getX(1))+
+								((event.getY(0)-event.getY(1)))*(event.getY(0)-event.getY(1)));
+						suol=ls/l*suols;	
+
+						moveX+=(x-mX);
+						moveY+=(y-mY);
+						mX=x;
+						mY=y;
+						this.invalidate();
+					}
+					
+					break;
+				case MotionEvent.ACTION_POINTER_UP:
+					
+					doDraw(TOUCH_TYPE.UP2,-1,-1,-1,-1);
+					
+					suols*=ls/l;
+					
+					break;
+				case MotionEvent.ACTION_UP:
+
+					doDraw(TOUCH_TYPE.UP1,-1,-1,-1,-1);
+					
+					long endTime = System.nanoTime();
+					long diffsuTime = endTime - startTime; //消耗時間
+					if(diffsuTime > 5e8 &&!isMove)
+					{
+						moveX = 0;
+						moveY = 0;
+						suols = 1;
+						suol = 1;
+						this.invalidate();
+					}
+					break;
 					
 				}
-
-				this.invalidate();
 				break;
-			case MotionEvent.ACTION_POINTER_UP:
-				//设置为单点模式
-				mode = 1;
-				suols*=ls/l;
 				
-				break;
-			case MotionEvent.ACTION_UP:
-				
-				mode=0;
-				
-				
-				long endTime = System.nanoTime();
-				long diffsuTime = endTime - startTime; //消耗時間
-				if(diffsuTime > 5e8 &&!isMove)
+			case Path://图元操作模式,更改列表数据
+				switch (event.getAction() & MotionEvent.ACTION_MASK) 
 				{
-					moveX = 0;
-					moveY = 0;
-					suols = 1;
-					suol = 1;
-					this.invalidate();
-				}
-				isMove = false;
+				case MotionEvent.ACTION_DOWN:
+					doTrans(TOUCH_TYPE.DOWN1, x , y, -1, -1);
+					
+					break;
+				case MotionEvent.ACTION_POINTER_DOWN:
+					doTrans(TOUCH_TYPE.DOWN1, event.getX(0), event.getY(0), event.getX(1) , event.getY(1));
+					
+					break;
+				case MotionEvent.ACTION_MOVE:
+					doTrans(TOUCH_TYPE.DOWN1, event.getX(0), event.getY(0), event.getX(1) , event.getY(1));
+					
+					break;
+				case MotionEvent.ACTION_POINTER_UP:
+					doTrans(TOUCH_TYPE.DOWN1, -1,-1,-1,-1);
+					
+					break;
+				case MotionEvent.ACTION_UP:
+					mode = 0;
+					break;
 				
-				switch (shape) {
-				case FREE:
-					path=new Path();
-					break;
-				case LINE:
-					path=new Path();
-					break;
-				case RECT://矩形
-					path=new Path();
-					break;
-				case OVAL://圆形
-					path=new Path();
-					break;
-				default:
-					break;
 				}
 				break;
 				
+			default:
+				break;
 			}
-			break;
-			
-		case Path://图元操作模式,更改列表数据
-			switch (event.getAction() & MotionEvent.ACTION_MASK) 
-			{
-			case MotionEvent.ACTION_DOWN:
-				mX=x;
-				mY=y;
-				mode+=1;
-				if(opTrans == null)
-				{
-					opTrans = new OpTrans();
-					opManage.pushOp(opTrans);
-				}
-				opTrans = new OpTrans();
-				opManage.pushOp(opTrans);
-
-				break;
-			case MotionEvent.ACTION_POINTER_DOWN:
-				//设置为双点模式
-				mode+=1;
-				
-				l1= (float) Math.sqrt((event.getX(0)-event.getX(1))*(event.getX(0)-event.getX(1))+(event.getY(0)-event.getY(1))*(event.getY(0)-event.getY(1)));
-				q1=(float) Math.atan2((event.getY(1)-event.getY(0)),(event.getX(1)-event.getX(0)));	
-					
-				
-				break;
-			case MotionEvent.ACTION_MOVE:
-				if(mode==1)
-					opTrans.doMove(x-mX, y-mY);//移动
-				else if(mode==2)
-				{
-					l2= (float) Math.sqrt((event.getX(0)-event.getX(1))*(event.getX(0)-event.getX(1))+(event.getY(0)-event.getY(1))*(event.getY(0)-event.getY(1)));
-					q2=(float) Math.atan2((event.getY(1)-event.getY(0)),(event.getX(1)-event.getX(0)));
-					opTrans.doScale(l2/l1,(event.getX(0)+event.getX(1))/2,(event.getY(0)+event.getY(1))/2);//缩放l2/l1为缩放比
-					opTrans.doRotate((q2-q1),(event.getX(0)+event.getX(1))/2,(event.getY(0)+event.getY(1))/2);//旋转q2-q1为旋转角
-					
-				}
-				
-				opTrans.Redo();
-				mX=x;
-				mY=y;
-
-				this.invalidate();
-				break;
-			case MotionEvent.ACTION_POINTER_UP:
-				//设置为单点模式
-				mode = -1;
-				
-				
-				break;
-			case MotionEvent.ACTION_UP:
-				mode = 0;
-				break;
-			
-			}
-			break;
-			
-		default:
-			break;
+	
+			return true;
 		}
-
-		return true;
+		else 
+			return false;
 	}
 	
+	/**
+	 * 在canvas上绘图
+	 * @param 绘图基本事务
+	 */
 	private void drawOp(Operation op){
 		switch (op.type) {
 		case FILL://填充
@@ -376,7 +248,6 @@ public class DrawView extends View {
 		}
 	}
 	
-
 
 	/**
 	 * 初始化位图
@@ -495,6 +366,22 @@ public class DrawView extends View {
 	 */
 	public int getPaintAlpha(){
 		return paintAlpha;
+	}
+	
+	/**
+	 * 设置网络管理器
+	 */
+	public void setNetManage(NetManage nm)
+	{
+		this.netmanage = nm;
+	}
+	
+	/**
+	 * 设置玩家游戏绘制顺序链表
+	 */
+	public void setOrderList(ArrayList<String> orderList)
+	{
+		this.orderList = orderList;
 	}
 	
 	/**
@@ -706,5 +593,187 @@ public class DrawView extends View {
 		this.invalidate();
 	}
 
+	/**
+	 * 客户端接受服务器端的数据进行操作
+	 * @param touch type
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 */
+	public void doOperation(TOUCH_TYPE touch, float x1, float y1, float x2, float y2){
+		if(ds == DrawState.Draw)
+			doDraw(touch,x1,y1,x2,y2);
+		else if(ds == DrawState.Path)
+			doTrans(touch,x1,y1,x2,y2);
+	}
+	
+	private void doDraw(TOUCH_TYPE touch, float x1, float y1, float x2, float y2){
+		switch(touch){
+		case DOWN1:
+			//缓存位图
+			mode = 1;
+			saveCacheBitmap();
+			isFirstMove = true;
+			if(shape == Shape.FILL){
+				OpFill opFill = new OpFill((int)(x1-moveX),(int)(y1-moveY),getPaintColor());
+				opFill.Redo();
+				opManage.pushOp(opFill);
+				this.invalidate();
+			}
+			break;
+		case DOWN2:
+			//设置为双点模式
+			mode = 2;
+			//取消Draw操作
+			if(!isFirstMove){
+				opManage.popOp();
+				opManage.popDraw();
+				this.invalidate();
+			}
+			break;
+		case MOVE:
+			isMove = true;
+			if(mode == 1)
+			{
+				if(isFirstMove){
+					switch (shape) 
+					{
+					case FREE:
+						path.moveTo(x1-moveX, y1-moveY);
+						px=x1-moveX;
+						py=y1-moveY;
+						opDraw = new OpDraw(path, paint);
+						opDraw.Redo();
+						opManage.pushOp(opDraw);
+						break;
+					case LINE:
+						path.moveTo(x1-moveX, y1-moveY);
+						px=x1-moveX;
+						py=y1-moveY;
+						opDraw = new OpDraw(path, paint);
+						opDraw.Redo();
+						opManage.pushOp(opDraw);
+						break;
+					case RECT:
+						path.moveTo(x1-moveX, y1-moveY);
+						px=x1-moveX;
+						py=y1-moveY;
+						opDraw = new OpDraw(path, paint);
+						opDraw.Redo();
+						opManage.pushOp(opDraw);
+						break;
+					case OVAL:
+						path.moveTo(x1-moveX, y1-moveY);
+						px=x1-moveX;
+						py=y1-moveY;
+						opDraw = new OpDraw(path, paint);
+						opDraw.Redo();
+						opManage.pushOp(opDraw);
+						break;
+					default:
+						break;
+					}
+					isFirstMove = false;
+				}
+				else{
+					switch (shape) 
+					{
+					case FREE:
+						path.quadTo(px,py,((x1-moveX)+px)/2, ((y1-moveY)+py)/2);
+						px=x1-moveX;
+						py=y1-moveY;
+						break;
+					case LINE:
+						path.reset();
+						path.moveTo(px, py);
+						path.lineTo(x1-moveX, y1-moveY);
+						break;
+					case RECT://矩形
+						path.reset();
+						path.moveTo(px, py);
+						RectF rectf1=new RectF(px,py,x1-moveX,y1-moveY);
+						path.addRect(rectf1, Direction.CW);
+						break;
+					case OVAL://圆形
+						path.reset();
+						path.moveTo(px, py);
+						RectF rectf2=new RectF(px,py,x1-moveX,y1-moveY);
+						path.addOval(rectf2, Direction.CW);
+						break;
+					
+					default:
+						break;
+					}
+				}
+			}
+			else if(mode == 2){	
+				
+			}
+			this.invalidate();
+			break;
+		case UP2:
+			mode = 1;
+			break;
+		case UP1:
+			mode=0;
+			isMove = false;
+			path = new Path();
+			break;
+		default:
+			break;
+		}
+		
+	}
+	
+	private void doTrans(TOUCH_TYPE touch, float x1, float y1, float x2, float y2){
+		switch(touch){
+		case DOWN1:
+			mX=x1;
+			mY=y1;
+			mode = 1;
+			if(opTrans == null)
+			{
+				opTrans = new OpTrans();
+				opManage.pushOp(opTrans);
+			}
+			opTrans = new OpTrans();
+			opManage.pushOp(opTrans);
+			break;
+		case DOWN2:
+			//设置为双点模式
+			mode = 2;
+			l1= (float) Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+			q1=(float) Math.atan2(y2-y1,x2-x1);	
+			break;
+		case MOVE:
+			if(mode==1)
+				opTrans.doMove(x1-mX, y1-mY);//移动
+			else if(mode==2)
+			{
+				l2= (float) Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+				q2=(float) Math.atan2(y2-y1,x2-x1);
+				opTrans.doScale(l2/l1,(x1+x2)/2,(y1+y2)/2);//缩放l2/l1为缩放比
+				opTrans.doRotate((q2-q1),(x1+x2)/2,(y1+y2)/2);//旋转q2-q1为旋转角
+				
+			}
+			
+			opTrans.Redo();
+			mX=x1;
+			mY=y1;
+
+			this.invalidate();
+			break;
+		case UP2:
+			mode = 1;
+			break;
+		case UP1:
+			mode=0;
+			break;
+		default:
+			break;
+		}
+	}
+	
 }
 

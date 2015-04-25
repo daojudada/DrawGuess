@@ -10,6 +10,8 @@ import java.util.List;
 import com.drawguess.R;
 import com.drawguess.activity.SettingActivity;
 import com.drawguess.dialog.LoadingDialog;
+import com.drawguess.interfaces.MSGListener;
+import com.drawguess.net.NetManage;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -39,7 +41,9 @@ public abstract class BaseActivity extends Activity {
     protected ActionBar mActionBar;
     protected List<AsyncTask<Void, Void, Boolean>> mAsyncTasks = new ArrayList<AsyncTask<Void, Void, Boolean>>();
     protected Context mContext;
-
+    protected NetManage netManage;
+    protected MSGListener clientListener;
+    protected MSGListener serverListener;
     protected float mDensity;
     protected LoadingDialog mLoadingDialog;
     protected int mScreenHeight;

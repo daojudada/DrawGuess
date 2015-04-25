@@ -66,6 +66,16 @@
 
 		</LinearLayout>
 		
+		<TextView
+			android:id="@+id/gameroom_my_order"
+			android:layout_marginRight="5dp"
+			android:layout_marginTop="5dp"
+		    android:layout_marginLeft="30dp"
+		    android:layout_gravity="center_vertical"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/text_color"
+			android:textSize="17sp" />
 		
 		
 	</LinearLayout>
@@ -130,8 +140,23 @@
 		android:paddingRight="8dip"
 		android:paddingTop="4dip" >
 
+	    
+		<Button
+			android:id="@+id/gameroom_create"
+			android:layout_width="wrap_content"
+			android:layout_height="42dp"
+			android:layout_marginRight="9dip"
+			android:layout_weight="1"
+			android:background="@drawable/btn_bottombar_red"
+			android:gravity="center"
+			android:text="@string/gameroom_create"
+			android:textColor="@drawable/profile_bottom_text_color"
+			style="?android:attr/borderlessButtonStyle"
+			android:textSize="14sp" />
+		
 		<Button
 			android:id="@+id/gameroom_ready"
+			android:visibility="gone"
 			android:layout_width="wrap_content"
 			android:layout_height="42dp"
 			android:layout_marginRight="9dip"
@@ -146,6 +171,7 @@
 
 		<Button
 			android:id="@+id/gameroom_start"
+			android:visibility="gone"
 			android:layout_width="wrap_content"
 			android:layout_height="42dp"
 			android:layout_marginLeft="9dip"

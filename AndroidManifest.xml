@@ -86,7 +86,7 @@
 			android:screenOrientation="portrait" >
 		</activity>
 		<activity
-			android:name=".activity.DrawTabActivity"
+			android:name=".activity.DrawGuessActivity"
 			android:screenOrientation="portrait" 
 			android:theme="@android:style/Theme.Holo.NoActionBar">
 		</activity>

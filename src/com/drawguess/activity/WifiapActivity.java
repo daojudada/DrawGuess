@@ -45,150 +45,7 @@ import android.widget.TextView;
 public class WifiapActivity extends BaseActivity implements OnClickListener, NetWorkChangeListener,
         OnScrollListener, OnItemClickListener {
 
-    private class ApHandler extends Handler {
-        public ApHandler() {
-        }
-
-
-        @Override
-        public void handleMessage(Message msg) {
-
-            switch (msg.what) {
-                case WifiApConst.ApScanResult: // 扫描Wifi列表
-                    if (isRespond) {
-                        getWifiList();
-                        refreshAdapter(mWifiList);
-                    }
-                    break;
-
-                case WifiApConst.ApCreateApSuccess: // 创建热点成功
-                    mSearchWifiThread.stop();
-                    mTvStatusInfo.setText(getString(R.string.wifiap_text_createap_succeed));
-                    mLvWifiList.setVisibility(View.GONE);
-                    mLlApInfo.setVisibility(View.VISIBLE);
-                    mTvApSSID.setText("SSID: " + WifiUtils.getApSSID());
-                    mBtnCreateAp.setText(getString(R.string.wifiap_btn_closeap));
-                    mBtnBack.setClickable(true);
-                    mBtnCreateAp.setClickable(true);
-                    mBtnNext.setClickable(true);
-                    break;
-
-                case WifiApConst.WiFiConnectSuccess: // 连接热点成功
-                    String str = getString(R.string.wifiap_text_wifi_connected)
-                            + WifiUtils.getSSID();
-                    mTvStatusInfo.setText(str);
-                    showShortToast(str);
-                    break;
-
-                case WifiApConst.WiFiConnectError: // 连接热点错误
-                    showShortToast(R.string.wifiap_toast_connectap_error);
-                    break;
-
-                case WifiApConst.NetworkChanged: // Wifi状态变化
-                    if (WifiUtils.isWifiEnabled()) {
-                        mTvStatusInfo.setText(getString(R.string.wifiap_text_wifi_1_0));
-                    }
-                    else {
-                        mTvStatusInfo.setText(getString(R.string.wifiap_text_wifi_0));
-                        showShortToast(R.string.wifiap_text_wifi_disconnect);
-                    }
-
-                default:
-                    break;
-            }
-        }
-    }
-
-    public class hintDialogOnClick implements DialogInterface.OnClickListener {
-
-        @Override
-        public void onClick(DialogInterface hintDialog, int which) {
-            switch (which) {
-
-            // 确定
-            case 0:
-                hintDialog.dismiss();
-                if (WifiUtils.isWifiApEnabled()) {
-
-                    // 执行关闭热点事件
-                    WifiUtils.closeWifiAp();
-                    WifiUtils.OpenWifi();
-
-                    showShortToast(R.string.wifiap_text_ap_0);
-                    mTvStatusInfo.setText(getString(R.string.wifiap_text_wifi_1_0));
-                    mBtnCreateAp.setText(getString(R.string.wifiap_btn_createap));
-                    mLlApInfo.setVisibility(View.GONE);
-                    mLvWifiList.setVisibility(View.VISIBLE);
-
-                    localIPaddress = null;
-                    serverIPaddres = null;
-
-                    mSearchWifiThread.start();
-                }
-                else {
-                    // 创建热点
-                    mTvStatusInfo.setText(getString(R.string.wifiap_text_createap_creating));
-                    mBtnBack.setClickable(false);
-                    mBtnCreateAp.setClickable(false);
-                    mBtnNext.setClickable(false);
-                    setAsyncTask();
-                }
-                break;
-
-            // 取消
-            case 1:
-                hintDialog.cancel();
-                break;
-            }
-        }
-    }
-    /**
-     * 定时刷新Wifi列表信息
-     */
-    class SearchWifiThread implements Runnable {
-        private Handler handler = null;
-        private boolean running = false;
-        private Thread thread = null;
-
-        SearchWifiThread(Handler handler) {
-            this.handler = handler;
-        }
-
-        @Override
-		public void run() {
-            while (!WifiUtils.isWifiApEnabled()) {
-                if (!this.running)
-                    return;
-                try {
-                    Thread.sleep(2000); // 扫描间隔
-                }
-                catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                handler.sendEmptyMessage(WifiApConst.ApScanResult);
-            }
-        }
-
-        public void start() {
-            try {
-                this.thread = new Thread(this);
-                this.running = true;
-                this.thread.start();
-            }
-            finally {
-            }
-        }
-
-        public void stop() {
-            try {
-                this.running = false;
-                this.thread = null;
-            }
-            finally {
-            }
-        }
-    }
-
+   
     private static final String TAG = "WifiapActivity";
     private static ApHandler mHandler;
     private boolean isRespond = true;
@@ -553,4 +410,149 @@ public class WifiapActivity extends BaseActivity implements OnClickListener, Net
     	mHandler.sendEmptyMessage(WifiApConst.NetworkChanged);
 
     }
+    
+    private class ApHandler extends Handler {
+        public ApHandler() {
+        }
+
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            switch (msg.what) {
+                case WifiApConst.ApScanResult: // 扫描Wifi列表
+                    if (isRespond) {
+                        getWifiList();
+                        refreshAdapter(mWifiList);
+                    }
+                    break;
+
+                case WifiApConst.ApCreateApSuccess: // 创建热点成功
+                    mSearchWifiThread.stop();
+                    mTvStatusInfo.setText(getString(R.string.wifiap_text_createap_succeed));
+                    mLvWifiList.setVisibility(View.GONE);
+                    mLlApInfo.setVisibility(View.VISIBLE);
+                    mTvApSSID.setText("SSID: " + WifiUtils.getApSSID());
+                    mBtnCreateAp.setText(getString(R.string.wifiap_btn_closeap));
+                    mBtnBack.setClickable(true);
+                    mBtnCreateAp.setClickable(true);
+                    mBtnNext.setClickable(true);
+                    break;
+
+                case WifiApConst.WiFiConnectSuccess: // 连接热点成功
+                    String str = getString(R.string.wifiap_text_wifi_connected)
+                            + WifiUtils.getSSID();
+                    mTvStatusInfo.setText(str);
+                    showShortToast(str);
+                    break;
+
+                case WifiApConst.WiFiConnectError: // 连接热点错误
+                    showShortToast(R.string.wifiap_toast_connectap_error);
+                    break;
+
+                case WifiApConst.NetworkChanged: // Wifi状态变化
+                    if (WifiUtils.isWifiEnabled()) {
+                        mTvStatusInfo.setText(getString(R.string.wifiap_text_wifi_1_0));
+                    }
+                    else {
+                        mTvStatusInfo.setText(getString(R.string.wifiap_text_wifi_0));
+                        showShortToast(R.string.wifiap_text_wifi_disconnect);
+                    }
+
+                default:
+                    break;
+            }
+        }
+    }
+
+    public class hintDialogOnClick implements DialogInterface.OnClickListener {
+
+        @Override
+        public void onClick(DialogInterface hintDialog, int which) {
+            switch (which) {
+
+            // 确定
+            case 0:
+                hintDialog.dismiss();
+                if (WifiUtils.isWifiApEnabled()) {
+
+                    // 执行关闭热点事件
+                    WifiUtils.closeWifiAp();
+                    WifiUtils.OpenWifi();
+
+                    showShortToast(R.string.wifiap_text_ap_0);
+                    mTvStatusInfo.setText(getString(R.string.wifiap_text_wifi_1_0));
+                    mBtnCreateAp.setText(getString(R.string.wifiap_btn_createap));
+                    mLlApInfo.setVisibility(View.GONE);
+                    mLvWifiList.setVisibility(View.VISIBLE);
+
+                    localIPaddress = null;
+                    serverIPaddres = null;
+
+                    mSearchWifiThread.start();
+                }
+                else {
+                    // 创建热点
+                    mTvStatusInfo.setText(getString(R.string.wifiap_text_createap_creating));
+                    mBtnBack.setClickable(false);
+                    mBtnCreateAp.setClickable(false);
+                    mBtnNext.setClickable(false);
+                    setAsyncTask();
+                }
+                break;
+
+            // 取消
+            case 1:
+                hintDialog.cancel();
+                break;
+            }
+        }
+    }
+    /**
+     * 定时刷新Wifi列表信息
+     */
+    class SearchWifiThread implements Runnable {
+        private Handler handler = null;
+        private boolean running = false;
+        private Thread thread = null;
+
+        SearchWifiThread(Handler handler) {
+            this.handler = handler;
+        }
+
+        @Override
+		public void run() {
+            while (!WifiUtils.isWifiApEnabled()) {
+                if (!this.running)
+                    return;
+                try {
+                    Thread.sleep(2000); // 扫描间隔
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                handler.sendEmptyMessage(WifiApConst.ApScanResult);
+            }
+        }
+
+        public void start() {
+            try {
+                this.thread = new Thread(this);
+                this.running = true;
+                this.thread.start();
+            }
+            finally {
+            }
+        }
+
+        public void stop() {
+            try {
+                this.running = false;
+                this.thread = null;
+            }
+            finally {
+            }
+        }
+    }
+
 }

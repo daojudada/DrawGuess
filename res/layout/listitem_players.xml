@@ -37,10 +37,17 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_alignParentRight="true"
-					android:layout_centerVertical="true"
 					android:layout_marginLeft="10dip" />
 
-				
+				<TextView
+				    android:id="@+id/uesr_item_htv_order"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textColor="@color/text_color"
+					android:singleLine="true"
+					android:layout_toLeftOf="@id/user_item_iv_isready"/>
+					
+					
 				<TextView
 					android:id="@+id/user_item_htv_name"
 					android:layout_width="wrap_content"
@@ -74,35 +81,28 @@
 
 				</LinearLayout>
 				
+				<TextView
+					android:id="@+id/user_item_htv_time"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@id/user_item_layout_gender"
+					android:layout_marginLeft="10dip"
+					android:layout_centerVertical="true"
+					android:singleLine="true"
+					android:textColor="@color/font_value"
+					android:textSize="12sp" />
 				
 			</RelativeLayout>
 
 		
-			<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal" >
-				
 			<TextView
 				android:id="@+id/user_item_tv_device"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:ellipsize="end"
 				android:singleLine="true"
 				android:textColor="@color/font_value"
 				android:textSize="13sp" />
-			
-
-			<TextView
-				android:id="@+id/user_item_htv_time"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginLeft="5dip"
-				android:singleLine="true"
-				android:textColor="@color/font_value"
-				android:textSize="12sp" />
-			
-			</LinearLayout>
+				
 		</LinearLayout>
 	</RelativeLayout>
 

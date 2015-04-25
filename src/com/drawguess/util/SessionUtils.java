@@ -107,7 +107,7 @@ public class SessionUtils {
     }
     
     /**
-     * 获取头像编号
+     * 获取游戏顺序
      * 
      * @return AvatarNum
      */

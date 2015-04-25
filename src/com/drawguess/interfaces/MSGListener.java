@@ -1,7 +1,6 @@
 ﻿package com.drawguess.interfaces;
 
 import com.drawguess.net.MSGProtocol;
-import com.esotericsoftware.kryonet.Connection;
 
 /**
  * 消息处理接口
@@ -9,5 +8,5 @@ import com.esotericsoftware.kryonet.Connection;
  *
  */
 public interface MSGListener{
-	void handleIPMSG(Connection conection, MSGProtocol ipmsg);
+	void processMessage(MSGProtocol ipmsg);
 }

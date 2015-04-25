@@ -7,17 +7,14 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.drawguess.R;
 
 /**
- * @fileName NearByPeople.java
- * @description 附近个人实体类
- * @author _Hill3
+ * 附近个人实体类
+ * @author GuoJun
+ * 
  */
 public class Users extends Entity implements Parcelable {
 
     /** 用户常量 **/
 
-    // 共有
-    public static final String AVATAR = "avatar";
-    public static final String BIRTHDAY = "birthday";
     public static final Parcelable.Creator<Users> CREATOR = new Parcelable.Creator<Users>() {
 
         @Override
@@ -39,6 +36,10 @@ public class Users extends Entity implements Parcelable {
             return new Users[size];
         }
     };
+    
+    // 共有
+    public static final String AVATAR = "avatar";
+    public static final String BIRTHDAY = "birthday";
     public static final String DEVICE = "Device";
     public static final String ENTITY_PEOPLE = "entity_people";
     public static final String GENDER = "Gender";
@@ -53,6 +54,7 @@ public class Users extends Entity implements Parcelable {
     public static final String ORDER = "order";
 
     public static final String SERVERIPADDRESS = "serverIPaddress";
+    
     public static Parcelable.Creator<Users> getCreator() {
         return CREATOR;
     }

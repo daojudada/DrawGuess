@@ -29,6 +29,7 @@ public class PlayersAdapter extends BaseObjectListAdapter {
         TextView mHtvLastMsg;
         TextView mHtvName;
         TextView mHtvTime;
+        TextView mHtvOrder;
         ImageView mIvAvatar;
         ImageView mIvGender;
         ImageView mIvReady;
@@ -49,6 +50,7 @@ public class PlayersAdapter extends BaseObjectListAdapter {
             holder.mIvAvatar = (ImageView) convertView.findViewById(R.id.user_item_iv_avatar);
             holder.mHtvDevice = (TextView) convertView.findViewById(R.id.user_item_tv_device);
             holder.mHtvName = (TextView) convertView.findViewById(R.id.user_item_htv_name);
+            holder.mHtvOrder = (TextView) convertView.findViewById(R.id.uesr_item_htv_order);
             holder.mLayoutGender = (LinearLayout) convertView
                     .findViewById(R.id.user_item_layout_gender);
             holder.mIvGender = (ImageView) convertView.findViewById(R.id.user_item_iv_gender);
@@ -59,6 +61,7 @@ public class PlayersAdapter extends BaseObjectListAdapter {
         else {
             holder = (ViewHolder) convertView.getTag();
         }
+        
         Users people = (Users) getItem(position);
         int avatarId = ImageUtils.getImageID(Users.AVATAR + people.getAvatar());
         Picasso.with(mContext).load(avatarId).into(holder.mIvAvatar);
@@ -67,10 +70,14 @@ public class PlayersAdapter extends BaseObjectListAdapter {
         holder.mIvGender.setImageResource(people.getGenderId());
         holder.mHtvTime.setText(DateUtils.getBetweentime(people.getLogintime()));
         holder.mHtvDevice.setText(people.getDevice());
-        if(people.getOrder()>0)
+        if(people.getOrder()>0){
         	holder.mIvReady.setImageResource(R.drawable.btn_ready);
-        else
+        	holder.mHtvOrder.setText("顺序"+people.getOrder());
+        }
+        else{
         	holder.mIvReady.setImageResource(R.drawable.btn_unready);
+        	holder.mHtvOrder.setText("");
+        }
         	
         return convertView;
     }

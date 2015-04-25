@@ -8,7 +8,7 @@
 -keep class com.drawguess.activity.ConnectModeActivity { <init>(...); }
 
 # view AndroidManifest.xml #generated:88
--keep class com.drawguess.activity.DrawTabActivity { <init>(...); }
+-keep class com.drawguess.activity.DrawGuessActivity { <init>(...); }
 
 # view AndroidManifest.xml #generated:67
 -keep class com.drawguess.activity.GameRoomActivity { <init>(...); }
@@ -39,7 +39,7 @@
 
 # view res/layout/activity_drawtabs.xml #generated:357
 # view res/layout/activity_drawtabs.xml #generated:383
-# view res/layout/activity_gameroom.xml #generated:108
+# view res/layout/activity_gameroom.xml #generated:118
 -keep class com.drawguess.view.MultiListView { <init>(...); }
 
 # view res/layout/activity_settting.xml #generated:127
@@ -48,7 +48,4 @@
 
 # view res/layout/dialog_paint.xml #generated:7
 -keep class com.drawguess.view.ShowPaintView { <init>(...); }
-
-# view res/layout/actionbar_tab_layout.xml #generated:15
--keep class com.readystatesoftware.viewbadger.BadgeView { <init>(...); }
 
