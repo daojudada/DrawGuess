@@ -96,6 +96,8 @@
     <string name="maintab_text_draw">绘图</string>
 	<string name="maintab_text_message">消息</string>
 	<string name="maintab_text_result">积分</string>
+	<string name="maintab_text_send">发送</string>
+	<string name="maintab_text_player">玩家</string>
 	<string name="maintab_toast_logout">再按一次退出程序</string>
 	
 	<string name="paint_width">宽度</string>

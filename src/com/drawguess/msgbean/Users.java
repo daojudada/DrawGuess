@@ -27,7 +27,6 @@ public class Users extends Entity implements Parcelable {
             user.setDevice(source.readString());
             user.setIpaddress(source.readString());
             user.setLogintime(source.readString());
-            user.setMsgCount(source.readInt());
             return user;
         }
 
@@ -39,7 +38,6 @@ public class Users extends Entity implements Parcelable {
     
     // 共有
     public static final String AVATAR = "avatar";
-    public static final String BIRTHDAY = "birthday";
     public static final String DEVICE = "Device";
     public static final String ENTITY_PEOPLE = "entity_people";
     public static final String GENDER = "Gender";
@@ -51,8 +49,8 @@ public class Users extends Entity implements Parcelable {
     public static final String ISCLIENT = "isClient";
     public static final String LOGINTIME = "LoginTime";
     public static final String NICKNAME = "Nickname";
-    public static final String ORDER = "order";
-
+    public static final String ORDER = "Order";
+    public static final String SCORE = "Score";
     public static final String SERVERIPADDRESS = "serverIPaddress";
     
     public static Parcelable.Creator<Users> getCreator() {
@@ -69,13 +67,11 @@ public class Users extends Entity implements Parcelable {
     private String mLogintime;
     private String mNickname;
     
-    private int msgCount;
-
     private int order;
-
+    private int score;
 
     public Users() {
-        this.msgCount = 0;
+    	score = 0;
         order = -1;
     }
 
@@ -91,6 +87,7 @@ public class Users extends Entity implements Parcelable {
         this.mIpaddress = ip;
         this.mLogintime = logintime;
         this.order = -1;
+        this.score = 0;
     }
 
     @Override
@@ -142,11 +139,6 @@ public class Users extends Entity implements Parcelable {
         return this.mLogintime;
     }
 
-    @JSONField(serialize = false)
-    public int getMsgCount() {
-        return this.msgCount;
-    }
-
 
     @JSONField(name = Users.NICKNAME)
     public String getNickname() {
@@ -158,6 +150,12 @@ public class Users extends Entity implements Parcelable {
         return this.order;
     }
 
+
+    @JSONField(serialize = false)
+    public int getScore() {
+        return this.score;
+    }
+    
     public void setAvatar(int paramAvatar) {
         this.mAvatar = paramAvatar;
     }
@@ -198,10 +196,6 @@ public class Users extends Entity implements Parcelable {
         this.mLogintime = paramLogintime;
     }
     
-    public void setMsgCount(int paramMsgCount) {
-        this.msgCount = paramMsgCount;
-    }
-
     public void setNickname(String paramNickname) {
         this.mNickname = paramNickname;
     }
@@ -210,6 +204,10 @@ public class Users extends Entity implements Parcelable {
         this.order = paramOrder;
     }
 
+    public void setScore(int paramScore){
+    	this.score = paramScore;
+    }
+    
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(mAvatar);
@@ -219,7 +217,6 @@ public class Users extends Entity implements Parcelable {
         dest.writeString(mDevice);
         dest.writeString(mIpaddress);
         dest.writeString(mLogintime);
-        dest.writeInt(msgCount);
     }
 
 }

@@ -26,8 +26,6 @@ public abstract class TimerCheck {
                             Thread.sleep(mSleepTime);
                         }
                         catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
                             exit();
                         }
                     }

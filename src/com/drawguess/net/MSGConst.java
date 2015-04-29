@@ -97,4 +97,53 @@ public class MSGConst {
 	 * 绘图同步数据
 	 */
 	public static final int ANS_DRAW			= 0x00000014;
+	
+
+	/**
+	 * 绘图同步数据
+	 */
+	public static final int SEND_DRAW			= 0x00000015;
+	
+	/**
+	 * 同步游戏玩家
+	 */
+	public static final int ANS_PLAYERS			= 0x00000016;
+	
+	/**
+	 * 同步游戏玩家
+	 */
+	public static final int SEND_PLAYERS		= 0x00000017;
+	
+
+	/**
+	 *  服务器应答猜词
+	 */
+	public static final int ANS_GUESS_WORD		= 0x00000018;
+	
+	/**
+	 * 客户器端发送猜词
+	 */
+	public static final int SEND_GUESS_WORD		= 0x00000019;
+	
+
+	/**
+	 *  服务器应答猜词
+	 */
+	public static final int ANS_GUESS_TRUE		= 0x00000020;
+	
+	/**
+	 * 客户器端发送猜词
+	 */
+	public static final int SEND_GUESS_TRUE		= 0x00000021;
+	
+
+	/**
+	 *  服务器应答猜词
+	 */
+	public static final int ANS_GUESS_FALSE		= 0x00000022;
+	
+	/**
+	 * 客户器端发送猜词
+	 */
+	public static final int SEND_GUESS_FALSE	= 0x00000023;
 }

@@ -10,8 +10,10 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+
 import com.drawguess.base.Constant;
-import com.drawguess.interfaces.MSGListener;
+import com.drawguess.interfaces.OnMsgRecListener;
 import com.drawguess.msgbean.Entity;
 import com.drawguess.util.LogUtils;
 import com.drawguess.util.SessionUtils;
@@ -39,17 +41,17 @@ public class UdpSocket implements Runnable {
     private static DatagramPacket sendDatagramPacket;
     private static DatagramSocket UDPSocket;
     private boolean isThreadRunning;
-    private List<MSGListener> mListenerList;
+    private List<OnMsgRecListener> mListenerList;
 	private DatagramPacket receiveDatagramPacket;
     private Thread receiveUDPThread;
     private String serverIp;
     
     public UdpSocket() {
-        mListenerList = new ArrayList<MSGListener>();
+        mListenerList = new ArrayList<OnMsgRecListener>();
         serverIp = null;
     }
 
-    public void addMsgListener(MSGListener listener) {
+    public void addMsgListener(OnMsgRecListener listener) {
         this.mListenerList.add(listener);
     }
     
@@ -94,11 +96,10 @@ public class UdpSocket implements Runnable {
 
         }
         catch (SocketException e) {
-            e.printStackTrace();
         }
     }
 
-    public void removeMsgListener(MSGListener listener) {
+    public void removeMsgListener(OnMsgRecListener listener) {
         this.mListenerList.remove(listener);
     }
 
@@ -117,7 +118,6 @@ public class UdpSocket implements Runnable {
                 }
                 receiveUDPThread = null;
                 LogUtils.e(TAG, "UDP数据包接收失败！线程停止");
-                e.printStackTrace();
                 break;
             }
 
@@ -134,27 +134,33 @@ public class UdpSocket implements Runnable {
                 LogUtils.e(TAG, "系统不支持GBK编码");
             }
 
-            MSGProtocol msgRes = new MSGProtocol(UDPListenResStr);
-            int command = msgRes.getCommandNo();
-            
-            //调试模式下允许自己
-            if (!SessionUtils.isLocalUser(msgRes.getSenderIMEI())) 
-            {
-            	switch(command){
-            	case MSGConst.BROAD_FIND:
-            		if(NetManage.getState() == 2)
-            			sendUDPdata(MSGConst.BROAD_REC,receiveDatagramPacket.getAddress(),SessionUtils.getLocalIPaddress());
-            		break;
-            	case MSGConst.BROAD_REC:
-            		serverIp = msgRes.getAddStr();
-            		LogUtils.i(TAG, "找到服务器IP");
-                    break;
-            	}
+            MSGProtocol msgRes;
+			try {
+				msgRes = new MSGProtocol(UDPListenResStr);
+				int command = msgRes.getCommandNo();
+	            
+	            //调试模式下允许自己
+	            if (!SessionUtils.isLocalUser(msgRes.getSenderIMEI())) 
+	            {
+	            	switch(command){
+	            	case MSGConst.BROAD_FIND:
+	            		if(NetManage.getState() == 2)
+	            			sendUDPdata(MSGConst.BROAD_REC,receiveDatagramPacket.getAddress(),SessionUtils.getLocalIPaddress());
+	            		break;
+	            	case MSGConst.BROAD_REC:
+	            		serverIp = msgRes.getAddStr();
+	            		LogUtils.i(TAG, "找到服务器IP");
+	                    break;
+	            	}
 
-                for (MSGListener msgListener: mListenerList) {
-                    msgListener.processMessage(msgRes);
-                }
-            }
+	                for (OnMsgRecListener msgListener: mListenerList) {
+	                    msgListener.processMessage(msgRes);
+	                }
+	            }
+			} catch (JSONException e) {
+        		LogUtils.e(TAG, "UDP json解析失败");
+			}
+            
 
             // 每次接收完UDP数据后，重置长度。否则可能会导致下次收到数据包被截断
             if (receiveDatagramPacket != null) {
@@ -235,7 +241,6 @@ public class UdpSocket implements Runnable {
 			sendBuffer = msg.getProtocolJSON().getBytes("gbk");
 		} catch (UnsupportedEncodingException e) {
 			LogUtils.e(TAG, "json error");
-			e.printStackTrace();
 		}
     	SendThread sendThread = new SendThread(targetIP);
     	sendThread.start();
@@ -258,7 +263,6 @@ public class UdpSocket implements Runnable {
 				  	LogUtils.i(TAG, "sendUDPdata() 数据发送成功");
 			  	}
 				catch (Exception e) {
-					e.printStackTrace();
 	                SEND_FLAG = false;
 					LogUtils.e(TAG, "sendUDPdata() 数据发送失败");
 				}

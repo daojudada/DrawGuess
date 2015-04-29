@@ -66,20 +66,12 @@ public class WifiUtils {
                 method2.invoke(mWifiManager, config, false);
             }
             catch (NoSuchMethodException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
             }
             catch (IllegalArgumentException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
             }
             catch (IllegalAccessException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
             }
             catch (InvocationTargetException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
             }
         }
     }
@@ -232,7 +224,6 @@ public class WifiUtils {
             }
         }
         catch (SocketException e) {
-            e.printStackTrace();
         }
 
         return null;
@@ -336,11 +327,8 @@ public class WifiUtils {
 
         }
         catch (NoSuchMethodException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
         catch (Exception e) {
-            e.printStackTrace();
         }
 
         return false;
@@ -397,24 +385,14 @@ public class WifiUtils {
 
         }
         catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
         catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
         catch (InvocationTargetException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
         catch (SecurityException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
         catch (NoSuchMethodException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
     }
 
@@ -432,7 +410,6 @@ public class WifiUtils {
         TimerCheck timerCheck = new TimerCheck() {
             @Override
             public void doTimeOutWork() {
-                // TODO Auto-generated method stub
                 this.exit();
             }
 

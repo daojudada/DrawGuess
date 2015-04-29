@@ -34,7 +34,6 @@ public class JsonUtils {
             t = JSON.parseObject(paramJson, paramCls);
         }
         catch (Exception e) {
-            e.printStackTrace();
         }
         return t;
     }

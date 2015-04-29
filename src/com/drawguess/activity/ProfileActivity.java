@@ -72,7 +72,6 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
         }
         catch (Exception e) {
             showShortToast(R.string.login_toast_loginfailue);
-            e.printStackTrace();
         }
 
     }

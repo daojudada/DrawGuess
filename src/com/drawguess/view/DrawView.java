@@ -5,12 +5,19 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.drawguess.base.Constant;
 import com.drawguess.drawop.OpDraw.Shape;
 import com.drawguess.drawop.OperationManage.DrawMode;
+import com.drawguess.drawop.*;
+import com.drawguess.msgbean.DataDraw;
+import com.drawguess.msgbean.DataDraw.OP_TYPE;
+import com.drawguess.msgbean.DataDraw.TOUCH_TYPE;
+import com.drawguess.net.MSGConst;
+import com.drawguess.net.NetManage;
+import com.drawguess.util.LogUtils;
+import com.drawguess.util.SessionUtils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -32,11 +39,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.drawguess.drawop.*;
-import com.drawguess.msgbean.DataDraw.TOUCH_TYPE;
-import com.drawguess.net.NetManage;
-import com.drawguess.util.LogUtils;
-import com.drawguess.util.SessionUtils;
 
 /**
  * 画板View，实现绘图的基本功能
@@ -44,10 +46,9 @@ import com.drawguess.util.SessionUtils;
  *
  */
 public class DrawView extends View {
-	public enum DrawState{Canvas,Draw,Path}
+	public enum DrawState{Draw,Trans}
 	private final static String TAG = "DrawView";
-	private NetManage netmanage;
-	private ArrayList<String> orderList;
+	private NetManage netManage;
 	
 	private Paint bmpPaint;
 	private Bitmap cacheBitmap,earlyBitmap;
@@ -88,6 +89,7 @@ public class DrawView extends View {
 	private float suol=1,suols=1;//缩放比例;
 	private int wx,hy;//图像大小
 	
+	
 	public DrawView(Context context,AttributeSet attrs){
 		super(context,attrs);
 		setLayerType(LAYER_TYPE_SOFTWARE, null);
@@ -127,15 +129,21 @@ public class DrawView extends View {
 	public boolean dispatchTouchEvent(MotionEvent event){
 		//如果当前绘图顺序处于首位
 		if(SessionUtils.getOrder() == 1){
-			float x=event.getX(0)/suol;//画图时的坐标转换
-			float y=event.getY(0)/suol;
+			float x=event.getX(0);//画图时的坐标转换
+			float y=event.getY(0);
+			DataDraw data;
 			
 			switch (ds) {
 			case Draw://绘图模式
 				switch (event.getAction() & MotionEvent.ACTION_MASK) 
 				{
 				case MotionEvent.ACTION_DOWN:
-					
+					//发送给服务器
+					data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.DOWN1,x/wx,y/hy,-1,-1);
+					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					//当前设备绘制
+					x/=suol;
+					y/=suol;
 					doDraw(TOUCH_TYPE.DOWN1,x,y,-1,-1);
 					
 					startTime = System.nanoTime();  //開始時間
@@ -143,7 +151,13 @@ public class DrawView extends View {
 					break;
 	
 				case MotionEvent.ACTION_POINTER_DOWN:
-					
+
+					//发送给服务器
+					data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.DOWN2,-1,-1,-1,-1);
+					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					//当前设备绘制
+					x/=suol;
+					y/=suol;
 					doDraw(TOUCH_TYPE.DOWN2,-1,-1,-1,-1);
 					
 					l=(float) Math.sqrt((event.getX(0)-event.getX(1))*(event.getX(0)-event.getX(1))+(event.getY(0)-event.getY(1))*(event.getY(0)-event.getY(1)));
@@ -152,9 +166,19 @@ public class DrawView extends View {
 					
 					break;
 				case MotionEvent.ACTION_MOVE:
-					if(mode == 1)
+					isMove = true;
+					if(mode == 1){
+						//发送给服务器
+						data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.MOVE,x/wx,y/hy,-1,-1);
+						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+						//当前设备绘制
+						x/=suol;
+						y/=suol;
 						doDraw(TOUCH_TYPE.MOVE,x,y,-1,-1);
+					}
 					else{
+						x/=suol;
+						y/=suol;
 						ls=(float) Math.sqrt(
 								(event.getX(0)-event.getX(1))*(event.getX(0)-event.getX(1))+
 								((event.getY(0)-event.getY(1)))*(event.getY(0)-event.getY(1)));
@@ -169,14 +193,24 @@ public class DrawView extends View {
 					
 					break;
 				case MotionEvent.ACTION_POINTER_UP:
-					
+					//发送给服务器
+					data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.UP2,-1,-1,-1,-1);
+					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					//当前设备绘制
+					x/=suol;
+					y/=suol;
 					doDraw(TOUCH_TYPE.UP2,-1,-1,-1,-1);
 					
 					suols*=ls/l;
 					
 					break;
 				case MotionEvent.ACTION_UP:
-
+					//发送给服务器
+					data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.UP1,-1,-1,-1,-1);
+					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					//当前设备绘制
+					x/=suol;
+					y/=suol;
 					doDraw(TOUCH_TYPE.UP1,-1,-1,-1,-1);
 					
 					long endTime = System.nanoTime();
@@ -189,32 +223,64 @@ public class DrawView extends View {
 						suol = 1;
 						this.invalidate();
 					}
+					isMove = false;
+					
 					break;
 					
 				}
 				break;
 				
-			case Path://图元操作模式,更改列表数据
+			case Trans://图元操作模式,更改列表数据
+				float x2,y2;
 				switch (event.getAction() & MotionEvent.ACTION_MASK) 
 				{
 				case MotionEvent.ACTION_DOWN:
+					data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.DOWN1,x,y,-1,-1);
+					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					x/=suol;
+					y/=suol;
 					doTrans(TOUCH_TYPE.DOWN1, x , y, -1, -1);
-					
 					break;
 				case MotionEvent.ACTION_POINTER_DOWN:
-					doTrans(TOUCH_TYPE.DOWN1, event.getX(0), event.getY(0), event.getX(1) , event.getY(1));
-					
+					x2 = event.getX(1);
+					y2 = event.getY(1);
+					data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.DOWN2,x,y,x2,y2);
+					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					x/=suol;
+					y/=suol;
+					x2/=suol;
+					y2/=suol;
+					doTrans(TOUCH_TYPE.DOWN2, x, y, x2, y2);
 					break;
 				case MotionEvent.ACTION_MOVE:
-					doTrans(TOUCH_TYPE.DOWN1, event.getX(0), event.getY(0), event.getX(1) , event.getY(1));
-					
+					if(mode ==1){
+						data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.MOVE,x,y,-1,-1);
+						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+						x/=suol;
+						y/=suol;
+						doTrans(TOUCH_TYPE.MOVE, x, y, -1 , -1);
+					}
+					else if(mode ==2){
+						x2 = event.getX(1);
+						y2 = event.getY(1);
+						data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.MOVE,x,y,x2,y2);
+						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+						x/=suol;
+						y/=suol;
+						x2/=suol;
+						y2/=suol;
+						doTrans(TOUCH_TYPE.MOVE, x, y, x2, y2);
+					}
 					break;
 				case MotionEvent.ACTION_POINTER_UP:
-					doTrans(TOUCH_TYPE.DOWN1, -1,-1,-1,-1);
-					
+					data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.UP2,-1,-1,-1,-1);
+					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					doTrans(TOUCH_TYPE.UP2, -1,-1,-1,-1);
 					break;
 				case MotionEvent.ACTION_UP:
-					mode = 0;
+					data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.UP1,-1,-1,-1,-1);
+					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					doTrans(TOUCH_TYPE.UP1, -1,-1,-1,-1);
 					break;
 				
 				}
@@ -223,11 +289,8 @@ public class DrawView extends View {
 			default:
 				break;
 			}
-	
-			return true;
 		}
-		else 
-			return false;
+		return true;
 	}
 	
 	/**
@@ -274,6 +337,13 @@ public class DrawView extends View {
 		paint.setStrokeJoin(Paint.Join.ROUND);  
 		paint.setStrokeCap(Paint.Cap.ROUND);  
 	}
+	
+
+	private void saveCacheBitmap(){
+		earlyBitmap = cacheBitmap.copy(Config.ARGB_8888, true);
+	}
+	
+/**.........................public...............................................................................**/
 	
 	
 	@Override
@@ -323,16 +393,27 @@ public class DrawView extends View {
 			}
         }
 		catch (Exception e) {
-            e.printStackTrace();
             LogUtils.i(TAG, "onDraw wrong");
         }
 	}
 	
-	private void saveCacheBitmap(){
-		earlyBitmap = cacheBitmap.copy(Config.ARGB_8888, true);
+	/**
+	 * 
+	 * @return 操作栈的长度
+	 */
+	public int getOpSize(){
+		return opManage.size();
 	}
 	
-/**.........................public...............................................................................**/	
+	//得到View的宽度
+	public int getWX(){
+		return wx;
+	}
+	
+	//得到View的长度
+	public int getHY(){
+		return hy;
+	}
 	
 	/**
 	 * 返回笔刷颜色
@@ -373,15 +454,7 @@ public class DrawView extends View {
 	 */
 	public void setNetManage(NetManage nm)
 	{
-		this.netmanage = nm;
-	}
-	
-	/**
-	 * 设置玩家游戏绘制顺序链表
-	 */
-	public void setOrderList(ArrayList<String> orderList)
-	{
-		this.orderList = orderList;
+		this.netManage = nm;
 	}
 	
 	/**
@@ -450,23 +523,7 @@ public class DrawView extends View {
 			paint.setStrokeWidth(paintWidth);
 		}
 	}
-	
-	/**
-	 * 锁定画布
-	 */
-	public boolean setLock()
-	{
-		if(ds != DrawState.Canvas)
-		{
-			ds = DrawState.Canvas;
-			return true;
-		}
-		else 
-		{
-			ds = DrawState.Draw;
-			return false;
-		}
-	}
+
 	
 	/**
 	 * 设置填充模式
@@ -554,9 +611,7 @@ public class DrawView extends View {
 			out.flush();
 			out.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 	
@@ -571,9 +626,9 @@ public class DrawView extends View {
 	 * 几何变换
 	 */
 	public boolean setTrans(){
-		if(ds != DrawState.Path)
+		if(ds != DrawState.Trans)
 		{
-			ds = DrawState.Path;
+			ds = DrawState.Trans;
 			return true;
 		}
 		else 
@@ -596,15 +651,15 @@ public class DrawView extends View {
 	/**
 	 * 客户端接受服务器端的数据进行操作
 	 * @param touch type
-	 * @param x1
-	 * @param y1
-	 * @param x2
-	 * @param y2
+	 * @param x1 附加数据
+	 * @param y1 附加数据
+	 * @param x2 附加数据
+	 * @param y2 附加数据
 	 */
 	public void doOperation(TOUCH_TYPE touch, float x1, float y1, float x2, float y2){
 		if(ds == DrawState.Draw)
 			doDraw(touch,x1,y1,x2,y2);
-		else if(ds == DrawState.Path)
+		else if(ds == DrawState.Trans)
 			doTrans(touch,x1,y1,x2,y2);
 	}
 	
@@ -613,6 +668,7 @@ public class DrawView extends View {
 		case DOWN1:
 			//缓存位图
 			mode = 1;
+			path = new Path();
 			saveCacheBitmap();
 			isFirstMove = true;
 			if(shape == Shape.FILL){
@@ -633,7 +689,6 @@ public class DrawView extends View {
 			}
 			break;
 		case MOVE:
-			isMove = true;
 			if(mode == 1)
 			{
 				if(isFirstMove){
@@ -717,8 +772,6 @@ public class DrawView extends View {
 			break;
 		case UP1:
 			mode=0;
-			isMove = false;
-			path = new Path();
 			break;
 		default:
 			break;
@@ -732,11 +785,6 @@ public class DrawView extends View {
 			mX=x1;
 			mY=y1;
 			mode = 1;
-			if(opTrans == null)
-			{
-				opTrans = new OpTrans();
-				opManage.pushOp(opTrans);
-			}
 			opTrans = new OpTrans();
 			opManage.pushOp(opTrans);
 			break;

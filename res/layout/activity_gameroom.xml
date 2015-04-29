@@ -11,20 +11,19 @@
 		android:layout_height="10dp"
 		android:background="#dddddd"/>
 	    
-	<LinearLayout
+	<RelativeLayout
 		android:id="@+id/gameroom_my_user"
 		android:layout_width="match_parent"
 		android:layout_height="60dp"
 		
 		android:layout_below="@id/empty"
-		android:orientation="horizontal"
 		android:background="@color/white" >
 
 		<ImageView
 		    android:id="@+id/gameroom_my_avatar"
 		    android:layout_width="50dp"
 		    android:layout_height="50dp"
-		    android:layout_gravity="center_vertical"
+		    android:layout_centerVertical="true"
 		    android:layout_marginLeft="10dp"
 		    android:adjustViewBounds="true"
 		    android:background="@drawable/corners_avatar"
@@ -32,26 +31,26 @@
 
 		<TextView
 			android:id="@+id/gameroom_my_name"
-			android:layout_marginRight="5dp"
-			android:layout_marginTop="5dp"
+			android:layout_toRightOf="@+id/gameroom_my_avatar"
+			android:layout_alignBottom="@+id/gameroom_my_avatar"
 		    android:layout_marginLeft="10dp"
-		    android:layout_gravity="center_vertical"
+			android:layout_marginRight="5dp"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textColor="@color/black"
 			android:textSize="30sp" />
 
 
-
 		<LinearLayout
 			android:id="@+id/gameroom_layout_gender"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-		    android:layout_gravity="center_vertical"
+			android:layout_toRightOf="@+id/gameroom_my_name"
+			android:layout_alignBottom="@+id/gameroom_my_name"
+			android:layout_marginBottom="4dp"
 			android:gravity="center"
 			android:orientation="horizontal"
 			android:layout_marginRight="20dp"
-			android:layout_marginTop="10dp"
 			android:paddingTop="4dip"
 			android:paddingBottom="4dip"
 			android:paddingLeft="4dip"
@@ -68,17 +67,15 @@
 		
 		<TextView
 			android:id="@+id/gameroom_my_order"
-			android:layout_marginRight="5dp"
-			android:layout_marginTop="5dp"
-		    android:layout_marginLeft="30dp"
-		    android:layout_gravity="center_vertical"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+		    android:layout_centerVertical="true"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="10dp"
 			android:textColor="@color/text_color"
-			android:textSize="17sp" />
+			android:textSize="18sp" />
 		
-		
-	</LinearLayout>
+	</RelativeLayout>
 
 	<View
        	android:id="@+id/empty2"

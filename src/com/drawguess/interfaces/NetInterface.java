@@ -1,6 +1,6 @@
 package com.drawguess.interfaces;
 
-import com.drawguess.interfaces.MSGListener;
+import com.drawguess.interfaces.OnMsgRecListener;
 import com.drawguess.net.TcpClient;
 import com.drawguess.net.TcpServer;
 
@@ -17,31 +17,31 @@ public interface NetInterface {
 		 * 添加客户端消息处理监听回调
 		 * @param listener
 		 */
-	    public void addClientListener(MSGListener listener);
+	    public void addClientListener(OnMsgRecListener listener);
 
 		/**
 		 * 添加服务器消息处理监听回调
 		 * @param listener
 		 */
-	    public void addServerListener(MSGListener listener);
+	    public void addServerListener(OnMsgRecListener listener);
 
 		/**
 		 * 删除客户端消息处理监听回调
 		 * @param listener
 		 */
-	    public void removeClientListener(MSGListener listener);
+	    public void removeClientListener(OnMsgRecListener listener);
 
 		/**
 		 * 删除服务器消息处理监听回调
 		 * @param listener
 		 */
-	    public void removeServerListener(MSGListener listener);
+	    public void removeServerListener(OnMsgRecListener listener);
 
 	    /**
 	     * 连接服务器
 	     * @return is connected successful
 	     */
-	    public void connectServer();
+	    public void connectServer(String serverIp);
 		   
 	    /**
 	     * 创建客户端

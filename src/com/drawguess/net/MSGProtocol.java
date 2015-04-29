@@ -12,7 +12,6 @@ import com.drawguess.msgbean.DataDraw;
 import com.drawguess.msgbean.Entity;
 import com.drawguess.msgbean.Users;
 import com.drawguess.util.JsonUtils;
-import com.drawguess.util.LogUtils;
 
 /**
  * IPMSG协议抽象类
@@ -29,7 +28,6 @@ import com.drawguess.util.LogUtils;
  * 
  */
 public class MSGProtocol {
-    private static final String TAG = "IPMSGPProtocol";
     public enum ADDITION_TYPE {
     	STRING, USER , DATADRAW
     }
@@ -37,71 +35,58 @@ public class MSGProtocol {
     private static final String ADDSTR = "addStr";
     private static final String ADDTYPE = "addType";
     private static final String COMMANDNO = "commandNo";
-    private static final String PACKETNO = "packetNo";
 
     
     private Entity addObject; // 附加对象
     private String addStr; // 附加信息
     private ADDITION_TYPE addType; // 附加数据类型
     private int commandNo; // 命令
-    private String packetNo;// 数据包序号，以发送时系统时间为序号
-
     private String senderIMEI; // 发送者IMEI
 
     public MSGProtocol() {
-        this.packetNo = getSeconds();
     }
 
     // 根据协议字符串初始化
-    public MSGProtocol(String paramProtocolJSON) {
-        try {
-            JSONObject protocolJSON = new JSONObject(paramProtocolJSON);
-            packetNo = protocolJSON.getString(PACKETNO);
-            commandNo = protocolJSON.getInt(COMMANDNO);
-            senderIMEI = protocolJSON.getString(Users.IMEI);
-            if (protocolJSON.has(ADDTYPE)) { // 若有附加信息
-                String addJSONStr = null;
-                if (protocolJSON.has(ADDOBJECT)) { // 若为Entity类型
-                    addJSONStr = protocolJSON.getString(ADDOBJECT);
-                }
-                else if (protocolJSON.has(ADDSTR)) { // 若为String类型
-                    addJSONStr = protocolJSON.getString(ADDSTR);
-                }
-                switch (ADDITION_TYPE.valueOf(protocolJSON.getString(ADDTYPE))) {
-                    case USER: // 为用户数据
-                        addObject = JsonUtils.getObject(addJSONStr, Users.class);
-                        break;
-
-                    case DATADRAW: // 为消息数据
-                        addObject = JsonUtils.getObject(addJSONStr, DataDraw.class);
-                        break;
-                        
-                    case STRING: // 为String数据
-                        addStr = addJSONStr;
-                        break;
-
-                    default:
-                        break;
-                }
-
+    public MSGProtocol(String paramProtocolJSON) throws JSONException {
+        JSONObject protocolJSON = new JSONObject(paramProtocolJSON);
+        commandNo = protocolJSON.getInt(COMMANDNO);
+        senderIMEI = protocolJSON.getString(Users.IMEI);
+        if (protocolJSON.has(ADDTYPE)) { // 若有附加信息
+            String addJSONStr = null;
+            if (protocolJSON.has(ADDOBJECT)) { // 若为Entity类型
+                addJSONStr = protocolJSON.getString(ADDOBJECT);
             }
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-            LogUtils.e(TAG, "非标准JSON文本");
+            else if (protocolJSON.has(ADDSTR)) { // 若为String类型
+                addJSONStr = protocolJSON.getString(ADDSTR);
+            }
+            switch (ADDITION_TYPE.valueOf(protocolJSON.getString(ADDTYPE))) {
+                case USER: // 为用户数据
+                    addObject = JsonUtils.getObject(addJSONStr, Users.class);
+                    break;
+
+                case DATADRAW: // 为消息数据
+                    addObject = JsonUtils.getObject(addJSONStr, DataDraw.class);
+                    break;
+                    
+                case STRING: // 为String数据
+                    addStr = addJSONStr;
+                    break;
+
+                default:
+                    break;
+            }
+
         }
     }
 
     public MSGProtocol(String paramSenderIMEI, int paramCommandNo) {
         super();
-        this.packetNo = getSeconds();
         this.senderIMEI = paramSenderIMEI;
         this.commandNo = paramCommandNo;
     }
 
     public MSGProtocol(String paramSenderIMEI, int paramCommandNo, Entity paramObject) {
         super();
-        this.packetNo = getSeconds();
         this.senderIMEI = paramSenderIMEI;
         this.commandNo = paramCommandNo;
         this.addObject = paramObject;
@@ -115,7 +100,6 @@ public class MSGProtocol {
 
     public MSGProtocol(String paramSenderIMEI, int paramCommandNo, String paramStr) {
         super();
-        this.packetNo = getSeconds();
         this.senderIMEI = paramSenderIMEI;
         this.commandNo = paramCommandNo;
         this.addStr = paramStr;
@@ -142,10 +126,6 @@ public class MSGProtocol {
         return this.commandNo;
     }
 
-    @JSONField(name = PACKETNO)
-    public String getPacketNo() {
-        return this.packetNo;
-    }
 
     // 输出协议JSON串
     @JSONField(serialize = false)
@@ -181,11 +161,6 @@ public class MSGProtocol {
         this.commandNo = paramCommandNo;
     }
     
-
-    public void setPacketNo(String paramPacketNo) {
-        this.packetNo = paramPacketNo;
-    }
-
     public void setSenderIMEI(String paramSenderIMEI) {
         this.senderIMEI = paramSenderIMEI;
     }

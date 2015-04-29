@@ -108,245 +108,304 @@
     <FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent" >
-	    <FrameLayout
+			
+        
+	    <LinearLayout
 	        android:id="@+id/drawlayout"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent" >
+			android:layout_height="match_parent" 
+	        android:orientation="vertical">
 				
 		    <LinearLayout
+		        android:id="@+id/drawtab_colorbar"
 		        android:layout_width="match_parent"
-		        android:layout_height="match_parent"
-		        android:orientation="vertical">
+		        android:layout_height="0dp"
+		        android:background="@color/white"
+		        android:layout_weight="1"
+		        android:orientation="horizontal" >
 		        
-			    <com.drawguess.view.DrawView
-			        android:id="@+id/drawview"
-			        android:layout_width="match_parent"
-			        android:layout_height="match_parent">
-			    </com.drawguess.view.DrawView>
-			    
-			    
-			    <LinearLayout
-			        android:id="@+id/edit_text_layout"
-			        android:layout_width="match_parent"
-			        android:layout_height="52dp"
-			        android:orientation="horizontal">
-			        
-					    <EditText
-					        android:id="@+id/chat_textditor_eet_editer"
-					        android:layout_width="0dip"
-					        android:layout_height="wrap_content"
-					        android:layout_weight="1"
-					        android:background="@drawable/edittext_sendmsg"
-					        android:gravity="center_vertical"
-					        android:imeOptions="flagNoExtractUi"
-					        android:maxHeight="120dip"
-					        android:maxLength="4000"
-					        android:minHeight="46dip"
-					        android:paddingTop="3dip"
-					        android:hint="@null"/>
-					    
-			    </LinearLayout>
-		    </LinearLayout>
-		
+		        <ImageButton
+		            android:id="@+id/erase"
+		        	android:layout_width="wrap_content"
+		        	android:layout_height="wrap_content"
+                    android:layout_marginLeft="10.0dp"
+                    android:layout_marginRight="3.0dp"
+		        	android:layout_marginTop="6dp"
+		        	android:layout_weight="1"
+		        	android:contentDescription="@string/app_name"
+		        	android:background="@drawable/btn_erase1">
+		        </ImageButton>
+		        
+		        <ImageButton
+		            android:id="@+id/delete"
+		            android:visibility="gone"
+		        	android:layout_width="wrap_content"
+		        	android:layout_height="wrap_content"
+                    android:layout_marginLeft="10.0dp"
+                    android:layout_marginRight="3.0dp"
+		        	android:layout_marginTop="6dp"
+		        	android:layout_weight="1"
+		        	android:contentDescription="@string/app_name"
+		        	android:background="@drawable/btn_delete">
+		        </ImageButton>
+		        
+		        <ImageButton
+		            android:id="@+id/black"
+		        	android:layout_width="wrap_content"
+		        	android:layout_height="wrap_content"
+                    android:layout_marginLeft="3.0dp"
+                    android:layout_marginRight="3.0dp"
+		        	android:layout_marginTop="6dp"
+		        	android:layout_weight="1"
+		        	android:contentDescription="@string/app_name"
+		        	android:background="@drawable/btn_black1">
+		        </ImageButton>
+		        <ImageButton
+		            android:id="@+id/red"
+		        	android:layout_width="wrap_content"
+		        	android:layout_height="wrap_content"
+                    android:layout_marginLeft="3.0dp"
+                    android:layout_marginRight="3.0dp"
+		        	android:layout_marginTop="6dp"
+		        	android:layout_weight="1"
+		        	android:contentDescription="@string/app_name"
+		        	android:background="@drawable/btn_red1">
+		        </ImageButton>
+		        <ImageButton
+		            android:id="@+id/blue"
+		        	android:layout_width="wrap_content"
+		        	android:layout_height="wrap_content"
+                    android:layout_marginLeft="3.0dp"
+                    android:layout_marginRight="3.0dp"
+		        	android:layout_marginTop="6dp"
+		        	android:layout_weight="1"
+		        	android:contentDescription="@string/app_name"
+		        	android:background="@drawable/btn_blue1">
+		        </ImageButton>
+		        <ImageButton
+		            android:id="@+id/green"
+		        	android:layout_width="wrap_content"
+		        	android:layout_height="wrap_content"
+                    android:layout_marginLeft="3.0dp"
+                    android:layout_marginRight="3.0dp"
+		        	android:layout_marginTop="6dp"
+		        	android:layout_weight="1"
+		        	android:contentDescription="@string/app_name"
+		        	android:background="@drawable/btn_green1">
+		        </ImageButton>
+		        <ImageButton
+		            android:id="@+id/purple"
+		        	android:layout_width="wrap_content"
+		        	android:layout_height="wrap_content"
+                    android:layout_marginLeft="3.0dp"
+                    android:layout_marginRight="3.0dp"
+		        	android:layout_marginTop="6dp"
+		        	android:layout_weight="1"
+		        	android:contentDescription="@string/app_name"
+		        	android:background="@drawable/btn_purple1">
+		        </ImageButton>
+		        <ImageButton
+		            android:id="@+id/ching"
+		        	android:layout_width="wrap_content"
+		        	android:layout_height="wrap_content"
+                    android:layout_marginLeft="3.0dp"
+                    android:layout_marginRight="3.0dp"
+		        	android:layout_marginTop="6dp"
+		        	android:layout_weight="1"
+		        	android:contentDescription="@string/app_name"
+		        	android:background="@drawable/btn_ching1">
+		        </ImageButton>
+		        <ImageButton
+		            android:id="@+id/yellow"
+		        	android:layout_width="wrap_content"
+		        	android:layout_height="wrap_content"
+                    android:layout_marginLeft="3.0dp"
+                    android:layout_marginRight="3.0dp"
+		        	android:layout_marginTop="6dp"
+		        	android:layout_weight="1"
+		        	android:contentDescription="@string/app_name"
+		        	android:background="@drawable/btn_yellow1">
+		        </ImageButton>
+		    	
+		        <ImageButton
+		            android:id="@+id/colorpick"
+		        	android:layout_width="wrap_content"
+		        	android:layout_height="wrap_content"
+                    android:layout_marginLeft="3.0dp"
+                    android:layout_marginRight="10.0dp"
+		        	android:layout_marginTop="6dp"
+		        	android:layout_weight="1"
+		        	android:contentDescription="@string/app_name"
+		        	android:background="@drawable/btn_color">
+		        </ImageButton>
+		        
+		        
+		        <ImageButton
+		            android:id="@+id/copy"
+		            android:visibility="gone"
+		        	android:layout_width="wrap_content"
+		        	android:layout_height="wrap_content"
+                    android:layout_marginLeft="3.0dp"
+                    android:layout_marginRight="10.0dp"
+		        	android:layout_marginTop="6dp"
+		        	android:layout_weight="1"
+		        	android:contentDescription="@string/app_name"
+		        	android:background="@drawable/btn_copy">
+		        </ImageButton>
+		        
+		     </LinearLayout>
+		     
+		    <com.drawguess.view.DrawView
+		        android:id="@+id/drawview"
+		        android:layout_width="match_parent"
+		        android:layout_height="0dp"
+		        android:layout_weight="13">
+		    </com.drawguess.view.DrawView>
+		    
+		    
 		    <LinearLayout
-		        android:id="@+id/draw_button_layout"
+		        android:id="@+id/edit_text_layout"
 		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-		        android:orientation="vertical">
+		        android:layout_height="52dp"
+		        android:background="@drawable/bg_unlogin_bar"
+		        android:orientation="horizontal">
 		        
-			    <LinearLayout
-			        android:id="@+id/colorbar"
-			        android:layout_width="match_parent"
-			        android:layout_height="wrap_content"
-			        android:layout_marginTop="6dp"
-			        android:layout_weight="1"
-			        android:orientation="horizontal" >
-			        
-			        <ImageButton
-			            android:id="@+id/erase"
-			        	android:layout_width="wrap_content"
+				    <EditText
+				        android:id="@+id/drawtab_chat_editer"
+				        android:layout_width="0dip"
+				        android:layout_height="wrap_content"
+				        android:layout_weight="5"
+				        android:gravity="center_vertical"
+                     	android:imeOptions="actionSend" 
+				        android:maxHeight="45dip"
+				        android:minHeight="40dip"
+				        android:textColor="@color/black"
+	                  	android:layout_marginLeft="10.0dp"
+	                    android:layout_marginRight="10.0dp"
+	                  	android:layout_marginTop="5.0dp"
+	                    android:layout_marginBottom="5.0dp"
+				        android:background="@drawable/edittext_sendmsg"
+				        android:hint="@null"/>
+				    <Button
+				        android:id="@+id/drawtab_chat_send"
+				        android:layout_width="0dip"
 			        	android:layout_height="wrap_content"
- 	                    android:layout_marginLeft="10.0dp"
-                        android:layout_marginRight="3.0dp"
+				        android:layout_gravity="center_vertical"
+				        android:minWidth="35dip"
+	                  	android:layout_marginLeft="5.0dp"
+	                    android:layout_marginRight="10.0dp"
+	                  	android:layout_marginTop="5.0dp"
+			        	android:layout_marginBottom="5dp"
 			        	android:layout_weight="1"
-			        	android:contentDescription="@string/app_name"
-			        	android:background="@drawable/btn_erase1">
-			        </ImageButton>
-			        
-			        <ImageButton
-			            android:id="@+id/black"
-			        	android:layout_width="wrap_content"
-			        	android:layout_height="wrap_content"
- 	                    android:layout_marginLeft="3.0dp"
-                        android:layout_marginRight="3.0dp"
-			        	android:layout_weight="1"
-			        	android:contentDescription="@string/app_name"
-			        	android:background="@drawable/btn_black1">
-			        </ImageButton>
-			        <ImageButton
-			            android:id="@+id/red"
-			        	android:layout_width="wrap_content"
-			        	android:layout_height="wrap_content"
- 	                    android:layout_marginLeft="3.0dp"
-                        android:layout_marginRight="3.0dp"
-			        	android:layout_weight="1"
-			        	android:contentDescription="@string/app_name"
-			        	android:background="@drawable/btn_red1">
-			        </ImageButton>
-			        <ImageButton
-			            android:id="@+id/blue"
-			        	android:layout_width="wrap_content"
-			        	android:layout_height="wrap_content"
- 	                    android:layout_marginLeft="3.0dp"
-                        android:layout_marginRight="3.0dp"
-			        	android:layout_weight="1"
-			        	android:contentDescription="@string/app_name"
-			        	android:background="@drawable/btn_blue1">
-			        </ImageButton>
-			        <ImageButton
-			            android:id="@+id/green"
-			        	android:layout_width="wrap_content"
-			        	android:layout_height="wrap_content"
- 	                    android:layout_marginLeft="3.0dp"
-                        android:layout_marginRight="3.0dp"
-			        	android:layout_weight="1"
-			        	android:contentDescription="@string/app_name"
-			        	android:background="@drawable/btn_green1">
-			        </ImageButton>
-			        <ImageButton
-			            android:id="@+id/purple"
-			        	android:layout_width="wrap_content"
-			        	android:layout_height="wrap_content"
- 	                    android:layout_marginLeft="3.0dp"
-                        android:layout_marginRight="3.0dp"
-			        	android:layout_weight="1"
-			        	android:contentDescription="@string/app_name"
-			        	android:background="@drawable/btn_purple1">
-			        </ImageButton>
-			        <ImageButton
-			            android:id="@+id/ching"
-			        	android:layout_width="wrap_content"
-			        	android:layout_height="wrap_content"
- 	                    android:layout_marginLeft="3.0dp"
-                        android:layout_marginRight="3.0dp"
-			        	android:layout_weight="1"
-			        	android:contentDescription="@string/app_name"
-			        	android:background="@drawable/btn_ching1">
-			        </ImageButton>
-			        <ImageButton
-			            android:id="@+id/yellow"
-			        	android:layout_width="wrap_content"
-			        	android:layout_height="wrap_content"
- 	                    android:layout_marginLeft="3.0dp"
-                        android:layout_marginRight="3.0dp"
-			        	android:layout_weight="1"
-			        	android:contentDescription="@string/app_name"
-			        	android:background="@drawable/btn_yellow1">
-			        </ImageButton>
-			    	
-			        <ImageButton
-			            android:id="@+id/colorpick"
-			        	android:layout_width="wrap_content"
-			        	android:layout_height="wrap_content"
- 	                    android:layout_marginLeft="3.0dp"
-                        android:layout_marginRight="10.0dp"
-			        	android:layout_weight="1"
-			        	android:contentDescription="@string/app_name"
-			        	android:background="@drawable/btn_color">
-			        </ImageButton>
-			        
-			     </LinearLayout>
-			     
-			     <View
-			        android:layout_width="match_parent"
-			        android:layout_height="wrap_content"
-			        android:layout_weight="3">
-			     </View>
-			     
-			     <LinearLayout
-			        android:id="@+id/btnbar"
-			        android:layout_width="match_parent"
-			        android:layout_height="wrap_content"
-			        android:layout_marginBottom="6dp"
-			        android:layout_weight="1"
-			        android:orientation="horizontal" >
-			        
-			        <ImageButton
-			            android:id="@+id/shape"
-			        	android:layout_width="wrap_content"
-			        	android:layout_height="wrap_content"
- 	                    android:layout_marginLeft="10.0dp"
-                        android:layout_marginRight="10.0dp"
-			        	android:layout_weight="1"
-			        	android:contentDescription="@string/app_name"
-			        	android:background="@drawable/btn_free">
-			        </ImageButton>
-			        <ImageButton
-			            android:id="@+id/fill"
-			        	android:layout_width="wrap_content"
-			        	android:layout_height="wrap_content"
- 	                    android:layout_marginLeft="10.0dp"
-                        android:layout_marginRight="10.0dp"
-			        	android:layout_weight="1"
-			        	android:contentDescription="@string/app_name"
-			        	android:background="@drawable/btn_fill1">
-			        </ImageButton>
-			        <ImageButton
-			            android:id="@+id/undo"
-			        	android:layout_width="wrap_content"
-			        	android:layout_height="wrap_content"
- 	                    android:layout_marginLeft="10.0dp"
-                        android:layout_marginRight="10.0dp"
-			        	android:layout_weight="1"
-			        	android:contentDescription="@string/app_name"
-			        	android:background="@drawable/btn_undo">
-			        </ImageButton>
-			        <ImageButton
-			            android:id="@+id/menu"
-			        	android:layout_width="wrap_content"
-			        	android:layout_height="wrap_content"
- 	                    android:layout_marginLeft="10.0dp"
-                        android:layout_marginRight="10.0dp"
-			        	android:layout_weight="1"
-			        	android:contentDescription="@string/app_name"
-			        	android:background="@drawable/btn_menu">
-			        </ImageButton>
-			        <ImageButton
-			            android:id="@+id/redo"
-			        	android:layout_width="wrap_content"
-			        	android:layout_height="wrap_content"
- 	                    android:layout_marginLeft="10.0dp"
-                        android:layout_marginRight="10.0dp"
-			        	android:layout_weight="1"
-			        	android:contentDescription="@string/app_name"
-			        	android:background="@drawable/btn_redo">
-			        </ImageButton>
-			        <ImageButton
-			            android:id="@+id/edit"
-			        	android:layout_width="wrap_content"
-			        	android:layout_height="wrap_content"
- 	                    android:layout_marginLeft="10.0dp"
-                        android:layout_marginRight="10.0dp"
-			        	android:layout_weight="1"
-			        	android:contentDescription="@string/app_name"
-			        	android:background="@drawable/btn_edit1">
-			        </ImageButton>
-			    	
-			        <ImageButton
-			            android:id="@+id/paint"
-			        	android:layout_width="wrap_content"
-			        	android:layout_height="wrap_content"
- 	                    android:layout_marginLeft="10.0dp"
-                        android:layout_marginRight="10.0dp"
-			        	android:layout_weight="1"
-			        	android:contentDescription="@string/app_name"
-			        	android:background="@drawable/btn_paint">
-			        </ImageButton>
-			        
-			     </LinearLayout>
-		     </LinearLayout>    
-		</FrameLayout>
+			        	android:textSize="14sp"
+			        	android:singleLine="true"
+			        	android:text="@string/maintab_text_send"
+			        	android:background="@drawable/btn_chat_send"
+			        	android:contentDescription="@string/app_name">
+		        	</Button>
+		        
+		    </LinearLayout>
+		    
+		     
+		     <LinearLayout
+		        android:id="@+id/drawtab_btnbar"
+		        android:layout_width="match_parent"
+		        android:layout_height="0dp"
+		        android:background="@color/white"
+		        android:layout_weight="1"
+		        android:orientation="horizontal" >
+		        
+		        <ImageButton
+		            android:id="@+id/shape"
+		        	android:layout_width="wrap_content"
+		        	android:layout_height="wrap_content"
+                  	android:layout_marginLeft="10.0dp"
+                    android:layout_marginRight="10.0dp"
+		        	android:layout_marginBottom="6dp"
+		        	android:layout_weight="1"
+		        	android:contentDescription="@string/app_name"
+		        	android:background="@drawable/btn_free">
+		        </ImageButton>
+		        <ImageButton
+		            android:id="@+id/fill"
+		        	android:layout_width="wrap_content"
+		        	android:layout_height="wrap_content"
+                  	android:layout_marginLeft="10.0dp"
+                    android:layout_marginRight="10.0dp"
+		        	android:layout_marginBottom="6dp"
+		        	android:layout_weight="1"
+		        	android:contentDescription="@string/app_name"
+		        	android:background="@drawable/btn_fill1">
+		        </ImageButton>
+		        <ImageButton
+		            android:id="@+id/undo"
+		        	android:layout_width="wrap_content"
+		        	android:layout_height="wrap_content"
+                  	android:layout_marginLeft="10.0dp"
+                    android:layout_marginRight="10.0dp"
+		        	android:layout_marginBottom="6dp"
+		        	android:layout_weight="1"
+		        	android:contentDescription="@string/app_name"
+		        	android:background="@drawable/btn_undo">
+		        </ImageButton>
+		        <ImageButton
+		            android:id="@+id/menu"
+		        	android:layout_width="wrap_content"
+		        	android:layout_height="wrap_content"
+                  	android:layout_marginLeft="10.0dp"
+                    android:layout_marginRight="10.0dp"
+		        	android:layout_marginBottom="6dp"
+		        	android:layout_weight="1"
+		        	android:contentDescription="@string/app_name"
+		        	android:background="@drawable/btn_menu">
+		        </ImageButton>
+		        <ImageButton
+		            android:id="@+id/redo"
+		        	android:layout_width="wrap_content"
+		        	android:layout_height="wrap_content"
+                  	android:layout_marginLeft="10.0dp"
+                    android:layout_marginRight="10.0dp"
+		        	android:layout_marginBottom="6dp"
+		        	android:layout_weight="1"
+		        	android:contentDescription="@string/app_name"
+		        	android:background="@drawable/btn_redo">
+		        </ImageButton>
+		        <ImageButton
+		            android:id="@+id/edit"
+		        	android:layout_width="wrap_content"
+		        	android:layout_height="wrap_content"
+                  	android:layout_marginLeft="10.0dp"
+                    android:layout_marginRight="10.0dp"
+		        	android:layout_marginBottom="6dp"
+		        	android:layout_weight="1"
+		        	android:contentDescription="@string/app_name"
+		        	android:background="@drawable/btn_edit1">
+		        </ImageButton>
+		    	
+		        <ImageButton
+		            android:id="@+id/paint"
+		        	android:layout_width="wrap_content"
+		        	android:layout_height="wrap_content"
+                  	android:layout_marginLeft="10.0dp"
+                    android:layout_marginRight="10.0dp"
+		        	android:layout_marginBottom="6dp"
+		        	android:layout_weight="1"
+		        	android:contentDescription="@string/app_name"
+		        	android:background="@drawable/btn_paint">
+		        </ImageButton>
+		        
+		     </LinearLayout>
+	     </LinearLayout>    
 		
+	    
+        <TextView
+            android:id="@+id/debug_test"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_marginLeft="50dp"
+        	android:layout_marginTop="50dp"
+        	android:textColor="@color/red"/>
+        
 	    <LinearLayout
 	        android:id="@+id/chatlayout" 
 	        android:layout_width="match_parent"
@@ -377,11 +436,40 @@
 	        android:id="@+id/resultlayout" 
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
+	        android:background="@color/white"
 	        android:visibility="gone"
 	        android:orientation="vertical">
 		    
-	        <com.drawguess.view.MultiListView
-				android:id="@+id/result_list"
+	        
+		    <LinearLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+	        	android:layout_marginTop="20dp"	
+	        	android:layout_marginBottom="20dp"	
+		        android:orientation="horizontal">
+		        
+		        <TextView
+		            android:layout_height="wrap_content"
+		            android:layout_width="0dp"
+		            android:layout_weight="1"
+		            android:gravity="center"
+		            android:textColor="@color/text_color"
+		            android:textSize="20sp"
+		            android:text="@string/maintab_text_player"/>
+		        
+		        
+		        <TextView
+		            android:layout_height="wrap_content"
+		            android:layout_width="0dp"
+		            android:layout_weight="1"
+		            android:gravity="center"
+		            android:textSize="20sp"
+		            android:textColor="@color/text_color"
+		            android:text="@string/maintab_text_result"/>
+	        </LinearLayout>
+		        
+	        <ListView
+				android:id="@+id/scores_list"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:cacheColorHint="@color/transparent"
@@ -393,7 +481,7 @@
 				android:paddingRight="4dip"
 				android:scrollbars="none"
 				android:scrollingCache="false" >
-			</com.drawguess.view.MultiListView>
+			</ListView>
 			
 	        
 	    </LinearLayout>

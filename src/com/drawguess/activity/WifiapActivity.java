@@ -86,7 +86,7 @@ public class WifiapActivity extends BaseActivity implements OnClickListener, Net
                     return true;
                 }
                 catch (Exception e) {
-                    e.printStackTrace();
+                	LogUtils.e(TAG, "seesion set wrong");
                 }
                 return false;
             }
@@ -529,7 +529,6 @@ public class WifiapActivity extends BaseActivity implements OnClickListener, Net
                     Thread.sleep(2000); // 扫描间隔
                 }
                 catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
                 handler.sendEmptyMessage(WifiApConst.ApScanResult);
             }

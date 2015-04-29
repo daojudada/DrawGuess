@@ -1,7 +1,7 @@
 package com.drawguess.dialog;
 
 import com.drawguess.R;
-import com.drawguess.interfaces.PaintChangedListener;
+import com.drawguess.interfaces.OnPaintChangedListener;
 import com.drawguess.view.ShowPaintView;
 
 
@@ -32,7 +32,7 @@ public class PaintDialog extends Dialog {
 	private int paintAlpha;
 	private int paintStyle;
 	private int paintColor;
-	private PaintChangedListener mListener;
+	private OnPaintChangedListener mListener;
 
 	/**
 	 * 构造对话框
@@ -42,7 +42,7 @@ public class PaintDialog extends Dialog {
 	 * @param paintS 笔刷样式
 	 * @param listener 监听
 	 */
-    public PaintDialog(Context context, int paintW, int paintA, int paintS, int paintC, PaintChangedListener listener) {
+    public PaintDialog(Context context, int paintW, int paintA, int paintS, int paintC, OnPaintChangedListener listener) {
         super(context);
         paintWidth = paintW;
         paintAlpha = paintA;
@@ -51,11 +51,11 @@ public class PaintDialog extends Dialog {
         this.mListener = listener;
     }
     
-	public PaintChangedListener getmListener() {
+	public OnPaintChangedListener getmListener() {
 		return mListener;
 	}
 	
-	public void setmListener(PaintChangedListener mListener) {
+	public void setmListener(OnPaintChangedListener mListener) {
 		this.mListener = mListener;
 	}
 
@@ -76,13 +76,13 @@ public class PaintDialog extends Dialog {
         case 0:
         	paintStyleGroup.check(mPencil.getId());
 			break;
-        case 2:
+        case 1:
         	paintStyleGroup.check(mBrush.getId());
 			break;
-        case 3:
+        case 2:
         	paintStyleGroup.check(mCrany.getId());
 			break;
-        case 1:
+        case 3:
         	paintStyleGroup.check(mRelief.getId());
 			break;
         default:
@@ -93,21 +93,19 @@ public class PaintDialog extends Dialog {
 
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				/**
-				 * 选的和ID对不上，找不到原因，FUCK the BUG
-				 */
+
 		        switch (checkedId) {
 	            case R.id.paint_style_pencil:
 	            	paintStyle = 0;
 	            	break;
 	            case R.id.paint_style_brush:
-	            	paintStyle = 2;
+	            	paintStyle = 1;
 	            	break;
 	            case R.id.paint_style_crany:
-	            	paintStyle = 3;
+	            	paintStyle = 2;
 	            	break;
 	            case R.id.paint_style_relief:
-	            	paintStyle = 1;
+	            	paintStyle = 3;
 					break;
 	            default:
 	            	break;

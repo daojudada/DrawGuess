@@ -2,7 +2,6 @@ package com.drawguess.activity;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -25,7 +24,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.drawguess.R;
 import com.drawguess.adapter.PlayersAdapter;
 import com.drawguess.base.BaseActivity;
-import com.drawguess.interfaces.MSGListener;
+import com.drawguess.interfaces.OnMsgRecListener;
 import com.drawguess.msgbean.Users;
 import com.drawguess.net.MSGConst;
 import com.drawguess.net.MSGProtocol;
@@ -61,19 +60,23 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
     private TextView mName;
     private TextView mPlayersNum;
     private TextView mOrder;
-    private ArrayList<String> mReadyList; //已准备的用户列表
-    private ArrayList<String> mStartList; //已准备的用户列表
-    private HashMap<String,Users> mUsersMap; // 在线用户列表
-    private ArrayList<Users> mUsersList; // 临时在线用户列表，用于adapter初始化
+    
+    /**
+     * Local只允许在交互时与客户端收到消息时操作，Server只允许在服务器端收到消息时操作
+     */
+    private HashMap<String,Users> mServerUsersMap; // 服务器在线用户列表
+    private HashMap<String,Users> mLocalUsersMap; // 客户端在线用户列表
+    
+    private ArrayList<String> mServerReadyList; //服务器已准备的用户列表
+    private ArrayList<String> mServerStartList; //服务器已回应开始的用户列表
+    
+    private ArrayList<Users> mLocalUsersList; // 客户端临时在线用户列表，用于adapter初始化
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gameroom);
         
-        mUsersMap = new HashMap<String,Users>();
-        mReadyList =  new ArrayList<String>();
-        mStartList = new ArrayList<String>();
         
         isMeReady = false;
         SessionUtils.setOrder(-1);
@@ -86,6 +89,9 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
         //获取单例
         netManage = NetManage.getInstance(this);
         netManage.setSocketMode(SocketMode.TCP);
+        mLocalUsersMap = NetManage.getLocalUserMap();
+        mServerUsersMap = NetManage.getServerUserMap();
+        
         //创建UDP广播线程
 		netManage.createUDP();
 		//寻找服务器
@@ -103,7 +109,11 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.gameroom_create:
+			NetManage.setState(2);
+	        mServerReadyList =  new ArrayList<String>();
+	        mServerStartList = new ArrayList<String>();
 			createServer();
+            createClient(SessionUtils.getLocalIPaddress());
         	showShortToast("创建房间成功");
         	haveFind = true;
             LogUtils.i(TAG, "创建房间成功");
@@ -114,13 +124,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
         		//用户准备
         		mBtnReady.setBackgroundResource(R.drawable.btn_red_default);
         		mBtnReady.setText(R.string.gameroom_order);
-        		if(NetManage.getState() == 2){
-					addReady(SessionUtils.getIMEI());
-					String lists = TypeUtils.cListToString(mReadyList);
-        			netManage.sendToAllClient(MSGConst.ANS_READY, lists);
-        		}
-        		else if(NetManage.getState() == 1)
-        			netManage.sendToServer(MSGConst.SEND_READY, null);
+    			netManage.sendToServer(MSGConst.SEND_READY, null);
         		isMeReady = true;
         	}
         	else
@@ -128,13 +132,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
         		//用户取消准备
         		mBtnReady.setBackgroundResource(R.drawable.btn_bottombar_normal);
         		mBtnReady.setText(R.string.gameroom_ready);
-        		if(NetManage.getState() == 2){
-            		removeReady(SessionUtils.getIMEI());
-					String lists = TypeUtils.cListToString(mReadyList);
-        			netManage.sendToAllClient(MSGConst.ANS_UNREADY, lists);
-        		}
-        		else if(NetManage.getState() == 1)
-        			netManage.sendToServer(MSGConst.SEND_UNREADY, null);
+    			netManage.sendToServer(MSGConst.SEND_UNREADY, null);
         		isMeReady = false;
         	}
         	//刷新UI
@@ -143,7 +141,6 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
             break;
 
         case R.id.gameroom_start:
-        	mStartList.add(SessionUtils.getIMEI());
         	netManage.sendToAllClient(MSGConst.ANS_START, null);
             break;
 		}
@@ -163,7 +160,11 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
             protected void onPostExecute(Boolean result) {
             	if(result){
     	            LogUtils.i(TAG, "找到房间");
-    	            createClient();
+    	            //显示按钮
+    	    		mBtnCreate.setVisibility(View.GONE);
+    	    		mBtnReady.setVisibility(View.VISIBLE);
+    				NetManage.setState(1);
+    	            createClient(netManage.getServerIp());
     	            haveFind = true;
                 	showShortToast("连接房间成功");
                 }
@@ -198,7 +199,11 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
             	dismissLoadingDialog();
                 if(result){
     	            LogUtils.i(TAG, "找到房间");
-    	            createClient();
+    	            //显示按钮
+    	    		mBtnCreate.setVisibility(View.GONE);
+    	    		mBtnReady.setVisibility(View.VISIBLE);
+    				NetManage.setState(1);
+    	            createClient(netManage.getServerIp());
                 	showShortToast("连接房间成功");
                 }
                 else{
@@ -216,13 +221,10 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
     }
 	
 	
-	private void createClient(){
-        //显示按钮
-		mBtnCreate.setVisibility(View.GONE);
-		mBtnReady.setVisibility(View.VISIBLE);
+	private void createClient(String serverIp){
         //创建客户端
     	netManage.createClient();
-    	clientListener = new MSGListener(){
+    	clientListener = new OnMsgRecListener(){
 			@Override
 			public void processMessage(MSGProtocol pMsg) {
 		        android.os.Message msg = new android.os.Message();
@@ -231,13 +233,18 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 		        switch (command) {
 				case MSGConst.ANS_ONLINE:{ //服务器向客户端通报其他在线用户
 					Users user = (Users)pMsg.getAddObject();
-					//添加用户列表
-					mUsersMap.put(user.getIMEI(), user);
+					if(!user.getIMEI().equals(SessionUtils.getIMEI())){
+						//添加用户列表
+						mLocalUsersMap.put(user.getIMEI(), user);
+					}
 				}
 					break;
 		        case MSGConst.ANS_OFFLINE: {//服务器向客户端通报其他下线用户
-					//删除用户列表
-					mUsersMap.remove(pMsg.getSenderIMEI());
+					Users user = (Users)pMsg.getAddObject();
+					if(!user.getIMEI().equals(SessionUtils.getIMEI())){
+						//删除用户列表
+						mLocalUsersMap.remove(pMsg.getSenderIMEI());
+					}
 		        }
 		            break;
 		        case MSGConst.ANS_READY:{//服务器向客户端通报其他准备用户
@@ -251,13 +258,17 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 		        }
 		            break;
 		        case MSGConst.ANS_START:{//收到开始请求
-		        	netManage.sendToServer(MSGConst.SEND_START, null);
+		        	if(isMeReady)
+		        		netManage.sendToServer(MSGConst.SEND_START, null);
 		        }
 		        	break;
 		        	
 		        case MSGConst.ANS_RESTART:{
-		    		netManage.removeClientListener(clientListener);
-		        	startActivity(DrawGuessActivity.class);
+		        	if(!pMsg.getSenderIMEI().equals(SessionUtils.getIMEI())){
+			    		netManage.removeClientListener(clientListener);
+			        	startActivity(DrawGuessActivity.class);
+		        	}
+		        	break;
 		        }
 		        default:
 		        	LogUtils.i(TAG, "wrong msg type");
@@ -272,7 +283,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
     	//添加客户端消息回调
 		netManage.addClientListener(clientListener);
 		//连接服务器
-		netManage.connectServer();
+		netManage.connectServer(serverIp);
 		//开启客户端线程
 		netManage.startClient();
 		//通报客户端上线
@@ -289,21 +300,25 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
         netManage.createServer();
         //开启服务器线程
 		netManage.startServer();
-		serverListener = new MSGListener(){
+		serverListener = new OnMsgRecListener(){
 			@Override
 			public void processMessage(MSGProtocol pMsg) {
-		        android.os.Message msg = new android.os.Message();
-		        Bundle b = new Bundle();
 				int command = pMsg.getCommandNo();
 				switch (command) {
 				case MSGConst.SEND_ONLINE:{ // 用户上线
 					Users user = (Users)pMsg.getAddObject();
 					//添加用户
 					addUser(user);
-		            //向该客户端发送服务器信息
+		            //向该客户端发送本机信息
 		            netManage.sendToClient(MSGConst.ANS_ONLINE, SessionUtils.getLocalUserInfo(), pMsg.getSenderIMEI());
 		            //向除该client的客户端发送该客户端信息
 		            netManage.sendToAllExClient(MSGConst.ANS_ONLINE, user, pMsg.getSenderIMEI());
+		            //如果本机准备了 发送准备消息
+		            if(isMeReady){
+						String lists = TypeUtils.cListToString(mServerReadyList);
+			            netManage.sendToClient(MSGConst.ANS_READY, lists, pMsg.getSenderIMEI());
+		            }
+		            	
 				}   
 		            break;
 		        case MSGConst.SEND_OFFLINE:{ // 用户下线
@@ -317,14 +332,14 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 		        case MSGConst.SEND_READY:{//收到准备请求
 		        	String imei = pMsg.getSenderIMEI();
 					addReady(imei);
-					String lists = TypeUtils.cListToString(mReadyList);
+					String lists = TypeUtils.cListToString(mServerReadyList);
 		            netManage.sendToAllClient(MSGConst.ANS_READY, lists);
 		        }
 		            break;
 		        case MSGConst.SEND_UNREADY:{//用户取消准备
 		        	String imei = pMsg.getSenderIMEI();
 					removeReady(imei);
-					String lists = TypeUtils.cListToString(mReadyList);
+					String lists = TypeUtils.cListToString(mServerReadyList);
 		            netManage.sendToAllClient(MSGConst.ANS_UNREADY, lists);
 		        }
 		            break;
@@ -336,10 +351,6 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 		        	LogUtils.i(TAG, "wrong msg type");
 		            break;
 			    }
-		        //发送给主线程
-		        msg.what = command;
-		        msg.setData(b);
-				handler.sendMessage(msg);
 			}
 		};
 		//添加服务器消息处理回调
@@ -347,37 +358,44 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 	}
 	
 	private synchronized void checkStart(String imei){
-    	mStartList.add(imei);
-    	if(mStartList.size() == mReadyList.size()){
+    	mServerStartList.add(imei);
+    	if(mServerStartList.size() == mServerReadyList.size()){
     		//确定开始
     		netManage.sendToAllClient(MSGConst.ANS_RESTART, null);
     		//删除该类的监听回调
     		netManage.removeServerListener(serverListener);
+    		netManage.removeClientListener(clientListener);
     		//停止监听UDP寻找房间的广播
     		netManage.stopUdp();
     		Bundle b =new Bundle();
-			b.putStringArrayList("order", mReadyList);
+			b.putStringArrayList("order", mServerReadyList);
 			startActivity(DrawGuessActivity.class, b);
-			
     	}
     }
 	
 
-	private void addReady(String imei){
-		//添加准备列表
-		mReadyList.add(imei);
-		setOrderList(mReadyList);
+	private synchronized void addUser(Users user){
+		//添加用户列表
+		mServerUsersMap.put(user.getIMEI(), user);
     }
     
-	private void removeReady(String imei){
+	private synchronized void removeUser(Users user){
+		mServerUsersMap.remove(user.getIMEI());
+    }
+	
+	private synchronized void addReady(String imei){
+		//添加准备列表
+		mServerReadyList.add(imei);
+    }
+    
+	private synchronized void removeReady(String imei){
 		//删除准备列表
-		mReadyList.remove(imei);
-		setOrderList(mReadyList);
+		mServerReadyList.remove(imei);
     }
 	
 	private void setOrderList(List<String> lists){
 		SessionUtils.setOrder(-1);
-		Iterator<Entry<String, Users>> iter = mUsersMap.entrySet().iterator();
+		Iterator<Entry<String, Users>> iter = mLocalUsersMap.entrySet().iterator();
     	while (iter.hasNext()) {
     		Entry<String, Users> entry = (Entry<String, Users>) iter.next();
     		Users u = (Users) entry.getValue();
@@ -390,21 +408,12 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 				if(s.equals(SessionUtils.getIMEI()))
 					SessionUtils.setOrder(i);
 				else{
-					Users user = mUsersMap.get(s);
+					Users user = mLocalUsersMap.get(s);
 					user.setOrder(i);
 				}
 			}
 		}
 	}
-	
-	private synchronized void addUser(Users user){
-		//添加用户列表
-		mUsersMap.put(user.getIMEI(), user);
-    }
-    
-	private synchronized void removeUser(Users user){
-		mUsersMap.remove(user.getIMEI());
-    }
 	
 	@Override
     protected void initViews() {
@@ -441,7 +450,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
         mBtnReady.setOnClickListener(this);
         mBtnStart.setOnClickListener(this);
         mBtnCreate.setOnClickListener(this);
-        mAdapter = new PlayersAdapter(this, mUsersList);
+        mAdapter = new PlayersAdapter(this, mLocalUsersList);
         mListView.setAdapter(mAdapter);
         mListView.setOnRefreshListener(this);
         mListView.setOnItemClickListener(this);
@@ -454,9 +463,9 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
      * @param application
      */
     private void initMapToList() {
-        mUsersList = new ArrayList<Users>(mUsersMap.size());
-        for (Map.Entry<String, Users> entry : mUsersMap.entrySet()) {
-            mUsersList.add(entry.getValue());
+        mLocalUsersList = new ArrayList<Users>(mLocalUsersMap.size());
+        for (Map.Entry<String, Users> entry : mLocalUsersMap.entrySet()) {
+            mLocalUsersList.add(entry.getValue());
         }
     }
     
@@ -469,11 +478,8 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 	private class MyHandler extends Handler{
 		@Override
 		public void handleMessage(Message msg) {
+			//只有客户端才更新UI
 			switch (msg.what){
-			case MSGConst.SEND_ONLINE:
-	        case MSGConst.SEND_OFFLINE:
-	        case MSGConst.SEND_READY:
-	        case MSGConst.SEND_UNREADY:
 	        case MSGConst.ANS_ONLINE:
 	        case MSGConst.ANS_OFFLINE: 
 	        case MSGConst.ANS_READY:
@@ -492,7 +498,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 	
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-       //Users people = mUsersList.get((int) id);
+       //Users people = mLocalUsersList.get((int) id);
     }
 
    
@@ -500,7 +506,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
     
     /** 刷新用户在线列表UI **/
     private void refreshAdapter() {
-        mAdapter.setData(mUsersList); // Adapter加载List数据
+        mAdapter.setData(mLocalUsersList); // Adapter加载List数据
         mAdapter.notifyDataSetChanged();
     }
     
@@ -512,12 +518,12 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
     		mOrder.setText("顺序：" + SessionUtils.getOrder());
     	else
     		mOrder.setText("");
-    	if(mUsersList.isEmpty())
+    	if(mLocalUsersList.isEmpty())
     		mPlayersNum.setText(R.string.gameroom_emptyplayer);
     	else
     	{
     		String sFormat = getResources().getString(R.string.gameroom_haveplayer); 
-       		mPlayersNum.setText(sFormat + mUsersList.size());
+       		mPlayersNum.setText(sFormat + mLocalUsersList.size());
     	}
     }
 

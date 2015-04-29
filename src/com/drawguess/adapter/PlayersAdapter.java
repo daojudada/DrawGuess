@@ -49,13 +49,12 @@ public class PlayersAdapter extends BaseObjectListAdapter {
 
             holder.mIvAvatar = (ImageView) convertView.findViewById(R.id.user_item_iv_avatar);
             holder.mHtvDevice = (TextView) convertView.findViewById(R.id.user_item_tv_device);
-            holder.mHtvName = (TextView) convertView.findViewById(R.id.user_item_htv_name);
             holder.mHtvOrder = (TextView) convertView.findViewById(R.id.uesr_item_htv_order);
-            holder.mLayoutGender = (LinearLayout) convertView
-                    .findViewById(R.id.user_item_layout_gender);
+            holder.mLayoutGender = (LinearLayout) convertView.findViewById(R.id.user_item_layout_gender);
             holder.mIvGender = (ImageView) convertView.findViewById(R.id.user_item_iv_gender);
             holder.mHtvTime = (TextView) convertView.findViewById(R.id.user_item_htv_time);
             holder.mIvReady = (ImageView) convertView.findViewById(R.id.user_item_iv_isready);
+            holder.mHtvName = (TextView) convertView.findViewById(R.id.user_item_htv_name);
             convertView.setTag(holder);
         }
         else {

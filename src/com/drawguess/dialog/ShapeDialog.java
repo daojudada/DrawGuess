@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.drawguess.R;
-import com.drawguess.interfaces.ShapeChangedListener;
+import com.drawguess.interfaces.OnShapeChangedListener;
 
 
 import android.app.AlertDialog;
@@ -26,7 +26,7 @@ public class ShapeDialog{
 			R.drawable.btn_rect3,
 			R.drawable.btn_oval3};
 	
-	private ShapeChangedListener mListener;
+	private OnShapeChangedListener mListener;
 	private String[] names=new String[]{"涂鸦","直线","矩形","椭圆"};
 
     /**
@@ -35,7 +35,7 @@ public class ShapeDialog{
      * @param title 
      * @param listener 
      */
-    public ShapeDialog(Context context, ShapeChangedListener listener) {
+    public ShapeDialog(Context context, OnShapeChangedListener listener) {
     	mListener=listener;
 
     	

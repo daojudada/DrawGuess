@@ -26,10 +26,6 @@ public class SdDataUtils {
         return mSP.getInt(Users.AVATAR, 0);
     }
 
-    public String getBirthday() {
-        return mSP.getString(Users.BIRTHDAY, "000000");
-    }
-
     public SharedPreferences.Editor getEditor() {
         return mEditor;
     }

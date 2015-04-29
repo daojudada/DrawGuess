@@ -7,6 +7,6 @@ import com.drawguess.net.MSGProtocol;
  * @author GuoJun
  *
  */
-public interface MSGListener{
+public interface OnMsgRecListener{
 	void processMessage(MSGProtocol ipmsg);
 }

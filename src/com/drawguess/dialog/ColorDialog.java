@@ -1,7 +1,7 @@
 package com.drawguess.dialog;
 
 import com.drawguess.base.Constant;
-import com.drawguess.interfaces.ColorChangedListener;
+import com.drawguess.interfaces.OnColorChangedListener;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -27,7 +27,7 @@ public class ColorDialog extends Dialog {
 	Context context;
 	private String title;
 	private int mInitialColor;
-    private ColorChangedListener mListener;
+    private OnColorChangedListener mListener;
 
 	/**
      * 构造
@@ -36,7 +36,7 @@ public class ColorDialog extends Dialog {
      * @param listener 
      */
     public ColorDialog(Context context, String title, 
-    		ColorChangedListener listener) {
+    		OnColorChangedListener listener) {
     	this(context, Color.BLACK, title, listener);
     }
     
@@ -47,7 +47,7 @@ public class ColorDialog extends Dialog {
      * @param listener 
      */
     public ColorDialog(Context context, int initialColor, 
-    		String title, ColorChangedListener listener) {
+    		String title, OnColorChangedListener listener) {
         super(context);
         this.context = context;
         mListener = listener;
@@ -84,11 +84,11 @@ public class ColorDialog extends Dialog {
 		this.mInitialColor = mInitialColor;
 	}
 
-	public ColorChangedListener getmListener() {
+	public OnColorChangedListener getmListener() {
 		return mListener;
 	}
 
-	public void setmListener(ColorChangedListener mListener) {
+	public void setmListener(OnColorChangedListener mListener) {
 		this.mListener = mListener;
 	}
 	

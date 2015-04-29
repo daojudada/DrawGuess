@@ -1,11 +1,14 @@
 package com.drawguess.net;
 
 
+import java.util.HashMap;
+
 import android.content.Context;
 
-import com.drawguess.interfaces.MSGListener;
+import com.drawguess.interfaces.OnMsgRecListener;
 import com.drawguess.interfaces.NetInterface;
 import com.drawguess.msgbean.Entity;
+import com.drawguess.msgbean.Users;
 import com.drawguess.util.LogUtils;
 import com.drawguess.util.SessionUtils;
 
@@ -16,6 +19,10 @@ import com.drawguess.util.SessionUtils;
  */
 public class NetManage implements NetInterface{
     public enum SocketMode{TCP,UDP}
+    
+    private static HashMap<String,Users> mServerUsersMap; // 服务器在线用户列表
+    private static HashMap<String,Users> mLocalUsersMap; // 客户端在线用户列表
+    
     private static final String TAG = "WifiNet";
     private static NetManage instance;
     private static Context mContext;
@@ -37,42 +44,62 @@ public class NetManage implements NetInterface{
     	return state;
     }
 
+    /**
+     * 得到目前网络管理状态
+     * 0：空
+     * 1：客户端
+     * 2：服务器
+     */
+    public static void setState(int s){
+    	state = s;
+    }
+    
     public static NetManage getInstance(Context context) {
+        mContext = context;
         if (instance == null) {
-            mContext = context;
+            mLocalUsersMap = new HashMap<String,Users>();
+            mServerUsersMap = new HashMap<String,Users>();
             instance = new NetManage();
         }
         return instance;
     }
     
+    public static HashMap<String,Users> getLocalUserMap(){
+    	return mLocalUsersMap;
+    }
+    
+
+    public static HashMap<String,Users> getServerUserMap(){
+    	return mServerUsersMap;
+    }
+    
     @Override
-    public void addClientListener(MSGListener listener){
+    public void addClientListener(OnMsgRecListener listener){
     	mClient.addMsgListener(listener);
     }
     
 
     @Override
-    public void addServerListener(MSGListener listener){
+    public void addServerListener(OnMsgRecListener listener){
     	mServer.addMsgListener(listener);
     }
     
-    public void addUdpListener(MSGListener listener){
+    public void addUdpListener(OnMsgRecListener listener){
     	mUDPListener.addMsgListener(listener);
     }
     
     @Override
-    public void removeClientListener(MSGListener listener){
-    	mClient.addMsgListener(listener);
+    public void removeClientListener(OnMsgRecListener listener){
+    	mClient.removeMsgListener(listener);
     }
-    
 
     @Override
-    public void removeServerListener(MSGListener listener){
-    	mServer.addMsgListener(listener);
+    public void removeServerListener(OnMsgRecListener listener){
+    	mServer.removeMsgListener(listener);
     }
     
-    public void removeUdpListener(MSGListener listener){
-    	mUDPListener.addMsgListener(listener);
+    public void removeUdpListener(OnMsgRecListener listener){
+    	mUDPListener.removeMsgListener(listener);
     }
 
     public void setSocketMode(SocketMode sm){
@@ -87,13 +114,12 @@ public class NetManage implements NetInterface{
 
     @Override
     public void createClient(){
-    	state = 1;
     	mClient = TcpClient.getInstance(mContext);
     }
 
     @Override
-    public void connectServer(){
-		mClient.connect(serverIp);
+    public void connectServer(String ip){
+		mClient.connect(ip);
     }
     
     
@@ -109,7 +135,6 @@ public class NetManage implements NetInterface{
     
     @Override
     public void createServer(){
-    	state = 2;
     	mServer= TcpServer.getInstance(mContext);
     }
 
@@ -122,7 +147,6 @@ public class NetManage implements NetInterface{
         		try {
 					Thread.sleep(300);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
 				}
         		serverIp = mUDPListener.getServerIp();
     			if(serverIp != null){
@@ -146,6 +170,9 @@ public class NetManage implements NetInterface{
     	return mServer;
     }
     
+    public String getServerIp(){
+    	return serverIp;
+    }
     
     /**
      * 打包数据包
@@ -185,36 +212,38 @@ public class NetManage implements NetInterface{
     
     @Override
     public void sendToAllExClient(int commandNo, Object addData, String imei) {
-    	MSGProtocol ipmsg = packageMsg(commandNo,addData);
-    	if(ipmsg!=null){
-
-        	try {
-            	if(sm == SocketMode.TCP)
-            		mServer.sendToAllExClient(ipmsg, imei);
-        		//else
-        			
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-                LogUtils.e(TAG, "sendToClient() 发送数据包失败");
-            }
-            LogUtils.i(TAG, "sendToAllExClient() 发送数据包成功");
-	    }
+    	if(state == 2){
+	    	MSGProtocol ipmsg = packageMsg(commandNo,addData);
+	    	if(ipmsg!=null){
+	
+	        	try {
+	            	if(sm == SocketMode.TCP)
+	            		mServer.sendToAllExClient(ipmsg, imei);
+	        		//else
+	        			
+	            }
+	            catch (Exception e) {
+	                LogUtils.e(TAG, "sendToClient() 发送数据包失败");
+	            }
+	            LogUtils.i(TAG, "sendToAllExClient() 发送数据包成功");
+		    }
+    	}
     }
     
     @Override
     public void sendToClient(int commandNo, Object addData, String imei) {
-    	MSGProtocol ipmsg = packageMsg(commandNo,addData);
-    	if(ipmsg!=null){
-        	try {
-            	if(sm == SocketMode.TCP)
-            		mServer.sendToClient(ipmsg, imei);
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-                LogUtils.e(TAG, "sendToClient() 发送数据包失败");
-            }
-            LogUtils.i(TAG, "sendToServer() 发送数据包成功");
+    	if(state == 2){
+	    	MSGProtocol ipmsg = packageMsg(commandNo,addData);
+	    	if(ipmsg!=null){
+	        	try {
+	            	if(sm == SocketMode.TCP)
+	            		mServer.sendToClient(ipmsg, imei);
+	            }
+	            catch (Exception e) {
+	                LogUtils.e(TAG, "sendToClient() 发送数据包失败");
+	            }
+	            LogUtils.i(TAG, "sendToServer() 发送数据包成功");
+	    	}
     	}
     }
     
@@ -222,14 +251,12 @@ public class NetManage implements NetInterface{
 
     @Override
     public void sendToServer(int commandNo, Object addData) {
-    	if(state == 1){
-	    	MSGProtocol ipmsg = packageMsg(commandNo,addData);
-	    	if(ipmsg!=null){
-            	if(sm == SocketMode.TCP)
-            		mClient.sendData(ipmsg);
-        		else
-        			mUDPListener.sendUDPdata(ipmsg, serverIp);
-	    	}
+    	MSGProtocol ipmsg = packageMsg(commandNo,addData);
+    	if(ipmsg!=null){
+        	if(sm == SocketMode.TCP)
+        		mClient.sendToServer(ipmsg);
+    		else
+    			mUDPListener.sendUDPdata(ipmsg, serverIp);
     	}
     }
     
@@ -246,6 +273,7 @@ public class NetManage implements NetInterface{
     	}
     	else if(state == 2){
     		mServer.stop();
+    		mClient.stop();
     	}
     }
 }

@@ -18,92 +18,86 @@
 			android:layout_marginRight="10dip"
 			android:scaleType="fitXY" />
 
-		<LinearLayout
+
+		<RelativeLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_centerVertical="true"
-			android:layout_toRightOf="@id/user_item_iv_avatar"
-			android:gravity="center_vertical"
-			android:orientation="vertical" >
+			android:layout_toRightOf="@id/user_item_iv_avatar">
 
-			<RelativeLayout
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:layout_marginBottom="5dip"
-				android:gravity="center" >
+			<TextView
+				android:id="@+id/user_item_htv_name"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentLeft="true"
+				android:layout_alignParentTop="true"
+				android:singleLine="true"
+				android:textColor="@color/text_color"
+				android:textSize="17sp" />
+			
+			<LinearLayout
+				android:id="@+id/user_item_layout_gender"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_toRightOf="@id/user_item_htv_name"
+				android:layout_alignBottom="@id/user_item_htv_name"
+				android:layout_marginBottom="3dip"
+				android:layout_marginLeft="5dip"
+				android:gravity="center"
+				android:orientation="horizontal"
+				android:paddingBottom="3dip"
+				android:paddingLeft="5dip"
+				android:paddingRight="5dip"
+				android:paddingTop="3dip" >
 
 				<ImageView
-					android:id="@+id/user_item_iv_isready"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_alignParentRight="true"
-					android:layout_marginLeft="10dip" />
+					android:id="@+id/user_item_iv_gender"
+					android:layout_width="8dip"
+					android:layout_height="8dip"
+					android:scaleType="fitXY" />
 
-				<TextView
-				    android:id="@+id/uesr_item_htv_order"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:textColor="@color/text_color"
-					android:singleLine="true"
-					android:layout_toLeftOf="@id/user_item_iv_isready"/>
-					
-					
-				<TextView
-					android:id="@+id/user_item_htv_name"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_alignParentLeft="true"
-					android:layout_centerVertical="true"
-					android:singleLine="true"
-					android:textColor="@color/text_color"
-					android:textSize="17sp" />
-				
-				<LinearLayout
-					android:id="@+id/user_item_layout_gender"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_toRightOf="@id/user_item_htv_name"
-					android:layout_centerVertical="true"
-					android:layout_marginTop="3dip"
-					android:layout_marginLeft="5dip"
-					android:gravity="center"
-					android:orientation="horizontal"
-					android:paddingBottom="3dip"
-					android:paddingLeft="5dip"
-					android:paddingRight="5dip"
-					android:paddingTop="3dip" >
-
-					<ImageView
-						android:id="@+id/user_item_iv_gender"
-						android:layout_width="8dip"
-						android:layout_height="8dip"
-						android:scaleType="fitXY" />
-
-				</LinearLayout>
-				
-				<TextView
-					android:id="@+id/user_item_htv_time"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_toRightOf="@id/user_item_layout_gender"
-					android:layout_marginLeft="10dip"
-					android:layout_centerVertical="true"
-					android:singleLine="true"
-					android:textColor="@color/font_value"
-					android:textSize="12sp" />
-				
-			</RelativeLayout>
-
-		
+			</LinearLayout>
+			
+			<TextView
+				android:id="@+id/user_item_htv_time"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_toRightOf="@id/user_item_layout_gender"
+				android:layout_alignBottom="@id/user_item_htv_name"
+				android:layout_marginLeft="10dip"
+				android:singleLine="true"
+				android:textColor="@color/font_value"
+				android:textSize="12sp" />
+			
 			<TextView
 				android:id="@+id/user_item_tv_device"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_below="@+id/user_item_htv_name"
+				android:layout_marginTop="10dp"
 				android:singleLine="true"
 				android:textColor="@color/font_value"
 				android:textSize="13sp" />
+			
+			
+			<ImageView
+				android:id="@+id/user_item_iv_isready"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentRight="true"
+				android:layout_alignParentTop="true"/>
+
+			<TextView
+			    android:id="@+id/uesr_item_htv_order"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
+				android:layout_toLeftOf="@id/user_item_iv_isready"
+				android:textColor="@color/text_color"
+				android:singleLine="true"/>
+		</RelativeLayout>
+
+		
 				
-		</LinearLayout>
 	</RelativeLayout>
 
 	<View

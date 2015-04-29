@@ -29,10 +29,6 @@ public class SessionUtils {
         return Integer.parseInt(mlocalUserSession.get(Users.AVATAR));
     }
 
-    public static String getBirthday() {
-        return mlocalUserSession.get(Users.BIRTHDAY);
-    }
-
     /**
      * 获取设备品牌型号
      * 
@@ -116,6 +112,14 @@ public class SessionUtils {
     }
 
 
+    /**
+     * 获取游戏积分
+     * 
+     * @return AvatarNum
+     */
+    public static int getScore() {
+        return Integer.parseInt(mlocalUserSession.get(Users.SCORE));
+    }
 
     /**
      * 获取热点IP
@@ -144,10 +148,6 @@ public class SessionUtils {
      */
     public static void setAvatar(int paramAvatar) {
         mlocalUserSession.put(Users.AVATAR, String.valueOf(paramAvatar));
-    }
-
-    public static void setBirthday(String birthday) {
-        mlocalUserSession.put(Users.BIRTHDAY, birthday);
     }
 
     /**
@@ -218,6 +218,7 @@ public class SessionUtils {
         mlocalUserSession.put(Users.IPADDRESS, pUsers.getIpaddress());
         mlocalUserSession.put(Users.LOGINTIME, pUsers.getLogintime());
         mlocalUserSession.put(Users.ORDER, String.valueOf(pUsers.getOrder()));
+        mlocalUserSession.put(Users.SCORE, String.valueOf(pUsers.getScore()));
     }
 
 
@@ -251,6 +252,19 @@ public class SessionUtils {
         mlocalUserSession.put(Users.ORDER, String.valueOf(paramOrder));
     }
 
+
+
+    /**
+     * 设置游戏序号
+     * 
+     * @param paramAvatar
+     *            选择的头像编号
+     */
+    public static void setScore(int paramScore) {
+        mlocalUserSession.put(Users.SCORE, String.valueOf(paramScore));
+    }
+
+    
     /**
      * 设置热点IP
      * 
