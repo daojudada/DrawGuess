@@ -146,4 +146,26 @@ public class MSGConst {
 	 * 客户器端发送猜词
 	 */
 	public static final int SEND_GUESS_FALSE	= 0x00000023;
+	
+
+	/**
+	 *  服务器应答猜词
+	 */
+	public static final int ANS_CHOOSED			= 0x00000024;
+	
+	/**
+	 * 客户器端发送猜词
+	 */
+	public static final int SEND_CHOOSED		= 0x00000025;
+	
+
+	/**
+	 *  服务器应答提示
+	 */
+	public static final int ANS_TIP				= 0x00000026;
+	
+	/**
+	 * 客户器端发送提示
+	 */
+	public static final int SEND_TIP			= 0x00000027;
 }

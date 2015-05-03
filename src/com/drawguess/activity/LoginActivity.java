@@ -20,8 +20,12 @@ import android.widget.TextView;
 import com.drawguess.R;
 import com.drawguess.base.ActivitiesManager;
 import com.drawguess.base.BaseActivity;
-import com.drawguess.msgbean.Users;
-import com.drawguess.util.DateUtils;
+import com.drawguess.base.Constant;
+import com.drawguess.msgbean.User;
+import com.drawguess.sql.DBOperate;
+import com.drawguess.sql.WordInfo;
+import com.drawguess.util.DataUtils;
+import com.drawguess.util.EncryptUtils;
 import com.drawguess.util.ImageUtils;
 import com.drawguess.util.SdDataUtils;
 import com.drawguess.util.SessionUtils;
@@ -76,7 +80,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         try {
             mIMEI = mTelephonyManager.getDeviceId(); // 获取IMEI
             mDevice = getPhoneModel();
-            mLogintime = DateUtils.getNowtime();
+            mLogintime = DataUtils.getNowtime();
             
             // 设置用户Session信息
             SessionUtils.setIMEI(mIMEI);
@@ -90,12 +94,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
             SdDataUtils mSPutUtils = new SdDataUtils();
             SharedPreferences.Editor mEditor = mSPutUtils.getEditor();
             
-            mEditor.putString(Users.IMEI, mIMEI)
-            	.putString(Users.DEVICE, mDevice)
-            	.putString(Users.NICKNAME, mNickname)
-            	.putString(Users.GENDER, mGender)
-                .putString(Users.LOGINTIME, mLogintime)
-        		.putInt(Users.AVATAR, mAvatar);
+            mEditor.putString(User.IMEI, mIMEI)
+            	.putString(User.DEVICE, mDevice)
+            	.putString(User.NICKNAME, mNickname)
+            	.putString(User.GENDER, mGender)
+                .putString(User.LOGINTIME, mLogintime)
+        		.putInt(User.AVATAR, mAvatar);
             mEditor.commit();
             
             startActivity(ConnectModeActivity.class);
@@ -155,11 +159,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
             mGender = sp.getGender();
             mLastLogintime = sp.getLogintime();
             
-            Picasso.with(mContext).load(ImageUtils.getImageID(Users.AVATAR + mAvatar)).into(mImgExAvatar);
-            Picasso.with(mContext).load(ImageUtils.getImageID(Users.AVATAR + mAvatar)).into(mIvAvatar);
+            Picasso.with(mContext).load(ImageUtils.getImageID(User.AVATAR + mAvatar)).into(mImgExAvatar);
+            Picasso.with(mContext).load(ImageUtils.getImageID(User.AVATAR + mAvatar)).into(mIvAvatar);
             
             mTvExNickmame.setText(mNickname);
-            mTvExLogintime.setText(DateUtils.getBetweentime(mLastLogintime));
+            mTvExLogintime.setText(DataUtils.getBetweentime(mLastLogintime));
             
             if ("女".equals(mGender)) {
                 mIvExGender.setBackgroundResource(R.drawable.ic_user_famale);
@@ -218,7 +222,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 		else if (resultCode == RESULT_OK){
 			int result = data_intent.getExtras().getInt("result");
             mAvatar = result + 1;
-            Picasso.with(mContext).load(ImageUtils.getImageID(Users.AVATAR + mAvatar)).into(mIvAvatar);
+            Picasso.with(mContext).load(ImageUtils.getImageID(User.AVATAR + mAvatar)).into(mIvAvatar);
        }
 	}
     

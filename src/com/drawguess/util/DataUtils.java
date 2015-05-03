@@ -13,7 +13,7 @@ import android.content.Context;
  * @author GuoJun
  *
  */
-public class DateUtils {
+public class DataUtils {
 
     public static String FORMATTIMESTR = "yyyy年MM月dd日 HH:mm:ss"; // 时间格式化格式
 

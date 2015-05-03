@@ -2,7 +2,7 @@ package com.drawguess.activity;
 
 import com.drawguess.R;
 import com.drawguess.base.BaseActivity;
-import com.drawguess.msgbean.Users;
+import com.drawguess.msgbean.User;
 import com.drawguess.util.ImageUtils;
 import com.drawguess.util.SdDataUtils;
 import com.drawguess.util.SessionUtils;
@@ -62,9 +62,9 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
             SdDataUtils mSPutUtils = new SdDataUtils();
             SharedPreferences.Editor mEditor = mSPutUtils.getEditor();
             
-            mEditor.putString(Users.NICKNAME, mNickname)
-            	.putString(Users.GENDER, mGender)
-        		.putInt(Users.AVATAR, mAvatar);
+            mEditor.putString(User.NICKNAME, mNickname)
+            	.putString(User.GENDER, mGender)
+        		.putInt(User.AVATAR, mAvatar);
             mEditor.commit();
             
             finish();
@@ -94,7 +94,7 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
     	mGender = sp.getGender();
     	
     	mEtNickname.setText(mNickname);
-    	Picasso.with(mContext).load(ImageUtils.getImageID(Users.AVATAR + mAvatar)).into(mIvAvatar);
+    	Picasso.with(mContext).load(ImageUtils.getImageID(User.AVATAR + mAvatar)).into(mIvAvatar);
     	if ("女".equals(mGender)) {
     		mRgGender.check(mRbGirl.getId());
         }
@@ -159,7 +159,7 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
    		else if (resultCode == RESULT_OK){
    			int result = data_intent.getExtras().getInt("result");
                mAvatar = result + 1;
-               Picasso.with(mContext).load(ImageUtils.getImageID(Users.AVATAR + mAvatar)).into(mIvAvatar);
+               Picasso.with(mContext).load(ImageUtils.getImageID(User.AVATAR + mAvatar)).into(mIvAvatar);
           }
    	}
 

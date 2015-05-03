@@ -3,7 +3,7 @@ package com.drawguess.util;
 
 import java.util.HashMap;
 
-import com.drawguess.msgbean.Users;
+import com.drawguess.msgbean.User;
 
 /**
  * 本机用户的相关数据类
@@ -12,7 +12,7 @@ import com.drawguess.msgbean.Users;
  */
 public class SessionUtils {
 
-    private static Users localUserInfo;
+    private static User localUserInfo;
     private static HashMap<String, String> mlocalUserSession = new HashMap<String, String>(15);
 
     /** 清空全局登陆Session信息 **/
@@ -26,7 +26,7 @@ public class SessionUtils {
      * @return AvatarNum
      */
     public static int getAvatar() {
-        return Integer.parseInt(mlocalUserSession.get(Users.AVATAR));
+        return Integer.parseInt(mlocalUserSession.get(User.AVATAR));
     }
 
     /**
@@ -35,7 +35,7 @@ public class SessionUtils {
      * @return device
      */
     public static String getDevice() {
-        return mlocalUserSession.get(Users.DEVICE);
+        return mlocalUserSession.get(User.DEVICE);
     }
 
 
@@ -45,7 +45,7 @@ public class SessionUtils {
      * @return Gender
      */
     public static String getGender() {
-        return mlocalUserSession.get(Users.GENDER);
+        return mlocalUserSession.get(User.GENDER);
     }
 
     /**
@@ -54,7 +54,7 @@ public class SessionUtils {
      * @return IMEI
      */
     public static String getIMEI() {
-        return mlocalUserSession.get(Users.IMEI);
+        return mlocalUserSession.get(User.IMEI);
     }
 
     /**
@@ -63,7 +63,7 @@ public class SessionUtils {
      * @return isClient
      */
     public static boolean getIsClient() {
-        return Boolean.parseBoolean(mlocalUserSession.get(Users.ISCLIENT));
+        return Boolean.parseBoolean(mlocalUserSession.get(User.ISCLIENT));
     }
 
     /**
@@ -72,12 +72,12 @@ public class SessionUtils {
      * @return localIPaddress
      */
     public static String getLocalIPaddress() {
-        return mlocalUserSession.get(Users.IPADDRESS);
+        return mlocalUserSession.get(User.IPADDRESS);
     }
 
-    public static Users getLocalUserInfo() {
+    public static User getLocalUserInfo() {
         if (localUserInfo == null) {
-            localUserInfo = new Users(getAvatar(), getNickname(),getGender(), getIMEI(), getDevice(), 
+            localUserInfo = new User(getAvatar(), getNickname(),getGender(), getIMEI(), getDevice(), 
                     getLocalIPaddress(), getLoginTime());
 
         }
@@ -90,7 +90,7 @@ public class SessionUtils {
      * @return Data 登录时间 年月日
      */
     public static String getLoginTime() {
-        return mlocalUserSession.get(Users.LOGINTIME);
+        return mlocalUserSession.get(User.LOGINTIME);
     }
 
     /**
@@ -99,7 +99,7 @@ public class SessionUtils {
      * @return Nickname
      */
     public static String getNickname() {
-        return mlocalUserSession.get(Users.NICKNAME);
+        return mlocalUserSession.get(User.NICKNAME);
     }
     
     /**
@@ -108,17 +108,7 @@ public class SessionUtils {
      * @return AvatarNum
      */
     public static int getOrder() {
-        return Integer.parseInt(mlocalUserSession.get(Users.ORDER));
-    }
-
-
-    /**
-     * 获取游戏积分
-     * 
-     * @return AvatarNum
-     */
-    public static int getScore() {
-        return Integer.parseInt(mlocalUserSession.get(Users.SCORE));
+        return Integer.parseInt(mlocalUserSession.get(User.ORDER));
     }
 
     /**
@@ -127,7 +117,7 @@ public class SessionUtils {
      * @return serverIPaddress
      */
     public static String getServerIPaddress() {
-        return mlocalUserSession.get(Users.SERVERIPADDRESS);
+        return mlocalUserSession.get(User.SERVERIPADDRESS);
     }
 
     public static boolean isLocalUser(String paramIMEI) {
@@ -147,7 +137,7 @@ public class SessionUtils {
      *            选择的头像编号
      */
     public static void setAvatar(int paramAvatar) {
-        mlocalUserSession.put(Users.AVATAR, String.valueOf(paramAvatar));
+        mlocalUserSession.put(User.AVATAR, String.valueOf(paramAvatar));
     }
 
     /**
@@ -156,7 +146,7 @@ public class SessionUtils {
      * @param paramDevice
      */
     public static void setDevice(String paramDevice) {
-        mlocalUserSession.put(Users.DEVICE, paramDevice);
+        mlocalUserSession.put(User.DEVICE, paramDevice);
     }
 
     /**
@@ -166,7 +156,7 @@ public class SessionUtils {
      * 
      */
     public static void setGender(String paramGender) {
-        mlocalUserSession.put(Users.GENDER, paramGender);
+        mlocalUserSession.put(User.GENDER, paramGender);
     }
 
     /**
@@ -176,7 +166,7 @@ public class SessionUtils {
      *            本机的IMEI值
      */
     public static void setIMEI(String paramIMEI) {
-        mlocalUserSession.put(Users.IMEI, paramIMEI);
+        mlocalUserSession.put(User.IMEI, paramIMEI);
     }
 
     /**
@@ -185,7 +175,7 @@ public class SessionUtils {
      * @param paramIsClient
      */
     public static void setIsClient(boolean paramIsClient) {
-        mlocalUserSession.put(Users.ISCLIENT, String.valueOf(paramIsClient));
+        mlocalUserSession.put(User.ISCLIENT, String.valueOf(paramIsClient));
     }
 
 
@@ -196,7 +186,7 @@ public class SessionUtils {
      *            本地IP地址值
      */
     public static void setLocalIPaddress(String paramLocalIPaddress) {
-        mlocalUserSession.put(Users.IPADDRESS, paramLocalIPaddress);
+        mlocalUserSession.put(User.IPADDRESS, paramLocalIPaddress);
     }
 
     /**
@@ -205,20 +195,20 @@ public class SessionUtils {
      * @param paramID
      */
     public static void setLocalUserID(int paramID) {
-        mlocalUserSession.put(Users.ID, String.valueOf(paramID));
+        mlocalUserSession.put(User.ID, String.valueOf(paramID));
     }
 
-    public static void setLocalUserInfo(Users pUsers) {
+    public static void setLocalUserInfo(User pUsers) {
         localUserInfo = pUsers;
-        mlocalUserSession.put(Users.AVATAR, String.valueOf(pUsers.getAvatar()));
-        mlocalUserSession.put(Users.NICKNAME, pUsers.getNickname());
-        mlocalUserSession.put(Users.GENDER, pUsers.getGender());
-        mlocalUserSession.put(Users.IMEI, pUsers.getIMEI());
-        mlocalUserSession.put(Users.DEVICE, pUsers.getDevice());
-        mlocalUserSession.put(Users.IPADDRESS, pUsers.getIpaddress());
-        mlocalUserSession.put(Users.LOGINTIME, pUsers.getLogintime());
-        mlocalUserSession.put(Users.ORDER, String.valueOf(pUsers.getOrder()));
-        mlocalUserSession.put(Users.SCORE, String.valueOf(pUsers.getScore()));
+        mlocalUserSession.put(User.AVATAR, String.valueOf(pUsers.getAvatar()));
+        mlocalUserSession.put(User.NICKNAME, pUsers.getNickname());
+        mlocalUserSession.put(User.GENDER, pUsers.getGender());
+        mlocalUserSession.put(User.IMEI, pUsers.getIMEI());
+        mlocalUserSession.put(User.DEVICE, pUsers.getDevice());
+        mlocalUserSession.put(User.IPADDRESS, pUsers.getIpaddress());
+        mlocalUserSession.put(User.LOGINTIME, pUsers.getLogintime());
+        mlocalUserSession.put(User.ORDER, String.valueOf(pUsers.getOrder()));
+        mlocalUserSession.put(User.SCORE, String.valueOf(pUsers.getScore()));
     }
 
 
@@ -228,7 +218,7 @@ public class SessionUtils {
      * @param paramLoginTime
      */
     public static void setLoginTime(String paramLoginTime) {
-        mlocalUserSession.put(Users.LOGINTIME, paramLoginTime);
+        mlocalUserSession.put(User.LOGINTIME, paramLoginTime);
     }
 
     /**
@@ -238,7 +228,7 @@ public class SessionUtils {
      * 
      */
     public static void setNickname(String paramNickname) {
-        mlocalUserSession.put(Users.NICKNAME, paramNickname);
+        mlocalUserSession.put(User.NICKNAME, paramNickname);
     }
     
 
@@ -249,21 +239,8 @@ public class SessionUtils {
      *            选择的头像编号
      */
     public static void setOrder(int paramOrder) {
-        mlocalUserSession.put(Users.ORDER, String.valueOf(paramOrder));
+        mlocalUserSession.put(User.ORDER, String.valueOf(paramOrder));
     }
-
-
-
-    /**
-     * 设置游戏序号
-     * 
-     * @param paramAvatar
-     *            选择的头像编号
-     */
-    public static void setScore(int paramScore) {
-        mlocalUserSession.put(Users.SCORE, String.valueOf(paramScore));
-    }
-
     
     /**
      * 设置热点IP
@@ -272,11 +249,11 @@ public class SessionUtils {
      *            热点IP地址值
      */
     public static void setServerIPaddress(String paramServerIPaddress) {
-        mlocalUserSession.put(Users.SERVERIPADDRESS, paramServerIPaddress);
+        mlocalUserSession.put(User.SERVERIPADDRESS, paramServerIPaddress);
     }
 
     public static void updateUserInfo() {
-        localUserInfo = new Users(getAvatar(), getNickname(),getGender(), getIMEI(), getDevice(), 
+        localUserInfo = new User(getAvatar(), getNickname(),getGender(), getIMEI(), getDevice(), 
                 getLocalIPaddress(), getLoginTime());
     }
 

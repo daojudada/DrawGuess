@@ -1,16 +1,15 @@
 package com.drawguess.net;
 
 
-import java.util.Date;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.drawguess.msgbean.DataDraw;
+import com.drawguess.msgbean.DataGuess;
 import com.drawguess.msgbean.Entity;
-import com.drawguess.msgbean.Users;
+import com.drawguess.msgbean.User;
 import com.drawguess.util.JsonUtils;
 
 /**
@@ -29,12 +28,13 @@ import com.drawguess.util.JsonUtils;
  */
 public class MSGProtocol {
     public enum ADDITION_TYPE {
-    	STRING, USER , DATADRAW
+    	STRING, USER, DATADRAW, DATAGUESS 
     }
     private static final String ADDOBJECT = "addObject";
     private static final String ADDSTR = "addStr";
     private static final String ADDTYPE = "addType";
     private static final String COMMANDNO = "commandNo";
+    private static final String ID = "id";
 
     
     private Entity addObject; // 附加对象
@@ -42,15 +42,17 @@ public class MSGProtocol {
     private ADDITION_TYPE addType; // 附加数据类型
     private int commandNo; // 命令
     private String senderIMEI; // 发送者IMEI
-
+    private int id;
+    
     public MSGProtocol() {
     }
 
     // 根据协议字符串初始化
     public MSGProtocol(String paramProtocolJSON) throws JSONException {
         JSONObject protocolJSON = new JSONObject(paramProtocolJSON);
+        id = protocolJSON.getInt(ID);
         commandNo = protocolJSON.getInt(COMMANDNO);
-        senderIMEI = protocolJSON.getString(Users.IMEI);
+        senderIMEI = protocolJSON.getString(User.IMEI);
         if (protocolJSON.has(ADDTYPE)) { // 若有附加信息
             String addJSONStr = null;
             if (protocolJSON.has(ADDOBJECT)) { // 若为Entity类型
@@ -61,13 +63,16 @@ public class MSGProtocol {
             }
             switch (ADDITION_TYPE.valueOf(protocolJSON.getString(ADDTYPE))) {
                 case USER: // 为用户数据
-                    addObject = JsonUtils.getObject(addJSONStr, Users.class);
+                    addObject = JsonUtils.getObject(addJSONStr, User.class);
                     break;
 
                 case DATADRAW: // 为消息数据
                     addObject = JsonUtils.getObject(addJSONStr, DataDraw.class);
                     break;
                     
+                case DATAGUESS://猜词数据
+                	addObject = JsonUtils.getObject(addJSONStr, DataGuess.class);
+                
                 case STRING: // 为String数据
                     addStr = addJSONStr;
                     break;
@@ -83,6 +88,7 @@ public class MSGProtocol {
         super();
         this.senderIMEI = paramSenderIMEI;
         this.commandNo = paramCommandNo;
+        this.id = 0;
     }
 
     public MSGProtocol(String paramSenderIMEI, int paramCommandNo, Entity paramObject) {
@@ -90,11 +96,15 @@ public class MSGProtocol {
         this.senderIMEI = paramSenderIMEI;
         this.commandNo = paramCommandNo;
         this.addObject = paramObject;
+        this.id = 0;
         if (paramObject instanceof DataDraw) { // 若为DATADRAW对象
             this.addType = ADDITION_TYPE.DATADRAW;
         }
-        if (paramObject instanceof Users) { // 若为People对象
+        if (paramObject instanceof User) { // 若为People对象
             this.addType = ADDITION_TYPE.USER;
+        }
+        if (paramObject instanceof DataGuess) { // 若为猜词对象
+            this.addType = ADDITION_TYPE.DATAGUESS;
         }
     }
 
@@ -104,8 +114,10 @@ public class MSGProtocol {
         this.commandNo = paramCommandNo;
         this.addStr = paramStr;
         this.addType = ADDITION_TYPE.STRING;
+        this.id = 0;
     }
 
+    
     @JSONField(name = ADDOBJECT)
     public Entity getAddObject() {
         return this.addObject;
@@ -126,6 +138,10 @@ public class MSGProtocol {
         return this.commandNo;
     }
 
+    @JSONField(name = ID)
+    public int getId() {
+        return this.id;
+    }
 
     // 输出协议JSON串
     @JSONField(serialize = false)
@@ -133,14 +149,8 @@ public class MSGProtocol {
         return JsonUtils.createJsonString(this);
     }
 
-    // 得到数据包编号，毫秒数
-    @JSONField(serialize = false)
-    private String getSeconds() {
-        Date nowDate = new Date();
-        return Long.toString(nowDate.getTime());
-    }
 
-    @JSONField(name = Users.IMEI)
+    @JSONField(name = User.IMEI)
     public String getSenderIMEI() {
         return this.senderIMEI;
     }
@@ -163,6 +173,10 @@ public class MSGProtocol {
     
     public void setSenderIMEI(String paramSenderIMEI) {
         this.senderIMEI = paramSenderIMEI;
+    }
+
+    public void setId(int paramId) {
+        this.id = paramId;
     }
 
 }

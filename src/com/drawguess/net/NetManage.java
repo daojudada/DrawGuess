@@ -8,7 +8,7 @@ import android.content.Context;
 import com.drawguess.interfaces.OnMsgRecListener;
 import com.drawguess.interfaces.NetInterface;
 import com.drawguess.msgbean.Entity;
-import com.drawguess.msgbean.Users;
+import com.drawguess.msgbean.User;
 import com.drawguess.util.LogUtils;
 import com.drawguess.util.SessionUtils;
 
@@ -20,8 +20,8 @@ import com.drawguess.util.SessionUtils;
 public class NetManage implements NetInterface{
     public enum SocketMode{TCP,UDP}
     
-    private static HashMap<String,Users> mServerUsersMap; // 服务器在线用户列表
-    private static HashMap<String,Users> mLocalUsersMap; // 客户端在线用户列表
+    private static HashMap<String,User> mServerUsersMap; // 服务器在线用户列表
+    private static HashMap<String,User> mLocalUsersMap; // 客户端在线用户列表
     
     private static final String TAG = "WifiNet";
     private static NetManage instance;
@@ -57,19 +57,19 @@ public class NetManage implements NetInterface{
     public static NetManage getInstance(Context context) {
         mContext = context;
         if (instance == null) {
-            mLocalUsersMap = new HashMap<String,Users>();
-            mServerUsersMap = new HashMap<String,Users>();
+            mLocalUsersMap = new HashMap<String,User>();
+            mServerUsersMap = new HashMap<String,User>();
             instance = new NetManage();
         }
         return instance;
     }
     
-    public static HashMap<String,Users> getLocalUserMap(){
+    public static HashMap<String,User> getLocalUserMap(){
     	return mLocalUsersMap;
     }
     
 
-    public static HashMap<String,Users> getServerUserMap(){
+    public static HashMap<String,User> getServerUserMap(){
     	return mServerUsersMap;
     }
     

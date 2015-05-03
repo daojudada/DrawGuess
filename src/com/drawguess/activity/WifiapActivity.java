@@ -184,7 +184,7 @@ public class WifiapActivity extends BaseActivity implements OnClickListener, Net
         hintDialogOnClick hintClick = new hintDialogOnClick();
 
         mHintDialog = BaseDialog.getDialog(WifiapActivity.this, R.string.dialog_tips, "",
-                getString(R.string.btn_yes), hintClick, getString(R.string.btn_cancel), hintClick);
+        		getString(R.string.btn_cancel), hintClick, getString(R.string.btn_yes), hintClick);
 
         mHandler = new ApHandler();
         mConnWifiDialog = new ConnWifiDialog(this, mHandler);
@@ -244,8 +244,7 @@ public class WifiapActivity extends BaseActivity implements OnClickListener, Net
 
             // 如果wifi正打开着的，就提醒用户
             if (WifiUtils.isWifiEnabled()) {
-                mHintDialog
-                        .setMessage(getString(R.string.wifiap_dialog_createap_closewifi_confirm));
+                mHintDialog.setMessage(getString(R.string.wifiap_dialog_createap_closewifi_confirm));
                 mHintDialog.show();
                 return;
             }
@@ -258,8 +257,7 @@ public class WifiapActivity extends BaseActivity implements OnClickListener, Net
                 return;
             }
 
-            mHintDialog
-                    .setMessage(getString(R.string.wifiap_dialog_createap_closewifi_confirm));
+            mHintDialog.setMessage(getString(R.string.wifiap_dialog_createap_closewifi_confirm));
             mHintDialog.show();
             return;
 
@@ -471,8 +469,12 @@ public class WifiapActivity extends BaseActivity implements OnClickListener, Net
         public void onClick(DialogInterface hintDialog, int which) {
             switch (which) {
 
-            // 确定
+            // 取消
             case 0:
+                hintDialog.cancel();
+                break;
+            // 确定
+            case 1:
                 hintDialog.dismiss();
                 if (WifiUtils.isWifiApEnabled()) {
 
@@ -501,10 +503,6 @@ public class WifiapActivity extends BaseActivity implements OnClickListener, Net
                 }
                 break;
 
-            // 取消
-            case 1:
-                hintDialog.cancel();
-                break;
             }
         }
     }

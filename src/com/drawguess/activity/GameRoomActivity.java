@@ -25,7 +25,7 @@ import com.drawguess.R;
 import com.drawguess.adapter.PlayersAdapter;
 import com.drawguess.base.BaseActivity;
 import com.drawguess.interfaces.OnMsgRecListener;
-import com.drawguess.msgbean.Users;
+import com.drawguess.msgbean.User;
 import com.drawguess.net.MSGConst;
 import com.drawguess.net.MSGProtocol;
 import com.drawguess.net.NetManage;
@@ -64,13 +64,13 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
     /**
      * Local只允许在交互时与客户端收到消息时操作，Server只允许在服务器端收到消息时操作
      */
-    private HashMap<String,Users> mServerUsersMap; // 服务器在线用户列表
-    private HashMap<String,Users> mLocalUsersMap; // 客户端在线用户列表
+    private HashMap<String,User> mServerUsersMap; // 服务器在线用户列表
+    private HashMap<String,User> mLocalUsersMap; // 客户端在线用户列表
     
     private ArrayList<String> mServerReadyList; //服务器已准备的用户列表
     private ArrayList<String> mServerStartList; //服务器已回应开始的用户列表
     
-    private ArrayList<Users> mLocalUsersList; // 客户端临时在线用户列表，用于adapter初始化
+    private ArrayList<User> mLocalUsersList; // 客户端临时在线用户列表，用于adapter初始化
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -232,7 +232,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 				int command = pMsg.getCommandNo();
 		        switch (command) {
 				case MSGConst.ANS_ONLINE:{ //服务器向客户端通报其他在线用户
-					Users user = (Users)pMsg.getAddObject();
+					User user = (User)pMsg.getAddObject();
 					if(!user.getIMEI().equals(SessionUtils.getIMEI())){
 						//添加用户列表
 						mLocalUsersMap.put(user.getIMEI(), user);
@@ -240,7 +240,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 				}
 					break;
 		        case MSGConst.ANS_OFFLINE: {//服务器向客户端通报其他下线用户
-					Users user = (Users)pMsg.getAddObject();
+					User user = (User)pMsg.getAddObject();
 					if(!user.getIMEI().equals(SessionUtils.getIMEI())){
 						//删除用户列表
 						mLocalUsersMap.remove(pMsg.getSenderIMEI());
@@ -258,18 +258,16 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 		        }
 		            break;
 		        case MSGConst.ANS_START:{//收到开始请求
-		        	if(isMeReady)
+		        	if(isMeReady){
+			        	if(!pMsg.getSenderIMEI().equals(SessionUtils.getIMEI())){
+				    		netManage.removeClientListener(clientListener);
+				        	startActivity(DrawGuessActivity.class);
+			        	}
 		        		netManage.sendToServer(MSGConst.SEND_START, null);
+		        	}
 		        }
 		        	break;
 		        	
-		        case MSGConst.ANS_RESTART:{
-		        	if(!pMsg.getSenderIMEI().equals(SessionUtils.getIMEI())){
-			    		netManage.removeClientListener(clientListener);
-			        	startActivity(DrawGuessActivity.class);
-		        	}
-		        	break;
-		        }
 		        default:
 		        	LogUtils.i(TAG, "wrong msg type");
 		            break;
@@ -306,7 +304,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 				int command = pMsg.getCommandNo();
 				switch (command) {
 				case MSGConst.SEND_ONLINE:{ // 用户上线
-					Users user = (Users)pMsg.getAddObject();
+					User user = (User)pMsg.getAddObject();
 					//添加用户
 					addUser(user);
 		            //向该客户端发送本机信息
@@ -322,7 +320,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 				}   
 		            break;
 		        case MSGConst.SEND_OFFLINE:{ // 用户下线
-					Users user = (Users)pMsg.getAddObject();
+					User user = (User)pMsg.getAddObject();
 					//删除用户列表
 					removeUser(user);
 		            //向除该client的客户端发送该客户端信息
@@ -360,8 +358,6 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 	private synchronized void checkStart(String imei){
     	mServerStartList.add(imei);
     	if(mServerStartList.size() == mServerReadyList.size()){
-    		//确定开始
-    		netManage.sendToAllClient(MSGConst.ANS_RESTART, null);
     		//删除该类的监听回调
     		netManage.removeServerListener(serverListener);
     		netManage.removeClientListener(clientListener);
@@ -374,12 +370,12 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
     }
 	
 
-	private synchronized void addUser(Users user){
+	private synchronized void addUser(User user){
 		//添加用户列表
 		mServerUsersMap.put(user.getIMEI(), user);
     }
     
-	private synchronized void removeUser(Users user){
+	private synchronized void removeUser(User user){
 		mServerUsersMap.remove(user.getIMEI());
     }
 	
@@ -395,10 +391,10 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 	
 	private void setOrderList(List<String> lists){
 		SessionUtils.setOrder(-1);
-		Iterator<Entry<String, Users>> iter = mLocalUsersMap.entrySet().iterator();
+		Iterator<Entry<String, User>> iter = mLocalUsersMap.entrySet().iterator();
     	while (iter.hasNext()) {
-    		Entry<String, Users> entry = (Entry<String, Users>) iter.next();
-    		Users u = (Users) entry.getValue();
+    		Entry<String, User> entry = (Entry<String, User>) iter.next();
+    		User u = (User) entry.getValue();
     		u.setOrder(-1);
 		}
 		int i = 0;
@@ -408,7 +404,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 				if(s.equals(SessionUtils.getIMEI()))
 					SessionUtils.setOrder(i);
 				else{
-					Users user = mLocalUsersMap.get(s);
+					User user = mLocalUsersMap.get(s);
 					user.setOrder(i);
 				}
 			}
@@ -431,7 +427,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
         
     	mListView = (MultiListView) findViewById(R.id.friends_list);
     	
-    	Picasso.with(mContext).load(ImageUtils.getImageID(Users.AVATAR + SessionUtils.getAvatar())).into(mIvAvatar);
+    	Picasso.with(mContext).load(ImageUtils.getImageID(User.AVATAR + SessionUtils.getAvatar())).into(mIvAvatar);
     	mName.setText(SessionUtils.getNickname());
 		mPlayersNum.setText(R.string.gameroom_emptyplayer);
 		
@@ -463,8 +459,8 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
      * @param application
      */
     private void initMapToList() {
-        mLocalUsersList = new ArrayList<Users>(mLocalUsersMap.size());
-        for (Map.Entry<String, Users> entry : mLocalUsersMap.entrySet()) {
+        mLocalUsersList = new ArrayList<User>(mLocalUsersMap.size());
+        for (Map.Entry<String, User> entry : mLocalUsersMap.entrySet()) {
             mLocalUsersList.add(entry.getValue());
         }
     }

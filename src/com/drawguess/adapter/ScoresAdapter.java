@@ -13,8 +13,8 @@ import android.widget.TextView;
 import com.drawguess.R;
 import com.drawguess.base.BaseObjectListAdapter;
 import com.drawguess.msgbean.Entity;
-import com.drawguess.msgbean.Users;
-import com.drawguess.util.DateUtils;
+import com.drawguess.msgbean.User;
+import com.drawguess.util.DataUtils;
 import com.drawguess.util.ImageUtils;
 import com.squareup.picasso.Picasso;
 
@@ -41,20 +41,20 @@ public class ScoresAdapter extends BaseObjectListAdapter {
             convertView = mInflater.inflate(R.layout.listitem_scores, null, false);
             holder = new ViewHolder();
 
-            holder.mIvAvatar = (ImageView) convertView.findViewById(R.id.user_item_iv_avatar);
-            holder.mTvName = (TextView) convertView.findViewById(R.id.user_item_tv_name);
-            holder.mTvScore = (TextView) convertView.findViewById(R.id.uesr_item_tv_score);
+            holder.mIvAvatar = (ImageView) convertView.findViewById(R.id.score_item_iv_avatar);
+            holder.mTvName = (TextView) convertView.findViewById(R.id.score_item_tv_name);
+            holder.mTvScore = (TextView) convertView.findViewById(R.id.score_item_tv_score);
             convertView.setTag(holder);
         }
         else {
             holder = (ViewHolder) convertView.getTag();
         }
         
-        Users people = (Users) getItem(position);
-        int avatarId = ImageUtils.getImageID(Users.AVATAR + people.getAvatar());
+        User people = (User) getItem(position);
+        int avatarId = ImageUtils.getImageID(User.AVATAR + people.getAvatar());
         Picasso.with(mContext).load(avatarId).into(holder.mIvAvatar);
         holder.mTvName.setText(people.getNickname());
-        holder.mTvScore.setText(people.getScore());
+        holder.mTvScore.setText(people.getScore()+"");
         
         	
         return convertView;

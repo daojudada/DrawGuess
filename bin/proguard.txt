@@ -31,13 +31,12 @@
 # view AndroidManifest.xml #generated:36
 -keep class com.drawguess.base.BaseApplication { <init>(...); }
 
-# view res/layout/activity_drawtabs.xml #generated:258
+# view res/layout/activity_drawtabs.xml #generated:263
 -keep class com.drawguess.view.DrawView { <init>(...); }
 
 # view res/layout/dialog_loading.xml #generated:9
 -keep class com.drawguess.view.FlippingImageView { <init>(...); }
 
-# view res/layout/activity_drawtabs.xml #generated:416
 # view res/layout/activity_gameroom.xml #generated:115
 -keep class com.drawguess.view.MultiListView { <init>(...); }
 

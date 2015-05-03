@@ -11,15 +11,15 @@ import com.drawguess.R;
  * @author GuoJun
  * 
  */
-public class Users extends Entity implements Parcelable {
+public class User extends Entity implements Parcelable {
 
     /** 用户常量 **/
 
-    public static final Parcelable.Creator<Users> CREATOR = new Parcelable.Creator<Users>() {
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
 
         @Override
-        public Users createFromParcel(Parcel source) {
-            Users user = new Users();
+        public User createFromParcel(Parcel source) {
+            User user = new User();
             user.setAvatar(source.readInt());
             user.setNickname(source.readString());
             user.setGender(source.readString());
@@ -31,8 +31,8 @@ public class Users extends Entity implements Parcelable {
         }
 
         @Override
-        public Users[] newArray(int size) {
-            return new Users[size];
+        public User[] newArray(int size) {
+            return new User[size];
         }
     };
     
@@ -53,7 +53,7 @@ public class Users extends Entity implements Parcelable {
     public static final String SCORE = "Score";
     public static final String SERVERIPADDRESS = "serverIPaddress";
     
-    public static Parcelable.Creator<Users> getCreator() {
+    public static Parcelable.Creator<User> getCreator() {
         return CREATOR;
     }
     private int mAvatar;
@@ -70,14 +70,14 @@ public class Users extends Entity implements Parcelable {
     private int order;
     private int score;
 
-    public Users() {
+    public User() {
     	score = 0;
         order = -1;
     }
 
 
 
-    public Users(int avatar, String nickname, String gender, String IMEI,
+    public User(int avatar, String nickname, String gender, String IMEI,
             String device, String ip, String logintime) {
         this.mAvatar = avatar;
         this.mNickname = nickname;
@@ -95,18 +95,18 @@ public class Users extends Entity implements Parcelable {
         return 0;
     }
 
-    @JSONField(name = Users.AVATAR)
+    @JSONField(name = User.AVATAR)
     public int getAvatar() {
         return this.mAvatar;
     }
 
-    @JSONField(name = Users.DEVICE)
+    @JSONField(name = User.DEVICE)
     public String getDevice() {
         return this.mDevice;
     }
 
 
-    @JSONField(name = Users.GENDER)
+    @JSONField(name = User.GENDER)
     public String getGender() {
         return this.mGender;
     }
@@ -124,23 +124,23 @@ public class Users extends Entity implements Parcelable {
     }
 
 
-    @JSONField(name = Users.IMEI)
+    @JSONField(name = User.IMEI)
     public String getIMEI() {
         return this.mIMEI;
     }
 
-    @JSONField(name = Users.IPADDRESS)
+    @JSONField(name = User.IPADDRESS)
     public String getIpaddress() {
         return this.mIpaddress;
     }
 
-    @JSONField(name = Users.LOGINTIME)
+    @JSONField(name = User.LOGINTIME)
     public String getLogintime() {
         return this.mLogintime;
     }
 
 
-    @JSONField(name = Users.NICKNAME)
+    @JSONField(name = User.NICKNAME)
     public String getNickname() {
         return this.mNickname;
     }

@@ -14,7 +14,6 @@ import java.util.List;
 import org.apache.http.conn.util.InetAddressUtils;
 
 import com.drawguess.base.BaseApplication;
-import com.drawguess.wifiap.TimerCheck;
 import com.drawguess.wifiap.WifiApConst;
 
 import android.content.Context;
@@ -407,23 +406,22 @@ public class WifiUtils {
 
         startAp(ssid, passwd);
 
-        TimerCheck timerCheck = new TimerCheck() {
+        TimerUtils timerCheck = new TimerUtils() {
             @Override
             public void doTimeOutWork() {
-                this.exit();
             }
 
             @Override
             public void doTimerCheckWork() {
 
                 if (isWifiApEnabled()) {
-                    LogUtils.v(TAG, "WifiAp enabled success!");
+                    LogUtils.i(TAG, "WifiAp enabled success!");
                     Message msg = handler.obtainMessage(WifiApConst.ApCreateApSuccess);
                     handler.sendMessage(msg);
                     this.exit();
                 }
                 else {
-                    LogUtils.v(TAG, "WifiAp enabled failed!");
+                    LogUtils.i(TAG, "WifiAp enabled failed!");
                 }
             }
         };

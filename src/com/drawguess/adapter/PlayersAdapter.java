@@ -13,8 +13,8 @@ import android.widget.TextView;
 import com.drawguess.R;
 import com.drawguess.base.BaseObjectListAdapter;
 import com.drawguess.msgbean.Entity;
-import com.drawguess.msgbean.Users;
-import com.drawguess.util.DateUtils;
+import com.drawguess.msgbean.User;
+import com.drawguess.util.DataUtils;
 import com.drawguess.util.ImageUtils;
 import com.squareup.picasso.Picasso;
 
@@ -61,13 +61,13 @@ public class PlayersAdapter extends BaseObjectListAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         
-        Users people = (Users) getItem(position);
-        int avatarId = ImageUtils.getImageID(Users.AVATAR + people.getAvatar());
+        User people = (User) getItem(position);
+        int avatarId = ImageUtils.getImageID(User.AVATAR + people.getAvatar());
         Picasso.with(mContext).load(avatarId).into(holder.mIvAvatar);
         holder.mHtvName.setText(people.getNickname());
         holder.mLayoutGender.setBackgroundResource(people.getGenderBgId());
         holder.mIvGender.setImageResource(people.getGenderId());
-        holder.mHtvTime.setText(DateUtils.getBetweentime(people.getLogintime()));
+        holder.mHtvTime.setText(DataUtils.getBetweentime(people.getLogintime()));
         holder.mHtvDevice.setText(people.getDevice());
         if(people.getOrder()>0){
         	holder.mIvReady.setImageResource(R.drawable.btn_ready);

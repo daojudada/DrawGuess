@@ -1,7 +1,7 @@
 package com.drawguess.util;
 
 import com.drawguess.base.BaseApplication;
-import com.drawguess.msgbean.Users;
+import com.drawguess.msgbean.User;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -23,7 +23,7 @@ public class SdDataUtils {
     }
 
     public int getAvatarId() {
-        return mSP.getInt(Users.AVATAR, 0);
+        return mSP.getInt(User.AVATAR, 0);
     }
 
     public SharedPreferences.Editor getEditor() {
@@ -31,11 +31,11 @@ public class SdDataUtils {
     }
 
     public String getGender() {
-        return mSP.getString(Users.GENDER, "获取失败");
+        return mSP.getString(User.GENDER, "获取失败");
     }
 
     public String getIMEI() {
-        return mSP.getString(Users.IMEI, "");
+        return mSP.getString(User.IMEI, "");
     }
 
 
@@ -45,10 +45,10 @@ public class SdDataUtils {
 
 
     public String getLogintime() {
-        return mSP.getString(Users.LOGINTIME, "获取失败");
+        return mSP.getString(User.LOGINTIME, "获取失败");
     }
 
     public String getNickname() {
-        return mSP.getString(Users.NICKNAME, "");
+        return mSP.getString(User.NICKNAME, "");
     }
 }

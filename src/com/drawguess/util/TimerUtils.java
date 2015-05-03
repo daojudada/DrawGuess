@@ -1,23 +1,24 @@
-package com.drawguess.wifiap;
+package com.drawguess.util;
 
 /**
  * 时间检测类
- * @author copy from other
+ * @author GuoJun
  *
  */
-public abstract class TimerCheck {
+public abstract class TimerUtils {
+	public final static int TIME_CHECK = 150;
+	public final static int TIME_OUT = 151;
     private int mCount = 0;
     private boolean mExitFlag = false;
     private int mSleepTime = 1000; // 1s
     private Thread mThread = null;
     private int mTimeOutCount = 1;
 
-    public TimerCheck() {
+    public TimerUtils() {
         mThread = new Thread(new Runnable() {
 
             @Override
             public void run() {
-                // TODO Auto-generated method stub
                 while (!mExitFlag) {
                     mCount++;
                     if (mCount < mTimeOutCount) {
@@ -31,12 +32,21 @@ public abstract class TimerCheck {
                     }
                     else {
                         doTimeOutWork();
+                        exit();
                     }
                 }
             }
         });
     }
 
+    /**
+     * 
+     * @return 时间次数
+     */
+    public int getCount(){
+    	return mCount;
+    }
+    
     public abstract void doTimeOutWork();
 
     /**
@@ -56,7 +66,6 @@ public abstract class TimerCheck {
     public void start(int timeOutCount, int sleepTime) {
         mTimeOutCount = timeOutCount;
         mSleepTime = sleepTime;
-
         mThread.start();
     }
 

@@ -18,45 +18,27 @@ import org.json.JSONException;
 
 import com.drawguess.base.Constant;
 import com.drawguess.interfaces.OnMsgRecListener;
+import com.drawguess.net.MSGProtocol.ADDITION_TYPE;
 import com.drawguess.util.LogUtils;
 
 import android.content.Context;
 
 public class TcpServer implements Runnable {
     private static final String TAG = "TcpServer";
+    private static ArrayList<MSGProtocol> msgCacheList;
+    private static int msgId = 0;
     private static TcpServer instance;
-    
 
     private List<ServerThread> threadList ;
     private ArrayBlockingQueue<MSGProtocol> msgQueue;
-
-    private SendMsgThread sendMsgThread;
+    
+    
     private Thread receiveThread;
     private ServerSocket serverSocket ;
     private List<OnMsgRecListener> mListenerList;
     private boolean isThreadRunning ; // 是否线程开始标志
 
-    /**
-     * 监听是否有输出消息请求线程类,向客户端发送消息
-     */
-    class SendMsgThread extends Thread{
-        @Override
-        public void run() {
-            while(true){
-                MSGProtocol message = null;
-				try {
-					message = msgQueue.take();
-				} catch (InterruptedException e) {
-					LogUtils.e(TAG, "msgQueue wrong");
-				}
-				
-                for (ServerThread thread : threadList) {
-                    thread.sendData(message);
-                }
-            }
-        }
-    }
-    
+  
     private TcpServer() {
         mListenerList = new ArrayList<OnMsgRecListener>();
         threadList = new LinkedList<ServerThread>(); 
@@ -69,6 +51,9 @@ public class TcpServer implements Runnable {
         return receiveThread ;
     }
 
+    public int getMsgId(){
+    	return msgId;
+    }
 
     public void addMsgListener(OnMsgRecListener listener) {
         this.mListenerList.add(listener);
@@ -87,6 +72,7 @@ public class TcpServer implements Runnable {
     public static TcpServer getInstance(Context context) {
         if (instance == null) {
             instance = new TcpServer();
+            msgCacheList = new ArrayList<MSGProtocol>(100);
         }
         return instance;
     }
@@ -99,10 +85,6 @@ public class TcpServer implements Runnable {
     public void start() {
         connect();
         isThreadRunning  = true; // 使能发送标识
-        if (sendMsgThread == null) {
-	        sendMsgThread = new SendMsgThread();
-	        sendMsgThread.start();
-        }
         if (receiveThread == null) {
             receiveThread = new Thread(this);
             receiveThread.start();
@@ -115,10 +97,7 @@ public class TcpServer implements Runnable {
     	isThreadRunning  = false;
         if (receiveThread != null)
             receiveThread.interrupt();
-        if (sendMsgThread != null)
-            sendMsgThread.interrupt();
         receiveThread = null;
-    	sendMsgThread = null;
         instance = null; // 置空, 消除静�?�变量引�?
         LogUtils.i(TAG, "stopUDPSocketThread() 线程停止成功");
     }
@@ -172,14 +151,15 @@ public class TcpServer implements Runnable {
      * @param addData add data
      */
     public void sendToAllClient(MSGProtocol msg) {
-    	for(ServerThread thread : threadList){
-    			thread.isSend = true;
-    	}
-    	try {
-			msgQueue.put(msg);
-		} catch (InterruptedException e) {
-			LogUtils.e(TAG, "Queue put wrong");
+		//如果是绘图数据，给数据包打上编号。并缓存
+		if(msg.getAddType() == ADDITION_TYPE.DATADRAW){
+    		msg.setId(msgId);
+    		msgCacheList.add(msg);
+    		msgId++;
 		}
+    	for(ServerThread thread : threadList){
+    			thread.sendData(msg);
+    	}
     }
     
     /**
@@ -190,13 +170,8 @@ public class TcpServer implements Runnable {
     public void sendToAllExClient(MSGProtocol msg, String imei) {
     	for(ServerThread thread : threadList){
     		if(!thread.getIMEI().equals(imei))
-    			thread.isSend = true;
+    			thread.sendData(msg);
     	}
-    	try {
-			msgQueue.put(msg);
-		} catch (InterruptedException e) {
-			LogUtils.e(TAG, "Queue put wrong");
-		}
     }
     
     /**
@@ -207,13 +182,8 @@ public class TcpServer implements Runnable {
     public void sendToClient(MSGProtocol msg, String imei) {
     	for(ServerThread thread : threadList){
     		if(thread.getIMEI().equals(imei))
-    			thread.isSend = true;
+    			thread.sendData(msg);
     	}
-    	try {
-			msgQueue.put(msg);
-		} catch (InterruptedException e) {
-			LogUtils.e(TAG, "Queue put wrong");
-		}
     }
     
     
@@ -226,14 +196,12 @@ public class TcpServer implements Runnable {
         private DataInputStream dataInPut;
         private byte[] receiveBuffer = new byte[Constant.BUFFER_SIZE];// 数据报内容
         private byte[] sendBuffer = new byte[Constant.BUFFER_SIZE]; // 数据报内容
-        private boolean isSend;
         private String imei;
         
         public ServerThread(Socket s) throws IOException {
             client = s;
 			dataOutPut = new DataOutputStream(client.getOutputStream());
 			dataInPut = new DataInputStream(client.getInputStream());
-			isSend = false;
             start();
         }
           
@@ -244,31 +212,25 @@ public class TcpServer implements Runnable {
         	imei = i;
         }
 
-        public void setIsSend(boolean b){
-        	isSend = b;
-        }
         
         /**
          * 向客户端socket写入数据
          * @param msg协议串
          */
         public void sendData(MSGProtocol msg){
-        	if(isSend){
-	        	try {
-	        		String msgProtocol = msg.getProtocolJSON();
-	        		String msgAll =  msgProtocol + "@sp"; 
-					sendBuffer = msgAll.getBytes("gbk");
-					dataOutPut.write(sendBuffer);
-					dataOutPut.flush();
-				} catch (UnsupportedEncodingException e) {
-				    LogUtils.e(TAG, "系统不支持GBK编码");
-				} catch (IOException e) {
-					LogUtils.e(TAG, "send to client error");
-				}
-	        	isSend = false;
-	            sendBuffer = new byte[Constant.BUFFER_SIZE];
-				LogUtils.i(TAG, "send to client successful");
-        	}
+        	try {
+        		String msgProtocol = msg.getProtocolJSON();
+        		String msgAll =  msgProtocol + "@sp"; 
+				sendBuffer = msgAll.getBytes("gbk");
+				dataOutPut.write(sendBuffer);
+				dataOutPut.flush();
+			} catch (UnsupportedEncodingException e) {
+			    LogUtils.e(TAG, "系统不支持GBK编码");
+			} catch (IOException e) {
+				LogUtils.e(TAG, "send to client error");
+			}
+            sendBuffer = new byte[Constant.BUFFER_SIZE];
+			LogUtils.i(TAG, "send to client successful");
         }
         
         @Override
@@ -322,5 +284,3 @@ public class TcpServer implements Runnable {
         }
     }
 }
-
-

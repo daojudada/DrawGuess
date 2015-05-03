@@ -148,8 +148,10 @@ public abstract class BaseActivity extends Activity {
     }
 
     /** 含有标题、内容、两个按钮的对话框 **/
-    protected AlertDialog showAlertDialog(String title, String message, String positiveText,
-            DialogInterface.OnClickListener onPositiveClickListener, String negativeText,
+    protected AlertDialog showAlertDialog(String title, String message, 
+    		String positiveText,
+            DialogInterface.OnClickListener onPositiveClickListener, 
+            String negativeText,
             DialogInterface.OnClickListener onNegativeClickListener) {
         AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle(title).setMessage(message)
                 .setPositiveButton(positiveText, onPositiveClickListener)
