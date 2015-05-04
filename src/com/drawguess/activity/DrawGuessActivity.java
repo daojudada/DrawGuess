@@ -95,8 +95,10 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
     private View mVDraw,mVChat,mVResult;
     private ImageView mIvArrow;
     private Button mBtSend;
+    private Button mBtTip;
     private EditText mEtEdit;
     private TextView mTvTime;
+    private TextView mTvDraw;
     private ListView mLvScore;
     private ListView mLvMsg;
     
@@ -171,8 +173,18 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 
 	@Override
     protected void onDestroy() {
-        super.onDestroy();
+		if(NetManage.getState() == 2){
+			netManage.sendToAllExClient(MSGConst.ANS_GAME_OVER, null, SessionUtils.getIMEI());
+			netManage.stop();
+			netManage.stopUdp();
+		}
+		else{
+			netManage.sendToServer(MSGConst.SEND_OFFLINE, null);
+			netManage.stop();
+			netManage.stopUdp();
+		}
         handler = null;
+        super.onDestroy();
     }
 	
 	@Override
@@ -180,7 +192,6 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 		for(int i=0;i<7;i++){
 			mBtColors[i].setOnClickListener(this);
 		}
-
 		mLvMsg.setStackFromBottom(true);
 		mLvMsg.setFastScrollEnabled(true);
         
@@ -199,6 +210,7 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 		mIbDelete.setOnClickListener(this);
 		mIbCopy.setOnClickListener(this);
 		mBtSend.setOnClickListener(this);
+		mBtTip.setOnClickListener(this);
 
 		mLayoutTime.setOnClickListener(this);
 		mIvArrow.setOnClickListener(this);
@@ -246,6 +258,7 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 	    mLayoutTime = (LinearLayout)findViewById(R.id.drawtab_layout_time);
 	    mIvArrow = (ImageView)findViewById(R.id.drawtab_iv_arrow);
 	    mTvTime = (TextView)findViewById(R.id.drawtab_tv_time);
+	    mTvDraw = (TextView)findViewById(R.id.drawtab_tv_draw);
 	    
 		mBtColors[0] = (ImageButton)findViewById(R.id.black);
 		mBtColors[1] = (ImageButton)findViewById(R.id.red);
@@ -267,6 +280,7 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 		mIbDelete= (ImageButton)findViewById(R.id.delete);
 		mIbCopy  = (ImageButton)findViewById(R.id.copy);
 
+		mBtTip = (Button)findViewById(R.id.drawtab_bt_tip);
 	    mBtSend = (Button)findViewById(R.id.drawtab_chat_send);
 	    mEtEdit = (EditText)findViewById(R.id.drawtab_chat_editer);
 
@@ -291,6 +305,9 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 		int m;
 		DataDraw data;
 		switch (v.getId()) {
+		case R.id.drawtab_bt_tip:
+			netManage.sendToServer(MSGConst.SEND_TIP, mLocalKind);
+			break;
 		case R.id.drawtab_chat_send:
 			if(!mEtEdit.getText().toString().equals("")){
 				DataGuess dg = new DataGuess(SessionUtils.getIMEI(), DataUtils.getNowtime(), mEtEdit.getText().toString());
@@ -809,6 +826,18 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 	        		}
 		        	break;
 		        }
+		        case MSGConst.ANS_GAME_OVER:{
+		        	mLocalPlayersMap.clear();
+		        	netManage.stop();
+		        	NetManage.setState(0);
+		        	break;
+		        }
+		        case MSGConst.ANS_OFFLINE:{
+		        	String name = mLocalPlayersMap.get(pMsg.getAddStr()).getNickname();
+		            mLocalPlayersMap.remove(pMsg.getAddStr());
+		        	b.putString("offline", name);
+		        	break;
+		        }
 		        case MSGConst.ANS_GUESS_TRUE:{
 	            	
 	            	//猜词加2分
@@ -823,12 +852,20 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 
 
 	            	if(SessionUtils.getOrder() == 1){
-	            		showCustomToast(guessUser.getNickname()+"猜对了，你加1分");
+	            		b.putString("toast", guessUser.getNickname()+"猜对了，你加1分");
+	    		        android.os.Message tMsg = new android.os.Message();
+	    		        tMsg.what = MSGConst.SHOW_TOAST;
+	    		        tMsg.setData(b);
+	    				handler.sendMessage(tMsg);
 	            		DataGuess dg = new DataGuess(SessionUtils.getIMEI(), DataUtils.getNowtime(), "好厉害，这也能猜出来");
 	            		mLocalMsgsList.add(dg);
 	            	}
 	            	else{
-	            		showCustomToast("恭喜你猜对了，积分加2");
+	            		b.putString("toast", "恭喜你猜对了，积分加2");
+	    		        android.os.Message tMsg = new android.os.Message();
+	    		        tMsg.what = MSGConst.SHOW_TOAST;
+	    		        tMsg.setData(b);
+	    				handler.sendMessage(tMsg);
 	            	}
 	            	
 		        	//排序积分榜
@@ -839,10 +876,21 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 		        case MSGConst.ANS_GUESS_FALSE:{
 	            	User guessUser =  mLocalPlayersMap.get(pMsg.getAddStr());
 	            	if(SessionUtils.getOrder() == 1){
-	            		showCustomToast(guessUser.getNickname()+"猜错了");
+	            		b.putString("toast", guessUser.getNickname()+"猜错了");
+	    		        android.os.Message tMsg = new android.os.Message();
+	    		        tMsg.what = MSGConst.SHOW_TOAST;
+	    		        tMsg.setData(b);
+	    				handler.sendMessage(tMsg);
 	            		DataGuess dg = new DataGuess(SessionUtils.getIMEI(), DataUtils.getNowtime(), 
-	            				guessUser.getNickname()+"你个逗逼猜错了");
+	            				guessUser.getNickname()+",你个逗逼猜错了");
 	            		mLocalMsgsList.add(dg);
+	            	}
+	            	else{
+	            		b.putString("toast", "很遗憾你猜错了");
+	    		        android.os.Message tMsg = new android.os.Message();
+	    		        tMsg.what = MSGConst.SHOW_TOAST;
+	    		        tMsg.setData(b);
+	    				handler.sendMessage(tMsg);
 	            	}
 		        	break;
 		        }
@@ -890,7 +938,14 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 	        		}
 		        	break;
 		        }
-		        	
+		        case MSGConst.ANS_TIP:{
+            		b.putString("toast", "对方很好心的提示你:"+ pMsg.getAddStr());
+    		        android.os.Message tMsg = new android.os.Message();
+    		        tMsg.what = MSGConst.SHOW_TOAST;
+    		        tMsg.setData(b);
+    				handler.sendMessage(tMsg);
+		        	break;
+		        }
 		        default:
 		        	LogUtils.i(TAG, "wrong msg type");
 		            break;
@@ -919,6 +974,19 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 				case MSGConst.SEND_ONLINE:
 					netManage.sendToClient(MSGConst.ANS_PLAYERS, TypeUtils.cListToString(mServerOrderList), pMsg.getSenderIMEI());
 					break;
+				case MSGConst.SEND_OFFLINE:
+					String imei = pMsg.getSenderIMEI();
+					if(mServerOrderList.get(0).equals(imei)){
+					    mServerOrderList.remove(imei);
+					    mServerPlayersMap.remove(imei);
+					    netManage.sendToAllClient(MSGConst.ANS_PLAYERS, TypeUtils.cListToString(mServerOrderList));
+					}
+					else{
+					    mServerOrderList.remove(imei);
+					    mServerPlayersMap.remove(imei);
+					}
+					netManage.sendToAllExClient(MSGConst.ANS_OFFLINE, imei, imei);
+					break;
 				case MSGConst.SEND_DRAW:
 					netManage.sendToAllClient(MSGConst.ANS_DRAW, (DataDraw)pMsg.getAddObject());
 					
@@ -940,7 +1008,7 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
         			score = drawUser.getScore();
         			drawUser.setScore(++score);
 	            	//发送猜对消息
-					netManage.sendToAllClient(MSGConst.ANS_GUESS_TRUE, (DataGuess)pMsg.getAddObject());
+					netManage.sendToAllClient(MSGConst.ANS_GUESS_TRUE, pMsg.getAddStr());
 					if(isAllGuessTrue()){
 						guessNum = 0;
 						//重新分配游戏顺序
@@ -950,10 +1018,13 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 					}
 					break;
 				case MSGConst.SEND_GUESS_FALSE:
-					netManage.sendToAllClient(MSGConst.ANS_GUESS_FALSE, (DataGuess)pMsg.getAddObject());
+					netManage.sendToAllClient(MSGConst.ANS_GUESS_FALSE, pMsg.getAddStr());
 					break;
 				case MSGConst.SEND_CHOOSED:
 					netManage.sendToAllExClient(MSGConst.ANS_CHOOSED, null, pMsg.getSenderIMEI());
+					break;
+				case MSGConst.SEND_TIP:
+					netManage.sendToAllExClient(MSGConst.ANS_TIP, pMsg.getAddStr(), pMsg.getSenderIMEI());
 					break;
 		        default:
 		        	LogUtils.i(TAG, "wrong msg type");
@@ -1008,27 +1079,29 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
         	    	mLayoutColorBar.setVisibility(View.VISIBLE);
         	    	mLayoutBtnBar.setVisibility(View.VISIBLE);
         	    	
-            		//设置消息表
-            		mLocalMsgsList = new ArrayList<DataGuess>();
-            		msgsAdapter = new MsgsAdapter(DrawGuessActivity.this, mLocalMsgsList);
-            		mLvMsg.setAdapter(msgsAdapter);
             		//显示选词对话框
-            		DialogInterface.OnClickListener chooseListener = new DialogInterface.OnClickListener(){
+            		DialogInterface.OnClickListener firstListener = new DialogInterface.OnClickListener(){
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							if(which == 0){
-								mLocalWord = mLocalWord1;
-								mLocalKind = mLocalKind1;
-							}else if(which ==1){
-								mLocalWord = mLocalWord2;
-								mLocalKind = mLocalKind2;
-							}
+							mLocalWord = mLocalWord1;
+							mLocalKind = mLocalKind1;
+							handler.sendEmptyMessage(MSGConst.SET_TEXT);
 							netManage.sendToServer(MSGConst.SEND_CHOOSED, null);
-						}};
+						}
+					};
+            		DialogInterface.OnClickListener secondListener = new DialogInterface.OnClickListener(){
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							mLocalWord = mLocalWord2;
+							mLocalKind = mLocalKind2;
+							handler.sendEmptyMessage(MSGConst.SET_TEXT);
+							netManage.sendToServer(MSGConst.SEND_CHOOSED, null);
+						}
+					};
             		showAlertDialog(
             				"选择词汇","请从下面两个词语中选择一个你要画的词汇吧",
-            				mLocalWord1, chooseListener,
-            				mLocalWord2, chooseListener);
+            				mLocalWord1, firstListener,
+            				mLocalWord2, secondListener);
             		
         		}
         		else{
@@ -1039,7 +1112,11 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
         	    	showLoadingDialog("等待绘图者选词噢");
         		}
         		
+        		//创建计时进程
         		if(NetManage.getState() == 2){
+        			//退出上个计时进程
+        			if(mServerTimerCheck != null)
+        				mServerTimerCheck.exit();
         			//设定游戏时间
         			mServerTimerCheck = new TimerUtils() {
         	            @Override
@@ -1058,6 +1135,9 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
         	        };
         	        mServerTimerCheck.start(Constant.GAME_TIME, 1000);
         		}
+    			//退出上个计时进程
+        		if(mLocalTimerCheck != null)
+        			mLocalTimerCheck.exit();
     			//设定游戏时间
     			mLocalTimerCheck = new TimerUtils() {
     	            @Override
@@ -1066,17 +1146,32 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 
     	            @Override
     	            public void doTimerCheckWork() {
-    	            	handler.sendEmptyMessage(TIME_CHECK);
+    	            	handler.sendEmptyMessage(MSGConst.TIME_CHECK);
     	            }
     	        };
     	        mLocalTimerCheck.start(Constant.GAME_TIME, 1000);
         		//清空画布
         		doClickEvent(OP_TYPE.CLEAR, -1, -1, -1, -1);
     			
+
+        		//设置消息表
+        		mLocalMsgsList = new ArrayList<DataGuess>();
+        		msgsAdapter = new MsgsAdapter(DrawGuessActivity.this, mLocalMsgsList);
+        		mLvMsg.setAdapter(msgsAdapter);
             	//设置积分表格
         		scoresAdapter = new ScoresAdapter(DrawGuessActivity.this, mLocalScoresList);
         		mLvScore.setAdapter(scoresAdapter);
                 scoresAdapter.notifyDataSetChanged();
+            	break;
+            }
+            case MSGConst.ANS_GAME_OVER:{
+            	showCustomToast("房主退出了游戏，断开连接");
+	        	finish();
+            	break;
+            }
+            case MSGConst.ANS_OFFLINE:{
+            	String name = msg.getData().getString("offline");
+            	showCustomToast(name + "离开了游戏");
             	break;
             }
             case MSGConst.ANS_GUESS_TRUE:{
@@ -1127,8 +1222,15 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 	        	}
 	        	break;
 	        }
-            case TimerUtils.TIME_CHECK:
+            case MSGConst.TIME_CHECK:
             	mTvTime.setText(mLocalTimerCheck.getCount() + "秒");
+            	break;
+            case MSGConst.SHOW_TOAST:
+            	String s = msg.getData().getString("toast");
+            	showCustomToast(s);
+            	break;
+            case MSGConst.SET_TEXT:
+            	mTvDraw.setText("你要画的词是：" + mLocalWord);
             	break;
         	case MSGConst.DEBUG_MSG:
 				mDebug.setText(logNum + " ");

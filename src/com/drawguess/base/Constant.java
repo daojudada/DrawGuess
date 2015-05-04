@@ -32,7 +32,7 @@ public class Constant {
 	/**
 	 * 游戏时间
 	 */
-	public static final int GAME_TIME = 30;
+	public static final int GAME_TIME = 300;
 	/**
 	 * DES加密密钥 
 	 */

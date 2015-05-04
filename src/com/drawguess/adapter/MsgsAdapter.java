@@ -43,7 +43,7 @@ public class MsgsAdapter extends BaseObjectListAdapter {
             mAvatarId = ImageUtils.getImageID(avatarFileName);
         }
         else {
-            User users = NetManage.getServerUserMap().get(msg.getSenderIMEI());
+            User users = NetManage.getLocalUserMap().get(msg.getSenderIMEI());
             String avatarFileName = User.AVATAR + users.getAvatar();
             mAvatarId = ImageUtils.getImageID(avatarFileName);
         }

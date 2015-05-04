@@ -1,7 +1,9 @@
 package com.drawguess.net;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import android.content.Context;
 
@@ -170,6 +172,15 @@ public class NetManage implements NetInterface{
     	return mServer;
     }
     
+
+    public void setClient(TcpClient c){
+    	mClient = c;
+    }
+
+    public void getServer(TcpServer s){
+    	mServer = s;
+    }
+    
     public String getServerIp(){
     	return serverIp;
     }
@@ -206,6 +217,11 @@ public class NetManage implements NetInterface{
 	    	if(ipmsg!=null){
             	if(sm == SocketMode.TCP)
             		mServer.sendToAllClient(ipmsg);
+            	else{
+        	        for (Map.Entry<String, User> entry : mServerUsersMap.entrySet()) {
+    	        		mUDPListener.sendUDPdata(ipmsg, entry.getKey());
+        	        }
+            	}
 		    }
     	}
     }
@@ -219,7 +235,12 @@ public class NetManage implements NetInterface{
 	        	try {
 	            	if(sm == SocketMode.TCP)
 	            		mServer.sendToAllExClient(ipmsg, imei);
-	        		//else
+	        		else{
+	        	        for (Map.Entry<String, User> entry : mServerUsersMap.entrySet()) {
+	        	        	if(!imei.equals(entry.getKey()))
+	        	        		mUDPListener.sendUDPdata(ipmsg, entry.getKey());
+	        	        }
+	        		}
 	        			
 	            }
 	            catch (Exception e) {
@@ -238,6 +259,8 @@ public class NetManage implements NetInterface{
 	        	try {
 	            	if(sm == SocketMode.TCP)
 	            		mServer.sendToClient(ipmsg, imei);
+	            	else
+	        			mUDPListener.sendUDPdata(ipmsg, imei);
 	            }
 	            catch (Exception e) {
 	                LogUtils.e(TAG, "sendToClient() 发送数据包失败");
@@ -266,8 +289,7 @@ public class NetManage implements NetInterface{
     }
 
     @Override
- 	public void stopNet(){
- 		mUDPListener.stop();
+ 	public void stop(){
  		if(state == 1){
     		mClient.stop();
     	}

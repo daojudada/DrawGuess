@@ -24,6 +24,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.drawguess.R;
 import com.drawguess.adapter.PlayersAdapter;
 import com.drawguess.base.BaseActivity;
+import com.drawguess.base.BaseApplication;
 import com.drawguess.interfaces.OnMsgRecListener;
 import com.drawguess.msgbean.User;
 import com.drawguess.net.MSGConst;
@@ -101,6 +102,17 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
     
 	@Override
     protected void onDestroy() {
+		if(NetManage.getState() == 2){
+			netManage.sendToAllExClient(MSGConst.ANS_GAME_OVER, null, SessionUtils.getIMEI());
+			netManage.stop();
+			netManage.stopUdp();
+		}
+		else{
+			netManage.sendToServer(MSGConst.SEND_OFFLINE, null);
+			netManage.stop();
+			netManage.stopUdp();
+		}
+		handler = null;
         super.onDestroy();
     }
 	
@@ -114,7 +126,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 	        mServerStartList = new ArrayList<String>();
 			createServer();
             createClient(SessionUtils.getLocalIPaddress());
-        	showShortToast("创建房间成功");
+        	showCustomToast("创建房间成功");
         	haveFind = true;
             LogUtils.i(TAG, "创建房间成功");
             break;
@@ -166,11 +178,11 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
     				NetManage.setState(1);
     	            createClient(netManage.getServerIp());
     	            haveFind = true;
-                	showShortToast("连接房间成功");
+                	showCustomToast("连接房间成功");
                 }
                 else{
     	            LogUtils.i(TAG, "没有找到房间");
-                	showShortToast("没有找到房间");
+                	showCustomToast("没有找到房间");
                 }
                 mListView.onRefreshComplete();
 
@@ -199,16 +211,17 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
             	dismissLoadingDialog();
                 if(result){
     	            LogUtils.i(TAG, "找到房间");
+    	            BaseApplication.playNotification();
     	            //显示按钮
     	    		mBtnCreate.setVisibility(View.GONE);
     	    		mBtnReady.setVisibility(View.VISIBLE);
     				NetManage.setState(1);
     	            createClient(netManage.getServerIp());
-                	showShortToast("连接房间成功");
+                	showCustomToast("连接房间成功");
                 }
                 else{
     	            LogUtils.i(TAG, "没有找到房间");
-                	showShortToast("没有找到房间");
+                	showCustomToast("没有找到房间");
                 }
             }
 
@@ -231,6 +244,17 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 		        Bundle b = new Bundle();
 				int command = pMsg.getCommandNo();
 		        switch (command) {
+		        case MSGConst.ANS_GAME_OVER:{//服务器退出游戏
+		    		//显示开始按钮
+		    		mBtnCreate.setVisibility(View.VISIBLE);
+		    		mBtnReady.setVisibility(View.GONE);
+		    		mBtnStart.setVisibility(View.GONE);
+		        	mLocalUsersMap.clear();
+		        	mLocalUsersList.clear();
+		        	netManage.stop();
+		        	netManage.setClient(null);
+		        	NetManage.setState(0);
+		        }
 				case MSGConst.ANS_ONLINE:{ //服务器向客户端通报其他在线用户
 					User user = (User)pMsg.getAddObject();
 					if(!user.getIMEI().equals(SessionUtils.getIMEI())){
@@ -240,10 +264,10 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 				}
 					break;
 		        case MSGConst.ANS_OFFLINE: {//服务器向客户端通报其他下线用户
-					User user = (User)pMsg.getAddObject();
-					if(!user.getIMEI().equals(SessionUtils.getIMEI())){
+					String imei = pMsg.getAddStr();
+					if(!imei.equals(SessionUtils.getIMEI())){
 						//删除用户列表
-						mLocalUsersMap.remove(pMsg.getSenderIMEI());
+						mLocalUsersMap.remove(imei);
 					}
 		        }
 		            break;
@@ -261,6 +285,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 		        	if(isMeReady){
 			        	if(!pMsg.getSenderIMEI().equals(SessionUtils.getIMEI())){
 				    		netManage.removeClientListener(clientListener);
+		    	            BaseApplication.playNotification();
 				        	startActivity(DrawGuessActivity.class);
 			        	}
 		        		netManage.sendToServer(MSGConst.SEND_START, null);
@@ -320,11 +345,12 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 				}   
 		            break;
 		        case MSGConst.SEND_OFFLINE:{ // 用户下线
-					User user = (User)pMsg.getAddObject();
+					String imei = pMsg.getSenderIMEI();
 					//删除用户列表
-					removeUser(user);
+					removeUser(imei);
+					removeReady(imei);
 		            //向除该client的客户端发送该客户端信息
-		            netManage.sendToAllExClient(MSGConst.ANS_OFFLINE, null, pMsg.getSenderIMEI());
+		            netManage.sendToAllExClient(MSGConst.ANS_OFFLINE, imei, imei);
 		        }
 		            break;
 		        case MSGConst.SEND_READY:{//收到准备请求
@@ -361,10 +387,9 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
     		//删除该类的监听回调
     		netManage.removeServerListener(serverListener);
     		netManage.removeClientListener(clientListener);
-    		//停止监听UDP寻找房间的广播
-    		netManage.stopUdp();
     		Bundle b =new Bundle();
 			b.putStringArrayList("order", mServerReadyList);
+            BaseApplication.playNotification();
 			startActivity(DrawGuessActivity.class, b);
     	}
     }
@@ -375,8 +400,8 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 		mServerUsersMap.put(user.getIMEI(), user);
     }
     
-	private synchronized void removeUser(User user){
-		mServerUsersMap.remove(user.getIMEI());
+	private synchronized void removeUser(String imei){
+		mServerUsersMap.remove(imei);
     }
 	
 	private synchronized void addReady(String imei){
@@ -386,7 +411,8 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
     
 	private synchronized void removeReady(String imei){
 		//删除准备列表
-		mServerReadyList.remove(imei);
+		if(mServerReadyList.contains(imei))
+			mServerReadyList.remove(imei);
     }
 	
 	private void setOrderList(List<String> lists){
@@ -476,6 +502,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 		public void handleMessage(Message msg) {
 			//只有客户端才更新UI
 			switch (msg.what){
+			case MSGConst.ANS_GAME_OVER:
 	        case MSGConst.ANS_ONLINE:
 	        case MSGConst.ANS_OFFLINE: 
 	        case MSGConst.ANS_READY:

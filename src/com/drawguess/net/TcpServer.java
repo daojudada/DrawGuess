@@ -12,7 +12,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
 
 import org.json.JSONException;
 
@@ -30,7 +29,6 @@ public class TcpServer implements Runnable {
     private static TcpServer instance;
 
     private List<ServerThread> threadList ;
-    private ArrayBlockingQueue<MSGProtocol> msgQueue;
     
     
     private Thread receiveThread;
@@ -42,7 +40,6 @@ public class TcpServer implements Runnable {
     private TcpServer() {
         mListenerList = new ArrayList<OnMsgRecListener>();
         threadList = new LinkedList<ServerThread>(); 
-        msgQueue = new ArrayBlockingQueue<MSGProtocol>(100);
         LogUtils.i(TAG, "建立线程成功");
 
     }
@@ -262,6 +259,9 @@ public class TcpServer implements Runnable {
 			    	switch(command){
 			    	case MSGConst.SEND_ONLINE:
 			    		setIMEI(msgRes.getSenderIMEI());
+			    		break;
+			    	case MSGConst.SEND_OFFLINE:
+			    		threadList.remove(ServerThread.this);
 			    		break;
 		    		default:
 		    			break;

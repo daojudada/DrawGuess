@@ -2,6 +2,8 @@ package com.drawguess.activity;
 
 
 
+import java.util.Random;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -138,6 +140,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         mBtnExit = (Button) findViewById(R.id.login_btn_exit);
         mBtnNext = (Button) findViewById(R.id.login_btn_next);
         mBtnChangeUser = (Button) findViewById(R.id.login_btn_changeUser);
+        
+        mAvatar = new Random(System.currentTimeMillis()).nextInt(11)+1;
+        Picasso.with(mContext)
+        	.load(ImageUtils.getImageID(User.AVATAR + mAvatar))
+        	.into(mIvAvatar);
 
         SdDataUtils sp = new SdDataUtils();
         mNickname = sp.getNickname();

@@ -10,12 +10,11 @@ package com.drawguess.net;
  * 
  */
 public class MSGConst {	
-	
 
 	/**
-	 * DEBUG中测试用
+	 * 服务器端应答在线
 	 */
-	public static final int DEBUG_MSG			= 0x00000000;
+	public static final int ANS_GAME_OVER		= 0x00000000;
 	
 	/**
 	 * UDP广播在线
@@ -168,4 +167,27 @@ public class MSGConst {
 	 * 客户器端发送提示
 	 */
 	public static final int SEND_TIP			= 0x00000027;
+	
+
+
+	/**
+	 * 时间检测
+	 */
+	public final static int TIME_CHECK 			= 0x00000150;
+	/**
+	 * 时间到
+	 */
+	public final static int TIME_OUT 			= 0x00000151;
+	/**
+	 * DEBUG中测试用
+	 */
+	public static final int DEBUG_MSG			= 0x00000152;
+	/**
+	 * 显示TOAST
+	 */
+	public final static int SHOW_TOAST			= 0x00000153;
+	/**
+	 * 设置TEXT内容
+	 */
+	public final static int SET_TEXT	 		= 0x00000154;
 }

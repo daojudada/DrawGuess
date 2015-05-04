@@ -344,6 +344,7 @@
 			        	android:contentDescription="@string/app_name">
 		        	</Button>
 		        
+				   
 		    </LinearLayout>
 		    
 		     
@@ -454,10 +455,29 @@
 	        android:visibility="gone"
 	        android:orientation="vertical">
 		    
+	        <LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="40dp"
+				android:orientation="vertical"
+				android:background="@drawable/ab_solid_dark_holo" >
+		
+				<TextView
+					android:id="@+id/drawtab_tv_draw"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:layout_gravity="center_vertical"
+					android:gravity="center"
+					android:textSize="18sp" >
+				</TextView>
+				
+			</LinearLayout>
+	
 	        <ListView
 				android:id="@+id/chat_list"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
+				android:layout_weight="1"
 				android:cacheColorHint="@color/transparent"
 				android:divider="#00000000"
 				android:dividerHeight="0dip"
@@ -471,7 +491,7 @@
 			
 	        <LinearLayout
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
+				android:layout_height="50dp"
 				android:background="@drawable/bg_unlogin_bar"
 				android:gravity="center_vertical"
 				android:orientation="horizontal"
@@ -481,15 +501,15 @@
 				android:paddingTop="4dp" >
 		
 				<Button
-					android:id="@+id/drawtab_char_tip"
-					android:layout_width="wrap_content"
-					android:layout_height="42dip"
+					android:id="@+id/drawtab_bt_tip"
+					android:layout_width="0dp"
+					android:layout_height="30dip"
+					android:layout_weight="1"
 					android:layout_marginLeft="9dip"
 					android:layout_marginRight="9dip"
-					android:layout_weight="1"
 					android:background="@drawable/btn_bottombar"
 					android:gravity="center"
-					android:text="@string/btn_exit"
+					android:text="@string/maintab_tip_all"
 					android:textColor="@drawable/profile_bottom_text_color"
 					style="?android:attr/borderlessButtonStyle"
 					android:textSize="14sp" />

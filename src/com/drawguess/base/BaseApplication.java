@@ -21,7 +21,8 @@ public class BaseApplication extends Application {
 
     /** 静音、震动默认开关 **/
     private static boolean isSlient = false;
-    private static boolean isVIBRATE = true;
+    private static boolean isVibrate = true;
+    private static boolean isPrintLog = true;
 
     private static SoundPool notiMediaplayer;
     /** 新消息提醒 **/
@@ -48,7 +49,7 @@ public class BaseApplication extends Application {
 
     /* 设置震动提醒 */
     public static boolean getVibrateFlag() {
-        return isVIBRATE;
+        return isVibrate;
     }
 
   
@@ -60,7 +61,7 @@ public class BaseApplication extends Application {
         if (!isSlient) {
             notiMediaplayer.play(notiSoundPoolID, 1, 1, 0, 0, 1);
         }
-        if (isVIBRATE) {
+        if (isVibrate) {
             notiVibrator.vibrate(200);
         }
 
@@ -71,10 +72,8 @@ public class BaseApplication extends Application {
     }
 
     public static void setVibrateFlag(boolean pIsvibrate) {
-        isVIBRATE = pIsvibrate;
+    	isVibrate = pIsvibrate;
     }
-
-    private boolean isPrintLog = true;
 
     private void initNotification() {
         notiMediaplayer = new SoundPool(3, AudioManager.STREAM_SYSTEM, 5);
@@ -82,6 +81,7 @@ public class BaseApplication extends Application {
         notiVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
     }
 
+    
     @Override
     public void onCreate() {
         super.onCreate();

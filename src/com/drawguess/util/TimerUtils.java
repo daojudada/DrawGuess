@@ -1,13 +1,11 @@
 package com.drawguess.util;
 
 /**
- * 时间检测类
+ * 计时进程类
  * @author GuoJun
  *
  */
 public abstract class TimerUtils {
-	public final static int TIME_CHECK = 150;
-	public final static int TIME_OUT = 151;
     private int mCount = 0;
     private boolean mExitFlag = false;
     private int mSleepTime = 1000; // 1s
@@ -16,7 +14,6 @@ public abstract class TimerUtils {
 
     public TimerUtils() {
         mThread = new Thread(new Runnable() {
-
             @Override
             public void run() {
                 while (!mExitFlag) {
@@ -56,6 +53,7 @@ public abstract class TimerUtils {
 
     public void exit() {
         mExitFlag = true;
+        mThread = null;
     }
 
     /**

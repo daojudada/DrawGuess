@@ -120,7 +120,7 @@ public interface NetInterface {
 	 	/**
 	 	 * 停止网络服务	
 	 	 */
-	 	public void stopNet();
+	 	public void stop();
 
 
 }
