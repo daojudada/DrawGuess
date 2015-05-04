@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/background_normal"
+	android:orientation="vertical" >
+
+    <LinearLayout
+		android:id="@+id/bluetooth_linearlayout_main"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_weight="1"
+		android:orientation="vertical" >
+		
+        <TextView
+        	android:id="@+id/title_new_devices"
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:background="#666"
+        	android:paddingLeft="5dp"
+        	android:text="@string/bluetooth_title_other_devices"
+        	android:textColor="#fff"
+        	/>
+        
+        <com.drawguess.view.MultiListView
+            android:id="@+id/bluetooth_other_devices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:cacheColorHint="@color/transparent"
+			android:divider="@null"
+			android:fadingEdge="none"
+			android:listSelector="@drawable/list_selector_transition">
+        </com.drawguess.view.MultiListView>	
+		
+        <TextView
+        	android:id="@+id/title_paired_devices"
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:background="#666"
+        	android:paddingLeft="5dp"
+        	android:text="@string/bluetooth_title_paired_devices"
+        	android:textColor="#fff"
+        	/>
+        
+        <ListView
+            android:id="@+id/bluetooth_paired_devices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:cacheColorHint="@color/transparent"
+			android:divider="@null"
+			android:fadingEdge="none"
+			android:listSelector="@drawable/list_selector_transition">
+        </ListView>		
+	</LinearLayout>
+	
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@drawable/bg_unlogin_bar"
+		android:gravity="center_vertical"
+		android:orientation="horizontal"
+		android:paddingBottom="4dp"
+		android:paddingLeft="8dp"
+		android:paddingRight="8dp"
+		android:paddingTop="4dp" >
+
+
+		<Button
+		    android:id="@+id/bluetooth_btn_back"
+			android:layout_width="0dp"
+			android:layout_height="42dip"
+			android:layout_marginLeft="9dip"
+			android:layout_marginRight="9dip"
+			android:layout_weight="1"
+			android:background="@drawable/btn_bottombar"
+			android:gravity="center"
+			android:text="@string/btn_back"
+			android:textColor="@drawable/profile_bottom_text_color"
+			style="?android:attr/borderlessButtonStyle"
+			android:textSize="14sp" >
+		
+		</Button>
+		
+		<Button
+		    android:id="@+id/bluetooth_btn_change"
+			android:layout_width="0dp"
+			android:layout_height="42dip"
+			android:layout_marginLeft="9dip"
+			android:layout_marginRight="9dip"
+			android:layout_weight="1"
+			android:background="@drawable/btn_bottombar"
+			android:gravity="center"
+			android:text="@string/btn_change_device_name"
+			android:textColor="@drawable/profile_bottom_text_color"
+			style="?android:attr/borderlessButtonStyle"
+			android:textSize="14sp" >
+		
+		</Button>
+	</LinearLayout>
+
+	
+</LinearLayout>

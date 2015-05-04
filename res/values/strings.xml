@@ -8,7 +8,8 @@
 	<string name="btn_save">保存</string>
 	<string name="dialog_tips">提 示</string>
 	<string name="btn_yes">确    定</string>
-	<string name="btn_cancel">取    消</string>
+	<string name="btn_cancel">取    消</string>	
+    <string name="btn_change_device_name">修改设备名称</string>
 	
 	<string name="login_hint_nickname">输入您的昵称</string>
 	<string name="login_text_selectsex">选择性别</string>
@@ -108,5 +109,14 @@
 	<string name="paint_brush">画笔</string>
 	<string name="paint_crany">水彩</string>
 	<string name="paint_relief">浮雕</string>
+	
+
+    <!--  Activity_Bluetooth -->
+    <string name="bluetooth_scanning">搜索设备中……</string>
+    <string name="bluetooth_select_device">请选择需要连接的设备</string>
+    <string name="bluetooth_none_paired">请先匹配一个设备</string>
+    <string name="bluetooth_none_found">没有找到设备</string>
+    <string name="bluetooth_title_paired_devices">曾配对设备</string>
+    <string name="bluetooth_title_other_devices">附近的设备</string>
 	
 </resources>

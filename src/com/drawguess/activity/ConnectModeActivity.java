@@ -54,7 +54,7 @@ public class ConnectModeActivity extends BaseActivity implements OnClickListener
                 
                 break;
             case R.id.btn_bluetooth:
-            	
+            	startActivity(BluetoothActivity.class);
                 break;
     
 
