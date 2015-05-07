@@ -41,7 +41,6 @@ public abstract class BaseActivity extends Activity {
     protected ActionBar mActionBar;
     protected List<AsyncTask<Void, Void, Boolean>> mAsyncTasks = new ArrayList<AsyncTask<Void, Void, Boolean>>();
     protected Context mContext;
-    protected NetManage netManage;
     protected OnMsgRecListener clientListener;
     protected OnMsgRecListener serverListener;
     protected float mDensity;

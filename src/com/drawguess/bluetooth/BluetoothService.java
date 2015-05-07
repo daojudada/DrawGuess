@@ -15,7 +15,11 @@ import java.io.OutputStream;
 import java.util.UUID;
 
 import com.drawguess.base.Constant;
+import com.drawguess.msgbean.Entity;
+import com.drawguess.net.MSGConst;
+import com.drawguess.net.MSGProtocol;
 import com.drawguess.util.LogUtils;
+import com.drawguess.util.SessionUtils;
 
 /**
  * This class does all the work for setting up and managing Bluetooth
@@ -37,9 +41,11 @@ public class BluetoothService {
     private static final UUID MY_UUID_INSECURE =
             UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
 
+    private static BluetoothService instance;
+    private static Handler mHandler;
+    
     // Member fields
     private final BluetoothAdapter mAdapter;
-    private final Handler mHandler;
     private AcceptThread mSecureAcceptThread;
     private AcceptThread mInsecureAcceptThread;
     private ConnectThread mConnectThread;
@@ -51,19 +57,27 @@ public class BluetoothService {
     public static final int STATE_LISTEN = 1;     // now listening for incoming connections
     public static final int STATE_CONNECTING = 2; // now initiating an outgoing connection
     public static final int STATE_CONNECTED = 3;  // now connected to a remote device
-
+    
+    
+    
     /**
      * Constructor. Prepares a new BluetoothChat session.
      *
      * @param context The UI Activity Context
      * @param handler A Handler to send messages back to the UI Activity
      */
-    public BluetoothService(Context context, Handler handler) {
+    private BluetoothService(){
         mAdapter = BluetoothAdapter.getDefaultAdapter();
         mState = STATE_NONE;
-        mHandler = handler;
     }
 
+    public static BluetoothService getInstance(Handler handler){
+    	if(instance ==null){
+    		instance = new BluetoothService();
+    	}
+        mHandler = handler;
+    	return instance;
+    }
     /**
      * Set the current state of the chat connection
      *
@@ -219,6 +233,55 @@ public class BluetoothService {
         setState(STATE_NONE);
     }
 
+    
+    /**
+     * 打包数据包
+     * 
+     * @param commandNo
+     *            消息命令
+     * @param addData
+     *            附加数据
+     * @see MSGConst
+     */
+    public MSGProtocol packageMsg(int commandNo, Object addData) {
+        MSGProtocol ipmsgProtocol = null;
+        String imei = SessionUtils.getIMEI();
+
+        if (addData == null) {
+            ipmsgProtocol = new MSGProtocol(imei, commandNo);
+        }
+        else if (addData instanceof Entity) {
+            ipmsgProtocol = new MSGProtocol(imei, commandNo, (Entity) addData);
+        }
+        else if (addData instanceof String) {
+            ipmsgProtocol = new MSGProtocol(imei, commandNo, (String) addData);
+        }
+        return ipmsgProtocol;
+    }
+    
+	/**
+     * Sends a message.
+     *
+     * @param message A string of text to send.
+     */
+    public void sendMessage(int commandNo, Object addData) {
+    	MSGProtocol msg = packageMsg(commandNo,addData);
+    	
+        // Check that we're actually connected before trying anything
+        if (getState() != BluetoothService.STATE_CONNECTED) {
+            // Toast.makeText(getActivity(), R.string.not_connected, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Check that there's actually something to send
+        // Get the message bytes and tell the BluetoothChatService to write
+    	String msgProtocol = msg.getProtocolJSON();
+		String msgAll =  msgProtocol + "@sp"; 
+        byte[] send = msgAll.getBytes();
+        write(send);
+
+    }
+    
     /**
      * Write to the ConnectedThread in an unsynchronized manner
      *

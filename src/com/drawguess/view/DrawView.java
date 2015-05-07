@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.util.Iterator;
 
 import com.drawguess.base.Constant;
+import com.drawguess.bluetooth.BluetoothService;
 import com.drawguess.drawop.OpDraw.Shape;
 import com.drawguess.drawop.OperationManage.DrawMode;
 import com.drawguess.drawop.*;
@@ -49,7 +50,7 @@ public class DrawView extends View {
 	public enum DrawState{Draw,Trans}
 	private final static String TAG = "DrawView";
 	private NetManage netManage;
-	
+	private BluetoothService btService;
 	private Paint bmpPaint;
 	private Bitmap cacheBitmap,earlyBitmap;
 	private Canvas cacheCanvas;
@@ -140,7 +141,10 @@ public class DrawView extends View {
 				case MotionEvent.ACTION_DOWN:
 					//发送给服务器
 					data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.DOWN1,x/wx,y/hy,-1,-1);
-					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					if(Constant.CONNECT_WAY)
+						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					else
+						btService.sendMessage(MSGConst.SEND_DRAW, data);
 					//当前设备绘制
 					x/=suol;
 					y/=suol;
@@ -154,7 +158,10 @@ public class DrawView extends View {
 
 					//发送给服务器
 					data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.DOWN2,-1,-1,-1,-1);
-					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					if(Constant.CONNECT_WAY)
+						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					else
+						btService.sendMessage(MSGConst.SEND_DRAW, data);
 					//当前设备绘制
 					x/=suol;
 					y/=suol;
@@ -170,7 +177,10 @@ public class DrawView extends View {
 					if(mode == 1){
 						//发送给服务器
 						data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.MOVE,x/wx,y/hy,-1,-1);
-						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+						if(Constant.CONNECT_WAY)
+							netManage.sendToServer(MSGConst.SEND_DRAW, data);
+						else
+							btService.sendMessage(MSGConst.SEND_DRAW, data);
 						//当前设备绘制
 						x/=suol;
 						y/=suol;
@@ -195,7 +205,10 @@ public class DrawView extends View {
 				case MotionEvent.ACTION_POINTER_UP:
 					//发送给服务器
 					data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.UP2,-1,-1,-1,-1);
-					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					if(Constant.CONNECT_WAY)
+						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					else
+						btService.sendMessage(MSGConst.SEND_DRAW, data);
 					//当前设备绘制
 					x/=suol;
 					y/=suol;
@@ -207,7 +220,10 @@ public class DrawView extends View {
 				case MotionEvent.ACTION_UP:
 					//发送给服务器
 					data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.UP1,-1,-1,-1,-1);
-					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					if(Constant.CONNECT_WAY)
+						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					else
+						btService.sendMessage(MSGConst.SEND_DRAW, data);
 					//当前设备绘制
 					x/=suol;
 					y/=suol;
@@ -236,7 +252,10 @@ public class DrawView extends View {
 				{
 				case MotionEvent.ACTION_DOWN:
 					data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.DOWN1,x,y,-1,-1);
-					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					if(Constant.CONNECT_WAY)
+						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					else
+						btService.sendMessage(MSGConst.SEND_DRAW, data);
 					x/=suol;
 					y/=suol;
 					doTrans(TOUCH_TYPE.DOWN1, x , y, -1, -1);
@@ -245,7 +264,10 @@ public class DrawView extends View {
 					x2 = event.getX(1);
 					y2 = event.getY(1);
 					data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.DOWN2,x,y,x2,y2);
-					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					if(Constant.CONNECT_WAY)
+						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					else
+						btService.sendMessage(MSGConst.SEND_DRAW, data);
 					x/=suol;
 					y/=suol;
 					x2/=suol;
@@ -255,7 +277,10 @@ public class DrawView extends View {
 				case MotionEvent.ACTION_MOVE:
 					if(mode ==1){
 						data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.MOVE,x,y,-1,-1);
-						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+						if(Constant.CONNECT_WAY)
+							netManage.sendToServer(MSGConst.SEND_DRAW, data);
+						else
+							btService.sendMessage(MSGConst.SEND_DRAW, data);
 						x/=suol;
 						y/=suol;
 						doTrans(TOUCH_TYPE.MOVE, x, y, -1 , -1);
@@ -264,7 +289,10 @@ public class DrawView extends View {
 						x2 = event.getX(1);
 						y2 = event.getY(1);
 						data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.MOVE,x,y,x2,y2);
-						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+						if(Constant.CONNECT_WAY)
+							netManage.sendToServer(MSGConst.SEND_DRAW, data);
+						else
+							btService.sendMessage(MSGConst.SEND_DRAW, data);
 						x/=suol;
 						y/=suol;
 						x2/=suol;
@@ -274,12 +302,18 @@ public class DrawView extends View {
 					break;
 				case MotionEvent.ACTION_POINTER_UP:
 					data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.UP2,-1,-1,-1,-1);
-					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					if(Constant.CONNECT_WAY)
+						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					else
+						btService.sendMessage(MSGConst.SEND_DRAW, data);
 					doTrans(TOUCH_TYPE.UP2, -1,-1,-1,-1);
 					break;
 				case MotionEvent.ACTION_UP:
 					data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.UP1,-1,-1,-1,-1);
-					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					if(Constant.CONNECT_WAY)
+						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					else
+						btService.sendMessage(MSGConst.SEND_DRAW, data);
 					doTrans(TOUCH_TYPE.UP1, -1,-1,-1,-1);
 					break;
 				
@@ -455,6 +489,14 @@ public class DrawView extends View {
 	public void setNetManage(NetManage nm)
 	{
 		this.netManage = nm;
+	}
+	
+	/**
+	 * 设置网络管理器
+	 */
+	public void setBtService(BluetoothService nm)
+	{
+		this.btService = nm;
 	}
 	
 	/**

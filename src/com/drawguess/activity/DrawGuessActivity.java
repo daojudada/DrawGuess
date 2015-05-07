@@ -65,6 +65,7 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
      * 延时退出时间变量
      */
     private long ExitTime; 
+    private NetManage netManage;
     /**
      * 消息传递类
      */

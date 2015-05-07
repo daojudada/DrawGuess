@@ -10,6 +10,7 @@
 	<string name="btn_yes">确    定</string>
 	<string name="btn_cancel">取    消</string>	
     <string name="btn_change_device_name">修改设备名称</string>
+    <string name="btn_cancel_discovery">停止搜索设备</string>
 	
 	<string name="login_hint_nickname">输入您的昵称</string>
 	<string name="login_text_selectsex">选择性别</string>
@@ -118,5 +119,14 @@
     <string name="bluetooth_none_found">没有找到设备</string>
     <string name="bluetooth_title_paired_devices">曾配对设备</string>
     <string name="bluetooth_title_other_devices">附近的设备</string>
+    
+    <!--  BluetoothChat -->
+    <string name="send">Send</string>
+    <string name="not_connected">You are not connected to a device</string>
+    <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving Bluetooth Chat.</string>
+    <string name="title_connecting">connecting...</string>
+    <string name="title_connected_to">connected to </string>
+    <string name="title_not_connected">not connected</string>
+    
 	
 </resources>

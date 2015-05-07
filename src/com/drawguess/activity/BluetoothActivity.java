@@ -2,9 +2,10 @@ package com.drawguess.activity;
 
 import java.util.Set;
 
+import org.json.JSONException;
+
 import com.drawguess.R;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
@@ -12,6 +13,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -22,6 +25,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.drawguess.base.BaseActivity;
+import com.drawguess.base.Constant;
+import com.drawguess.bluetooth.BluetoothService;
+import com.drawguess.net.MSGConst;
+import com.drawguess.net.MSGProtocol;
 import com.drawguess.util.LogUtils;
 import com.drawguess.view.MultiListView;
 import com.drawguess.view.MultiListView.OnRefreshListener;
@@ -43,31 +50,57 @@ public class BluetoothActivity extends BaseActivity implements OnClickListener, 
     * Return Intent extra
     */
    public static String EXTRA_DEVICE_ADDRESS = "device_address";
+   
 
    /**
-    * Member fields
+    * Name of the connected device
     */
-   private BluetoothAdapter mBtAdapter;
+   private String mConnectedDeviceName = null;
+   private String saveStr = "";
 
-   /**
-    * Newly discovered devices
-    */
-   private ArrayAdapter<String> mNewDevicesArrayAdapter;
+   private boolean isMeDraw = false,isClick = false;
+
+	/*
+	 * 蓝牙连接服务类对象
+	 */
+	private BluetoothService mBtService;
+	
+	/*
+	 * 蓝牙适配器对象
+	 */
+	private BluetoothAdapter mBtAdapter;
+
+	/**
+	 * Newly discovered devices
+	 */
+	private ArrayAdapter<String> mNewDevicesArrayAdapter;
    
-   private MultiListView newDevicesListView;
-   private ListView pairedListView;
-   private ArrayAdapter<String> pairedDevicesArrayAdapter;
-   private Set<BluetoothDevice> pairedDevices;
+	private MultiListView newDevicesListView;
+	private ListView pairedListView;
+	private ArrayAdapter<String> pairedDevicesArrayAdapter;
+	private Set<BluetoothDevice> pairedDevices;
    
-// Intent request codes
-   private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
-   private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
-   private static final int REQUEST_ENABLE_BT = 3;
+	// Intent request codes
+	private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
+	private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
+	private static final int REQUEST_ENABLE_BT = 3;
    
+
    
 	@Override
 	protected void initEvents() {
-		// TODO Auto-generated method stub
+
+        // Get the local Bluetooth adapter
+        mBtAdapter = BluetoothAdapter.getDefaultAdapter();
+        
+		// If BT is not on, request that it be enabled.  
+        // setupChat() will then be called during onActivityResult  
+        if (!mBtAdapter.isEnabled()) {  
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);  
+            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);  
+        }
+        
+		// fill two views with devices that might be available for connection
 		pairedListView.setAdapter(pairedDevicesArrayAdapter);
         pairedListView.setOnItemClickListener(mDeviceClickListener);
         
@@ -75,15 +108,13 @@ public class BluetoothActivity extends BaseActivity implements OnClickListener, 
         newDevicesListView.setOnItemClickListener(mDeviceClickListener);
         newDevicesListView.setOnRefreshListener(this);
         
-        // Get the local Bluetooth adapter
-        mBtAdapter = BluetoothAdapter.getDefaultAdapter();
+        Button btnBack = (Button)findViewById(R.id.bluetooth_btn_back);
+        btnBack.setOnClickListener(this);
+        Button btnChange = (Button)findViewById(R.id.bluetooth_btn_change);
+        btnChange.setOnClickListener(this);
+        Button btnCancelDiscovery = (Button)findViewById(R.id.bluetooth_btn_cancel_discovery);
+        btnCancelDiscovery.setOnClickListener(this);
         
-        // If BT is not on, request that it be enabled.  
-        // setupChat() will then be called during onActivityResult  
-        if (!mBtAdapter.isEnabled()) {  
-            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);  
-            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);  
-        }
 	}
 
 	@Override
@@ -112,6 +143,12 @@ public class BluetoothActivity extends BaseActivity implements OnClickListener, 
 		{
 		case R.id.bluetooth_btn_back:
 			finish();
+			break;
+			
+		case R.id.bluetooth_btn_cancel_discovery:
+			if (mBtAdapter != null) {
+				mBtAdapter.cancelDiscovery();
+			}
 			break;
 			
 		case R.id.bluetooth_btn_change:
@@ -163,7 +200,16 @@ public class BluetoothActivity extends BaseActivity implements OnClickListener, 
 
         doDiscovery();
     }
-
+    
+    @Override
+    public void onStart() {
+        super.onStart();
+            // Otherwise, setup the chat session
+        if (mBtService == null) {
+            setupChat();
+        }
+    }
+    
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -176,7 +222,24 @@ public class BluetoothActivity extends BaseActivity implements OnClickListener, 
         // Unregister broadcast listeners
         this.unregisterReceiver(mReceiver);
     }
-
+    
+    public void tryConnecting(int requestCode, String address) {
+        switch (requestCode) {
+            case REQUEST_CONNECT_DEVICE_SECURE:
+                // When DeviceListActivity returns with a device to connect
+                    connectDevice(address, true);
+                break;
+            case REQUEST_CONNECT_DEVICE_INSECURE:
+                // When DeviceListActivity returns with a device to connect
+                    connectDevice(address, false);
+                break;
+            case REQUEST_ENABLE_BT:
+                // When the request to enable Bluetooth returns
+                    // Bluetooth is now enabled, so set up a chat session
+                    setupChat();
+        }
+    }
+    
     /**
      * Start device discover with the BluetoothAdapter
      */
@@ -198,6 +261,7 @@ public class BluetoothActivity extends BaseActivity implements OnClickListener, 
         // Request discover from BluetoothAdapter
         mBtAdapter.startDiscovery();
     }
+    
 
     /**
      * The on-click listener for all devices in the ListViews
@@ -213,19 +277,8 @@ public class BluetoothActivity extends BaseActivity implements OnClickListener, 
             if (info.length() > 17) {
             	String address = info.substring(info.length() - 17); //Problematic statement when info.length() < 17 // temporarily solved
             
-            	// Create the result Intent and include the MAC address
-            	Intent intent = new Intent();
-            	
-            	// Set result and finish this Activity
-            	// setResult(Activity.RESULT_OK, intent);
-        		// finish();  //make bluetooth connection in this activity or service instead
-            	// or at least transfer the address to the activity that utilize the connection
-            	
-            	intent.setClass(BluetoothActivity.this, BtDrawGuessActivity.class);
-            	Bundle bundle = new Bundle();
-            	bundle.putString(EXTRA_DEVICE_ADDRESS, address);
-            	intent.putExtras(bundle);
-            	startActivity(intent);
+            	isMeDraw = true;
+            	tryConnecting(REQUEST_CONNECT_DEVICE_SECURE, address);
 
             }
         }
@@ -270,6 +323,93 @@ public class BluetoothActivity extends BaseActivity implements OnClickListener, 
 		}
 	}
 	
+	private void connectDevice(String address, boolean secure) {
+        // Get the BluetoothDevice object
+        BluetoothDevice device = mBtAdapter.getRemoteDevice(address);
+        // Attempt to connect to the device
+        mBtService.connect(device, secure);
+        //mBtService.sendMessage(MSGConst.SEND_START, null);
+    }
 	
-	//public static 
+	
+	
+	private void setupChat() {
+        LogUtils.d(TAG, "setupChat()");
+
+        // Initialize the BluetoothChatService to perform bluetooth connections
+        mBtService = BluetoothService.getInstance(mHandler);
+
+    }
+	
+	private final Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case Constant.MESSAGE_STATE_CHANGE:
+                    switch (msg.arg1) {
+                        case BluetoothService.STATE_CONNECTED:
+                            //setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
+                            mBtService.sendMessage(MSGConst.SEND_START, null);
+                            break;
+                        case BluetoothService.STATE_CONNECTING:
+                            //setStatus(R.string.title_connecting);
+                            break;
+                        case BluetoothService.STATE_LISTEN:
+                        case BluetoothService.STATE_NONE:
+                            //setStatus(R.string.title_not_connected);
+                            break;
+                    }
+                    break;
+                case Constant.MESSAGE_WRITE:
+                    byte[] writeBuf = (byte[]) msg.obj;
+                    // construct a string from the buffer
+                    String writeMessage = new String(writeBuf);
+                    break;
+                case Constant.MESSAGE_READ:
+                    byte[] readBuf = (byte[]) msg.obj;
+                    // construct a string from the valid bytes in the buffer
+                    String readMessage = new String(readBuf, 0, msg.arg1);
+                    readMessage+=" ";
+                    String[] strArray = null; 
+        	    	strArray = readMessage.split("@sp"); 
+            		for(int i = 0; i<strArray.length ; i++){
+            			String sendMsg = strArray[i];
+            			if(i == strArray.length -1 ){
+        					saveStr = sendMsg.trim();
+            			}
+            			else{
+            				MSGProtocol pMsg;
+        					try {
+        						pMsg = new MSGProtocol(sendMsg);
+        	                    LogUtils.i("Read", pMsg.getCommandNo()+"");
+        	                    if(pMsg.getCommandNo() == MSGConst.SEND_START){
+        	                        Bundle b = new Bundle();
+        	                        b.putBoolean("isMeDraw", isMeDraw);
+        	                        startActivity(BtDrawGuessActivity.class,b);
+        	                    }
+        					} catch (JSONException e) {
+        	                    LogUtils.i("json", "json wrong");
+        					}
+            			}
+            		}
+            		break;
+                
+                case Constant.MESSAGE_DEVICE_NAME:
+                    // save the connected device's name
+                    mConnectedDeviceName = msg.getData().getString(Constant.DEVICE_NAME);
+                    if (null != BluetoothActivity.this) {
+                        showCustomToast( "Connected to " + mConnectedDeviceName);
+                    }
+                    break;
+                case Constant.MESSAGE_TOAST:
+                    if (null != BluetoothActivity.this) {
+                    	if(isMeDraw)
+                    		isMeDraw = false;
+                        showCustomToast( msg.getData().getString(Constant.TOAST));
+                    }
+                    break;
+            }
+        }
+    };
+	
 }

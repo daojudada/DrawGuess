@@ -49,7 +49,8 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 
     private boolean isMeReady;
     private boolean haveFind;
-    
+
+    private NetManage netManage;
     private PlayersAdapter mAdapter;
     private Button mBtnReady;
     private Button mBtnStart;
@@ -102,6 +103,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
     
 	@Override
     protected void onDestroy() {
+		/*
 		if(NetManage.getState() == 2){
 			netManage.sendToAllExClient(MSGConst.ANS_GAME_OVER, null, SessionUtils.getIMEI());
 			netManage.stop();
@@ -113,6 +115,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 			netManage.stopUdp();
 		}
 		handler = null;
+		*/
         super.onDestroy();
     }
 	
