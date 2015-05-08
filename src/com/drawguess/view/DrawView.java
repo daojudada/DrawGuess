@@ -479,6 +479,11 @@ public class DrawView extends View {
 	 */
 	public void setClear()
 	{
+
+		suol=1;
+		suols=1;
+		moveX= 0;
+		moveY = 0;
 		opManage.clear();
 		initBitmap();
 		refreshCanvas();
