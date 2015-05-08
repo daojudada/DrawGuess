@@ -27,6 +27,7 @@ import com.drawguess.base.BaseActivity;
 import com.drawguess.base.BaseApplication;
 import com.drawguess.interfaces.OnMsgRecListener;
 import com.drawguess.msgbean.User;
+import com.drawguess.msgbean.UserList;
 import com.drawguess.net.MSGConst;
 import com.drawguess.net.MSGProtocol;
 import com.drawguess.net.NetManage;
@@ -259,11 +260,12 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 		        	NetManage.setState(0);
 		        }
 				case MSGConst.ANS_ONLINE:{ //服务器向客户端通报其他在线用户
-					User user = (User)pMsg.getAddObject();
-					if(!user.getIMEI().equals(SessionUtils.getIMEI())){
-						//添加用户列表
-						mLocalUsersMap.put(user.getIMEI(), user);
-					}
+					UserList userList = (UserList)pMsg.getAddObject();
+					for(User user:userList.getUserList())
+						if(!user.getIMEI().equals(SessionUtils.getIMEI())){
+							//添加用户列表
+							mLocalUsersMap.put(user.getIMEI(), user);
+						}
 				}
 					break;
 		        case MSGConst.ANS_OFFLINE: {//服务器向客户端通报其他下线用户
@@ -335,15 +337,10 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 					User user = (User)pMsg.getAddObject();
 					//添加用户
 					addUser(user);
-		            //向该客户端发送本机信息
-		            netManage.sendToClient(MSGConst.ANS_ONLINE, SessionUtils.getLocalUserInfo(), pMsg.getSenderIMEI());
-		            //向除该client的客户端发送该客户端信息
-		            netManage.sendToAllExClient(MSGConst.ANS_ONLINE, user, pMsg.getSenderIMEI());
-		            //如果本机准备了 发送准备消息
-		            if(isMeReady){
-						String lists = TypeUtils.cListToString(mServerReadyList);
-			            netManage.sendToClient(MSGConst.ANS_READY, lists, pMsg.getSenderIMEI());
-		            }
+					UserList userList = new UserList(TypeUtils.cMapToList(mServerUsersMap));
+		            netManage.sendToAllClient(MSGConst.ANS_ONLINE, userList);
+					String lists = TypeUtils.cListToString(mServerReadyList);
+		            netManage.sendToClient(MSGConst.ANS_READY, lists, pMsg.getSenderIMEI());
 		            	
 				}   
 		            break;
@@ -482,17 +479,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
         
     }
     
-    /**
-     * 将用户表HashMap转成ArrayList
-     * 
-     * @param application
-     */
-    private void initMapToList() {
-        mLocalUsersList = new ArrayList<User>(mLocalUsersMap.size());
-        for (Map.Entry<String, User> entry : mLocalUsersMap.entrySet()) {
-            mLocalUsersList.add(entry.getValue());
-        }
-    }
+
     
     
     
@@ -511,7 +498,7 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 	        case MSGConst.ANS_READY:
 	        case MSGConst.ANS_UNREADY:
 				//刷新UI
-				initMapToList();
+				mLocalUsersList = TypeUtils.cMapToList(mLocalUsersMap);
 	            refreshAdapter();
 	            refreshPlayersNum();
 	            break;

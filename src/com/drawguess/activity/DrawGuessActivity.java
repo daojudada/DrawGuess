@@ -861,7 +861,7 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 	            		DataGuess dg = new DataGuess(SessionUtils.getIMEI(), DataUtils.getNowtime(), "好厉害，这也能猜出来");
 	            		mLocalMsgsList.add(dg);
 	            	}
-	            	else{
+	            	else if(SessionUtils.getIMEI().equals(guessUser.getIMEI())){
 	            		b.putString("toast", "恭喜你猜对了，积分加2");
 	    		        android.os.Message tMsg = new android.os.Message();
 	    		        tMsg.what = MSGConst.SHOW_TOAST;
@@ -955,8 +955,8 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 		        	
 	        		if(SessionUtils.getOrder()!=1){
 						logNum++;
-	        			handler.sendEmptyMessage(MSGConst.DEBUG_MSG);
 	        		}
+        			handler.sendEmptyMessage(MSGConst.DEBUG_MSG);
 		        	break;
 		        }
 		        case MSGConst.ANS_TIP:{
@@ -1011,10 +1011,6 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 				case MSGConst.SEND_DRAW:
 					netManage.sendToAllClient(MSGConst.ANS_DRAW, (DataDraw)pMsg.getAddObject());
 					
-					//test
-					logNum++;
-        			handler.sendEmptyMessage(MSGConst.DEBUG_MSG);
-        			
 					break;
 				case MSGConst.SEND_GUESS_WORD:
 					netManage.sendToClient(MSGConst.ANS_GUESS_WORD, (DataGuess)pMsg.getAddObject(), mServerOrderList.get(0));

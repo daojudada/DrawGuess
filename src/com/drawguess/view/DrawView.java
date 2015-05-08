@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
 import java.text.DateFormat;
 import java.util.Iterator;
 
+import com.drawguess.activity.DrawGuessActivity;
 import com.drawguess.base.Constant;
 import com.drawguess.bluetooth.BluetoothService;
 import com.drawguess.drawop.OpDraw.Shape;
@@ -58,7 +61,7 @@ public class DrawView extends View {
 	
 	private DrawState ds;
 	private int EraseWidth;
-	private boolean isMove,isFirstMove,isFinishDraw;
+	private boolean isMove,isFirstMove;
 	private float l=0,ls=0;//两点的初始距�?
 	private float l1=1,l2=1;//图元模式的缩放比
 	private int mode=0;//触摸点数
@@ -103,7 +106,6 @@ public class DrawView extends View {
 		paintColor = Color.BLACK;
 		EraseWidth = paintWidth+20; 
 		isMove = false;
-		isFinishDraw = true;
 
 		wx = Constant.WIN_X ;
 		hy = (int) ( Constant.WIN_Y - 40 *  Constant.DENSITY);
@@ -137,11 +139,15 @@ public class DrawView extends View {
 			
 			switch (ds) {
 			case Draw://绘图模式
+
+				//test
+    			
 				switch (event.getAction() & MotionEvent.ACTION_MASK) 
 				{
 				case MotionEvent.ACTION_DOWN:
 					//发送给服务器
 					data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.DOWN1,x/wx,y/hy,-1,-1);
+					DrawGuessActivity.logNum++;
 					if(Constant.CONNECT_WAY)
 						netManage.sendToServer(MSGConst.SEND_DRAW, data);
 					else
@@ -159,6 +165,7 @@ public class DrawView extends View {
 
 					//发送给服务器
 					data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.DOWN2,-1,-1,-1,-1);
+					DrawGuessActivity.logNum++;
 					if(Constant.CONNECT_WAY)
 						netManage.sendToServer(MSGConst.SEND_DRAW, data);
 					else
@@ -178,6 +185,7 @@ public class DrawView extends View {
 					if(mode == 1){
 						//发送给服务器
 						data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.MOVE,x/wx,y/hy,-1,-1);
+						DrawGuessActivity.logNum++;
 						if(Constant.CONNECT_WAY)
 							netManage.sendToServer(MSGConst.SEND_DRAW, data);
 						else
@@ -206,6 +214,7 @@ public class DrawView extends View {
 				case MotionEvent.ACTION_POINTER_UP:
 					//发送给服务器
 					data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.UP2,-1,-1,-1,-1);
+					DrawGuessActivity.logNum++;
 					if(Constant.CONNECT_WAY)
 						netManage.sendToServer(MSGConst.SEND_DRAW, data);
 					else
@@ -221,6 +230,7 @@ public class DrawView extends View {
 				case MotionEvent.ACTION_UP:
 					//发送给服务器
 					data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.UP1,-1,-1,-1,-1);
+					DrawGuessActivity.logNum++;
 					if(Constant.CONNECT_WAY)
 						netManage.sendToServer(MSGConst.SEND_DRAW, data);
 					else
@@ -353,6 +363,7 @@ public class DrawView extends View {
 	private void initBitmap(){
 		cacheBitmap= Bitmap.createBitmap(wx, hy, Config.ARGB_8888);
 		cacheCanvas.setBitmap(cacheBitmap);
+		cacheCanvas.drawColor(Color.WHITE);
 		Operation.setPro(cacheCanvas, cacheBitmap, opManage);
 		saveCacheBitmap();
 	}
@@ -375,7 +386,7 @@ public class DrawView extends View {
 	
 
 	private void saveCacheBitmap(){
-		earlyBitmap = cacheBitmap.copy(Config.ARGB_8888, true);
+		earlyBitmap = cacheBitmap.copy(Config.ARGB_8888, false);
 	}
 	
 /**.........................public...............................................................................**/
@@ -386,51 +397,13 @@ public class DrawView extends View {
 		try
         {
 			canvas.setDrawFilter(pfd);
-			cacheCanvas.setDrawFilter(pfd);
-			if(opManage.getMode() == DrawMode.RE)
-			{
-				opManage.setMode(DrawMode.ADD);
-				cacheCanvas.drawColor(Color.WHITE);
-				Operation.setPro(cacheCanvas, cacheBitmap, opManage);
-				
-				Iterator<Operation> i = opManage.getDrawIterator();
-				while(i.hasNext())
-				{
-					Operation op= i.next();
-					if(op == opManage.getDrawLast())
-						saveCacheBitmap();
-					drawOp(op);
-					
-				}
-				
-				canvas.scale(suol, suol);
-				canvas.drawColor(Color.TRANSPARENT, Mode.CLEAR);//清屏
-				canvas.drawColor(Color.rgb(128, 128, 128));
-				canvas.drawBitmap(cacheBitmap,moveX,moveY,bmpPaint);
-			}
-			else if(opManage.getMode() == DrawMode.ADD)
-			{
-				cacheCanvas.drawColor(Color.WHITE);
-				cacheCanvas.drawBitmap(earlyBitmap,0,0,bmpPaint);
-				Operation.setPro(cacheCanvas, cacheBitmap, opManage);
-				
-				Operation op= opManage.getDrawLast();
-				if(op!=null)
-				{
-					drawOp(op);
-				}
-				
-				canvas.scale(suol, suol);
-				canvas.drawColor(Color.TRANSPARENT, Mode.CLEAR);//清屏
-				canvas.drawColor(Color.rgb(128, 128, 128));
-				canvas.drawBitmap(cacheBitmap,moveX,moveY,bmpPaint);
-				
-			}
+			canvas.scale(suol, suol);
+			canvas.drawColor(Color.rgb(128, 128, 128));
+			canvas.drawBitmap(cacheBitmap,moveX,moveY,bmpPaint);
         }
 		catch (Exception e) {
             LogUtils.i(TAG, "onDraw wrong");
         }
-		isFinishDraw = true;
 	}
 	
 	/**
@@ -508,7 +481,6 @@ public class DrawView extends View {
 	{
 		opManage.clear();
 		initBitmap();
-		isFinishDraw = true;
 		refreshCanvas();
 	}
 	
@@ -714,7 +686,10 @@ public class DrawView extends View {
 			//缓存位图
 			mode = 1;
 			path = new Path();
+			
 			saveCacheBitmap();
+			
+			
 			isFirstMove = true;
 			if(shape == Shape.FILL){
 				OpFill opFill = new OpFill((int)(x1-moveX),(int)(y1-moveY),getPaintColor());
@@ -869,12 +844,40 @@ public class DrawView extends View {
 	}
 	
 	private void refreshCanvas(){
-		if(SessionUtils.getOrder() == 1 || Constant.CONNECT_WAY == false)
+		cacheCanvas.setDrawFilter(pfd);
+		if(opManage.getMode() == DrawMode.RE)
+		{
+			opManage.setMode(DrawMode.ADD);
+			cacheCanvas.drawColor(Color.WHITE);
+			Operation.setPro(cacheCanvas, cacheBitmap, opManage);
+			
+			Iterator<Operation> i = opManage.getDrawIterator();
+			while(i.hasNext())
+			{
+				Operation op= i.next();
+				if(op == opManage.getDrawLast())
+					saveCacheBitmap();
+				drawOp(op);
+				
+			}
+		}
+		else if(opManage.getMode() == DrawMode.ADD)
+		{
+
+			cacheCanvas.drawBitmap(earlyBitmap,0,0,bmpPaint);
+			
+			Operation op= opManage.getDrawLast();
+			if(op!=null)
+			{
+				drawOp(op);
+			}
+			
+		}
+		if(SessionUtils.getOrder() == 1){
 			this.invalidate();
+		}
 		else{
-			while(!isFinishDraw){}
 			this.postInvalidate();
-			isFinishDraw = false;
 		}
 	}
 }

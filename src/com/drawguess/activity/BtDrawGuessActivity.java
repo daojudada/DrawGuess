@@ -170,6 +170,15 @@ public class BtDrawGuessActivity extends BaseActivity implements OnClickListener
         initEvents();
 
         mBtService = BluetoothService.getInstance(handler);
+        mBtService.setListener(new OnMsgRecListener(){
+
+			@Override
+			public void processMessage(MSGProtocol ipmsg) {
+				handleMsg(ipmsg);
+			}
+        	
+        });
+        
         mDrawView.setBtService(mBtService);
         
         Bundle bundle = this.getIntent().getExtras();
@@ -1000,33 +1009,6 @@ public class BtDrawGuessActivity extends BaseActivity implements OnClickListener
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-            case Constant.MESSAGE_READ:
-                byte[] readBuf = (byte[]) msg.obj;
-                // construct a string from the valid bytes in the buffer
-                String readMessage = new String(readBuf, 0, msg.arg1);
-                readMessage+=" ";
-                String[] strArray = null; 
-    	    	strArray = readMessage.split("@sp"); 
-        		for(int i = 0; i<strArray.length ; i++){
-        			String sendMsg = strArray[i];
-        			if(i == strArray.length -1 ){
-    					saveStr = sendMsg.trim();
-        			}
-        			else{
-        				MSGProtocol pMsg;
-        				try {
-        					pMsg = new MSGProtocol(sendMsg);
-                            LogUtils.i("Read", pMsg.getCommandNo()+"");
-                            handleMsg(pMsg);
-                            
-        				} catch (JSONException e) {
-                            LogUtils.e("json", "json wrong");
-        				}
-        			}
-        		}
-        		
-        		
-                break;
             case MSGConst.SEND_START:{
             	//如果自己是链表第一个
         		if(isMeDraw){

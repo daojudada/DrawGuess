@@ -49,7 +49,7 @@ public class TcpClient implements Runnable {
     private TcpClient() {
         mListenerList = new ArrayList<OnMsgRecListener>();
         LogUtils.i(TAG, "建立线程成功");
-        msgQueue = new ArrayBlockingQueue<MSGProtocol>(100);
+        msgQueue = new ArrayBlockingQueue<MSGProtocol>(500);
     }
 
     public Thread getThread() {

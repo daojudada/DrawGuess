@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.drawguess.base.BaseActivity;
 import com.drawguess.base.Constant;
 import com.drawguess.bluetooth.BluetoothService;
+import com.drawguess.interfaces.OnMsgRecListener;
 import com.drawguess.net.MSGConst;
 import com.drawguess.net.MSGProtocol;
 import com.drawguess.util.LogUtils;
@@ -354,6 +355,16 @@ public class BluetoothActivity extends BaseActivity implements OnClickListener, 
 
         // Initialize the BluetoothChatService to perform bluetooth connections
         mBtService = BluetoothService.getInstance(mHandler);
+        mBtService.setListener(new OnMsgRecListener(){
+			@Override
+			public void processMessage(MSGProtocol ipmsg) {
+                if(ipmsg.getCommandNo() == MSGConst.SEND_START){
+                    Bundle b = new Bundle();
+                    b.putBoolean("isMeDraw", isMeDraw);
+                    startActivity(BtDrawGuessActivity.class,b);
+                }
+			}
+        });
 
     }
 	
@@ -376,40 +387,7 @@ public class BluetoothActivity extends BaseActivity implements OnClickListener, 
                             break;
                     }
                     break;
-                case Constant.MESSAGE_WRITE:
-                    byte[] writeBuf = (byte[]) msg.obj;
-                    // construct a string from the buffer
-                    String writeMessage = new String(writeBuf);
-                    break;
-                case Constant.MESSAGE_READ:
-                    byte[] readBuf = (byte[]) msg.obj;
-                    // construct a string from the valid bytes in the buffer
-                    String readMessage = new String(readBuf, 0, msg.arg1);
-                    readMessage+=" ";
-                    String[] strArray = null; 
-        	    	strArray = readMessage.split("@sp"); 
-            		for(int i = 0; i<strArray.length ; i++){
-            			String sendMsg = strArray[i];
-            			if(i == strArray.length -1 ){
-        					saveStr = sendMsg.trim();
-            			}
-            			else{
-            				MSGProtocol pMsg;
-        					try {
-        						pMsg = new MSGProtocol(sendMsg);
-        	                    LogUtils.i("Read", pMsg.getCommandNo()+"");
-        	                    if(pMsg.getCommandNo() == MSGConst.SEND_START){
-        	                        Bundle b = new Bundle();
-        	                        b.putBoolean("isMeDraw", isMeDraw);
-        	                        startActivity(BtDrawGuessActivity.class,b);
-        	                    }
-        					} catch (JSONException e) {
-        	                    LogUtils.i("json", "json wrong");
-        					}
-            			}
-            		}
-            		break;
-                
+       
                 case Constant.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
                     mConnectedDeviceName = msg.getData().getString(Constant.DEVICE_NAME);

@@ -14,7 +14,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
+import org.json.JSONException;
+
+import com.drawguess.activity.BtDrawGuessActivity;
 import com.drawguess.base.Constant;
+import com.drawguess.interfaces.OnMsgRecListener;
 import com.drawguess.msgbean.Entity;
 import com.drawguess.net.MSGConst;
 import com.drawguess.net.MSGProtocol;
@@ -52,13 +56,15 @@ public class BluetoothService {
     private ConnectedThread mConnectedThread;
     private int mState;
 
+    private OnMsgRecListener msgListener;
+    
     // Constant that indicate the current connection state
     public static final int STATE_NONE = 0;       // we're doing nothing
     public static final int STATE_LISTEN = 1;     // now listening for incoming connections
     public static final int STATE_CONNECTING = 2; // now initiating an outgoing connection
     public static final int STATE_CONNECTED = 3;  // now connected to a remote device
     
-    
+    private String saveStr = "";
     
     /**
      * Constructor. Prepares a new BluetoothChat session.
@@ -78,6 +84,12 @@ public class BluetoothService {
         mHandler = handler;
     	return instance;
     }
+    
+    public void setListener(OnMsgRecListener msgListener){
+    	this.msgListener = msgListener;
+    }
+    
+    
     /**
      * Set the current state of the chat connection
      *
@@ -525,10 +537,28 @@ public class BluetoothService {
                 try {
                     // Read from the InputStream
                     bytes = mmInStream.read(buffer);
-
-                    // Send the obtained bytes to the UI Activity
-                    mHandler.obtainMessage(Constant.MESSAGE_READ, bytes, -1, buffer)
-                            .sendToTarget();
+                    String readMessage = new String(buffer, 0, bytes);
+                    readMessage+=" ";
+                    String[] strArray = null; 
+        	    	strArray = readMessage.split("@sp"); 
+            		for(int i = 0; i<strArray.length ; i++){
+            			String sendMsg = strArray[i];
+            			if(i == strArray.length -1 ){
+        					saveStr = sendMsg.trim();
+            			}
+            			else{
+            				MSGProtocol pMsg;
+            				try {
+            					pMsg = new MSGProtocol(sendMsg);
+                                LogUtils.i("Read", pMsg.getCommandNo()+"");
+                                if(msgListener != null)
+                                	msgListener.processMessage(pMsg);
+            				} catch (JSONException e) {
+                                LogUtils.e("json", "json wrong");
+            				}
+            			}
+            		}
+            		
                 } catch (IOException e) {
                     LogUtils.e(TAG, "disconnected");
                     connectionLost();
@@ -547,10 +577,6 @@ public class BluetoothService {
         public void write(byte[] buffer) {
             try {
                 mmOutStream.write(buffer);
-
-                // Share the sent message back to the UI Activity
-                mHandler.obtainMessage(Constant.MESSAGE_WRITE, -1, -1, buffer)
-                        .sendToTarget();
             } catch (IOException e) {
                 LogUtils.e(TAG, "Exception during write");
             }
