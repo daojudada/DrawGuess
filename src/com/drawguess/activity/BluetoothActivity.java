@@ -211,6 +211,22 @@ public class BluetoothActivity extends BaseActivity implements OnClickListener, 
     }
     
     @Override
+    public void onResume() {
+        super.onResume();
+
+        // Performing this check in onResume() covers the case in which BT was
+        // not enabled during onStart(), so we were paused to enable it...
+        // onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
+        if (mBtService != null) {
+            // Only if the state is STATE_NONE, do we know that we haven't started already
+            if (mBtService.getState() == BluetoothService.STATE_NONE) {
+                // Start the Bluetooth chat services
+            	mBtService.start();
+            }
+        }
+    }
+    
+    @Override
     protected void onDestroy() {
         super.onDestroy();
 

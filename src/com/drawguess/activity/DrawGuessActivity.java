@@ -924,15 +924,35 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 		        	float data1 = data.getData1();
 		        	float data2 = data.getData2();
 		        	float data3 = data.getData3();
-		        	float data4 = data.getData4();
-		        	b.putInt("opType", op.ordinal());
-		        	b.putInt("touchType", touch.ordinal());
-		        	b.putFloat("data1", data1);
-		        	b.putFloat("data2", data2);
-		        	b.putFloat("data3", data3);
-		        	b.putFloat("data4", data4);
-		        	
+		        	float data4 = data.getData4();        	
 
+		        	switch (op){
+		        	case DRAW:
+		        	case FILL:
+		        	case TRANS:
+		        		if(SessionUtils.getOrder()!=1){
+		        			mDrawView.doOperation(touch, 
+		        					data1 * mDrawView.getWX(), data2 * mDrawView.getHY(), 
+		        					data3 * mDrawView.getWX(), data4 * mDrawView.getHY());
+		        		}
+		        		break;
+		        	case ERASE:
+		        	case PAINT:
+		        	case SHAPE:
+		        	case PACK:
+		        	case REDO:
+		        	case UNDO:
+		        	case EDIT:
+		        	case COPY:
+		        	case DELETE:
+		        	case CLEAR:
+		        		if(SessionUtils.getOrder()!=1)
+		        			doClickEvent(op,data1,data2,data3,data4);
+		        		break;
+		            default:
+		                break;
+		        	}
+		        	
 	        		if(SessionUtils.getOrder()!=1){
 						logNum++;
 	        			handler.sendEmptyMessage(MSGConst.DEBUG_MSG);
@@ -1188,41 +1208,6 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
             	refreshMsgAdapter();
             	break;
             }
-            case MSGConst.ANS_DRAW:{
-	        	OP_TYPE op = OP_TYPE.values()[msg.getData().getInt("opType")];
-	        	TOUCH_TYPE touch = TOUCH_TYPE.values()[msg.getData().getInt("touchType")];
-	        	float data1 =  msg.getData().getFloat("data1");
-	        	float data2 =  msg.getData().getFloat("data2");
-	        	float data3 =  msg.getData().getFloat("data3");
-	        	float data4 =  msg.getData().getFloat("data4");
-	        	switch (op){
-	        	case DRAW:
-	        	case FILL:
-	        	case TRANS:
-	        		if(SessionUtils.getOrder()!=1){
-	        			mDrawView.doOperation(touch, 
-	        					data1 * mDrawView.getWX(), data2 * mDrawView.getHY(), 
-	        					data3 * mDrawView.getWX(), data4 * mDrawView.getHY());
-	        		}
-	        		break;
-	        	case ERASE:
-	        	case PAINT:
-	        	case SHAPE:
-	        	case PACK:
-	        	case REDO:
-	        	case UNDO:
-	        	case EDIT:
-	        	case COPY:
-	        	case DELETE:
-	        	case CLEAR:
-	        		if(SessionUtils.getOrder()!=1)
-	        			doClickEvent(op,data1,data2,data3,data4);
-	        		break;
-	            default:
-	                break;
-	        	}
-	        	break;
-	        }
             case MSGConst.TIME_CHECK:
             	mTvTime.setText(mLocalTimerCheck.getCount() + "秒");
             	break;

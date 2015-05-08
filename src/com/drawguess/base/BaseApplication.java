@@ -22,7 +22,7 @@ public class BaseApplication extends Application {
     /** 静音、震动默认开关 **/
     private static boolean isSlient = false;
     private static boolean isVibrate = true;
-    private static boolean isPrintLog = true;
+    private static boolean isPrintLog = false;
 
     private static SoundPool notiMediaplayer;
     /** 新消息提醒 **/

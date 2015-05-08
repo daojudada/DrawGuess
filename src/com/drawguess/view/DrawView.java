@@ -35,6 +35,7 @@ import android.graphics.Path.Direction;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.RectF;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -57,7 +58,7 @@ public class DrawView extends View {
 	
 	private DrawState ds;
 	private int EraseWidth;
-	private boolean isMove,isFirstMove;
+	private boolean isMove,isFirstMove,isFinishDraw;
 	private float l=0,ls=0;//两点的初始距�?
 	private float l1=1,l2=1;//图元模式的缩放比
 	private int mode=0;//触摸点数
@@ -102,7 +103,7 @@ public class DrawView extends View {
 		paintColor = Color.BLACK;
 		EraseWidth = paintWidth+20; 
 		isMove = false;
-		
+		isFinishDraw = true;
 
 		wx = Constant.WIN_X ;
 		hy = (int) ( Constant.WIN_Y - 40 *  Constant.DENSITY);
@@ -198,7 +199,7 @@ public class DrawView extends View {
 						moveY+=(y-mY);
 						mX=x;
 						mY=y;
-						this.invalidate();
+						refreshCanvas();
 					}
 					
 					break;
@@ -237,7 +238,7 @@ public class DrawView extends View {
 						moveY = 0;
 						suols = 1;
 						suol = 1;
-						this.invalidate();
+						refreshCanvas();
 					}
 					isMove = false;
 					
@@ -429,6 +430,7 @@ public class DrawView extends View {
 		catch (Exception e) {
             LogUtils.i(TAG, "onDraw wrong");
         }
+		isFinishDraw = true;
 	}
 	
 	/**
@@ -500,13 +502,14 @@ public class DrawView extends View {
 	}
 	
 	/**
-	 * 清空画布
+	 * 清空画布c
 	 */
 	public void setClear()
 	{
 		opManage.clear();
 		initBitmap();
-		this.invalidate();
+		isFinishDraw = true;
+		refreshCanvas();
 	}
 	
 	/**
@@ -529,7 +532,7 @@ public class DrawView extends View {
 			OpCopy opCopy = new OpCopy();
 			opManage.pushOp(opCopy);
 			opCopy.Redo();
-			this.invalidate();
+			refreshCanvas();
 		}
 	}
 	
@@ -544,7 +547,7 @@ public class DrawView extends View {
 			OpDelete opDelete = new OpDelete();
 			opManage.pushOp(opDelete);
 			opDelete.Redo();
-			this.invalidate();
+			refreshCanvas();
 		}
 	}
 	
@@ -636,7 +639,7 @@ public class DrawView extends View {
 		opManage.setMode(DrawMode.RE);
 		initBitmap();
 		opManage.redo();
-		this.invalidate();
+		refreshCanvas();
 	}
 	
 	/**
@@ -687,7 +690,7 @@ public class DrawView extends View {
 		opManage.setMode(DrawMode.RE);
 		initBitmap();
 		opManage.undo();
-		this.invalidate();
+		refreshCanvas();
 	}
 
 	/**
@@ -698,7 +701,7 @@ public class DrawView extends View {
 	 * @param x2 附加数据
 	 * @param y2 附加数据
 	 */
-	public void doOperation(TOUCH_TYPE touch, float x1, float y1, float x2, float y2){
+	public synchronized  void doOperation(TOUCH_TYPE touch, float x1, float y1, float x2, float y2){
 		if(ds == DrawState.Draw)
 			doDraw(touch,x1,y1,x2,y2);
 		else if(ds == DrawState.Trans)
@@ -717,7 +720,7 @@ public class DrawView extends View {
 				OpFill opFill = new OpFill((int)(x1-moveX),(int)(y1-moveY),getPaintColor());
 				opFill.Redo();
 				opManage.pushOp(opFill);
-				this.invalidate();
+				refreshCanvas();
 			}
 			break;
 		case DOWN2:
@@ -727,7 +730,7 @@ public class DrawView extends View {
 			if(!isFirstMove){
 				opManage.popOp();
 				opManage.popDraw();
-				this.invalidate();
+				refreshCanvas();
 			}
 			break;
 		case MOVE:
@@ -807,7 +810,7 @@ public class DrawView extends View {
 			else if(mode == 2){	
 				
 			}
-			this.invalidate();
+			refreshCanvas();
 			break;
 		case UP2:
 			mode = 1;
@@ -852,7 +855,7 @@ public class DrawView extends View {
 			mX=x1;
 			mY=y1;
 
-			this.invalidate();
+			
 			break;
 		case UP2:
 			mode = 1;
@@ -865,5 +868,14 @@ public class DrawView extends View {
 		}
 	}
 	
+	private void refreshCanvas(){
+		if(SessionUtils.getOrder() == 1 || Constant.CONNECT_WAY == false)
+			this.invalidate();
+		else{
+			while(!isFinishDraw){}
+			this.postInvalidate();
+			isFinishDraw = false;
+		}
+	}
 }
 
