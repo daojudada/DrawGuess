@@ -62,7 +62,11 @@ import com.drawguess.util.SessionUtils;
 import com.drawguess.util.TimerUtils;
 import com.drawguess.util.TypeUtils;
 import com.drawguess.view.DrawView;
-
+/**
+ * 
+ * @author Kenny
+ *
+ */
 public class BtDrawGuessActivity extends BaseActivity implements OnClickListener{
 	
 	private static final String TAG = "DrawTabActivity";
@@ -72,17 +76,17 @@ public class BtDrawGuessActivity extends BaseActivity implements OnClickListener
 	 */
 	private String DEVICE_ADDRESS;
 	
-	/*
+	/**
 	 * 蓝牙连接服务类对象
 	 */
 	private BluetoothService mBtService;
 	
-	/*
+	/**
 	 * 蓝牙适配器对象
 	 */
 	private BluetoothAdapter mBtAdapter;
 	
-	/*
+	/**
 	 * 
 	 */
 	private boolean isMeDraw;

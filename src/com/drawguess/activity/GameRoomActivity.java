@@ -89,6 +89,11 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
         initViews();
         initEvents();
         
+    }
+
+    
+    @Override
+    protected void onStart() {
         //获取单例
         netManage = NetManage.getInstance(this);
         netManage.setSocketMode(SocketMode.TCP);
@@ -99,8 +104,9 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 		netManage.createUDP();
 		//寻找服务器
         findServerTask();
+        super.onStart();
     }
-
+	
     
 	@Override
     protected void onDestroy() {
@@ -253,11 +259,6 @@ public class GameRoomActivity extends BaseActivity implements  OnItemClickListen
 		    		mBtnCreate.setVisibility(View.VISIBLE);
 		    		mBtnReady.setVisibility(View.GONE);
 		    		mBtnStart.setVisibility(View.GONE);
-		        	mLocalUsersMap.clear();
-		        	mLocalUsersList.clear();
-		        	netManage.stop();
-		        	netManage.setClient(null);
-		        	NetManage.setState(0);
 		        }
 				case MSGConst.ANS_ONLINE:{ //服务器向客户端通报其他在线用户
 					UserList userList = (UserList)pMsg.getAddObject();

@@ -174,17 +174,26 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 
 	@Override
     protected void onDestroy() {
+		if(mServerTimerCheck != null)
+			mServerTimerCheck.exit();
+		//退出上个计时进程
+		if(mLocalTimerCheck != null)
+			mLocalTimerCheck.exit();
 		if(NetManage.getState() == 2){
+			NetManage.getLocalUserMap().clear();
+			NetManage.getServerUserMap().clear();
 			netManage.sendToAllExClient(MSGConst.ANS_GAME_OVER, null, SessionUtils.getIMEI());
-			netManage.stop();
-			netManage.stopUdp();
+			netManage.stopServer();
+			netManage.stopClient();
 		}
 		else{
 			netManage.sendToServer(MSGConst.SEND_OFFLINE, null);
-			netManage.stop();
-			netManage.stopUdp();
+			NetManage.getLocalUserMap().clear();
+			netManage.stopClient();
 		}
+		NetManage.setState(0);
         handler = null;
+        
         super.onDestroy();
     }
 	
@@ -828,9 +837,7 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 		        	break;
 		        }
 		        case MSGConst.ANS_GAME_OVER:{
-		        	mLocalPlayersMap.clear();
-		        	netManage.stop();
-		        	NetManage.setState(0);
+		        	finish();
 		        	break;
 		        }
 		        case MSGConst.ANS_OFFLINE:{

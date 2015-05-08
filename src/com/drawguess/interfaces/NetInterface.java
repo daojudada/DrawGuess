@@ -117,10 +117,6 @@ public interface NetInterface {
 	     */
 	    public void sendToServer(int commandNo, Object addData) ;
 	  
-	 	/**
-	 	 * 停止网络服务	
-	 	 */
-	 	public void stop();
 
 
 }

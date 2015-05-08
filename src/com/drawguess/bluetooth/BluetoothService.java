@@ -25,11 +25,11 @@ import com.drawguess.net.MSGProtocol;
 import com.drawguess.util.LogUtils;
 import com.drawguess.util.SessionUtils;
 
+
 /**
- * This class does all the work for setting up and managing Bluetooth
- * connections with other devices. It has a thread that listens for
- * incoming connections, a thread for connecting with a device, and a
- * thread for performing data transmissions when connected.
+ * 
+ * @author Kenny
+ *
  */
 public class BluetoothService {
     // Debugging

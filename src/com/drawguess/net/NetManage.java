@@ -288,14 +288,11 @@ public class NetManage implements NetInterface{
  		mUDPListener.stop();
     }
 
-    @Override
- 	public void stop(){
- 		if(state == 1){
-    		mClient.stop();
-    	}
-    	else if(state == 2){
-    		mServer.stop();
-    		mClient.stop();
-    	}
+ 	public void stopServer(){
+		mServer.stop();
+    }
+    
+    public void stopClient(){
+		mClient.stop();
     }
 }
