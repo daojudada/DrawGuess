@@ -4,10 +4,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
 import java.text.DateFormat;
 import java.util.Iterator;
 
+import com.drawguess.activity.DrawGuessActivity;
 import com.drawguess.base.Constant;
+import com.drawguess.bluetooth.BluetoothService;
 import com.drawguess.drawop.OpDraw.Shape;
 import com.drawguess.drawop.OperationManage.DrawMode;
 import com.drawguess.drawop.*;
@@ -34,6 +38,7 @@ import android.graphics.Path.Direction;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.RectF;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -49,7 +54,7 @@ public class DrawView extends View {
 	public enum DrawState{Draw,Trans}
 	private final static String TAG = "DrawView";
 	private NetManage netManage;
-	
+	private BluetoothService btService;
 	private Paint bmpPaint;
 	private Bitmap cacheBitmap,earlyBitmap;
 	private Canvas cacheCanvas;
@@ -101,7 +106,6 @@ public class DrawView extends View {
 		paintColor = Color.BLACK;
 		EraseWidth = paintWidth+20; 
 		isMove = false;
-		
 
 		wx = Constant.WIN_X ;
 		hy = (int) ( Constant.WIN_Y - 40 *  Constant.DENSITY);
@@ -135,12 +139,19 @@ public class DrawView extends View {
 			
 			switch (ds) {
 			case Draw://绘图模式
+
+				//test
+    			
 				switch (event.getAction() & MotionEvent.ACTION_MASK) 
 				{
 				case MotionEvent.ACTION_DOWN:
 					//发送给服务器
 					data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.DOWN1,x/wx,y/hy,-1,-1);
-					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					DrawGuessActivity.logNum++;
+					if(Constant.CONNECT_WAY)
+						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					else
+						btService.sendMessage(MSGConst.SEND_DRAW, data);
 					//当前设备绘制
 					x/=suol;
 					y/=suol;
@@ -154,7 +165,11 @@ public class DrawView extends View {
 
 					//发送给服务器
 					data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.DOWN2,-1,-1,-1,-1);
-					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					DrawGuessActivity.logNum++;
+					if(Constant.CONNECT_WAY)
+						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					else
+						btService.sendMessage(MSGConst.SEND_DRAW, data);
 					//当前设备绘制
 					x/=suol;
 					y/=suol;
@@ -170,7 +185,11 @@ public class DrawView extends View {
 					if(mode == 1){
 						//发送给服务器
 						data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.MOVE,x/wx,y/hy,-1,-1);
-						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+						DrawGuessActivity.logNum++;
+						if(Constant.CONNECT_WAY)
+							netManage.sendToServer(MSGConst.SEND_DRAW, data);
+						else
+							btService.sendMessage(MSGConst.SEND_DRAW, data);
 						//当前设备绘制
 						x/=suol;
 						y/=suol;
@@ -188,14 +207,18 @@ public class DrawView extends View {
 						moveY+=(y-mY);
 						mX=x;
 						mY=y;
-						this.invalidate();
+						refreshCanvas();
 					}
 					
 					break;
 				case MotionEvent.ACTION_POINTER_UP:
 					//发送给服务器
 					data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.UP2,-1,-1,-1,-1);
-					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					DrawGuessActivity.logNum++;
+					if(Constant.CONNECT_WAY)
+						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					else
+						btService.sendMessage(MSGConst.SEND_DRAW, data);
 					//当前设备绘制
 					x/=suol;
 					y/=suol;
@@ -207,7 +230,11 @@ public class DrawView extends View {
 				case MotionEvent.ACTION_UP:
 					//发送给服务器
 					data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.UP1,-1,-1,-1,-1);
-					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					DrawGuessActivity.logNum++;
+					if(Constant.CONNECT_WAY)
+						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					else
+						btService.sendMessage(MSGConst.SEND_DRAW, data);
 					//当前设备绘制
 					x/=suol;
 					y/=suol;
@@ -221,7 +248,7 @@ public class DrawView extends View {
 						moveY = 0;
 						suols = 1;
 						suol = 1;
-						this.invalidate();
+						refreshCanvas();
 					}
 					isMove = false;
 					
@@ -236,7 +263,10 @@ public class DrawView extends View {
 				{
 				case MotionEvent.ACTION_DOWN:
 					data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.DOWN1,x,y,-1,-1);
-					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					if(Constant.CONNECT_WAY)
+						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					else
+						btService.sendMessage(MSGConst.SEND_DRAW, data);
 					x/=suol;
 					y/=suol;
 					doTrans(TOUCH_TYPE.DOWN1, x , y, -1, -1);
@@ -245,7 +275,10 @@ public class DrawView extends View {
 					x2 = event.getX(1);
 					y2 = event.getY(1);
 					data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.DOWN2,x,y,x2,y2);
-					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					if(Constant.CONNECT_WAY)
+						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					else
+						btService.sendMessage(MSGConst.SEND_DRAW, data);
 					x/=suol;
 					y/=suol;
 					x2/=suol;
@@ -255,7 +288,10 @@ public class DrawView extends View {
 				case MotionEvent.ACTION_MOVE:
 					if(mode ==1){
 						data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.MOVE,x,y,-1,-1);
-						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+						if(Constant.CONNECT_WAY)
+							netManage.sendToServer(MSGConst.SEND_DRAW, data);
+						else
+							btService.sendMessage(MSGConst.SEND_DRAW, data);
 						x/=suol;
 						y/=suol;
 						doTrans(TOUCH_TYPE.MOVE, x, y, -1 , -1);
@@ -264,7 +300,10 @@ public class DrawView extends View {
 						x2 = event.getX(1);
 						y2 = event.getY(1);
 						data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.MOVE,x,y,x2,y2);
-						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+						if(Constant.CONNECT_WAY)
+							netManage.sendToServer(MSGConst.SEND_DRAW, data);
+						else
+							btService.sendMessage(MSGConst.SEND_DRAW, data);
 						x/=suol;
 						y/=suol;
 						x2/=suol;
@@ -274,12 +313,18 @@ public class DrawView extends View {
 					break;
 				case MotionEvent.ACTION_POINTER_UP:
 					data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.UP2,-1,-1,-1,-1);
-					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					if(Constant.CONNECT_WAY)
+						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					else
+						btService.sendMessage(MSGConst.SEND_DRAW, data);
 					doTrans(TOUCH_TYPE.UP2, -1,-1,-1,-1);
 					break;
 				case MotionEvent.ACTION_UP:
 					data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.UP1,-1,-1,-1,-1);
-					netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					if(Constant.CONNECT_WAY)
+						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					else
+						btService.sendMessage(MSGConst.SEND_DRAW, data);
 					doTrans(TOUCH_TYPE.UP1, -1,-1,-1,-1);
 					break;
 				
@@ -318,6 +363,7 @@ public class DrawView extends View {
 	private void initBitmap(){
 		cacheBitmap= Bitmap.createBitmap(wx, hy, Config.ARGB_8888);
 		cacheCanvas.setBitmap(cacheBitmap);
+		cacheCanvas.drawColor(Color.WHITE);
 		Operation.setPro(cacheCanvas, cacheBitmap, opManage);
 		saveCacheBitmap();
 	}
@@ -340,7 +386,7 @@ public class DrawView extends View {
 	
 
 	private void saveCacheBitmap(){
-		earlyBitmap = cacheBitmap.copy(Config.ARGB_8888, true);
+		earlyBitmap = cacheBitmap.copy(Config.ARGB_8888, false);
 	}
 	
 /**.........................public...............................................................................**/
@@ -351,46 +397,9 @@ public class DrawView extends View {
 		try
         {
 			canvas.setDrawFilter(pfd);
-			cacheCanvas.setDrawFilter(pfd);
-			if(opManage.getMode() == DrawMode.RE)
-			{
-				opManage.setMode(DrawMode.ADD);
-				cacheCanvas.drawColor(Color.WHITE);
-				Operation.setPro(cacheCanvas, cacheBitmap, opManage);
-				
-				Iterator<Operation> i = opManage.getDrawIterator();
-				while(i.hasNext())
-				{
-					Operation op= i.next();
-					if(op == opManage.getDrawLast())
-						saveCacheBitmap();
-					drawOp(op);
-					
-				}
-				
-				canvas.scale(suol, suol);
-				canvas.drawColor(Color.TRANSPARENT, Mode.CLEAR);//清屏
-				canvas.drawColor(Color.rgb(128, 128, 128));
-				canvas.drawBitmap(cacheBitmap,moveX,moveY,bmpPaint);
-			}
-			else if(opManage.getMode() == DrawMode.ADD)
-			{
-				cacheCanvas.drawColor(Color.WHITE);
-				cacheCanvas.drawBitmap(earlyBitmap,0,0,bmpPaint);
-				Operation.setPro(cacheCanvas, cacheBitmap, opManage);
-				
-				Operation op= opManage.getDrawLast();
-				if(op!=null)
-				{
-					drawOp(op);
-				}
-				
-				canvas.scale(suol, suol);
-				canvas.drawColor(Color.TRANSPARENT, Mode.CLEAR);//清屏
-				canvas.drawColor(Color.rgb(128, 128, 128));
-				canvas.drawBitmap(cacheBitmap,moveX,moveY,bmpPaint);
-				
-			}
+			canvas.scale(suol, suol);
+			canvas.drawColor(Color.rgb(128, 128, 128));
+			canvas.drawBitmap(cacheBitmap,moveX,moveY,bmpPaint);
         }
 		catch (Exception e) {
             LogUtils.i(TAG, "onDraw wrong");
@@ -458,13 +467,26 @@ public class DrawView extends View {
 	}
 	
 	/**
-	 * 清空画布
+	 * 设置网络管理器
+	 */
+	public void setBtService(BluetoothService nm)
+	{
+		this.btService = nm;
+	}
+	
+	/**
+	 * 清空画布c
 	 */
 	public void setClear()
 	{
+
+		suol=1;
+		suols=1;
+		moveX= 0;
+		moveY = 0;
 		opManage.clear();
 		initBitmap();
-		this.invalidate();
+		refreshCanvas();
 	}
 	
 	/**
@@ -487,7 +509,7 @@ public class DrawView extends View {
 			OpCopy opCopy = new OpCopy();
 			opManage.pushOp(opCopy);
 			opCopy.Redo();
-			this.invalidate();
+			refreshCanvas();
 		}
 	}
 	
@@ -502,7 +524,7 @@ public class DrawView extends View {
 			OpDelete opDelete = new OpDelete();
 			opManage.pushOp(opDelete);
 			opDelete.Redo();
-			this.invalidate();
+			refreshCanvas();
 		}
 	}
 	
@@ -594,7 +616,7 @@ public class DrawView extends View {
 		opManage.setMode(DrawMode.RE);
 		initBitmap();
 		opManage.redo();
-		this.invalidate();
+		refreshCanvas();
 	}
 	
 	/**
@@ -645,7 +667,7 @@ public class DrawView extends View {
 		opManage.setMode(DrawMode.RE);
 		initBitmap();
 		opManage.undo();
-		this.invalidate();
+		refreshCanvas();
 	}
 
 	/**
@@ -656,7 +678,7 @@ public class DrawView extends View {
 	 * @param x2 附加数据
 	 * @param y2 附加数据
 	 */
-	public void doOperation(TOUCH_TYPE touch, float x1, float y1, float x2, float y2){
+	public synchronized  void doOperation(TOUCH_TYPE touch, float x1, float y1, float x2, float y2){
 		if(ds == DrawState.Draw)
 			doDraw(touch,x1,y1,x2,y2);
 		else if(ds == DrawState.Trans)
@@ -669,13 +691,16 @@ public class DrawView extends View {
 			//缓存位图
 			mode = 1;
 			path = new Path();
+			
 			saveCacheBitmap();
+			
+			
 			isFirstMove = true;
 			if(shape == Shape.FILL){
 				OpFill opFill = new OpFill((int)(x1-moveX),(int)(y1-moveY),getPaintColor());
 				opFill.Redo();
 				opManage.pushOp(opFill);
-				this.invalidate();
+				refreshCanvas();
 			}
 			break;
 		case DOWN2:
@@ -685,7 +710,7 @@ public class DrawView extends View {
 			if(!isFirstMove){
 				opManage.popOp();
 				opManage.popDraw();
-				this.invalidate();
+				refreshCanvas();
 			}
 			break;
 		case MOVE:
@@ -765,7 +790,7 @@ public class DrawView extends View {
 			else if(mode == 2){	
 				
 			}
-			this.invalidate();
+			refreshCanvas();
 			break;
 		case UP2:
 			mode = 1;
@@ -810,7 +835,7 @@ public class DrawView extends View {
 			mX=x1;
 			mY=y1;
 
-			this.invalidate();
+			
 			break;
 		case UP2:
 			mode = 1;
@@ -823,5 +848,42 @@ public class DrawView extends View {
 		}
 	}
 	
+	private void refreshCanvas(){
+		cacheCanvas.setDrawFilter(pfd);
+		if(opManage.getMode() == DrawMode.RE)
+		{
+			opManage.setMode(DrawMode.ADD);
+			cacheCanvas.drawColor(Color.WHITE);
+			Operation.setPro(cacheCanvas, cacheBitmap, opManage);
+			
+			Iterator<Operation> i = opManage.getDrawIterator();
+			while(i.hasNext())
+			{
+				Operation op= i.next();
+				if(op == opManage.getDrawLast())
+					saveCacheBitmap();
+				drawOp(op);
+				
+			}
+		}
+		else if(opManage.getMode() == DrawMode.ADD)
+		{
+
+			cacheCanvas.drawBitmap(earlyBitmap,0,0,bmpPaint);
+			
+			Operation op= opManage.getDrawLast();
+			if(op!=null)
+			{
+				drawOp(op);
+			}
+			
+		}
+		if(SessionUtils.getOrder() == 1){
+			this.invalidate();
+		}
+		else{
+			this.postInvalidate();
+		}
+	}
 }
 

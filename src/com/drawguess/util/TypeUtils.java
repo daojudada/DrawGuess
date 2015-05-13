@@ -1,7 +1,11 @@
 package com.drawguess.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.drawguess.msgbean.User;
 
 
 /**
@@ -35,4 +39,16 @@ public class TypeUtils {
     	return list;
     }
 	
+    /**
+     * 将用户表HashMap转成ArrayList
+     * 
+     * @param application
+     */
+    public static ArrayList<User> cMapToList(HashMap<String,User> mUsersMap) {
+    	ArrayList<User> mUsersList = new ArrayList<User>(mUsersMap.size());
+        for (Map.Entry<String, User> entry : mUsersMap.entrySet()) {
+            mUsersList.add(entry.getValue());
+        }
+        return mUsersList;
+    }
 }

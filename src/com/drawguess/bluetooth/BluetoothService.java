@@ -14,14 +14,22 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
+import org.json.JSONException;
+
+import com.drawguess.activity.BtDrawGuessActivity;
 import com.drawguess.base.Constant;
+import com.drawguess.interfaces.OnMsgRecListener;
+import com.drawguess.msgbean.Entity;
+import com.drawguess.net.MSGConst;
+import com.drawguess.net.MSGProtocol;
 import com.drawguess.util.LogUtils;
+import com.drawguess.util.SessionUtils;
+
 
 /**
- * This class does all the work for setting up and managing Bluetooth
- * connections with other devices. It has a thread that listens for
- * incoming connections, a thread for connecting with a device, and a
- * thread for performing data transmissions when connected.
+ * 
+ * @author Kenny
+ *
  */
 public class BluetoothService {
     // Debugging
@@ -37,33 +45,51 @@ public class BluetoothService {
     private static final UUID MY_UUID_INSECURE =
             UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
 
+    private static BluetoothService instance;
+    private static Handler mHandler;
+    
     // Member fields
     private final BluetoothAdapter mAdapter;
-    private final Handler mHandler;
     private AcceptThread mSecureAcceptThread;
     private AcceptThread mInsecureAcceptThread;
     private ConnectThread mConnectThread;
     private ConnectedThread mConnectedThread;
     private int mState;
 
+    private OnMsgRecListener msgListener;
+    
     // Constant that indicate the current connection state
     public static final int STATE_NONE = 0;       // we're doing nothing
     public static final int STATE_LISTEN = 1;     // now listening for incoming connections
     public static final int STATE_CONNECTING = 2; // now initiating an outgoing connection
     public static final int STATE_CONNECTED = 3;  // now connected to a remote device
-
+    
+    private String saveStr = "";
+    
     /**
      * Constructor. Prepares a new BluetoothChat session.
      *
      * @param context The UI Activity Context
      * @param handler A Handler to send messages back to the UI Activity
      */
-    public BluetoothService(Context context, Handler handler) {
+    private BluetoothService(){
         mAdapter = BluetoothAdapter.getDefaultAdapter();
         mState = STATE_NONE;
-        mHandler = handler;
     }
 
+    public static BluetoothService getInstance(Handler handler){
+    	if(instance ==null){
+    		instance = new BluetoothService();
+    	}
+        mHandler = handler;
+    	return instance;
+    }
+    
+    public void setListener(OnMsgRecListener msgListener){
+    	this.msgListener = msgListener;
+    }
+    
+    
     /**
      * Set the current state of the chat connection
      *
@@ -219,6 +245,55 @@ public class BluetoothService {
         setState(STATE_NONE);
     }
 
+    
+    /**
+     * 打包数据包
+     * 
+     * @param commandNo
+     *            消息命令
+     * @param addData
+     *            附加数据
+     * @see MSGConst
+     */
+    public MSGProtocol packageMsg(int commandNo, Object addData) {
+        MSGProtocol ipmsgProtocol = null;
+        String imei = SessionUtils.getIMEI();
+
+        if (addData == null) {
+            ipmsgProtocol = new MSGProtocol(imei, commandNo);
+        }
+        else if (addData instanceof Entity) {
+            ipmsgProtocol = new MSGProtocol(imei, commandNo, (Entity) addData);
+        }
+        else if (addData instanceof String) {
+            ipmsgProtocol = new MSGProtocol(imei, commandNo, (String) addData);
+        }
+        return ipmsgProtocol;
+    }
+    
+	/**
+     * Sends a message.
+     *
+     * @param message A string of text to send.
+     */
+    public void sendMessage(int commandNo, Object addData) {
+    	MSGProtocol msg = packageMsg(commandNo,addData);
+    	
+        // Check that we're actually connected before trying anything
+        if (getState() != BluetoothService.STATE_CONNECTED) {
+            // Toast.makeText(getActivity(), R.string.not_connected, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Check that there's actually something to send
+        // Get the message bytes and tell the BluetoothChatService to write
+    	String msgProtocol = msg.getProtocolJSON();
+		String msgAll =  msgProtocol + "@sp"; 
+        byte[] send = msgAll.getBytes();
+        write(send);
+
+    }
+    
     /**
      * Write to the ConnectedThread in an unsynchronized manner
      *
@@ -462,10 +537,28 @@ public class BluetoothService {
                 try {
                     // Read from the InputStream
                     bytes = mmInStream.read(buffer);
-
-                    // Send the obtained bytes to the UI Activity
-                    mHandler.obtainMessage(Constant.MESSAGE_READ, bytes, -1, buffer)
-                            .sendToTarget();
+                    String readMessage = new String(buffer, 0, bytes);
+                    readMessage+=" ";
+                    String[] strArray = null; 
+        	    	strArray = readMessage.split("@sp"); 
+            		for(int i = 0; i<strArray.length ; i++){
+            			String sendMsg = strArray[i];
+            			if(i == strArray.length -1 ){
+        					saveStr = sendMsg.trim();
+            			}
+            			else{
+            				MSGProtocol pMsg;
+            				try {
+            					pMsg = new MSGProtocol(sendMsg);
+                                LogUtils.i("Read", pMsg.getCommandNo()+"");
+                                if(msgListener != null)
+                                	msgListener.processMessage(pMsg);
+            				} catch (JSONException e) {
+                                LogUtils.e("json", "json wrong");
+            				}
+            			}
+            		}
+            		
                 } catch (IOException e) {
                     LogUtils.e(TAG, "disconnected");
                     connectionLost();
@@ -484,10 +577,6 @@ public class BluetoothService {
         public void write(byte[] buffer) {
             try {
                 mmOutStream.write(buffer);
-
-                // Share the sent message back to the UI Activity
-                mHandler.obtainMessage(Constant.MESSAGE_WRITE, -1, -1, buffer)
-                        .sendToTarget();
             } catch (IOException e) {
                 LogUtils.e(TAG, "Exception during write");
             }

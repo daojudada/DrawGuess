@@ -5,11 +5,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+
 import com.alibaba.fastjson.annotation.JSONField;
 import com.drawguess.msgbean.DataDraw;
 import com.drawguess.msgbean.DataGuess;
 import com.drawguess.msgbean.Entity;
 import com.drawguess.msgbean.User;
+import com.drawguess.msgbean.UserList;
 import com.drawguess.util.JsonUtils;
 
 /**
@@ -28,7 +30,7 @@ import com.drawguess.util.JsonUtils;
  */
 public class MSGProtocol {
     public enum ADDITION_TYPE {
-    	STRING, USER, DATADRAW, DATAGUESS 
+    	STRING, USER, DATADRAW, DATAGUESS, USERLIST
     }
     private static final String ADDOBJECT = "addObject";
     private static final String ADDSTR = "addStr";
@@ -76,7 +78,11 @@ public class MSGProtocol {
                 case STRING: // 为String数据
                     addStr = addJSONStr;
                     break;
-
+                    
+                case USERLIST:
+                	addObject = JsonUtils.getObject(addJSONStr, UserList.class);
+                	break;
+                	
                 default:
                     break;
             }
@@ -105,6 +111,9 @@ public class MSGProtocol {
         }
         if (paramObject instanceof DataGuess) { // 若为猜词对象
             this.addType = ADDITION_TYPE.DATAGUESS;
+        }
+        if (paramObject instanceof UserList) { // 若为猜词对象
+            this.addType = ADDITION_TYPE.USERLIST;
         }
     }
 

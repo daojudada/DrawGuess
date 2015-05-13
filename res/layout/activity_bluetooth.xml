@@ -84,6 +84,22 @@
 		</Button>
 		
 		<Button
+		    android:id="@+id/bluetooth_btn_cancel_discovery"
+			android:layout_width="0dp"
+			android:layout_height="42dip"
+			android:layout_marginLeft="9dip"
+			android:layout_marginRight="9dip"
+			android:layout_weight="1"
+			android:background="@drawable/btn_bottombar"
+			android:gravity="center"
+			android:text="@string/btn_cancel_discovery"
+			android:textColor="@drawable/profile_bottom_text_color"
+			style="?android:attr/borderlessButtonStyle"
+			android:textSize="14sp" >
+		
+		</Button>
+		
+		<Button
 		    android:id="@+id/bluetooth_btn_change"
 			android:layout_width="0dp"
 			android:layout_height="42dip"

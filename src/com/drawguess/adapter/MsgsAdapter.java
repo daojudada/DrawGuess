@@ -9,7 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.drawguess.R;
+import com.drawguess.activity.BtDrawGuessActivity;
 import com.drawguess.base.BaseObjectListAdapter;
+import com.drawguess.base.Constant;
 import com.drawguess.msgbean.Entity;
 import com.drawguess.msgbean.DataGuess;
 import com.drawguess.msgbean.User;
@@ -43,9 +45,13 @@ public class MsgsAdapter extends BaseObjectListAdapter {
             mAvatarId = ImageUtils.getImageID(avatarFileName);
         }
         else {
-            User users = NetManage.getLocalUserMap().get(msg.getSenderIMEI());
-            String avatarFileName = User.AVATAR + users.getAvatar();
-            mAvatarId = ImageUtils.getImageID(avatarFileName);
+        	User users = null;
+        	if(Constant.CONNECT_WAY == true)
+        		users = NetManage.getLocalUserMap().get(msg.getSenderIMEI());
+        	else
+        		users = BtDrawGuessActivity.getLocalMap().get(msg.getSenderIMEI());
+    		String avatarFileName = User.AVATAR + users.getAvatar();
+    		mAvatarId = ImageUtils.getImageID(avatarFileName);
         }
         int messageType = getItemViewType(position);
 

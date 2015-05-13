@@ -65,6 +65,7 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
      * 延时退出时间变量
      */
     private long ExitTime; 
+    private NetManage netManage;
     /**
      * 消息传递类
      */
@@ -173,17 +174,26 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 
 	@Override
     protected void onDestroy() {
+		if(mServerTimerCheck != null)
+			mServerTimerCheck.exit();
+		//退出上个计时进程
+		if(mLocalTimerCheck != null)
+			mLocalTimerCheck.exit();
 		if(NetManage.getState() == 2){
+			NetManage.getLocalUserMap().clear();
+			NetManage.getServerUserMap().clear();
 			netManage.sendToAllExClient(MSGConst.ANS_GAME_OVER, null, SessionUtils.getIMEI());
-			netManage.stop();
-			netManage.stopUdp();
+			netManage.stopServer();
+			netManage.stopClient();
 		}
 		else{
 			netManage.sendToServer(MSGConst.SEND_OFFLINE, null);
-			netManage.stop();
-			netManage.stopUdp();
+			NetManage.getLocalUserMap().clear();
+			netManage.stopClient();
 		}
+		NetManage.setState(0);
         handler = null;
+        
         super.onDestroy();
     }
 	
@@ -827,9 +837,7 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 		        	break;
 		        }
 		        case MSGConst.ANS_GAME_OVER:{
-		        	mLocalPlayersMap.clear();
-		        	netManage.stop();
-		        	NetManage.setState(0);
+		        	finish();
 		        	break;
 		        }
 		        case MSGConst.ANS_OFFLINE:{
@@ -860,7 +868,7 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 	            		DataGuess dg = new DataGuess(SessionUtils.getIMEI(), DataUtils.getNowtime(), "好厉害，这也能猜出来");
 	            		mLocalMsgsList.add(dg);
 	            	}
-	            	else{
+	            	else if(SessionUtils.getIMEI().equals(guessUser.getIMEI())){
 	            		b.putString("toast", "恭喜你猜对了，积分加2");
 	    		        android.os.Message tMsg = new android.os.Message();
 	    		        tMsg.what = MSGConst.SHOW_TOAST;
@@ -923,19 +931,39 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 		        	float data1 = data.getData1();
 		        	float data2 = data.getData2();
 		        	float data3 = data.getData3();
-		        	float data4 = data.getData4();
-		        	b.putInt("opType", op.ordinal());
-		        	b.putInt("touchType", touch.ordinal());
-		        	b.putFloat("data1", data1);
-		        	b.putFloat("data2", data2);
-		        	b.putFloat("data3", data3);
-		        	b.putFloat("data4", data4);
-		        	
+		        	float data4 = data.getData4();        	
 
+		        	switch (op){
+		        	case DRAW:
+		        	case FILL:
+		        	case TRANS:
+		        		if(SessionUtils.getOrder()!=1){
+		        			mDrawView.doOperation(touch, 
+		        					data1 * mDrawView.getWX(), data2 * mDrawView.getHY(), 
+		        					data3 * mDrawView.getWX(), data4 * mDrawView.getHY());
+		        		}
+		        		break;
+		        	case ERASE:
+		        	case PAINT:
+		        	case SHAPE:
+		        	case PACK:
+		        	case REDO:
+		        	case UNDO:
+		        	case EDIT:
+		        	case COPY:
+		        	case DELETE:
+		        	case CLEAR:
+		        		if(SessionUtils.getOrder()!=1)
+		        			doClickEvent(op,data1,data2,data3,data4);
+		        		break;
+		            default:
+		                break;
+		        	}
+		        	
 	        		if(SessionUtils.getOrder()!=1){
 						logNum++;
-	        			handler.sendEmptyMessage(MSGConst.DEBUG_MSG);
 	        		}
+        			handler.sendEmptyMessage(MSGConst.DEBUG_MSG);
 		        	break;
 		        }
 		        case MSGConst.ANS_TIP:{
@@ -990,10 +1018,6 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
 				case MSGConst.SEND_DRAW:
 					netManage.sendToAllClient(MSGConst.ANS_DRAW, (DataDraw)pMsg.getAddObject());
 					
-					//test
-					logNum++;
-        			handler.sendEmptyMessage(MSGConst.DEBUG_MSG);
-        			
 					break;
 				case MSGConst.SEND_GUESS_WORD:
 					netManage.sendToClient(MSGConst.ANS_GUESS_WORD, (DataGuess)pMsg.getAddObject(), mServerOrderList.get(0));
@@ -1187,41 +1211,6 @@ public class DrawGuessActivity extends BaseActivity implements OnClickListener{
             	refreshMsgAdapter();
             	break;
             }
-            case MSGConst.ANS_DRAW:{
-	        	OP_TYPE op = OP_TYPE.values()[msg.getData().getInt("opType")];
-	        	TOUCH_TYPE touch = TOUCH_TYPE.values()[msg.getData().getInt("touchType")];
-	        	float data1 =  msg.getData().getFloat("data1");
-	        	float data2 =  msg.getData().getFloat("data2");
-	        	float data3 =  msg.getData().getFloat("data3");
-	        	float data4 =  msg.getData().getFloat("data4");
-	        	switch (op){
-	        	case DRAW:
-	        	case FILL:
-	        	case TRANS:
-	        		if(SessionUtils.getOrder()!=1){
-	        			mDrawView.doOperation(touch, 
-	        					data1 * mDrawView.getWX(), data2 * mDrawView.getHY(), 
-	        					data3 * mDrawView.getWX(), data4 * mDrawView.getHY());
-	        		}
-	        		break;
-	        	case ERASE:
-	        	case PAINT:
-	        	case SHAPE:
-	        	case PACK:
-	        	case REDO:
-	        	case UNDO:
-	        	case EDIT:
-	        	case COPY:
-	        	case DELETE:
-	        	case CLEAR:
-	        		if(SessionUtils.getOrder()!=1)
-	        			doClickEvent(op,data1,data2,data3,data4);
-	        		break;
-	            default:
-	                break;
-	        	}
-	        	break;
-	        }
             case MSGConst.TIME_CHECK:
             	mTvTime.setText(mLocalTimerCheck.getCount() + "秒");
             	break;

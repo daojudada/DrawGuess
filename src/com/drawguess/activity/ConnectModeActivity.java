@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.drawguess.R;
 import com.drawguess.base.ActivitiesManager;
 import com.drawguess.base.BaseActivity;
+import com.drawguess.base.Constant;
 
 /**
  * 选择联网模式，WIFI OR 蓝牙
@@ -50,10 +51,12 @@ public class ConnectModeActivity extends BaseActivity implements OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_wifi:
+            	Constant.CONNECT_WAY = true;
                 startActivity(WifiapActivity.class);
                 
                 break;
             case R.id.btn_bluetooth:
+            	Constant.CONNECT_WAY = false;
             	startActivity(BluetoothActivity.class);
                 break;
     
