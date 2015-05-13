@@ -17,7 +17,6 @@ public class Constant {
 	 * 屏幕长度
 	 */
 	public static int WIN_Y;
-<<<<<<< HEAD
 	/**
 	 * 流缓冲区大小
 	 */
@@ -38,10 +37,7 @@ public class Constant {
 	 * DES加密密钥 
 	 */
 	public static final	String PASSWORD = "9588028820109132570743325311898426347857298773549468758875018579537757772163084478873699447306034466200616411960574122434059469100235892702736860872901247123456";
-=======
-    public static final int BUFFER_SIZE = 1024;// 流缓冲大小
-    public static final int TCP_PORT = 4447; // 主机接收端口 
-	public static final int UDP_PORT = 3647; // 主机接收端口
+
 	
 	// Message types sent from the BluetoothChatService Handler
     public static final int MESSAGE_STATE_CHANGE = 1;
@@ -53,6 +49,5 @@ public class Constant {
     // Key names received from the BluetoothChatService Handler
     public static final String DEVICE_NAME = "device_name";
     public static final String TOAST = "toast";
->>>>>>> 7241ba6e667ed29ac43f6199fe31b0019486b15a
 }
 

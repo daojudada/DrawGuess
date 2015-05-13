@@ -1,96 +1,53 @@
-<<<<<<< HEAD
-# view AndroidManifest.xml #generated:78
+# view AndroidManifest.xml #generated:84
 -keep class com.drawguess.activity.AboutActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:69
--keep class com.drawguess.activity.ChooseAvatarActivity { <init>(...); }
-
-# view AndroidManifest.xml #generated:57
--keep class com.drawguess.activity.ConnectModeActivity { <init>(...); }
-
-# view AndroidManifest.xml #generated:86
--keep class com.drawguess.activity.DrawGuessActivity { <init>(...); }
-
-# view AndroidManifest.xml #generated:65
--keep class com.drawguess.activity.GameRoomActivity { <init>(...); }
-
-# view AndroidManifest.xml #generated:52
--keep class com.drawguess.activity.LoginActivity { <init>(...); }
-
-# view AndroidManifest.xml #generated:82
--keep class com.drawguess.activity.ProfileActivity { <init>(...); }
-
-# view AndroidManifest.xml #generated:73
--keep class com.drawguess.activity.SettingActivity { <init>(...); }
-
-# view AndroidManifest.xml #generated:42
--keep class com.drawguess.activity.WelcomeActivity { <init>(...); }
-
-# view AndroidManifest.xml #generated:61
--keep class com.drawguess.activity.WifiapActivity { <init>(...); }
-
-# view AndroidManifest.xml #generated:34
--keep class com.drawguess.base.BaseApplication { <init>(...); }
-
-# view res/layout/activity_drawtabs.xml #generated:263
-=======
-# view AndroidManifest.xml #generated:86
--keep class com.drawguess.activity.AboutActivity { <init>(...); }
-
-# view AndroidManifest.xml #generated:69
+# view AndroidManifest.xml #generated:67
 -keep class com.drawguess.activity.BluetoothActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:99
+# view AndroidManifest.xml #generated:97
 -keep class com.drawguess.activity.BtDrawGuessActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:77
+# view AndroidManifest.xml #generated:75
 -keep class com.drawguess.activity.ChooseAvatarActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:61
+# view AndroidManifest.xml #generated:59
 -keep class com.drawguess.activity.ConnectModeActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:94
+# view AndroidManifest.xml #generated:92
 -keep class com.drawguess.activity.DrawGuessActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:73
+# view AndroidManifest.xml #generated:71
 -keep class com.drawguess.activity.GameRoomActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:56
+# view AndroidManifest.xml #generated:54
 -keep class com.drawguess.activity.LoginActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:90
+# view AndroidManifest.xml #generated:88
 -keep class com.drawguess.activity.ProfileActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:81
+# view AndroidManifest.xml #generated:79
 -keep class com.drawguess.activity.SettingActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:46
+# view AndroidManifest.xml #generated:44
 -keep class com.drawguess.activity.WelcomeActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:65
+# view AndroidManifest.xml #generated:63
 -keep class com.drawguess.activity.WifiapActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:38
+# view AndroidManifest.xml #generated:36
 -keep class com.drawguess.base.BaseApplication { <init>(...); }
 
 # view res/layout/activity_btdrawguess.xml #generated:121
-# view res/layout/activity_drawtabs.xml #generated:121
->>>>>>> 7241ba6e667ed29ac43f6199fe31b0019486b15a
+# view res/layout/activity_drawtabs.xml #generated:263
 -keep class com.drawguess.view.DrawView { <init>(...); }
 
 # view res/layout/dialog_loading.xml #generated:9
 -keep class com.drawguess.view.FlippingImageView { <init>(...); }
 
-<<<<<<< HEAD
-# view res/layout/activity_gameroom.xml #generated:115
-=======
 # view res/layout/activity_bluetooth.xml #generated:25
 # view res/layout/activity_btdrawguess.xml #generated:357
 # view res/layout/activity_btdrawguess.xml #generated:383
-# view res/layout/activity_drawtabs.xml #generated:357
-# view res/layout/activity_drawtabs.xml #generated:383
-# view res/layout/activity_gameroom.xml #generated:118
->>>>>>> 7241ba6e667ed29ac43f6199fe31b0019486b15a
+# view res/layout/activity_gameroom.xml #generated:115
 -keep class com.drawguess.view.MultiListView { <init>(...); }
 
 # view res/layout/activity_settting.xml #generated:127

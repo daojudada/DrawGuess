@@ -1,0 +1,871 @@
+com.alibaba.fastjson.JSON:
+    public static final java.lang.String VERSION
+    89:89:public static final java.lang.Object parse(java.lang.String)
+    93:104:public static final java.lang.Object parse(java.lang.String,int)
+    108:108:public static final varargs java.lang.Object parse(byte[],com.alibaba.fastjson.parser.Feature[])
+    112:121:public static final varargs java.lang.Object parse(byte[],int,int,java.nio.charset.CharsetDecoder,com.alibaba.fastjson.parser.Feature[])
+    125:143:public static final java.lang.Object parse(byte[],int,int,java.nio.charset.CharsetDecoder,int)
+    147:152:public static final varargs java.lang.Object parse(java.lang.String,com.alibaba.fastjson.parser.Feature[])
+    156:156:public static final varargs com.alibaba.fastjson.JSONObject parseObject(java.lang.String,com.alibaba.fastjson.parser.Feature[])
+    160:165:public static final com.alibaba.fastjson.JSONObject parseObject(java.lang.String)
+    170:170:public static final varargs java.lang.Object parseObject(java.lang.String,com.alibaba.fastjson.TypeReference,com.alibaba.fastjson.parser.Feature[])
+    180:180:public static final varargs java.lang.Object parseObject(java.lang.String,java.lang.reflect.Type,com.alibaba.fastjson.parser.Feature[])
+    185:200:public static final varargs java.lang.Object parseObject(java.lang.String,java.lang.reflect.Type,int,com.alibaba.fastjson.parser.Feature[])
+    250:250:public static final varargs java.lang.Object parseObject(byte[],java.lang.reflect.Type,com.alibaba.fastjson.parser.Feature[])
+    256:267:public static final varargs java.lang.Object parseObject(byte[],int,int,java.nio.charset.CharsetDecoder,java.lang.reflect.Type,com.alibaba.fastjson.parser.Feature[])
+    272:288:public static final varargs java.lang.Object parseObject(char[],int,java.lang.reflect.Type,com.alibaba.fastjson.parser.Feature[])
+    296:319:public static final com.alibaba.fastjson.JSONArray parseArray(java.lang.String)
+    323:343:public static final java.util.List parseArray(java.lang.String,java.lang.Class)
+    347:365:public static final java.util.List parseArray(java.lang.String,java.lang.reflect.Type[])
+    396:414:public static final varargs java.lang.String toJSONStringWithDateFormat(java.lang.Object,java.lang.String,com.alibaba.fastjson.serializer.SerializerFeature[])
+    419:451:public static final varargs java.lang.String toJSONString(java.lang.Object,com.alibaba.fastjson.serializer.SerializeFilter,com.alibaba.fastjson.serializer.SerializerFeature[])
+    456:468:public static final varargs byte[] toJSONBytes(java.lang.Object,com.alibaba.fastjson.serializer.SerializerFeature[])
+    473:485:public static final varargs java.lang.String toJSONString(java.lang.Object,com.alibaba.fastjson.serializer.SerializeConfig,com.alibaba.fastjson.serializer.SerializerFeature[])
+    490:499:public static final varargs java.lang.String toJSONStringZ(java.lang.Object,com.alibaba.fastjson.serializer.SerializeConfig,com.alibaba.fastjson.serializer.SerializerFeature[])
+    504:516:public static final varargs byte[] toJSONBytes(java.lang.Object,com.alibaba.fastjson.serializer.SerializeConfig,com.alibaba.fastjson.serializer.SerializerFeature[])
+    521:525:public static final java.lang.String toJSONString(java.lang.Object,boolean)
+    529:541:public static final varargs void writeJSONStringTo(java.lang.Object,java.io.Writer,com.alibaba.fastjson.serializer.SerializerFeature[])
+    575:575:public static final java.lang.Object toJSON(java.lang.Object)
+    580:654:public static final java.lang.Object toJSON(java.lang.Object,com.alibaba.fastjson.parser.ParserConfig)
+    659:659:public static final java.lang.Object toJavaObject(com.alibaba.fastjson.JSON,java.lang.Class)
+com.alibaba.fastjson.JSONArray:
+    private static final long serialVersionUID
+    63:65:public JSONArray(int)
+    180:186:public com.alibaba.fastjson.JSONObject getJSONObject(int)
+    190:196:public com.alibaba.fastjson.JSONArray getJSONArray(int)
+    200:201:public java.lang.Object getObject(int,java.lang.Class)
+    205:211:public java.lang.Boolean getBoolean(int)
+    215:221:public boolean getBooleanValue(int)
+    225:227:public java.lang.Byte getByte(int)
+    231:237:public byte getByteValue(int)
+    241:243:public java.lang.Short getShort(int)
+    247:253:public short getShortValue(int)
+    263:269:public int getIntValue(int)
+    279:285:public long getLongValue(int)
+    289:291:public java.lang.Float getFloat(int)
+    295:301:public float getFloatValue(int)
+    305:307:public java.lang.Double getDouble(int)
+    311:317:public double getDoubleValue(int)
+    321:323:public java.math.BigDecimal getBigDecimal(int)
+    327:329:public java.math.BigInteger getBigInteger(int)
+    333:335:public java.lang.String getString(int)
+    339:341:public java.util.Date getDate(int)
+    345:347:public java.sql.Date getSqlDate(int)
+    351:353:public java.sql.Timestamp getTimestamp(int)
+com.alibaba.fastjson.JSONException:
+    private static final long serialVersionUID
+com.alibaba.fastjson.JSONObject:
+    private static final long serialVersionUID
+    private static final int DEFAULT_INITIAL_CAPACITY
+    67:68:public JSONObject(boolean)
+    71:72:public JSONObject(int)
+    103:109:public com.alibaba.fastjson.JSONObject getJSONObject(java.lang.String)
+    113:119:public com.alibaba.fastjson.JSONArray getJSONArray(java.lang.String)
+    123:124:public java.lang.Object getObject(java.lang.String,java.lang.Class)
+    128:134:public java.lang.Boolean getBoolean(java.lang.String)
+    138:144:public byte[] getBytes(java.lang.String)
+    148:154:public boolean getBooleanValue(java.lang.String)
+    158:160:public java.lang.Byte getByte(java.lang.String)
+    164:170:public byte getByteValue(java.lang.String)
+    174:176:public java.lang.Short getShort(java.lang.String)
+    180:186:public short getShortValue(java.lang.String)
+    190:192:public java.lang.Integer getInteger(java.lang.String)
+    196:202:public int getIntValue(java.lang.String)
+    206:208:public java.lang.Long getLong(java.lang.String)
+    212:218:public long getLongValue(java.lang.String)
+    222:224:public java.lang.Float getFloat(java.lang.String)
+    228:234:public float getFloatValue(java.lang.String)
+    238:240:public java.lang.Double getDouble(java.lang.String)
+    244:250:public double getDoubleValue(java.lang.String)
+    254:256:public java.math.BigDecimal getBigDecimal(java.lang.String)
+    260:262:public java.math.BigInteger getBigInteger(java.lang.String)
+    266:272:public java.lang.String getString(java.lang.String)
+    276:278:public java.util.Date getDate(java.lang.String)
+    282:284:public java.sql.Date getSqlDate(java.lang.String)
+    288:290:public java.sql.Timestamp getTimestamp(java.lang.String)
+com.alibaba.fastjson.JSONReader
+com.alibaba.fastjson.JSONStreamContext
+com.alibaba.fastjson.JSONWriter
+com.alibaba.fastjson.TypeReference
+com.alibaba.fastjson.TypeReference$1
+com.alibaba.fastjson.annotation.JSONField:
+    public abstract com.alibaba.fastjson.parser.Feature[] parseFeatures()
+com.alibaba.fastjson.annotation.JSONType:
+    public abstract boolean asm()
+    public abstract com.alibaba.fastjson.serializer.SerializerFeature[] serialzeFeatures()
+    public abstract boolean alphabetic()
+com.alibaba.fastjson.parser.CharTypes:
+    21:21:public CharTypes()
+    59:59:public static boolean isSpecial_doubleQuotes(char)
+com.alibaba.fastjson.parser.DefaultJSONParser:
+    public static final int NONE
+    public static final int NeedToResolve
+    public static final int TypeNameRedirect
+    120:120:public java.lang.String getDateFomartPattern()
+    131:133:public void setDateFormat(java.lang.String)
+    136:137:public void setDateFomrat(java.text.DateFormat)
+    140:141:public DefaultJSONParser(java.lang.String)
+    144:145:public DefaultJSONParser(java.lang.String,com.alibaba.fastjson.parser.ParserConfig)
+    152:153:public DefaultJSONParser(char[],int,com.alibaba.fastjson.parser.ParserConfig,int)
+    156:157:public DefaultJSONParser(com.alibaba.fastjson.parser.JSONLexer)
+    160:161:public DefaultJSONParser(com.alibaba.fastjson.parser.JSONLexer,com.alibaba.fastjson.parser.ParserConfig)
+    177:180:public java.lang.String getInput()
+    482:483:public void setConfig(com.alibaba.fastjson.parser.ParserConfig)
+    510:512:public java.util.List parseArray(java.lang.Class)
+    516:517:public void parseArray(java.lang.Class,java.util.Collection)
+    604:714:public java.lang.Object[] parseArray(java.lang.reflect.Type[])
+    718:794:public void parseObject(java.lang.Object)
+    797:864:public java.lang.Object parseArrayWithType(java.lang.reflect.Type)
+    1093:1098:public java.lang.Object parseKey()
+    1181:1182:public void config(com.alibaba.fastjson.parser.Feature,boolean)
+    1203:1210:public final void accept(int,int)
+com.alibaba.fastjson.parser.JSONLexer:
+    public static final byte EOI
+    protected static final long MULTMIN_RADIX_TEN
+    protected static final long N_MULTMAX_RADIX_TEN
+    protected static final int INT_MULTMIN_RADIX_TEN
+    protected static final int INT_N_MULTMAX_RADIX_TEN
+    535:536:public void config(com.alibaba.fastjson.parser.Feature,boolean)
+com.alibaba.fastjson.parser.JSONReaderScanner
+com.alibaba.fastjson.parser.JSONScanner:
+    63:64:public JSONScanner(char[],int)
+    67:68:public JSONScanner(char[],int,int)
+com.alibaba.fastjson.parser.JSONToken:
+    public static final int ERROR
+    public static final int LITERAL_INT
+    public static final int LITERAL_FLOAT
+    public static final int LITERAL_STRING
+    public static final int LITERAL_ISO8601_DATE
+    public static final int TRUE
+    public static final int FALSE
+    public static final int NULL
+    public static final int NEW
+    public static final int LPAREN
+    public static final int RPAREN
+    public static final int LBRACE
+    public static final int RBRACE
+    public static final int LBRACKET
+    public static final int RBRACKET
+    public static final int COMMA
+    public static final int COLON
+    public static final int IDENTIFIER
+    public static final int FIELD_NAME
+    public static final int EOF
+    public static final int SET
+    public static final int TREE_SET
+    21:21:public JSONToken()
+com.alibaba.fastjson.parser.JavaBeanMapping
+com.alibaba.fastjson.parser.ParserConfig:
+    246:246:public com.alibaba.fastjson.util.IdentityHashMap getDerializers()
+    370:370:public boolean isPrimitive(java.lang.Class)
+com.alibaba.fastjson.parser.SymbolTable:
+    public static final int DEFAULT_TABLE_SIZE
+    public static final int MAX_BUCKET_LENTH
+    public static final int MAX_SIZE
+    50:51:public java.lang.String addSymbol(char[],int,int)
+    198:198:public int size()
+    202:208:public static final int hash(char[],int,int)
+com.alibaba.fastjson.serializer.DoubleSerializer:
+    35:37:public DoubleSerializer(java.text.DecimalFormat)
+    40:41:public DoubleSerializer(java.lang.String)
+com.alibaba.fastjson.serializer.FieldSerializer:
+    70:70:public java.lang.reflect.Method getMethod()
+com.alibaba.fastjson.serializer.FilterUtils:
+    5:5:public FilterUtils()
+com.alibaba.fastjson.serializer.JSONLibDataFormatSerializer
+com.alibaba.fastjson.serializer.JSONSerializer:
+    71:72:public JSONSerializer(com.alibaba.fastjson.serializer.SerializeConfig)
+    76:77:public JSONSerializer(com.alibaba.fastjson.serializer.JSONSerializerMap)
+    85:88:public java.lang.String getDateFormatPattern()
+    102:106:public void setDateFormat(java.text.DateFormat)
+    109:113:public void setDateFormat(java.lang.String)
+    212:216:public java.util.List getValueFilters()
+    224:224:public int getIndentCount()
+    243:247:public java.util.List getNameFilters()
+    255:259:public java.util.List getPropertyPreFilters()
+    267:271:public java.util.List getPropertyFilters()
+    299:299:public com.alibaba.fastjson.serializer.SerializeConfig getMapping()
+    303:313:public static final void write(java.io.Writer,java.lang.Object)
+    316:318:public static final void write(com.alibaba.fastjson.serializer.SerializeWriter,java.lang.Object)
+    337:338:public final void writeWithFieldName(java.lang.Object,java.lang.Object)
+    342:355:public final void writeWithFieldName(java.lang.Object,java.lang.Object,java.lang.reflect.Type)
+    440:441:public void close()
+com.alibaba.fastjson.serializer.JSONSerializerContext
+com.alibaba.fastjson.serializer.JSONSerializerContext$Entry
+com.alibaba.fastjson.serializer.JSONSerializerMap
+com.alibaba.fastjson.serializer.JavaBeanSerializer:
+    42:42:public com.alibaba.fastjson.serializer.FieldSerializer[] getGetters()
+    50:51:public varargs JavaBeanSerializer(java.lang.Class,java.lang.String[])
+    54:59:static varargs java.util.Map createAliasMap(java.lang.String[])
+com.alibaba.fastjson.serializer.PascalNameFilter
+com.alibaba.fastjson.serializer.SerialContext:
+    26:26:public java.lang.Object getFieldName()
+com.alibaba.fastjson.serializer.SerialWriterStringEncoder
+com.alibaba.fastjson.serializer.SerializeFilter
+com.alibaba.fastjson.serializer.SerializeWriter:
+    74:75:public varargs SerializeWriter(com.alibaba.fastjson.serializer.SerializerFeature[])
+    77:96:public varargs SerializeWriter(java.io.Writer,com.alibaba.fastjson.serializer.SerializerFeature[])
+    99:99:public int getBufferLength()
+    103:104:public SerializeWriter(int)
+    106:113:public SerializeWriter(java.io.Writer,int)
+    243:247:public void writeTo(java.io.Writer)
+    250:251:public void writeTo(java.io.OutputStream,java.lang.String)
+    254:259:public void writeTo(java.io.OutputStream,java.nio.charset.Charset)
+    279:280:public void reset()
+    288:294:public char[] toCharArray()
+    298:309:public byte[] toBytes(java.lang.String)
+    313:313:public int size()
+    799:805:public void writeString(java.lang.String,char)
+com.alibaba.fastjson.serializer.SerializerFeature:
+    124:130:public static int config(int,com.alibaba.fastjson.serializer.SerializerFeature,boolean)
+com.alibaba.fastjson.serializer.SimpleDateFormatSerializer
+com.alibaba.fastjson.serializer.SimplePropertyPreFilter
+com.alibaba.fastjson.util.Base64:
+    56:56:public Base64()
+    80:130:public static final byte[] decodeFast(char[],int,int)
+    201:253:public static final byte[] decodeFast(java.lang.String)
+com.alibaba.fastjson.util.DeserializeBeanInfo:
+    36:36:public java.lang.Class getClazz()
+com.alibaba.fastjson.util.FieldInfo:
+    176:176:public java.lang.Class getDeclaringClass()
+com.alibaba.fastjson.util.IOUtils:
+    30:30:public IOUtils()
+    33:40:public static void close(java.io.Closeable)
+    139:161:public static void getChars(byte,int,char[])
+    194:210:public static void decode(java.nio.charset.CharsetDecoder,java.nio.ByteBuffer,java.nio.CharBuffer)
+com.alibaba.fastjson.util.IdentityHashMap:
+    public static final int DEFAULT_TABLE_SIZE
+    71:77:public int size()
+com.alibaba.fastjson.util.ThreadLocalCache
+com.alibaba.fastjson.util.TypeUtils:
+    57:57:public TypeUtils()
+    412:419:public static final byte[] castToBytes(java.lang.Object)
+    457:457:public static final java.lang.Object castToJavaBean(java.lang.Object,java.lang.Class)
+    831:833:public static void clearClassMapping()
+    880:880:public static java.util.List computeGetters(java.lang.Class,java.util.Map)
+com.drawguess.BuildConfig
+com.drawguess.R:
+    10:10:public R()
+com.drawguess.R$attr
+com.drawguess.R$color
+com.drawguess.R$drawable:
+    public static final int ab_solid_dark_holo
+    public static final int app_icon
+    public static final int arrow
+    public static final int avatar1
+    public static final int avatar10
+    public static final int avatar11
+    public static final int avatar12
+    public static final int avatar2
+    public static final int avatar3
+    public static final int avatar4
+    public static final int avatar5
+    public static final int avatar6
+    public static final int avatar7
+    public static final int avatar8
+    public static final int avatar9
+    public static final int bg_aboutus
+    public static final int bg_arrow_in
+    public static final int bg_arrow_out
+    public static final int bg_common_toast
+    public static final int bg_gender_famal
+    public static final int bg_gender_male
+    public static final int bg_message_box_receive
+    public static final int bg_message_box_send
+    public static final int bg_msgbox_receive_normal
+    public static final int bg_msgbox_receive_press
+    public static final int bg_msgbox_send_normal
+    public static final int bg_msgbox_send_press
+    public static final int bg_time_normal
+    public static final int bg_unlogin_bar
+    public static final int bglistitem_selector_user
+    public static final int bottom
+    public static final int btn_big_normal_disable
+    public static final int btn_big_normal_normal
+    public static final int btn_big_normal_press
+    public static final int btn_black1
+    public static final int btn_black2
+    public static final int btn_blue1
+    public static final int btn_blue2
+    public static final int btn_bottombar
+    public static final int btn_bottombar_disable
+    public static final int btn_bottombar_normal
+    public static final int btn_bottombar_press
+    public static final int btn_bottombar_red
+    public static final int btn_chat_send
+    public static final int btn_chat_send_normal
+    public static final int btn_chat_send_press
+    public static final int btn_ching1
+    public static final int btn_ching2
+    public static final int btn_clear1
+    public static final int btn_clear2
+    public static final int btn_color
+    public static final int btn_color1
+    public static final int btn_color2
+    public static final int btn_copy
+    public static final int btn_copy1
+    public static final int btn_copy2
+    public static final int btn_default
+    public static final int btn_default_flat
+    public static final int btn_delete
+    public static final int btn_delete1
+    public static final int btn_delete2
+    public static final int btn_edit1
+    public static final int btn_edit2
+    public static final int btn_erase1
+    public static final int btn_erase2
+    public static final int btn_fill1
+    public static final int btn_fill2
+    public static final int btn_free
+    public static final int btn_free1
+    public static final int btn_free2
+    public static final int btn_free3
+    public static final int btn_green1
+    public static final int btn_green2
+    public static final int btn_line
+    public static final int btn_line1
+    public static final int btn_line2
+    public static final int btn_line3
+    public static final int btn_menu
+    public static final int btn_menu1
+    public static final int btn_menu2
+    public static final int btn_oval
+    public static final int btn_oval1
+    public static final int btn_oval2
+    public static final int btn_oval3
+    public static final int btn_paint
+    public static final int btn_paint1
+    public static final int btn_paint2
+    public static final int btn_pressed
+    public static final int btn_purple1
+    public static final int btn_purple2
+    public static final int btn_ready
+    public static final int btn_rect
+    public static final int btn_rect1
+    public static final int btn_rect2
+    public static final int btn_rect3
+    public static final int btn_red
+    public static final int btn_red1
+    public static final int btn_red2
+    public static final int btn_red_click
+    public static final int btn_red_default
+    public static final int btn_redo
+    public static final int btn_redo1
+    public static final int btn_redo2
+    public static final int btn_setting
+    public static final int btn_undo
+    public static final int btn_undo1
+    public static final int btn_undo2
+    public static final int btn_unpressed
+    public static final int btn_unready
+    public static final int btn_yellow1
+    public static final int btn_yellow2
+    public static final int corners_avatar
+    public static final int divider_horizontal_line
+    public static final int edittext_default
+    public static final int edittext_multiline_focus
+    public static final int edittext_multiline_normal
+    public static final int edittext_normal_focus
+    public static final int edittext_normal_normal
+    public static final int edittext_normal_press
+    public static final int edittext_sendmsg
+    public static final int edittext_sendmsg_normal
+    public static final int frame
+    public static final int ic_arrow
+    public static final int ic_connected
+    public static final int ic_launcher
+    public static final int ic_notification
+    public static final int ic_small_wifi_rssi_0
+    public static final int ic_small_wifi_rssi_1
+    public static final int ic_small_wifi_rssi_2
+    public static final int ic_small_wifi_rssi_3
+    public static final int ic_small_wifi_rssi_4
+    public static final int ic_user_famale
+    public static final int ic_user_male
+    public static final int ic_userinfo_android
+    public static final int list_selector_transition
+    public static final int listview_progressbar_bg
+    public static final int mask
+    public static final int pic_index_bg
+    public static final int pic_index_logo
+    public static final int profile_bottom_text_color
+    public static final int seekbar_po
+    public static final int seekbar_thumb
+    public static final int seekbar_thumb_normal
+    public static final int seekbar_thumb_pressed
+    public static final int shape_gray_round_frame_n
+com.drawguess.R$id
+com.drawguess.R$layout
+com.drawguess.R$menu
+com.drawguess.R$raw
+com.drawguess.R$string
+com.drawguess.R$style
+com.drawguess.activity.AboutActivity:
+    25:25:protected void initViews()
+com.drawguess.activity.DrawGuessActivity:
+    private static final java.lang.String TAG
+com.drawguess.activity.GameRoomActivity:
+    private static final java.lang.String TAG
+com.drawguess.activity.WifiapActivity:
+    private static final java.lang.String TAG
+com.drawguess.adapter.MsgsAdapter:
+    public static final int LEFT_TEXT
+    public static final int RIGHT_TEXT
+com.drawguess.adapter.PlayersAdapter$ViewHolder:
+    android.widget.TextView mHtvLastMsg
+com.drawguess.base.ActivitiesManager:
+    13:13:public ActivitiesManager()
+    34:37:public static int getActivitiesNum()
+    41:44:public static com.drawguess.base.BaseActivity getCurrentActivity()
+com.drawguess.base.BaseActivity:
+    protected abstract void initEvents()
+    protected abstract void initViews()
+    135:137:protected android.app.AlertDialog showAlertDialog(java.lang.String,java.lang.String)
+    144:147:protected android.app.AlertDialog showAlertDialog(java.lang.String,java.lang.String,int,java.lang.String,android.content.DialogInterface$OnClickListener,java.lang.String,android.content.DialogInterface$OnClickListener)
+    164:172:protected void showCustomToast(int)
+    195:196:protected void showLongToast(int)
+    200:201:protected void showLongToast(java.lang.String)
+    230:231:protected void startActivity(java.lang.String)
+    235:241:protected void startActivity(java.lang.String,android.os.Bundle)
+com.drawguess.base.BaseApplication:
+    60:67:public static void playNotification()
+com.drawguess.base.BaseDialog:
+    private int mID
+    23:23:public static com.drawguess.base.BaseDialog getDialog(android.content.Context,int,java.lang.CharSequence)
+    27:27:public static com.drawguess.base.BaseDialog getDialog(android.content.Context,int,java.lang.CharSequence,java.lang.CharSequence,android.content.DialogInterface$OnClickListener)
+    101:101:public int getID()
+    163:164:public void setButton1Background(int)
+    187:188:public void setButton2Background(int)
+    195:196:public void setButton2Text(java.lang.CharSequence)
+    211:212:public void setButton3Background(int)
+    215:216:public void setButton3Clickable(boolean)
+    219:220:public void setButton3Text(java.lang.CharSequence)
+    242:247:public void setDialogContentView(int,android.widget.LinearLayout$LayoutParams)
+    250:251:public void setID(int)
+com.drawguess.base.BaseObjectListAdapter:
+    39:39:public java.util.List getDatas()
+    62:69:protected void showCustomToast(java.lang.String)
+com.drawguess.base.Constant:
+    public static final int BUFFER_SIZE
+    public static final int TCP_PORT
+    public static final int UDP_PORT
+    public static final int GAME_TIME
+    public static final java.lang.String PASSWORD
+    3:3:public Constant()
+com.drawguess.dialog.ColorDialog:
+    40:41:public ColorDialog(android.content.Context,java.lang.String,com.drawguess.interfaces.OnColorChangedListener)
+    72:72:public java.lang.String getTitle()
+    76:77:public void setTitle(java.lang.String)
+    80:80:public int getmInitialColor()
+    84:85:public void setmInitialColor(int)
+    88:88:public com.drawguess.interfaces.OnColorChangedListener getmListener()
+    92:93:public void setmListener(com.drawguess.interfaces.OnColorChangedListener)
+com.drawguess.dialog.ConnWifiDialog:
+    166:168:public void setBtn1ClickListener(android.content.DialogInterface$OnClickListener)
+com.drawguess.dialog.PaintDialog:
+    55:55:public com.drawguess.interfaces.OnPaintChangedListener getmListener()
+    59:60:public void setmListener(com.drawguess.interfaces.OnPaintChangedListener)
+com.drawguess.dialog.ShapeDialog:
+    android.content.Context context
+com.drawguess.drawop.OpCopy:
+    24:24:public com.drawguess.drawop.OpDraw getDraw()
+com.drawguess.drawop.OpDraw:
+    17:21:public OpDraw(com.drawguess.drawop.OpDraw)
+    37:37:public boolean getIsDraw()
+    62:63:public void setPaint(android.graphics.Paint)
+com.drawguess.drawop.OpFill:
+    49:49:public int getColor()
+    56:56:public float[] getPosition()
+com.drawguess.drawop.OpTrans:
+    69:69:public com.drawguess.drawop.Operation getDraw()
+    77:77:public android.graphics.Path getPath()
+    82:84:public void init()
+com.drawguess.drawop.OperationManage:
+    195:195:public int size()
+com.drawguess.interfaces.NetInterface
+com.drawguess.msgbean.Avatar:
+    24:25:public void setImageId(int)
+com.drawguess.msgbean.DataDraw:
+    85:86:public void setOpType(com.drawguess.msgbean.DataDraw$OP_TYPE)
+    95:96:public void setTouchType(com.drawguess.msgbean.DataDraw$TOUCH_TYPE)
+    100:101:public void setData1(float)
+    105:106:public void setData2(float)
+    109:110:public void setData3(float)
+    113:114:public void setData4(float)
+com.drawguess.msgbean.DataGuess:
+    42:43:public void setSenderIMEI(java.lang.String)
+    63:64:public void setSendTime(java.lang.String)
+com.drawguess.msgbean.User:
+    public static final java.lang.String AVATAR
+    public static final java.lang.String DEVICE
+    public static final java.lang.String ENTITY_PEOPLE
+    public static final java.lang.String GENDER
+    public static final java.lang.String ID
+    public static final java.lang.String IMEI
+    public static final java.lang.String IPADDRESS
+    public static final java.lang.String ISCLIENT
+    public static final java.lang.String LOGINTIME
+    public static final java.lang.String NICKNAME
+    public static final java.lang.String ORDER
+    public static final java.lang.String SCORE
+    public static final java.lang.String SERVERIPADDRESS
+    57:57:public static android.os.Parcelable$Creator getCreator()
+    111:111:public java.lang.String getGender()
+    134:134:public java.lang.String getIpaddress()
+com.drawguess.net.MSGConst
+com.drawguess.net.MSGProtocol:
+    private static final java.lang.String ADDOBJECT
+    private static final java.lang.String ADDSTR
+    private static final java.lang.String ADDTYPE
+    private static final java.lang.String COMMANDNO
+    private static final java.lang.String ID
+    143:143:public int getId()
+    159:160:public void setAddObject(com.drawguess.msgbean.Entity)
+    163:164:public void setAddStr(java.lang.String)
+    167:168:public void setAddType(com.drawguess.net.MSGProtocol$ADDITION_TYPE)
+    171:172:public void setCommandNo(int)
+    175:176:public void setSenderIMEI(java.lang.String)
+com.drawguess.net.NetManage:
+    private static final java.lang.String TAG
+    90:91:public void addUdpListener(com.drawguess.interfaces.OnMsgRecListener)
+    104:105:public void removeUdpListener(com.drawguess.interfaces.OnMsgRecListener)
+    167:167:public com.drawguess.net.TcpClient getClient()
+    172:172:public com.drawguess.net.TcpServer getServer()
+    284:292:public void stopNet()
+com.drawguess.net.TcpClient:
+    private static final java.lang.String TAG
+    56:56:public java.lang.Thread getThread()
+    82:84:private TcpClient(android.content.Context)
+    95:109:public void stop()
+com.drawguess.net.TcpServer:
+    private static final java.lang.String TAG
+    49:49:public java.lang.Thread getThread()
+    53:53:public int getMsgId()
+    79:81:private TcpServer(android.content.Context)
+    95:101:public void stop()
+com.drawguess.net.UdpSocket:
+    private static final java.lang.String TAG
+    private static final java.lang.String BROADCASTIP
+    55:56:public void addMsgListener(com.drawguess.interfaces.OnMsgRecListener)
+    103:104:public void removeMsgListener(com.drawguess.interfaces.OnMsgRecListener)
+    214:215:public void sendUDPdata(int,java.net.InetAddress)
+    220:221:public void sendUDPdata(int,java.lang.String)
+com.drawguess.sql.DBHelper:
+    private static final int VERSION
+    private static final java.lang.String DBNAME
+    private static final java.lang.String T_NAME
+com.drawguess.sql.DBOperate:
+    50:51:public void dropTable()
+com.drawguess.sql.WordInfo:
+    26:27:public void setWord(byte[])
+    36:37:public void setKind(byte[])
+com.drawguess.util.DataUtils:
+    16:16:public DataUtils()
+    22:28:public static java.lang.String formatDate(android.content.Context,long)
+com.drawguess.util.EncryptUtils:
+    20:20:public EncryptUtils()
+    81:102:public static java.lang.String encryptMD5(java.lang.String)
+com.drawguess.util.ImageUtils:
+    14:14:public ImageUtils()
+com.drawguess.util.JsonUtils:
+    10:10:public JsonUtils()
+com.drawguess.util.LogUtils:
+    11:11:public LogUtils()
+    16:18:public static void d(java.lang.String,java.lang.String)
+    35:37:public static void v(java.lang.String,java.lang.String)
+    40:42:public static void w(java.lang.String,java.lang.String)
+    45:47:public static void wtf(java.lang.String,java.lang.String)
+com.drawguess.util.SdDataUtils:
+    private static final java.lang.String GlobalSharedName
+    38:38:public java.lang.String getIMEI()
+com.drawguess.util.SessionUtils:
+    13:13:public SessionUtils()
+    66:66:public static boolean getIsClient()
+    120:120:public static java.lang.String getServerIPaddress()
+    198:199:public static void setLocalUserID(int)
+    202:212:public static void setLocalUserInfo(com.drawguess.msgbean.User)
+    256:258:public static void updateUserInfo()
+com.drawguess.util.TextUtils:
+    12:12:public TextUtils()
+com.drawguess.util.TypeUtils:
+    14:14:public TypeUtils()
+com.drawguess.util.WifiUtils:
+    private static final java.lang.String TAG
+    37:37:public WifiUtils()
+    47:49:public static void addNetwork(android.net.wifi.WifiConfiguration)
+    52:53:public static void closeWifi()
+    172:173:public static void disconnectWifi(int)
+    210:228:public static java.lang.String getBroadcastAddress()
+    238:254:public static java.lang.String getGPRSLocalIPAddress()
+    263:266:public static java.lang.String getMacAddress()
+    270:273:public static int getNetworkId()
+    302:302:public static android.net.wifi.WifiInfo getWifiInfo()
+    358:362:public static void removeNetwork(int)
+com.drawguess.view.DrawView:
+    private static final java.lang.String TAG
+    405:405:public int getOpSize()
+com.drawguess.view.FrameAnimationController:
+    public static final int ANIMATION_FRAME_DURATION
+    private static final int MSG_ANIMATE
+    40:44:public static void requestFrameDelay(java.lang.Runnable,long)
+    46:47:private FrameAnimationController()
+com.drawguess.view.MultiListView:
+    private static final java.lang.String DATE_FORMAT_STR
+    private static final int DONE
+    private static final int ENDINT_AUTO_LOAD_DONE
+    private static final int ENDINT_LOADING
+    private static final int ENDINT_MANUAL_LOAD_DONE
+    private static final int LOADING
+    private static final int PULL_TO_REFRESH
+    private static final int RATIO
+    private static final int REFRESHING
+    private static final int RELEASE_TO_REFRESH
+    156:190:private void addFooterView()
+    379:379:public boolean isAutoLoadMore()
+    383:383:public boolean isCanLoadMore()
+    387:387:public boolean isCanRefresh()
+    391:391:public boolean isMoveToFirstItemAfterRefresh()
+    437:444:public void onLoadMoreComplete()
+    644:645:public void setAutoLoadMore(boolean)
+    648:652:public void setCanLoadMore(boolean)
+    655:656:public void setCanRefresh(boolean)
+    659:660:public void setMoveToFirstItemAfterRefresh(boolean)
+    663:670:public void setOnLoadListener(com.drawguess.view.MultiListView$OnLoadMoreListener)
+    80:80:static synthetic boolean access$0(com.drawguess.view.MultiListView)
+    83:83:static synthetic boolean access$1(com.drawguess.view.MultiListView)
+    98:98:static synthetic int access$2(com.drawguess.view.MultiListView)
+    113:113:static synthetic int access$3(com.drawguess.view.MultiListView)
+    98:98:static synthetic void access$4(com.drawguess.view.MultiListView,int)
+    421:421:static synthetic void access$5(com.drawguess.view.MultiListView)
+com.drawguess.view.MultiListView$1
+com.drawguess.view.SettingSwitchButton:
+    379:380:void setOnCheckedChangeWidgetListener(android.widget.CompoundButton$OnCheckedChangeListener)
+com.drawguess.wifiap.WifiApConst
+com.squareup.picasso.AssetRequestHandler:
+    protected static final java.lang.String ANDROID_ASSET
+com.squareup.picasso.Cache:
+    public abstract void clear()
+    public abstract void clearKeyUri(java.lang.String)
+com.squareup.picasso.Cache$1:
+    65:65:public void clear()
+    68:68:public void clearKeyUri(java.lang.String)
+com.squareup.picasso.Callback$EmptyCallback
+com.squareup.picasso.ContactsPhotoRequestHandler:
+    private static final int ID_LOOKUP
+    private static final int ID_THUMBNAIL
+    private static final int ID_CONTACT
+    private static final int ID_DISPLAY_PHOTO
+com.squareup.picasso.ContactsPhotoRequestHandler$ContactPhotoStreamIcs:
+    99:99:private ContactsPhotoRequestHandler$ContactPhotoStreamIcs()
+com.squareup.picasso.DeferredRequestCreator:
+    30:31:DeferredRequestCreator(com.squareup.picasso.RequestCreator,android.widget.ImageView)
+com.squareup.picasso.Dispatcher:
+    private static final int RETRY_DELAY
+    private static final int AIRPLANE_MODE_ON
+    private static final int AIRPLANE_MODE_OFF
+    static final int REQUEST_SUBMIT
+    static final int REQUEST_CANCEL
+    static final int REQUEST_GCED
+    static final int HUNTER_COMPLETE
+    static final int HUNTER_RETRY
+    static final int HUNTER_DECODE_FAILED
+    static final int HUNTER_DELAY_NEXT_BATCH
+    static final int HUNTER_BATCH_COMPLETE
+    static final int NETWORK_STATE_CHANGE
+    static final int AIRPLANE_MODE_CHANGE
+    static final int TAG_PAUSE
+    static final int TAG_RESUME
+    static final int REQUEST_BATCH_RESUME
+    private static final java.lang.String DISPATCHER_THREAD_NAME
+    private static final int BATCH_DELAY
+    123:134:void shutdown()
+    145:146:void dispatchPauseTag(java.lang.Object)
+    149:150:void dispatchResumeTag(java.lang.Object)
+com.squareup.picasso.Dispatcher$1
+com.squareup.picasso.Dispatcher$NetworkBroadcastReceiver:
+    static final java.lang.String EXTRA_AIRPLANE_STATE
+    562:563:void unregister()
+com.squareup.picasso.Downloader:
+    public abstract void shutdown()
+com.squareup.picasso.Downloader$Response:
+    70:78:public Downloader$Response(android.graphics.Bitmap,boolean)
+    89:90:public Downloader$Response(java.io.InputStream,boolean)
+    104:105:public Downloader$Response(android.graphics.Bitmap,boolean,long)
+com.squareup.picasso.FetchAction
+com.squareup.picasso.GetAction
+com.squareup.picasso.LruCache:
+    113:114:public final void evictAll()
+    125:126:public final synchronized void clear()
+    129:145:public final synchronized void clearKeyUri(java.lang.String)
+    149:149:public final synchronized int hitCount()
+    154:154:public final synchronized int missCount()
+    159:159:public final synchronized int putCount()
+    164:164:public final synchronized int evictionCount()
+com.squareup.picasso.MarkableInputStream:
+    private static final int DEFAULT_BUFFER_SIZE
+com.squareup.picasso.NetworkRequestHandler:
+    static final int RETRY_COUNT
+    private static final java.lang.String SCHEME_HTTP
+    private static final java.lang.String SCHEME_HTTPS
+com.squareup.picasso.OkHttpDownloader:
+    65:66:public OkHttpDownloader(android.content.Context,long)
+    92:92:protected final com.squareup.okhttp.OkHttpClient getClient()
+    132:139:public void shutdown()
+com.squareup.picasso.Picasso:
+    static final java.lang.String TAG
+    210:211:public void cancelRequest(com.squareup.picasso.Target)
+    218:219:public void cancelRequest(android.widget.RemoteViews,int)
+    228:237:public void cancelTag(java.lang.Object)
+    247:248:public void pauseTag(java.lang.Object)
+    258:259:public void resumeTag(java.lang.Object)
+    272:272:public com.squareup.picasso.RequestCreator load(android.net.Uri)
+    292:298:public com.squareup.picasso.RequestCreator load(java.lang.String)
+    315:318:public com.squareup.picasso.RequestCreator load(java.io.File)
+    342:346:public void invalidate(android.net.Uri)
+    356:360:public void invalidate(java.lang.String)
+    369:373:public void invalidate(java.io.File)
+    381:381:public boolean isDebugging()
+    391:392:public void setDebugging(boolean)
+    396:397:public void setIndicatorsEnabled(boolean)
+    401:401:public boolean areIndicatorsEnabled()
+    412:413:public void setLoggingEnabled(boolean)
+    417:417:public boolean isLoggingEnabled()
+    427:427:public com.squareup.picasso.StatsSnapshot getSnapshot()
+    432:447:public void shutdown()
+    656:662:public static void setSingletonInstance(com.squareup.picasso.Picasso)
+com.squareup.picasso.Picasso$Builder:
+    692:696:public com.squareup.picasso.Picasso$Builder defaultBitmapConfig(android.graphics.Bitmap$Config)
+    701:708:public com.squareup.picasso.Picasso$Builder downloader(com.squareup.picasso.Downloader)
+    717:724:public com.squareup.picasso.Picasso$Builder executor(java.util.concurrent.ExecutorService)
+    729:736:public com.squareup.picasso.Picasso$Builder memoryCache(com.squareup.picasso.Cache)
+    741:748:public com.squareup.picasso.Picasso$Builder listener(com.squareup.picasso.Picasso$Listener)
+    758:765:public com.squareup.picasso.Picasso$Builder requestTransformer(com.squareup.picasso.Picasso$RequestTransformer)
+    770:780:public com.squareup.picasso.Picasso$Builder addRequestHandler(com.squareup.picasso.RequestHandler)
+    788:788:public com.squareup.picasso.Picasso$Builder debugging(boolean)
+    793:794:public com.squareup.picasso.Picasso$Builder indicatorsEnabled(boolean)
+    804:805:public com.squareup.picasso.Picasso$Builder loggingEnabled(boolean)
+com.squareup.picasso.Picasso$CleanupThread:
+    617:618:void shutdown()
+com.squareup.picasso.PicassoDrawable:
+    private static final float FADE_DURATION
+com.squareup.picasso.PicassoExecutorService:
+    private static final int DEFAULT_THREAD_COUNT
+com.squareup.picasso.RemoteViewsAction
+com.squareup.picasso.RemoteViewsAction$AppWidgetAction
+com.squareup.picasso.RemoteViewsAction$NotificationAction
+com.squareup.picasso.RemoteViewsAction$RemoteViewsTarget
+com.squareup.picasso.Request:
+    187:187:public com.squareup.picasso.Request$Builder buildUpon()
+com.squareup.picasso.Request$Builder:
+    209:211:public Request$Builder(android.net.Uri)
+    214:216:public Request$Builder(int)
+    224:242:private Request$Builder(com.squareup.picasso.Request)
+    253:253:boolean hasPriority()
+    262:267:public com.squareup.picasso.Request$Builder setUri(android.net.Uri)
+    276:281:public com.squareup.picasso.Request$Builder setResourceId(int)
+    289:290:public com.squareup.picasso.Request$Builder stableKey(java.lang.String)
+    314:318:public com.squareup.picasso.Request$Builder clearResize()
+    327:331:public com.squareup.picasso.Request$Builder centerCrop()
+    336:337:public com.squareup.picasso.Request$Builder clearCenterCrop()
+    345:349:public com.squareup.picasso.Request$Builder centerInside()
+    354:355:public com.squareup.picasso.Request$Builder clearCenterInside()
+    363:367:public com.squareup.picasso.Request$Builder onlyScaleDown()
+    372:373:public com.squareup.picasso.Request$Builder clearOnlyScaleDown()
+    378:379:public com.squareup.picasso.Request$Builder rotate(float)
+    384:388:public com.squareup.picasso.Request$Builder rotate(float,float,float)
+    393:397:public com.squareup.picasso.Request$Builder clearRotation()
+    402:403:public com.squareup.picasso.Request$Builder config(android.graphics.Bitmap$Config)
+    408:415:public com.squareup.picasso.Request$Builder priority(com.squareup.picasso.Picasso$Priority)
+    424:434:public com.squareup.picasso.Request$Builder transform(com.squareup.picasso.Transformation)
+    191:191:synthetic Request$Builder(com.squareup.picasso.Request,com.squareup.picasso.Request$1)
+com.squareup.picasso.RequestCreator:
+    90:97:public com.squareup.picasso.RequestCreator noPlaceholder()
+    106:116:public com.squareup.picasso.RequestCreator placeholder(int)
+    128:135:public com.squareup.picasso.RequestCreator placeholder(android.graphics.drawable.Drawable)
+    140:147:public com.squareup.picasso.RequestCreator error(int)
+    152:159:public com.squareup.picasso.RequestCreator error(android.graphics.drawable.Drawable)
+    181:188:public com.squareup.picasso.RequestCreator tag(java.lang.Object)
+    198:199:public com.squareup.picasso.RequestCreator fit()
+    210:213:public com.squareup.picasso.RequestCreator resizeDimen(int,int)
+    228:229:public com.squareup.picasso.RequestCreator centerCrop()
+    237:238:public com.squareup.picasso.RequestCreator centerInside()
+    246:247:public com.squareup.picasso.RequestCreator onlyScaleDown()
+    252:253:public com.squareup.picasso.RequestCreator rotate(float)
+    258:259:public com.squareup.picasso.RequestCreator rotate(float,float,float)
+    269:270:public com.squareup.picasso.RequestCreator config(android.graphics.Bitmap$Config)
+    278:279:public com.squareup.picasso.RequestCreator stableKey(java.lang.String)
+    290:291:public com.squareup.picasso.RequestCreator priority(com.squareup.picasso.Picasso$Priority)
+    301:302:public com.squareup.picasso.RequestCreator transform(com.squareup.picasso.Transformation)
+    309:309:public com.squareup.picasso.RequestCreator skipMemoryCache()
+    317:332:public varargs com.squareup.picasso.RequestCreator memoryPolicy(com.squareup.picasso.MemoryPolicy,com.squareup.picasso.MemoryPolicy[])
+    340:355:public varargs com.squareup.picasso.RequestCreator networkPolicy(com.squareup.picasso.NetworkPolicy,com.squareup.picasso.NetworkPolicy[])
+    360:361:public com.squareup.picasso.RequestCreator noFade()
+    371:385:public android.graphics.Bitmap get()
+    395:396:public void fetch()
+    408:436:public void fetch(com.squareup.picasso.Callback)
+    484:518:public void into(com.squareup.picasso.Target)
+    526:550:public void into(android.widget.RemoteViews,int,int,android.app.Notification)
+    557:581:public void into(android.widget.RemoteViews,int,int[])
+    699:712:private void performRemoteViewInto(com.squareup.picasso.RemoteViewsAction)
+com.squareup.picasso.Stats:
+    private static final int CACHE_HIT
+    private static final int CACHE_MISS
+    private static final int BITMAP_DECODE_FINISHED
+    private static final int BITMAP_TRANSFORMED_FINISHED
+    private static final int DOWNLOAD_FINISHED
+    private static final java.lang.String STATS_THREAD_NAME
+    79:80:void shutdown()
+com.squareup.picasso.StatsSnapshot:
+    64:67:public void dump()
+com.squareup.picasso.Target
+com.squareup.picasso.TargetAction
+com.squareup.picasso.UrlConnectionDownloader:
+    static final java.lang.String RESPONSE_SOURCE
+    private static final java.lang.String FORCE_CACHE
+    107:110:public void shutdown()
+com.squareup.picasso.UrlConnectionDownloader$ResponseCacheIcs:
+    126:126:private UrlConnectionDownloader$ResponseCacheIcs()
+    139:142:static void close(java.lang.Object)
+com.squareup.picasso.Utils:
+    static final java.lang.String THREAD_PREFIX
+    static final java.lang.String THREAD_IDLE_NAME
+    static final int DEFAULT_READ_TIMEOUT_MILLIS
+    static final int DEFAULT_WRITE_TIMEOUT_MILLIS
+    static final int DEFAULT_CONNECT_TIMEOUT_MILLIS
+    private static final java.lang.String PICASSO_CACHE
+    private static final int KEY_PADDING
+    private static final int MIN_DISK_CACHE_SIZE
+    private static final int MAX_DISK_CACHE_SIZE
+    static final char KEY_SEPARATOR
+    static final java.lang.String OWNER_MAIN
+    static final java.lang.String OWNER_DISPATCHER
+    static final java.lang.String OWNER_HUNTER
+    static final java.lang.String VERB_CREATED
+    static final java.lang.String VERB_CHANGED
+    static final java.lang.String VERB_IGNORED
+    static final java.lang.String VERB_ENQUEUED
+    static final java.lang.String VERB_CANCELED
+    static final java.lang.String VERB_BATCHED
+    static final java.lang.String VERB_RETRYING
+    static final java.lang.String VERB_EXECUTING
+    static final java.lang.String VERB_DECODED
+    static final java.lang.String VERB_TRANSFORMED
+    static final java.lang.String VERB_JOINED
+    static final java.lang.String VERB_REMOVED
+    static final java.lang.String VERB_DELIVERED
+    static final java.lang.String VERB_REPLAYING
+    static final java.lang.String VERB_COMPLETED
+    static final java.lang.String VERB_ERRORED
+    static final java.lang.String VERB_PAUSED
+    static final java.lang.String VERB_RESUMED
+    private static final int WEBP_FILE_HEADER_SIZE
+    private static final java.lang.String WEBP_FILE_HEADER_RIFF
+    private static final java.lang.String WEBP_FILE_HEADER_WEBP
+    101:103:private Utils()
+    126:129:static void checkNotMain()
+com.squareup.picasso.Utils$ActivityManagerHoneycomb:
+    374:374:private Utils$ActivityManagerHoneycomb()
+com.squareup.picasso.Utils$BitmapHoneycombMR1:
+    399:399:private Utils$BitmapHoneycombMR1()
+com.squareup.picasso.Utils$OkHttpLoaderCreator:
+    405:405:private Utils$OkHttpLoaderCreator()

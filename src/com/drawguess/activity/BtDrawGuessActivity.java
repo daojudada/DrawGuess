@@ -22,17 +22,10 @@ import com.drawguess.dialog.ColorDialog;
 import com.drawguess.dialog.PaintDialog;
 import com.drawguess.dialog.ShapeDialog;
 import com.drawguess.drawop.OpDraw.Shape;
-import com.drawguess.interfaces.ColorChangedListener;
-import com.drawguess.interfaces.MSGListener;
-import com.drawguess.interfaces.PaintChangedListener;
-import com.drawguess.interfaces.ShapeChangedListener;
-import com.drawguess.msgbean.DataDraw;
-import com.drawguess.msgbean.DataDraw.OP_TYPE;
-import com.drawguess.msgbean.DataDraw.TOUCH_TYPE;
-import com.drawguess.msgbean.Users;
-import com.drawguess.util.LogUtils;
+import com.drawguess.interfaces.OnColorChangedListener;
+import com.drawguess.interfaces.OnPaintChangedListener;
+import com.drawguess.interfaces.OnShapeChangedListener;
 import com.drawguess.util.SessionUtils;
-import com.drawguess.util.TypeUtils;
 import com.drawguess.view.DrawView;
 
 public class BtDrawGuessActivity extends BaseActivity implements OnClickListener{
@@ -245,7 +238,7 @@ public class BtDrawGuessActivity extends BaseActivity implements OnClickListener
 			break;
 		case R.id.shape:
 			//形状选择,点击后对话框
-			new ShapeDialog(this, new ShapeChangedListener() {
+			new ShapeDialog(this, new OnShapeChangedListener() {
 				@Override
 				public void shapeChanged(int shape) {
 					switch(shape)
@@ -368,7 +361,7 @@ public class BtDrawGuessActivity extends BaseActivity implements OnClickListener
 			//填充
 			else{
 				//颜色设置，对话框
-				new ColorDialog(this, mDrawView.getPaintColor(), "color", new ColorChangedListener() {
+				new ColorDialog(this, mDrawView.getPaintColor(), "color", new OnColorChangedListener() {
 					@Override
 					public void colorChanged(int color) {
 						mDrawView.setPaintColor(color);
@@ -381,7 +374,7 @@ public class BtDrawGuessActivity extends BaseActivity implements OnClickListener
 		case R.id.paint:
 			//画笔设置，对话框
 			new PaintDialog(this, mDrawView.getPaintWidth(), mDrawView.getPaintAlpha(), mDrawView.getPaintStyle(),mDrawView.getPaintColor(),
-					new PaintChangedListener(){
+					new OnPaintChangedListener(){
 						@Override
 						public void paintChanged(int width, int alpha, int style) {
 							mDrawView.setPaintWidth(width);

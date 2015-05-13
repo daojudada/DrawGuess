@@ -1,0 +1,2793 @@
+com.alibaba.fastjson.JSON -> com.a.a.a:
+    java.lang.String DEFAULT_TYPE_KEY -> a
+    int DEFAULT_PARSER_FEATURE -> b
+    java.lang.String DEFFAULT_DATE_FORMAT -> c
+    int DEFAULT_GENERATE_FEATURE -> d
+    java.lang.Object parseObject(java.lang.String,java.lang.Class) -> a
+    java.lang.String toJSONString(java.lang.Object) -> a
+    java.lang.String toJSONString(java.lang.Object,com.alibaba.fastjson.serializer.SerializerFeature[]) -> a
+    java.lang.String toString() -> toString
+    java.lang.String toJSONString() -> a
+    void writeJSONString(java.lang.Appendable) -> a
+com.alibaba.fastjson.JSONArray -> com.a.a.b:
+    java.util.List list -> g
+    java.lang.Object relatedArray -> e
+    java.lang.reflect.Type componentType -> f
+    java.lang.Object getRelatedArray() -> b
+    void setRelatedArray(java.lang.Object) -> b
+    java.lang.reflect.Type getComponentType() -> c
+    void setComponentType(java.lang.reflect.Type) -> a
+    int size() -> size
+    boolean isEmpty() -> isEmpty
+    boolean contains(java.lang.Object) -> contains
+    java.util.Iterator iterator() -> iterator
+    java.lang.Object[] toArray() -> toArray
+    java.lang.Object[] toArray(java.lang.Object[]) -> toArray
+    boolean add(java.lang.Object) -> add
+    boolean remove(java.lang.Object) -> remove
+    boolean containsAll(java.util.Collection) -> containsAll
+    boolean addAll(java.util.Collection) -> addAll
+    boolean addAll(int,java.util.Collection) -> addAll
+    boolean removeAll(java.util.Collection) -> removeAll
+    boolean retainAll(java.util.Collection) -> retainAll
+    void clear() -> clear
+    java.lang.Object set(int,java.lang.Object) -> set
+    void add(int,java.lang.Object) -> add
+    java.lang.Object remove(int) -> remove
+    int indexOf(java.lang.Object) -> indexOf
+    int lastIndexOf(java.lang.Object) -> lastIndexOf
+    java.util.ListIterator listIterator() -> listIterator
+    java.util.ListIterator listIterator(int) -> listIterator
+    java.util.List subList(int,int) -> subList
+    java.lang.Object get(int) -> get
+    java.lang.Integer getInteger(int) -> a
+    java.lang.Long getLong(int) -> b
+    java.lang.Object clone() -> clone
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+com.alibaba.fastjson.JSONAware -> com.a.a.c:
+    java.lang.String toJSONString() -> a
+com.alibaba.fastjson.JSONException -> com.a.a.d:
+com.alibaba.fastjson.JSONObject -> com.a.a.e:
+    java.util.Map map -> e
+    int size() -> size
+    boolean isEmpty() -> isEmpty
+    boolean containsKey(java.lang.Object) -> containsKey
+    boolean containsValue(java.lang.Object) -> containsValue
+    java.lang.Object get(java.lang.Object) -> get
+    void putAll(java.util.Map) -> putAll
+    void clear() -> clear
+    java.lang.Object remove(java.lang.Object) -> remove
+    java.util.Set keySet() -> keySet
+    java.util.Collection values() -> values
+    java.util.Set entrySet() -> entrySet
+    java.lang.Object clone() -> clone
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+    java.lang.Object invoke(java.lang.Object,java.lang.reflect.Method,java.lang.Object[]) -> invoke
+    java.lang.Object put(java.lang.Object,java.lang.Object) -> put
+com.alibaba.fastjson.JSONStreamAware -> com.a.a.f:
+    void writeJSONString(java.lang.Appendable) -> a
+com.alibaba.fastjson.annotation.JSONCreator -> com.a.a.a.a:
+com.alibaba.fastjson.annotation.JSONField -> com.a.a.a.b:
+    java.lang.String name() -> a
+    java.lang.String format() -> b
+    boolean serialize() -> c
+    boolean deserialize() -> d
+    com.alibaba.fastjson.serializer.SerializerFeature[] serialzeFeatures() -> e
+com.alibaba.fastjson.annotation.JSONType -> com.a.a.a.c:
+    java.lang.String[] orders() -> a
+    java.lang.String[] ignores() -> b
+    java.lang.Class mappingTo() -> c
+com.alibaba.fastjson.parser.AbstractJSONParser -> com.a.a.b.a:
+com.alibaba.fastjson.parser.CharTypes -> com.a.a.b.b:
+    char[] digits -> a
+    boolean[] firstIdentifierFlags -> b
+    boolean[] identifierFlags -> c
+    boolean[] specicalFlags_doubleQuotes -> d
+    boolean[] specicalFlags_singleQuotes -> e
+    char[] replaceChars -> f
+    char[] ASCII_CHARS -> g
+com.alibaba.fastjson.parser.DefaultJSONParser -> com.a.a.b.c:
+    java.lang.Object input -> a
+    com.alibaba.fastjson.parser.SymbolTable symbolTable -> b
+    com.alibaba.fastjson.parser.ParserConfig config -> c
+    java.util.Set primitiveClasses -> f
+    java.lang.String dateFormatPattern -> g
+    java.text.DateFormat dateFormat -> h
+    com.alibaba.fastjson.parser.JSONLexer lexer -> d
+    com.alibaba.fastjson.parser.ParseContext context -> e
+    com.alibaba.fastjson.parser.ParseContext[] contextArray -> i
+    int contextArrayIndex -> j
+    java.util.List resolveTaskList -> k
+    int resolveStatus -> l
+    java.text.DateFormat getDateFormat() -> a
+    com.alibaba.fastjson.parser.SymbolTable getSymbolTable() -> b
+    java.lang.Object parseObject(java.util.Map,java.lang.Object) -> a
+    com.alibaba.fastjson.parser.ParserConfig getConfig() -> c
+    java.lang.Object parseObject(java.lang.Class) -> a
+    java.lang.Object parseObject(java.lang.reflect.Type) -> a
+    void parseArray(java.lang.reflect.Type,java.util.Collection) -> a
+    void parseArray(java.lang.reflect.Type,java.util.Collection,java.lang.Object) -> a
+    int getResolveStatus() -> d
+    void setResolveStatus(int) -> a
+    java.lang.Object getObject(java.lang.String) -> a
+    void checkListResolve(java.util.Collection) -> a
+    void checkMapResolve(java.util.Map,java.lang.String) -> a
+    com.alibaba.fastjson.JSONObject parseObject() -> e
+    void parseArray(java.util.Collection) -> b
+    void parseArray(java.util.Collection,java.lang.Object) -> a
+    com.alibaba.fastjson.parser.ParseContext getContext() -> f
+    java.util.List getResolveTaskList() -> g
+    void addResolveTask(com.alibaba.fastjson.parser.DefaultJSONParser$ResolveTask) -> a
+    com.alibaba.fastjson.parser.DefaultJSONParser$ResolveTask getLastResolveTask() -> h
+    void setContext(com.alibaba.fastjson.parser.ParseContext) -> a
+    void popContext() -> i
+    com.alibaba.fastjson.parser.ParseContext setContext(java.lang.Object,java.lang.Object) -> a
+    com.alibaba.fastjson.parser.ParseContext setContext(com.alibaba.fastjson.parser.ParseContext,java.lang.Object,java.lang.Object) -> a
+    java.lang.Object parse() -> j
+    java.lang.Object parse(java.lang.Object) -> a
+    boolean isEnabled(com.alibaba.fastjson.parser.Feature) -> a
+    com.alibaba.fastjson.parser.JSONLexer getLexer() -> k
+    void accept(int) -> b
+    void close() -> close
+com.alibaba.fastjson.parser.DefaultJSONParser$ResolveTask -> com.a.a.b.d:
+    com.alibaba.fastjson.parser.ParseContext context -> a
+    java.lang.String referenceValue -> b
+    com.alibaba.fastjson.parser.deserializer.FieldDeserializer fieldDeserializer -> c
+    com.alibaba.fastjson.parser.ParseContext ownerContext -> d
+    com.alibaba.fastjson.parser.ParseContext getContext() -> a
+    java.lang.String getReferenceValue() -> b
+    com.alibaba.fastjson.parser.deserializer.FieldDeserializer getFieldDeserializer() -> c
+    void setFieldDeserializer(com.alibaba.fastjson.parser.deserializer.FieldDeserializer) -> a
+    com.alibaba.fastjson.parser.ParseContext getOwnerContext() -> d
+    void setOwnerContext(com.alibaba.fastjson.parser.ParseContext) -> a
+com.alibaba.fastjson.parser.Feature -> com.a.a.b.e:
+    com.alibaba.fastjson.parser.Feature AutoCloseSource -> a
+    com.alibaba.fastjson.parser.Feature AllowComment -> b
+    com.alibaba.fastjson.parser.Feature AllowUnQuotedFieldNames -> c
+    com.alibaba.fastjson.parser.Feature AllowSingleQuotes -> d
+    com.alibaba.fastjson.parser.Feature InternFieldNames -> e
+    com.alibaba.fastjson.parser.Feature AllowISO8601DateFormat -> f
+    com.alibaba.fastjson.parser.Feature AllowArbitraryCommas -> g
+    com.alibaba.fastjson.parser.Feature UseBigDecimal -> h
+    com.alibaba.fastjson.parser.Feature IgnoreNotMatch -> i
+    com.alibaba.fastjson.parser.Feature SortFeidFastMatch -> j
+    com.alibaba.fastjson.parser.Feature DisableASM -> k
+    com.alibaba.fastjson.parser.Feature DisableCircularReferenceDetect -> l
+    com.alibaba.fastjson.parser.Feature InitStringFieldAsEmpty -> m
+    int mask -> n
+    com.alibaba.fastjson.parser.Feature[] $VALUES -> o
+    com.alibaba.fastjson.parser.Feature[] values() -> values
+    com.alibaba.fastjson.parser.Feature valueOf(java.lang.String) -> valueOf
+    int getMask() -> a
+    boolean isEnabled(int,com.alibaba.fastjson.parser.Feature) -> a
+    int config$430ef7dc(int,com.alibaba.fastjson.parser.Feature) -> b
+com.alibaba.fastjson.parser.JSONLexer -> com.a.a.b.f:
+    int token -> a
+    int pos -> b
+    int features -> c
+    char ch -> d
+    int bp -> e
+    int eofPos -> f
+    char[] sbuf -> g
+    int sp -> h
+    int np -> i
+    boolean hasSpecial -> j
+    java.util.Calendar calendar -> k
+    java.lang.ThreadLocal SBUF_REF_LOCAL -> p
+    com.alibaba.fastjson.parser.Keywords keywods -> l
+    char[] typeFieldName -> m
+    boolean[] whitespaceFlags -> n
+    int[] digits -> o
+    void nextToken() -> a
+    void nextToken(int) -> a
+    void nextTokenWithColon() -> b
+    int token() -> c
+    java.lang.String tokenName() -> d
+    int pos() -> e
+    int getBufferPosition() -> f
+    java.lang.Number integerValue() -> g
+    void nextTokenWithColon(int) -> b
+    float floatValue() -> h
+    boolean isEnabled(com.alibaba.fastjson.parser.Feature) -> a
+    java.lang.String numberString() -> i
+    boolean isEOF() -> j
+    char getCurrent() -> k
+    char charAt(int) -> c
+    char next() -> l
+    java.lang.String scanSymbol(com.alibaba.fastjson.parser.SymbolTable) -> a
+    void arrayCopy$100ea9ea(int,char[],int) -> a
+    java.lang.String scanSymbol(com.alibaba.fastjson.parser.SymbolTable,char) -> a
+    void resetStringPosition() -> m
+    java.lang.String scanSymbolUnQuoted(com.alibaba.fastjson.parser.SymbolTable) -> b
+    void copyTo(int,int,char[]) -> a
+    void scanString() -> n
+    java.util.Calendar getCalendar() -> o
+    int intValue() -> p
+    byte[] bytesValue() -> q
+    void close() -> close
+    boolean isRef() -> r
+    java.lang.String addSymbol(int,int,int,com.alibaba.fastjson.parser.SymbolTable) -> a
+    java.lang.String stringVal() -> s
+    boolean isBlankInput() -> t
+    void skipWhitespace() -> u
+    void putChar(char) -> a
+    void scanNumber() -> v
+    long longValue() -> w
+    java.lang.Number decimalValue(boolean) -> a
+    java.math.BigDecimal decimalValue() -> x
+    java.lang.Number numberValue() -> y
+    boolean isWhitespace(char) -> b
+com.alibaba.fastjson.parser.JSONScanner -> com.a.a.b.g:
+    java.lang.String text -> s
+    int ISO8601_LEN_0 -> p
+    int ISO8601_LEN_1 -> q
+    int ISO8601_LEN_2 -> r
+    char charAt(int) -> c
+    char next() -> l
+    void copyTo(int,int,char[]) -> a
+    java.lang.String addSymbol(int,int,int,com.alibaba.fastjson.parser.SymbolTable) -> a
+    byte[] bytesValue() -> q
+    void arrayCopy$100ea9ea(int,char[],int) -> a
+    java.lang.String stringVal() -> s
+    java.lang.String numberString() -> i
+    boolean scanISO8601DateIfMatch() -> z
+    boolean scanISO8601DateIfMatch(boolean) -> b
+    boolean checkTime(char,char,char,char,char,char) -> a
+    void setCalendar(char,char,char,char,char,char,char,char) -> a
+    boolean checkDate(char,char,char,char,char,char,int,int) -> a
+    boolean isEOF() -> j
+com.alibaba.fastjson.parser.JSONToken -> com.a.a.b.h:
+    java.lang.String name(int) -> a
+com.alibaba.fastjson.parser.Keywords -> com.a.a.b.i:
+    java.util.Map keywords -> b
+    com.alibaba.fastjson.parser.Keywords DEFAULT_KEYWORDS -> a
+    java.lang.Integer getKeyword(java.lang.String) -> a
+com.alibaba.fastjson.parser.ParseContext -> com.a.a.b.j:
+    java.lang.Object object -> a
+    com.alibaba.fastjson.parser.ParseContext parent -> b
+    java.lang.Object fieldName -> c
+    java.lang.reflect.Type type -> d
+    java.lang.reflect.Type getType() -> a
+    void setType(java.lang.reflect.Type) -> a
+    java.lang.Object getObject() -> b
+    void setObject(java.lang.Object) -> a
+    com.alibaba.fastjson.parser.ParseContext getParentContext() -> c
+    java.lang.String getPath() -> d
+    java.lang.String toString() -> toString
+com.alibaba.fastjson.parser.ParserConfig -> com.a.a.b.k:
+    java.util.Set primitiveClasses -> b
+    com.alibaba.fastjson.parser.ParserConfig global -> c
+    com.alibaba.fastjson.util.IdentityHashMap derializers -> d
+    com.alibaba.fastjson.parser.SymbolTable symbolTable -> a
+    com.alibaba.fastjson.parser.ParserConfig getGlobalInstance() -> a
+    com.alibaba.fastjson.parser.SymbolTable getSymbolTable() -> b
+    com.alibaba.fastjson.parser.deserializer.ObjectDeserializer getDeserializer(java.lang.reflect.Type) -> a
+    com.alibaba.fastjson.parser.deserializer.ObjectDeserializer getDeserializer(java.lang.Class,java.lang.reflect.Type) -> a
+    com.alibaba.fastjson.parser.deserializer.FieldDeserializer createFieldDeserializer(com.alibaba.fastjson.parser.ParserConfig,java.lang.Class,com.alibaba.fastjson.util.FieldInfo) -> a
+    com.alibaba.fastjson.parser.deserializer.ObjectDeserializer getDeserializer(com.alibaba.fastjson.util.FieldInfo) -> a
+    java.lang.reflect.Field getField(java.lang.Class,java.lang.String) -> a
+    java.lang.reflect.Field getField0(java.lang.Class,java.lang.String) -> b
+    java.util.Map getFieldDeserializers(java.lang.Class) -> a
+com.alibaba.fastjson.parser.SymbolTable -> com.a.a.b.l:
+    com.alibaba.fastjson.parser.SymbolTable$Entry[] buckets -> a
+    java.lang.String[] symbols -> b
+    char[][] symbols_char -> c
+    int indexMask -> d
+    int size -> e
+    java.lang.String addSymbol$157f2566(char[],int,int) -> a
+    java.lang.String addSymbol(java.lang.String,int,int,int) -> a
+com.alibaba.fastjson.parser.SymbolTable$Entry -> com.a.a.b.m:
+    java.lang.String symbol -> a
+    int hashCode -> b
+    char[] characters -> c
+    byte[] bytes -> d
+    com.alibaba.fastjson.parser.SymbolTable$Entry next -> e
+com.alibaba.fastjson.parser.deserializer.AbstractDateDeserializer -> com.a.a.b.a.a:
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    java.lang.Object cast$61c37781(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.Object) -> a
+com.alibaba.fastjson.parser.deserializer.ArrayDeserializer -> com.a.a.b.a.b:
+    com.alibaba.fastjson.parser.deserializer.ArrayDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    java.lang.Object toObjectArray(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.Class,com.alibaba.fastjson.JSONArray) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.ArrayListTypeFieldDeserializer -> com.a.a.b.a.c:
+    java.lang.reflect.Type itemType -> c
+    int itemFastMatchToken -> d
+    com.alibaba.fastjson.parser.deserializer.ObjectDeserializer deserializer -> e
+    int getFastMatchToken() -> a
+    void parseField(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.Object,java.lang.reflect.Type,java.util.Map) -> a
+    void parseArray(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.util.Collection) -> a
+com.alibaba.fastjson.parser.deserializer.BigDecimalDeserializer -> com.a.a.b.a.d:
+    com.alibaba.fastjson.parser.deserializer.BigDecimalDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.BigIntegerDeserializer -> com.a.a.b.a.e:
+    com.alibaba.fastjson.parser.deserializer.BigIntegerDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.BooleanDeserializer -> com.a.a.b.a.f:
+    com.alibaba.fastjson.parser.deserializer.BooleanDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.BooleanFieldDeserializer -> com.a.a.b.a.g:
+    void parseField(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.Object,java.lang.reflect.Type,java.util.Map) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.CalendarDeserializer -> com.a.a.b.a.h:
+    com.alibaba.fastjson.parser.deserializer.CalendarDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.CharArrayDeserializer -> com.a.a.b.a.i:
+    com.alibaba.fastjson.parser.deserializer.CharArrayDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.CharacterDeserializer -> com.a.a.b.a.j:
+    com.alibaba.fastjson.parser.deserializer.CharacterDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.CharsetDeserializer -> com.a.a.b.a.k:
+    com.alibaba.fastjson.parser.deserializer.CharsetDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.ClassDerializer -> com.a.a.b.a.l:
+    com.alibaba.fastjson.parser.deserializer.ClassDerializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.CollectionDeserializer -> com.a.a.b.a.m:
+    com.alibaba.fastjson.parser.deserializer.CollectionDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.DateDeserializer -> com.a.a.b.a.n:
+    com.alibaba.fastjson.parser.deserializer.DateDeserializer instance -> a
+    java.lang.Object cast$61c37781(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.DateFormatDeserializer -> com.a.a.b.a.o:
+    com.alibaba.fastjson.parser.deserializer.DateFormatDeserializer instance -> a
+    java.lang.Object cast$61c37781(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.DefaultFieldDeserializer -> com.a.a.b.a.p:
+    com.alibaba.fastjson.parser.deserializer.ObjectDeserializer fieldValueDeserilizer -> c
+    void parseField(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.Object,java.lang.reflect.Type,java.util.Map) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.EnumDeserializer -> com.a.a.b.a.q:
+    java.lang.Class enumClass -> a
+    java.util.Map ordinalMap -> b
+    java.util.Map nameMap -> c
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.FieldDeserializer -> com.a.a.b.a.r:
+    com.alibaba.fastjson.util.FieldInfo fieldInfo -> a
+    java.lang.Class clazz -> b
+    java.lang.reflect.Method getMethod() -> b
+    java.lang.reflect.Field getField() -> c
+    java.lang.Class getFieldClass() -> d
+    java.lang.reflect.Type getFieldType() -> e
+    void parseField(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.Object,java.lang.reflect.Type,java.util.Map) -> a
+    int getFastMatchToken() -> a
+    void setValue(java.lang.Object,boolean) -> a
+    void setValue(java.lang.Object,java.lang.Object) -> a
+com.alibaba.fastjson.parser.deserializer.FileDeserializer -> com.a.a.b.a.s:
+    com.alibaba.fastjson.parser.deserializer.FileDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.FloatDeserializer -> com.a.a.b.a.t:
+    com.alibaba.fastjson.parser.deserializer.FloatDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.InetAddressDeserializer -> com.a.a.b.a.u:
+    com.alibaba.fastjson.parser.deserializer.InetAddressDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.InetSocketAddressDeserializer -> com.a.a.b.a.v:
+    com.alibaba.fastjson.parser.deserializer.InetSocketAddressDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.IntegerDeserializer -> com.a.a.b.a.w:
+    com.alibaba.fastjson.parser.deserializer.IntegerDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.IntegerFieldDeserializer -> com.a.a.b.a.x:
+    void parseField(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.Object,java.lang.reflect.Type,java.util.Map) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.JSONArrayDeserializer -> com.a.a.b.a.y:
+    com.alibaba.fastjson.parser.deserializer.JSONArrayDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.JSONObjectDeserializer -> com.a.a.b.a.z:
+    com.alibaba.fastjson.parser.deserializer.JSONObjectDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.JavaBeanDeserializer -> com.a.a.b.a.aa:
+    java.util.Map feildDeserializerMap -> a
+    java.util.List fieldDeserializers -> b
+    java.lang.Class clazz -> c
+    com.alibaba.fastjson.util.DeserializeBeanInfo beanInfo -> d
+    java.util.Map getFieldDeserializerMap() -> b
+    java.lang.Object createInstance(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type) -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object,java.lang.Object) -> a
+    boolean parseField(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.String,java.lang.Object,java.lang.reflect.Type,java.util.Map) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.JavaObjectDeserializer -> com.a.a.b.a.ab:
+    com.alibaba.fastjson.parser.deserializer.JavaObjectDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.ListResolveFieldDeserializer -> com.a.a.b.a.ac:
+    int index -> c
+    java.util.List list -> d
+    com.alibaba.fastjson.parser.DefaultJSONParser parser -> e
+    void setValue(java.lang.Object,java.lang.Object) -> a
+    void parseField(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.Object,java.lang.reflect.Type,java.util.Map) -> a
+com.alibaba.fastjson.parser.deserializer.LocaleDeserializer -> com.a.a.b.a.ad:
+    com.alibaba.fastjson.parser.deserializer.LocaleDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.LongDeserializer -> com.a.a.b.a.ae:
+    com.alibaba.fastjson.parser.deserializer.LongDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.LongFieldDeserializer -> com.a.a.b.a.af:
+    com.alibaba.fastjson.parser.deserializer.ObjectDeserializer fieldValueDeserilizer -> c
+    void parseField(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.Object,java.lang.reflect.Type,java.util.Map) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.MapDeserializer -> com.a.a.b.a.ag:
+    com.alibaba.fastjson.parser.deserializer.MapDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    java.util.Map parseMap(com.alibaba.fastjson.parser.DefaultJSONParser,java.util.Map,java.lang.reflect.Type,java.lang.Object) -> a
+    java.lang.Object parseMap$5c6e98c3(com.alibaba.fastjson.parser.DefaultJSONParser,java.util.Map,java.lang.reflect.Type,java.lang.reflect.Type) -> a
+    java.util.Map createMap(java.lang.reflect.Type) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.MapResolveFieldDeserializer -> com.a.a.b.a.ah:
+    java.lang.String key -> c
+    java.util.Map map -> d
+    void setValue(java.lang.Object,java.lang.Object) -> a
+    void parseField(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.Object,java.lang.reflect.Type,java.util.Map) -> a
+com.alibaba.fastjson.parser.deserializer.NumberDeserializer -> com.a.a.b.a.ai:
+    com.alibaba.fastjson.parser.deserializer.NumberDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.ObjectDeserializer -> com.a.a.b.a.aj:
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.PatternDeserializer -> com.a.a.b.a.ak:
+    com.alibaba.fastjson.parser.deserializer.PatternDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.ReferenceDeserializer -> com.a.a.b.a.al:
+    com.alibaba.fastjson.parser.deserializer.ReferenceDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.SqlDateDeserializer -> com.a.a.b.a.am:
+    com.alibaba.fastjson.parser.deserializer.SqlDateDeserializer instance -> a
+    java.lang.Object cast$61c37781(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.StackTraceElementDeserializer -> com.a.a.b.a.an:
+    com.alibaba.fastjson.parser.deserializer.StackTraceElementDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.StringDeserializer -> com.a.a.b.a.ao:
+    com.alibaba.fastjson.parser.deserializer.StringDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.StringFieldDeserializer -> com.a.a.b.a.ap:
+    com.alibaba.fastjson.parser.deserializer.ObjectDeserializer fieldValueDeserilizer -> c
+    void parseField(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.Object,java.lang.reflect.Type,java.util.Map) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.ThrowableDeserializer -> com.a.a.b.a.aq:
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    java.lang.Throwable createException(java.lang.String,java.lang.Throwable,java.lang.Class) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.TimeDeserializer -> com.a.a.b.a.ar:
+    com.alibaba.fastjson.parser.deserializer.TimeDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.TimeZoneDeserializer -> com.a.a.b.a.as:
+    com.alibaba.fastjson.parser.deserializer.TimeZoneDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.TimestampDeserializer -> com.a.a.b.a.at:
+    com.alibaba.fastjson.parser.deserializer.TimestampDeserializer instance -> a
+    java.lang.Object cast$61c37781(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.URIDeserializer -> com.a.a.b.a.au:
+    com.alibaba.fastjson.parser.deserializer.URIDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.URLDeserializer -> com.a.a.b.a.av:
+    com.alibaba.fastjson.parser.deserializer.URLDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.parser.deserializer.UUIDDeserializer -> com.a.a.b.a.aw:
+    com.alibaba.fastjson.parser.deserializer.UUIDDeserializer instance -> a
+    java.lang.Object deserialze(com.alibaba.fastjson.parser.DefaultJSONParser,java.lang.reflect.Type,java.lang.Object) -> a
+    int getFastMatchToken() -> a
+com.alibaba.fastjson.serializer.AppendableSerializer -> com.a.a.c.a:
+    com.alibaba.fastjson.serializer.AppendableSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.ArraySerializer -> com.a.a.c.b:
+    java.lang.Class componentType -> a
+    com.alibaba.fastjson.serializer.ObjectSerializer compObjectSerializer -> b
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.AtomicBooleanSerializer -> com.a.a.c.c:
+    com.alibaba.fastjson.serializer.AtomicBooleanSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.AtomicIntegerArraySerializer -> com.a.a.c.d:
+    com.alibaba.fastjson.serializer.AtomicIntegerArraySerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.AtomicIntegerSerializer -> com.a.a.c.e:
+    com.alibaba.fastjson.serializer.AtomicIntegerSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.AtomicLongArraySerializer -> com.a.a.c.f:
+    com.alibaba.fastjson.serializer.AtomicLongArraySerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.AtomicLongSerializer -> com.a.a.c.g:
+    com.alibaba.fastjson.serializer.AtomicLongSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.BigDecimalSerializer -> com.a.a.c.h:
+    com.alibaba.fastjson.serializer.BigDecimalSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.BigIntegerSerializer -> com.a.a.c.i:
+    com.alibaba.fastjson.serializer.BigIntegerSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.BooleanArraySerializer -> com.a.a.c.j:
+    com.alibaba.fastjson.serializer.BooleanArraySerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.BooleanSerializer -> com.a.a.c.k:
+    com.alibaba.fastjson.serializer.BooleanSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.ByteArraySerializer -> com.a.a.c.l:
+    com.alibaba.fastjson.serializer.ByteArraySerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.ByteSerializer -> com.a.a.c.m:
+    com.alibaba.fastjson.serializer.ByteSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.CalendarSerializer -> com.a.a.c.n:
+    com.alibaba.fastjson.serializer.CalendarSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.CharArraySerializer -> com.a.a.c.o:
+    com.alibaba.fastjson.serializer.CharArraySerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.CharacterSerializer -> com.a.a.c.p:
+    com.alibaba.fastjson.serializer.CharacterSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.ClassSerializer -> com.a.a.c.q:
+    com.alibaba.fastjson.serializer.ClassSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.CollectionSerializer -> com.a.a.c.r:
+    com.alibaba.fastjson.serializer.CollectionSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.DateFormatSerializer -> com.a.a.c.s:
+    com.alibaba.fastjson.serializer.DateFormatSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.DateSerializer -> com.a.a.c.t:
+    com.alibaba.fastjson.serializer.DateSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.DoubleArraySerializer -> com.a.a.c.u:
+    com.alibaba.fastjson.serializer.DoubleArraySerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.DoubleSerializer -> com.a.a.c.v:
+    com.alibaba.fastjson.serializer.DoubleSerializer instance -> a
+    java.text.DecimalFormat decimalFormat -> b
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.EnumSerializer -> com.a.a.c.w:
+    com.alibaba.fastjson.serializer.EnumSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.EnumerationSeriliazer -> com.a.a.c.x:
+    com.alibaba.fastjson.serializer.EnumerationSeriliazer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.ExceptionSerializer -> com.a.a.c.y:
+    boolean isWriteClassName$c746c9e$73eae006(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.FieldSerializer -> com.a.a.c.z:
+    com.alibaba.fastjson.util.FieldInfo fieldInfo -> a
+    java.lang.String double_quoted_fieldPrefix -> b
+    java.lang.String single_quoted_fieldPrefix -> c
+    java.lang.String un_quoted_fieldPrefix -> d
+    boolean writeNull -> e
+    boolean isWriteNull() -> a
+    java.lang.reflect.Field getField() -> b
+    java.lang.String getName() -> c
+    void writePrefix(com.alibaba.fastjson.serializer.JSONSerializer) -> a
+    java.lang.Object getPropertyValue(java.lang.Object) -> a
+    void writeProperty(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object) -> a
+com.alibaba.fastjson.serializer.FileSerializer -> com.a.a.c.aa:
+    com.alibaba.fastjson.serializer.FileSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.FilterUtils -> com.a.a.c.ab:
+    java.lang.Object processValue$1a793e7(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object) -> a
+    java.lang.String processKey$ee4b679(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.String) -> a
+    boolean applyName$69b91e5f(com.alibaba.fastjson.serializer.JSONSerializer) -> a
+    boolean apply$188d7bc3(com.alibaba.fastjson.serializer.JSONSerializer) -> b
+com.alibaba.fastjson.serializer.FloatArraySerializer -> com.a.a.c.ac:
+    com.alibaba.fastjson.serializer.FloatArraySerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.FloatSerializer -> com.a.a.c.ad:
+    com.alibaba.fastjson.serializer.FloatSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.InetAddressSerializer -> com.a.a.c.ae:
+    com.alibaba.fastjson.serializer.InetAddressSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.InetSocketAddressSerializer -> com.a.a.c.af:
+    com.alibaba.fastjson.serializer.InetSocketAddressSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.IntArraySerializer -> com.a.a.c.ag:
+    com.alibaba.fastjson.serializer.IntArraySerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.IntegerSerializer -> com.a.a.c.ah:
+    com.alibaba.fastjson.serializer.IntegerSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.JSONAwareSerializer -> com.a.a.c.ai:
+    com.alibaba.fastjson.serializer.JSONAwareSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.JSONSerializer -> com.a.a.c.aj:
+    com.alibaba.fastjson.serializer.SerializeConfig config -> a
+    com.alibaba.fastjson.serializer.SerializeWriter out -> b
+    java.util.List propertyFilters -> c
+    java.util.List valueFilters -> d
+    java.util.List nameFilters -> e
+    java.util.List propertyPreFilters -> f
+    int indentCount -> g
+    java.lang.String indent -> h
+    java.lang.String dateFormatPattern -> i
+    java.text.DateFormat dateFormat -> j
+    java.util.IdentityHashMap references -> k
+    com.alibaba.fastjson.serializer.SerialContext context -> l
+    java.text.DateFormat getDateFormat() -> a
+    com.alibaba.fastjson.serializer.SerialContext getContext() -> b
+    void setContext(com.alibaba.fastjson.serializer.SerialContext) -> a
+    void setContext(com.alibaba.fastjson.serializer.SerialContext,java.lang.Object,java.lang.Object) -> a
+    boolean isWriteClassName$2da223c(java.lang.reflect.Type) -> a
+    boolean containsReference(java.lang.Object) -> a
+    void writeReference(java.lang.Object) -> b
+    java.util.List getValueFiltersDirect() -> c
+    void incrementIndent() -> d
+    void decrementIdent() -> e
+    void println() -> f
+    java.util.List getNameFiltersDirect() -> g
+    java.util.List getPropertyPreFiltersDirect() -> h
+    java.util.List getPropertyFiltersDirect() -> i
+    com.alibaba.fastjson.serializer.SerializeWriter getWriter() -> j
+    java.lang.String toString() -> toString
+    void config$263285f9(com.alibaba.fastjson.serializer.SerializerFeature) -> a
+    boolean isEnabled(com.alibaba.fastjson.serializer.SerializerFeature) -> b
+    void writeNull() -> k
+    void write(java.lang.Object) -> c
+    void writeWithFormat(java.lang.Object,java.lang.String) -> a
+    void write(java.lang.String) -> a
+    com.alibaba.fastjson.serializer.ObjectSerializer getObjectWriter(java.lang.Class) -> a
+com.alibaba.fastjson.serializer.JSONStreamAwareSerializer -> com.a.a.c.ak:
+    com.alibaba.fastjson.serializer.JSONStreamAwareSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.JavaBeanSerializer -> com.a.a.c.al:
+    com.alibaba.fastjson.serializer.FieldSerializer[] getters -> a
+    com.alibaba.fastjson.serializer.FieldSerializer[] sortedGetters -> b
+    boolean isWriteClassName$c746c9e$73eae006(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.reflect.Type) -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+    com.alibaba.fastjson.serializer.FieldSerializer createFieldSerializer(com.alibaba.fastjson.util.FieldInfo) -> a
+com.alibaba.fastjson.serializer.ListSerializer -> com.a.a.c.am:
+    com.alibaba.fastjson.serializer.ListSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.LongArraySerializer -> com.a.a.c.an:
+    com.alibaba.fastjson.serializer.LongArraySerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.LongSerializer -> com.a.a.c.ao:
+    com.alibaba.fastjson.serializer.LongSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.MapSerializer -> com.a.a.c.ap:
+    com.alibaba.fastjson.serializer.MapSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.NameFilter -> com.a.a.c.aq:
+    java.lang.String process$6bf0dac9() -> a
+com.alibaba.fastjson.serializer.NumberFieldSerializer -> com.a.a.c.ar:
+    void writeProperty(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object) -> a
+com.alibaba.fastjson.serializer.ObjectArraySerializer -> com.a.a.c.as:
+    com.alibaba.fastjson.serializer.ObjectArraySerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.ObjectFieldSerializer -> com.a.a.c.at:
+    com.alibaba.fastjson.serializer.ObjectSerializer fieldSerializer -> f
+    java.lang.Class runtimeFieldClass -> g
+    java.lang.String format -> h
+    boolean writeNumberAsZero -> i
+    boolean writeNullStringAsEmpty -> b
+    boolean writeNullBooleanAsFalse -> c
+    boolean writeNullListAsEmpty -> d
+    boolean writeEnumUsingToString -> e
+    void writeProperty(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object) -> a
+com.alibaba.fastjson.serializer.ObjectSerializer -> com.a.a.c.au:
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.PatternSerializer -> com.a.a.c.av:
+    com.alibaba.fastjson.serializer.PatternSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.PropertyFilter -> com.a.a.c.aw:
+    boolean apply$67828145() -> a
+com.alibaba.fastjson.serializer.PropertyPreFilter -> com.a.a.c.ax:
+    boolean apply$69b91e5f() -> a
+com.alibaba.fastjson.serializer.ReferenceSerializer -> com.a.a.c.ay:
+    com.alibaba.fastjson.serializer.ReferenceSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.SerialContext -> com.a.a.c.az:
+    com.alibaba.fastjson.serializer.SerialContext parent -> a
+    java.lang.Object object -> b
+    java.lang.Object fieldName -> c
+    com.alibaba.fastjson.serializer.SerialContext getParent() -> a
+    java.lang.Object getObject() -> b
+    java.lang.String getPath() -> c
+    java.lang.String toString() -> toString
+com.alibaba.fastjson.serializer.SerializeConfig -> com.a.a.c.ba:
+    com.alibaba.fastjson.serializer.SerializeConfig globalInstance -> a
+    com.alibaba.fastjson.serializer.ObjectSerializer createJavaBeanSerializer(java.lang.Class) -> a
+    com.alibaba.fastjson.serializer.SerializeConfig getGlobalInstance() -> a
+com.alibaba.fastjson.serializer.SerializeWriter -> com.a.a.c.bb:
+    char[] buf -> a
+    int count -> b
+    java.lang.ThreadLocal bufLocal -> c
+    int features -> d
+    java.io.Writer writer -> e
+    void config$263285f9(com.alibaba.fastjson.serializer.SerializerFeature) -> a
+    boolean isEnabled(com.alibaba.fastjson.serializer.SerializerFeature) -> b
+    void write(int) -> write
+    void write(char) -> a
+    void write(char[],int,int) -> write
+    void expandCapacity(int) -> b
+    void write(java.lang.String,int,int) -> write
+    com.alibaba.fastjson.serializer.SerializeWriter append(java.lang.CharSequence) -> a
+    com.alibaba.fastjson.serializer.SerializeWriter append(java.lang.CharSequence,int,int) -> a
+    com.alibaba.fastjson.serializer.SerializeWriter append(char) -> b
+    java.lang.String toString() -> toString
+    void close() -> close
+    void write(java.lang.String) -> write
+    void writeInt(int) -> a
+    void writeByteArray(byte[]) -> a
+    void writeIntAndChar(int,char) -> a
+    void writeLongAndChar(long,char) -> a
+    void writeLong(long) -> a
+    void writeNull() -> a
+    void writeStringWithDoubleQuote(java.lang.String,char,boolean) -> a
+    void write(boolean) -> a
+    void writeString(java.lang.String) -> a
+    void writeStringWithSingleQuote(java.lang.String) -> c
+    void writeFieldName(java.lang.String) -> b
+    void writeFieldName(java.lang.String,boolean) -> a
+    void flush() -> flush
+    java.io.Writer append(char) -> append
+    java.io.Writer append(java.lang.CharSequence,int,int) -> append
+    java.io.Writer append(java.lang.CharSequence) -> append
+    java.lang.Appendable append(char) -> append
+    java.lang.Appendable append(java.lang.CharSequence,int,int) -> append
+    java.lang.Appendable append(java.lang.CharSequence) -> append
+com.alibaba.fastjson.serializer.SerializerFeature -> com.a.a.c.bc:
+    com.alibaba.fastjson.serializer.SerializerFeature QuoteFieldNames -> a
+    com.alibaba.fastjson.serializer.SerializerFeature UseSingleQuotes -> b
+    com.alibaba.fastjson.serializer.SerializerFeature WriteMapNullValue -> c
+    com.alibaba.fastjson.serializer.SerializerFeature WriteEnumUsingToString -> d
+    com.alibaba.fastjson.serializer.SerializerFeature UseISO8601DateFormat -> e
+    com.alibaba.fastjson.serializer.SerializerFeature WriteNullListAsEmpty -> f
+    com.alibaba.fastjson.serializer.SerializerFeature WriteNullStringAsEmpty -> g
+    com.alibaba.fastjson.serializer.SerializerFeature WriteNullNumberAsZero -> h
+    com.alibaba.fastjson.serializer.SerializerFeature WriteNullBooleanAsFalse -> i
+    com.alibaba.fastjson.serializer.SerializerFeature SkipTransientField -> j
+    com.alibaba.fastjson.serializer.SerializerFeature SortField -> k
+    com.alibaba.fastjson.serializer.SerializerFeature WriteTabAsSpecial -> l
+    com.alibaba.fastjson.serializer.SerializerFeature PrettyFormat -> m
+    com.alibaba.fastjson.serializer.SerializerFeature WriteClassName -> n
+    com.alibaba.fastjson.serializer.SerializerFeature DisableCircularReferenceDetect -> o
+    com.alibaba.fastjson.serializer.SerializerFeature WriteSlashAsSpecial -> p
+    com.alibaba.fastjson.serializer.SerializerFeature BrowserCompatible -> q
+    com.alibaba.fastjson.serializer.SerializerFeature WriteDateUseDateFormat -> r
+    com.alibaba.fastjson.serializer.SerializerFeature NotWriteRootClassName -> s
+    com.alibaba.fastjson.serializer.SerializerFeature DisableCheckSpecialChar -> t
+    int mask -> u
+    com.alibaba.fastjson.serializer.SerializerFeature[] $VALUES -> v
+    com.alibaba.fastjson.serializer.SerializerFeature[] values() -> values
+    com.alibaba.fastjson.serializer.SerializerFeature valueOf(java.lang.String) -> valueOf
+    int getMask() -> a
+    boolean isEnabled(int,com.alibaba.fastjson.serializer.SerializerFeature) -> a
+com.alibaba.fastjson.serializer.ShortArraySerializer -> com.a.a.c.bd:
+    com.alibaba.fastjson.serializer.ShortArraySerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.ShortSerializer -> com.a.a.c.be:
+    com.alibaba.fastjson.serializer.ShortSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.StringSerializer -> com.a.a.c.bf:
+    com.alibaba.fastjson.serializer.StringSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.String) -> a
+com.alibaba.fastjson.serializer.TimeZoneSerializer -> com.a.a.c.bg:
+    com.alibaba.fastjson.serializer.TimeZoneSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.ToStringSerializer -> com.a.a.c.bh:
+    com.alibaba.fastjson.serializer.ToStringSerializer instance -> a
+    void write(com.alibaba.fastjson.serializer.JSONSerializer,java.lang.Object,java.lang.Object,java.lang.reflect.Type) -> a
+com.alibaba.fastjson.serializer.ValueFilter -> com.a.a.c.bi:
+    java.lang.Object process$792dfd5b() -> a
+com.alibaba.fastjson.util.Base64 -> com.a.a.d.a:
+    char[] CA -> a
+    int[] IA -> b
+    byte[] decodeFast(java.lang.String,int,int) -> a
+com.alibaba.fastjson.util.DeserializeBeanInfo -> com.a.a.d.b:
+    java.lang.Class clazz -> a
+    java.lang.reflect.Constructor defaultConstructor -> b
+    java.lang.reflect.Constructor creatorConstructor -> c
+    java.lang.reflect.Method factoryMethod -> d
+    java.util.List fieldList -> e
+    java.lang.reflect.Constructor getDefaultConstructor() -> a
+    java.lang.reflect.Constructor getCreatorConstructor() -> b
+    java.lang.reflect.Method getFactoryMethod() -> c
+    java.util.List getFieldList() -> d
+    com.alibaba.fastjson.util.FieldInfo getField(java.lang.String) -> a
+    boolean add(com.alibaba.fastjson.util.FieldInfo) -> a
+    com.alibaba.fastjson.util.DeserializeBeanInfo computeSetters(java.lang.Class,java.lang.reflect.Type) -> a
+    java.lang.reflect.Field getField(java.lang.Class,java.lang.String) -> a
+com.alibaba.fastjson.util.FieldInfo -> com.a.a.d.c:
+    java.lang.String name -> a
+    java.lang.reflect.Method method -> b
+    java.lang.reflect.Field field -> c
+    java.lang.Class fieldClass -> d
+    java.lang.reflect.Type fieldType -> e
+    java.lang.Class declaringClass -> f
+    boolean getOnly -> g
+    java.lang.reflect.Type getFieldType(java.lang.Class,java.lang.reflect.Type,java.lang.reflect.Type) -> a
+    java.lang.reflect.Type getInheritGenericType(java.lang.Class,java.lang.reflect.TypeVariable) -> a
+    java.lang.String toString() -> toString
+    java.lang.Class getFieldClass() -> a
+    java.lang.reflect.Type getFieldType() -> b
+    java.lang.String getName() -> c
+    java.lang.reflect.Method getMethod() -> d
+    java.lang.reflect.Field getField() -> e
+    java.lang.annotation.Annotation getAnnotation(java.lang.Class) -> a
+    java.lang.Object get(java.lang.Object) -> a
+    void set(java.lang.Object,java.lang.Object) -> a
+    void setAccessible$1385ff() -> f
+    boolean isGetOnly() -> g
+    int compareTo(java.lang.Object) -> compareTo
+com.alibaba.fastjson.util.IOUtils -> com.a.a.d.d:
+    char[] digits -> a
+    char[] DigitTens -> b
+    char[] DigitOnes -> c
+    int[] sizeTable -> d
+    int stringSize(long) -> a
+    void getChars(long,int,char[]) -> a
+    void getChars(int,int,char[]) -> a
+    int stringSize(int) -> a
+com.alibaba.fastjson.util.IdentityHashMap -> com.a.a.d.e:
+    com.alibaba.fastjson.util.IdentityHashMap$Entry[] buckets -> a
+    int indexMask -> b
+    java.lang.Object get(java.lang.Object) -> a
+    boolean put(java.lang.Object,java.lang.Object) -> a
+com.alibaba.fastjson.util.IdentityHashMap$Entry -> com.a.a.d.f:
+    int hashCode -> a
+    java.lang.Object key -> b
+    java.lang.Object value -> c
+    com.alibaba.fastjson.util.IdentityHashMap$Entry next -> d
+com.alibaba.fastjson.util.ParameterizedTypeImpl -> com.a.a.d.g:
+    java.lang.reflect.Type[] actualTypeArguments -> a
+    java.lang.reflect.Type ownerType -> b
+    java.lang.reflect.Type rawType -> c
+    java.lang.reflect.Type[] getActualTypeArguments() -> getActualTypeArguments
+    java.lang.reflect.Type getOwnerType() -> getOwnerType
+    java.lang.reflect.Type getRawType() -> getRawType
+com.alibaba.fastjson.util.TypeUtils -> com.a.a.d.h:
+    java.util.concurrent.ConcurrentMap mappings -> a
+    java.lang.Byte castToByte(java.lang.Object) -> a
+    java.lang.Character castToChar(java.lang.Object) -> b
+    java.lang.Short castToShort(java.lang.Object) -> c
+    java.math.BigDecimal castToBigDecimal(java.lang.Object) -> d
+    java.math.BigInteger castToBigInteger(java.lang.Object) -> e
+    java.lang.Float castToFloat(java.lang.Object) -> f
+    java.lang.Double castToDouble(java.lang.Object) -> g
+    java.util.Date castToDate(java.lang.Object) -> k
+    java.lang.Long castToLong(java.lang.Object) -> h
+    java.lang.Integer castToInt(java.lang.Object) -> i
+    java.lang.Boolean castToBoolean(java.lang.Object) -> j
+    java.lang.Object cast(java.lang.Object,java.lang.Class,com.alibaba.fastjson.parser.ParserConfig) -> a
+    java.lang.Object castToEnum$2682377e(java.lang.Object,java.lang.Class) -> a
+    java.lang.Object cast(java.lang.Object,java.lang.reflect.Type,com.alibaba.fastjson.parser.ParserConfig) -> a
+    java.lang.Object castToJavaBean(java.util.Map,java.lang.Class,com.alibaba.fastjson.parser.ParserConfig) -> a
+    void addClassMapping(java.lang.String,java.lang.Class) -> a
+    java.lang.Class loadClass(java.lang.String) -> a
+    java.util.List computeGetters$5a8bcd10(java.lang.Class,boolean) -> a
+    com.alibaba.fastjson.annotation.JSONField getSupperMethodAnnotation(java.lang.Class,java.lang.reflect.Method) -> a
+    boolean isJSONTypeIgnore(java.lang.Class,java.lang.String) -> a
+    java.lang.Class getClass(java.lang.reflect.Type) -> a
+com.drawguess.R -> com.drawguess.a:
+com.drawguess.R$drawable -> com.drawguess.b:
+com.drawguess.activity.AboutActivity -> com.drawguess.activity.AboutActivity:
+    void onCreate(android.os.Bundle) -> onCreate
+    boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+com.drawguess.activity.ChooseAvatarActivity -> com.drawguess.activity.ChooseAvatarActivity:
+    int[] images -> b
+    com.drawguess.adapter.AvatarAdapter adapter -> a
+    android.widget.GridView gridView -> c
+    void onCreate(android.os.Bundle) -> onCreate
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+com.drawguess.activity.ConnectModeActivity -> com.drawguess.activity.ConnectModeActivity:
+    long ExitTime -> a
+    android.widget.Button mBtnBack -> b
+    android.widget.Button mBtnBlueTooth -> c
+    android.widget.Button mBtnWiFi -> n
+    void onClick(android.view.View) -> onClick
+    void onCreate(android.os.Bundle) -> onCreate
+    boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
+com.drawguess.activity.DrawGuessActivity -> com.drawguess.activity.DrawGuessActivity:
+    long ExitTime -> n
+    com.drawguess.activity.DrawGuessActivity$MyHandler handler -> a
+    java.lang.Boolean isPack -> o
+    java.lang.Boolean isEraser -> p
+    java.lang.Boolean isTrans -> q
+    java.lang.Boolean isLoad -> r
+    int[] colorSource -> s
+    com.drawguess.view.DrawView mDrawView -> t
+    android.widget.ImageButton[] mBtColors -> u
+    android.widget.LinearLayout mDrawTab -> v
+    android.widget.LinearLayout mChatTab -> w
+    android.widget.LinearLayout mResultTab -> x
+    android.widget.ImageButton mIbErase -> y
+    android.widget.ImageButton mIbColor -> z
+    android.widget.ImageButton mIbPaint -> A
+    android.widget.ImageButton mIbFill -> B
+    android.widget.ImageButton mIbShape -> C
+    android.widget.ImageButton mIbRedo -> D
+    android.widget.ImageButton mIbUndo -> E
+    android.widget.ImageButton mIbMenu -> F
+    android.widget.ImageButton mIbEdit -> G
+    android.widget.ImageButton mIbDelete -> H
+    android.widget.ImageButton mIbCopy -> I
+    android.widget.LinearLayout mLayoutChat -> J
+    android.widget.LinearLayout mLayoutResult -> K
+    android.widget.LinearLayout mLayoutDraw -> L
+    android.widget.LinearLayout mLayoutChatEdit -> M
+    android.widget.LinearLayout mLayoutColorBar -> N
+    android.widget.LinearLayout mLayoutBtnBar -> O
+    android.widget.LinearLayout mLayoutTime -> P
+    android.view.View mVDraw -> Q
+    android.view.View mVChat -> R
+    android.view.View mVResult -> S
+    android.widget.ImageView mIvArrow -> T
+    android.widget.Button mBtSend -> U
+    android.widget.Button mBtTip -> V
+    android.widget.EditText mEtEdit -> W
+    android.widget.TextView mTvTime -> X
+    android.widget.TextView mTvDraw -> Y
+    android.widget.ListView mLvScore -> Z
+    android.widget.ListView mLvMsg -> aa
+    android.widget.TextView mDebug -> b
+    int logNum -> c
+    com.drawguess.adapter.ScoresAdapter scoresAdapter -> ab
+    com.drawguess.adapter.MsgsAdapter msgsAdapter -> ac
+    com.drawguess.util.TimerUtils mServerTimerCheck -> ad
+    com.drawguess.util.TimerUtils mLocalTimerCheck -> ae
+    int guessNum -> af
+    java.util.ArrayList mServerOrderList -> ag
+    java.util.HashMap mServerPlayersMap -> ah
+    java.util.HashMap mLocalPlayersMap -> ai
+    java.util.ArrayList mLocalMsgsList -> aj
+    java.util.ArrayList mLocalScoresList -> ak
+    com.drawguess.msgbean.User mLocalDrawUser -> al
+    java.lang.String mLocalWord -> am
+    java.lang.String mLocalWord1 -> an
+    java.lang.String mLocalWord2 -> ao
+    java.lang.String mLocalKind -> ap
+    java.lang.String mLocalKind1 -> aq
+    java.lang.String mLocalKind2 -> ar
+    int[] $SWITCH_TABLE$com$drawguess$msgbean$DataDraw$OP_TYPE -> as
+    void onCreate(android.os.Bundle) -> onCreate
+    void onDestroy() -> onDestroy
+    void onClick(android.view.View) -> onClick
+    void doClickEvent(com.drawguess.msgbean.DataDraw$OP_TYPE,float,float,float,float) -> a
+    boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
+    boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    void setColorBack(int) -> b
+    void createClientListener() -> a
+    void access$0(com.drawguess.activity.DrawGuessActivity) -> a
+    java.lang.Boolean access$1(com.drawguess.activity.DrawGuessActivity) -> b
+    void access$2(com.drawguess.activity.DrawGuessActivity,java.lang.Boolean) -> a
+    android.widget.LinearLayout access$3(com.drawguess.activity.DrawGuessActivity) -> c
+    android.widget.LinearLayout access$4(com.drawguess.activity.DrawGuessActivity) -> d
+    android.widget.LinearLayout access$5(com.drawguess.activity.DrawGuessActivity) -> e
+    android.widget.LinearLayout access$6(com.drawguess.activity.DrawGuessActivity) -> f
+    java.lang.String access$7(com.drawguess.activity.DrawGuessActivity) -> g
+    void access$8(com.drawguess.activity.DrawGuessActivity,java.lang.String) -> a
+    java.lang.String access$9(com.drawguess.activity.DrawGuessActivity) -> h
+    void access$10(com.drawguess.activity.DrawGuessActivity,java.lang.String) -> b
+    com.drawguess.net.NetManage access$11(com.drawguess.activity.DrawGuessActivity) -> i
+    java.lang.String access$12(com.drawguess.activity.DrawGuessActivity) -> j
+    java.lang.String access$13(com.drawguess.activity.DrawGuessActivity) -> k
+    android.app.AlertDialog access$14(com.drawguess.activity.DrawGuessActivity,java.lang.String,java.lang.String,java.lang.String,android.content.DialogInterface$OnClickListener,java.lang.String,android.content.DialogInterface$OnClickListener) -> a
+    void access$15(com.drawguess.activity.DrawGuessActivity,java.lang.String) -> c
+    com.drawguess.util.TimerUtils access$16(com.drawguess.activity.DrawGuessActivity) -> l
+    void access$17$4033d6ab(com.drawguess.activity.DrawGuessActivity) -> m
+    java.util.ArrayList access$18(com.drawguess.activity.DrawGuessActivity) -> n
+    void access$19(com.drawguess.activity.DrawGuessActivity,com.drawguess.util.TimerUtils) -> a
+    com.drawguess.util.TimerUtils access$20(com.drawguess.activity.DrawGuessActivity) -> o
+    void access$21(com.drawguess.activity.DrawGuessActivity,com.drawguess.util.TimerUtils) -> b
+    void access$22(com.drawguess.activity.DrawGuessActivity,java.util.ArrayList) -> a
+    java.util.ArrayList access$23(com.drawguess.activity.DrawGuessActivity) -> p
+    void access$24(com.drawguess.activity.DrawGuessActivity,com.drawguess.adapter.MsgsAdapter) -> a
+    android.widget.ListView access$25(com.drawguess.activity.DrawGuessActivity) -> q
+    com.drawguess.adapter.MsgsAdapter access$26(com.drawguess.activity.DrawGuessActivity) -> r
+    java.util.ArrayList access$27(com.drawguess.activity.DrawGuessActivity) -> s
+    void access$28(com.drawguess.activity.DrawGuessActivity,com.drawguess.adapter.ScoresAdapter) -> a
+    android.widget.ListView access$29(com.drawguess.activity.DrawGuessActivity) -> t
+    com.drawguess.adapter.ScoresAdapter access$30(com.drawguess.activity.DrawGuessActivity) -> u
+    void access$31(com.drawguess.activity.DrawGuessActivity) -> v
+    void access$32(com.drawguess.activity.DrawGuessActivity) -> w
+    com.drawguess.view.DrawView access$33(com.drawguess.activity.DrawGuessActivity) -> x
+    android.widget.TextView access$34(com.drawguess.activity.DrawGuessActivity) -> y
+    void access$35(com.drawguess.activity.DrawGuessActivity,java.lang.String) -> d
+    android.widget.TextView access$36(com.drawguess.activity.DrawGuessActivity) -> z
+    java.lang.String access$37(com.drawguess.activity.DrawGuessActivity) -> A
+    android.widget.EditText access$38(com.drawguess.activity.DrawGuessActivity) -> B
+    void access$39$4033d6ab(com.drawguess.activity.DrawGuessActivity) -> C
+    int[] $SWITCH_TABLE$com$drawguess$msgbean$DataDraw$OP_TYPE() -> b
+    void access$41(com.drawguess.activity.DrawGuessActivity,java.util.List) -> a
+    void access$42(com.drawguess.activity.DrawGuessActivity) -> D
+    void access$43(com.drawguess.activity.DrawGuessActivity,java.lang.String) -> e
+    void access$44(com.drawguess.activity.DrawGuessActivity,java.lang.String) -> f
+    void access$45(com.drawguess.activity.DrawGuessActivity,java.lang.String) -> g
+    void access$46(com.drawguess.activity.DrawGuessActivity,java.lang.String) -> h
+    java.util.HashMap access$47(com.drawguess.activity.DrawGuessActivity) -> E
+    com.drawguess.msgbean.User access$48(com.drawguess.activity.DrawGuessActivity) -> F
+    java.util.HashMap access$49(com.drawguess.activity.DrawGuessActivity) -> G
+    boolean access$50(com.drawguess.activity.DrawGuessActivity) -> H
+com.drawguess.activity.DrawGuessActivity$1 -> com.drawguess.activity.a:
+    com.drawguess.activity.DrawGuessActivity this$0 -> a
+    boolean onEditorAction(android.widget.TextView,int,android.view.KeyEvent) -> onEditorAction
+com.drawguess.activity.DrawGuessActivity$2 -> com.drawguess.activity.b:
+    com.drawguess.activity.DrawGuessActivity this$0 -> a
+    void shapeChanged(int) -> a
+com.drawguess.activity.DrawGuessActivity$3 -> com.drawguess.activity.c:
+    com.drawguess.activity.DrawGuessActivity this$0 -> a
+    void colorChanged(int) -> a
+com.drawguess.activity.DrawGuessActivity$4 -> com.drawguess.activity.d:
+    com.drawguess.activity.DrawGuessActivity this$0 -> a
+    void paintChanged(int,int,int) -> a
+com.drawguess.activity.DrawGuessActivity$5 -> com.drawguess.activity.e:
+    com.drawguess.activity.DrawGuessActivity this$0 -> a
+    void processMessage(com.drawguess.net.MSGProtocol) -> a
+com.drawguess.activity.DrawGuessActivity$6 -> com.drawguess.activity.f:
+    com.drawguess.activity.DrawGuessActivity this$0 -> a
+    void processMessage(com.drawguess.net.MSGProtocol) -> a
+com.drawguess.activity.DrawGuessActivity$MyHandler -> com.drawguess.activity.g:
+    com.drawguess.activity.DrawGuessActivity this$0 -> a
+    int[] $SWITCH_TABLE$com$drawguess$msgbean$DataDraw$OP_TYPE -> b
+    void handleMessage(android.os.Message) -> handleMessage
+    int[] $SWITCH_TABLE$com$drawguess$msgbean$DataDraw$OP_TYPE() -> a
+    com.drawguess.activity.DrawGuessActivity access$2(com.drawguess.activity.DrawGuessActivity$MyHandler) -> a
+com.drawguess.activity.DrawGuessActivity$MyHandler$1 -> com.drawguess.activity.h:
+    com.drawguess.activity.DrawGuessActivity$MyHandler this$1 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.drawguess.activity.DrawGuessActivity$MyHandler$2 -> com.drawguess.activity.i:
+    com.drawguess.activity.DrawGuessActivity$MyHandler this$1 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.drawguess.activity.DrawGuessActivity$MyHandler$3 -> com.drawguess.activity.j:
+    com.drawguess.activity.DrawGuessActivity$MyHandler this$1 -> a
+    void doTimeOutWork() -> a
+    void doTimerCheckWork() -> b
+com.drawguess.activity.DrawGuessActivity$MyHandler$4 -> com.drawguess.activity.k:
+    com.drawguess.activity.DrawGuessActivity$MyHandler this$1 -> a
+    void doTimeOutWork() -> a
+    void doTimerCheckWork() -> b
+com.drawguess.activity.GameRoomActivity -> com.drawguess.activity.GameRoomActivity:
+    boolean isMeReady -> a
+    boolean haveFind -> b
+    com.drawguess.adapter.PlayersAdapter mAdapter -> c
+    android.widget.Button mBtnReady -> n
+    android.widget.Button mBtnStart -> o
+    android.widget.Button mBtnCreate -> p
+    android.widget.ImageView mIvAvatar -> q
+    android.widget.ImageView mIvGender -> r
+    android.widget.LinearLayout mLayoutExGender -> s
+    com.drawguess.view.MultiListView mListView -> t
+    android.widget.TextView mName -> u
+    android.widget.TextView mPlayersNum -> v
+    android.widget.TextView mOrder -> w
+    java.util.HashMap mServerUsersMap -> x
+    java.util.HashMap mLocalUsersMap -> y
+    java.util.ArrayList mServerReadyList -> z
+    java.util.ArrayList mServerStartList -> A
+    java.util.ArrayList mLocalUsersList -> B
+    com.drawguess.activity.GameRoomActivity$MyHandler handler -> C
+    void onCreate(android.os.Bundle) -> onCreate
+    void onDestroy() -> onDestroy
+    void onClick(android.view.View) -> onClick
+    void onRefresh() -> a
+    void createClient(java.lang.String) -> c
+    void checkStart(java.lang.String) -> d
+    void addUser(com.drawguess.msgbean.User) -> a
+    void removeUser(com.drawguess.msgbean.User) -> b
+    void addReady(java.lang.String) -> e
+    void removeReady(java.lang.String) -> f
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    void refreshAdapter() -> b
+    void refreshPlayersNum() -> c
+    void access$0(com.drawguess.activity.GameRoomActivity) -> a
+    void access$1(com.drawguess.activity.GameRoomActivity) -> b
+    void access$2(com.drawguess.activity.GameRoomActivity) -> c
+    boolean access$3(com.drawguess.activity.GameRoomActivity) -> d
+    com.drawguess.net.NetManage access$4(com.drawguess.activity.GameRoomActivity) -> e
+    android.widget.Button access$5(com.drawguess.activity.GameRoomActivity) -> f
+    android.widget.Button access$6(com.drawguess.activity.GameRoomActivity) -> g
+    void access$7(com.drawguess.activity.GameRoomActivity,java.lang.String) -> a
+    void access$8$1c0533e6(com.drawguess.activity.GameRoomActivity) -> h
+    void access$9(com.drawguess.activity.GameRoomActivity,java.lang.String) -> b
+    com.drawguess.view.MultiListView access$10(com.drawguess.activity.GameRoomActivity) -> i
+    void access$11(com.drawguess.activity.GameRoomActivity) -> j
+    void access$12(com.drawguess.activity.GameRoomActivity,java.lang.String) -> c
+    java.util.HashMap access$13(com.drawguess.activity.GameRoomActivity) -> k
+    void access$14(com.drawguess.activity.GameRoomActivity,java.util.List) -> a
+    boolean access$15(com.drawguess.activity.GameRoomActivity) -> l
+    com.drawguess.interfaces.OnMsgRecListener access$16(com.drawguess.activity.GameRoomActivity) -> m
+    void access$17(com.drawguess.activity.GameRoomActivity,java.lang.Class) -> a
+    com.drawguess.activity.GameRoomActivity$MyHandler access$18(com.drawguess.activity.GameRoomActivity) -> n
+    void access$19(com.drawguess.activity.GameRoomActivity,com.drawguess.msgbean.User) -> a
+    java.util.ArrayList access$20(com.drawguess.activity.GameRoomActivity) -> o
+    void access$21(com.drawguess.activity.GameRoomActivity,com.drawguess.msgbean.User) -> b
+    void access$22(com.drawguess.activity.GameRoomActivity,java.lang.String) -> d
+    void access$23(com.drawguess.activity.GameRoomActivity,java.lang.String) -> e
+    void access$24(com.drawguess.activity.GameRoomActivity,java.lang.String) -> f
+com.drawguess.activity.GameRoomActivity$1 -> com.drawguess.activity.l:
+    com.drawguess.activity.GameRoomActivity this$0 -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+com.drawguess.activity.GameRoomActivity$2 -> com.drawguess.activity.m:
+    com.drawguess.activity.GameRoomActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+com.drawguess.activity.GameRoomActivity$3 -> com.drawguess.activity.n:
+    com.drawguess.activity.GameRoomActivity this$0 -> a
+    void processMessage(com.drawguess.net.MSGProtocol) -> a
+com.drawguess.activity.GameRoomActivity$4 -> com.drawguess.activity.o:
+    com.drawguess.activity.GameRoomActivity this$0 -> a
+    void processMessage(com.drawguess.net.MSGProtocol) -> a
+com.drawguess.activity.GameRoomActivity$MyHandler -> com.drawguess.activity.p:
+    com.drawguess.activity.GameRoomActivity this$0 -> a
+    void handleMessage(android.os.Message) -> handleMessage
+com.drawguess.activity.LoginActivity -> com.drawguess.activity.LoginActivity:
+    int mAvatar -> a
+    android.widget.Button mBtnChangeUser -> b
+    android.widget.Button mBtnExit -> c
+    android.widget.Button mBtnNext -> n
+    java.lang.String mDevice -> o
+    android.widget.EditText mEtNickname -> p
+    java.lang.String mGender -> q
+    java.lang.String mIMEI -> r
+    android.widget.ImageView mImgExAvatar -> s
+    android.widget.ImageView mIvAvatar -> t
+    android.widget.ImageView mIvExGender -> u
+    java.lang.String mLastLogintime -> v
+    android.widget.LinearLayout mLayoutExGender -> w
+    android.widget.LinearLayout mLlayoutExMain -> x
+    android.widget.LinearLayout mLlayoutMain -> y
+    java.lang.String mLogintime -> z
+    java.lang.String mNickname -> A
+    android.widget.RadioGroup mRgGender -> B
+    android.telephony.TelephonyManager mTelephonyManager -> C
+    android.widget.TextView mTvExLogintime -> D
+    android.widget.TextView mTvExNickmame -> E
+    void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    void onClick(android.view.View) -> onClick
+    void onCreate(android.os.Bundle) -> onCreate
+com.drawguess.activity.ProfileActivity -> com.drawguess.activity.ProfileActivity:
+    int mAvatar -> a
+    android.widget.Button mBtnBack -> b
+    android.widget.Button mBtnSave -> c
+    android.widget.EditText mEtNickname -> n
+    java.lang.String mGender -> o
+    android.widget.ImageView mIvAvatar -> p
+    java.lang.String mNickname -> q
+    android.widget.RadioButton mRbBoy -> r
+    android.widget.RadioButton mRbGirl -> s
+    android.widget.RadioGroup mRgGender -> t
+    void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    void onClick(android.view.View) -> onClick
+    void onCreate(android.os.Bundle) -> onCreate
+com.drawguess.activity.SettingActivity -> com.drawguess.activity.SettingActivity:
+    android.widget.Button mAboutUsButton -> a
+    android.widget.Button mBackButton -> b
+    android.widget.Button mExitApplicationButton -> c
+    com.drawguess.base.BaseDialog mExitDialog -> n
+    android.widget.ImageView mSettingInfoButton -> o
+    android.widget.RelativeLayout mSettingInfoLayoutButton -> p
+    com.drawguess.view.SettingSwitchButton mSoundSwitchButton -> q
+    com.drawguess.view.SettingSwitchButton mVibrateSwitchButton -> r
+    void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
+    void onClick(android.content.DialogInterface,int) -> onClick
+    void onClick(android.view.View) -> onClick
+    void onCreate(android.os.Bundle) -> onCreate
+    com.drawguess.base.BaseDialog access$0(com.drawguess.activity.SettingActivity) -> a
+com.drawguess.activity.SettingActivity$1 -> com.drawguess.activity.q:
+    com.drawguess.activity.SettingActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+com.drawguess.activity.WelcomeActivity -> com.drawguess.activity.WelcomeActivity:
+    java.lang.String TAG -> a
+    void onCreate(android.os.Bundle) -> onCreate
+    void readTxtToDb(java.lang.String,android.content.Context) -> a
+com.drawguess.activity.WelcomeActivity$1 -> com.drawguess.activity.r:
+    com.drawguess.activity.WelcomeActivity this$0 -> a
+    void run() -> run
+com.drawguess.activity.WifiapActivity -> com.drawguess.activity.WifiapActivity:
+    com.drawguess.activity.WifiapActivity$ApHandler mHandler -> a
+    boolean isRespond -> b
+    java.lang.String localIPaddress -> c
+    android.widget.Button mBtnBack -> n
+    android.widget.Button mBtnCreateAp -> o
+    android.widget.Button mBtnNext -> p
+    com.drawguess.dialog.ConnWifiDialog mConnWifiDialog -> q
+    com.drawguess.base.BaseDialog mHintDialog -> r
+    android.widget.LinearLayout mLlApInfo -> s
+    android.widget.ListView mLvWifiList -> t
+    com.drawguess.activity.WifiapActivity$SearchWifiThread mSearchWifiThread -> u
+    android.widget.TextView mTvApSSID -> v
+    android.widget.TextView mTvStatusInfo -> w
+    com.drawguess.adapter.WifiapAdapter mWifiApAdapter -> x
+    com.drawguess.wifiap.WifiapBroadcast mWifiapBroadcast -> y
+    java.util.ArrayList mWifiList -> z
+    java.lang.String serverIPaddres -> A
+    java.lang.String getLocalHostName() -> a
+    void onClick(android.view.View) -> onClick
+    void onCreate(android.os.Bundle) -> onCreate
+    void onDestroy() -> onDestroy
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    void onScroll(android.widget.AbsListView,int,int,int) -> onScroll
+    void onScrollStateChanged(android.widget.AbsListView,int) -> onScrollStateChanged
+    void refreshAdapter(java.util.List) -> a
+    void WifiConnected() -> b
+    void wifiStatusChange() -> c
+    boolean access$0(com.drawguess.activity.WifiapActivity) -> a
+    void access$1(com.drawguess.activity.WifiapActivity) -> b
+    java.util.ArrayList access$2(com.drawguess.activity.WifiapActivity) -> c
+    com.drawguess.activity.WifiapActivity$SearchWifiThread access$3(com.drawguess.activity.WifiapActivity) -> d
+    android.widget.TextView access$4(com.drawguess.activity.WifiapActivity) -> e
+    android.widget.ListView access$5(com.drawguess.activity.WifiapActivity) -> f
+    android.widget.LinearLayout access$6(com.drawguess.activity.WifiapActivity) -> g
+    android.widget.TextView access$7(com.drawguess.activity.WifiapActivity) -> h
+    android.widget.Button access$8(com.drawguess.activity.WifiapActivity) -> i
+    android.widget.Button access$9(com.drawguess.activity.WifiapActivity) -> j
+    android.widget.Button access$10(com.drawguess.activity.WifiapActivity) -> k
+    void access$11(com.drawguess.activity.WifiapActivity,java.lang.String) -> a
+    void access$12(com.drawguess.activity.WifiapActivity,int) -> a
+    void access$13$7d3725f3(com.drawguess.activity.WifiapActivity) -> l
+    void access$14$7d3725f3(com.drawguess.activity.WifiapActivity) -> m
+    void access$15(com.drawguess.activity.WifiapActivity) -> n
+    java.lang.String access$16(com.drawguess.activity.WifiapActivity) -> o
+    java.lang.String access$17(com.drawguess.activity.WifiapActivity) -> p
+    void access$18(com.drawguess.activity.WifiapActivity,java.lang.Class) -> a
+    com.drawguess.activity.WifiapActivity$ApHandler access$19() -> d
+    void access$20(com.drawguess.activity.WifiapActivity) -> q
+    void access$21(com.drawguess.activity.WifiapActivity,java.lang.String) -> b
+com.drawguess.activity.WifiapActivity$1 -> com.drawguess.activity.s:
+    com.drawguess.activity.WifiapActivity this$0 -> a
+    java.lang.Boolean doInBackground$5f8445a4() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+com.drawguess.activity.WifiapActivity$2 -> com.drawguess.activity.t:
+    com.drawguess.activity.WifiapActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+com.drawguess.activity.WifiapActivity$ApHandler -> com.drawguess.activity.u:
+    com.drawguess.activity.WifiapActivity this$0 -> a
+    void handleMessage(android.os.Message) -> handleMessage
+com.drawguess.activity.WifiapActivity$SearchWifiThread -> com.drawguess.activity.v:
+    android.os.Handler handler -> b
+    boolean running -> c
+    java.lang.Thread thread -> d
+    com.drawguess.activity.WifiapActivity this$0 -> a
+    void run() -> run
+    void start() -> a
+    void stop() -> b
+com.drawguess.activity.WifiapActivity$hintDialogOnClick -> com.drawguess.activity.w:
+    com.drawguess.activity.WifiapActivity this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.drawguess.adapter.AvatarAdapter -> com.drawguess.a.a:
+    android.content.Context mContext -> a
+    java.util.List mDatas -> b
+    android.view.LayoutInflater mInflater -> c
+    int getCount() -> getCount
+    java.lang.Object getItem(int) -> getItem
+    long getItemId(int) -> getItemId
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.drawguess.adapter.AvatarAdapter$ViewHolder -> com.drawguess.a.b:
+    android.widget.ImageView ivAvatar -> a
+com.drawguess.adapter.MsgsAdapter -> com.drawguess.a.c:
+    int mAvatarId -> d
+    void setData(java.util.List) -> a
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    int getItemViewType(int) -> getItemViewType
+com.drawguess.adapter.MsgsAdapter$ViewHolder -> com.drawguess.a.d:
+    android.widget.TextView mHtvTimeStampTime -> a
+    android.widget.TextView mTvTextContent -> b
+    android.widget.ImageView mIvLeftAvatar -> c
+    android.widget.ImageView mIvRightAvatar -> d
+    void access$0(com.drawguess.adapter.MsgsAdapter$ViewHolder,android.widget.TextView) -> a
+    void access$1(com.drawguess.adapter.MsgsAdapter$ViewHolder,android.widget.ImageView) -> a
+    void access$2(com.drawguess.adapter.MsgsAdapter$ViewHolder,android.widget.TextView) -> b
+    void access$3(com.drawguess.adapter.MsgsAdapter$ViewHolder,android.widget.ImageView) -> b
+    android.widget.TextView access$4(com.drawguess.adapter.MsgsAdapter$ViewHolder) -> a
+    android.widget.TextView access$5(com.drawguess.adapter.MsgsAdapter$ViewHolder) -> b
+    android.widget.ImageView access$6(com.drawguess.adapter.MsgsAdapter$ViewHolder) -> c
+    android.widget.ImageView access$7(com.drawguess.adapter.MsgsAdapter$ViewHolder) -> d
+com.drawguess.adapter.PlayersAdapter -> com.drawguess.a.e:
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    void setData(java.util.List) -> a
+com.drawguess.adapter.PlayersAdapter$ViewHolder -> com.drawguess.a.f:
+    android.widget.TextView mHtvDevice -> a
+    android.widget.TextView mHtvName -> b
+    android.widget.TextView mHtvTime -> c
+    android.widget.TextView mHtvOrder -> d
+    android.widget.ImageView mIvAvatar -> e
+    android.widget.ImageView mIvGender -> f
+    android.widget.ImageView mIvReady -> g
+    android.widget.LinearLayout mLayoutGender -> h
+    com.drawguess.adapter.PlayersAdapter this$0 -> i
+com.drawguess.adapter.ScoresAdapter -> com.drawguess.a.g:
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    void setData(java.util.List) -> a
+com.drawguess.adapter.ScoresAdapter$ViewHolder -> com.drawguess.a.h:
+    android.widget.TextView mTvName -> a
+    android.widget.TextView mTvScore -> b
+    android.widget.ImageView mIvAvatar -> c
+    com.drawguess.adapter.ScoresAdapter this$0 -> d
+com.drawguess.adapter.WifiapAdapter -> com.drawguess.a.i:
+    boolean isWifiConnected -> a
+    android.content.Context mContext -> b
+    java.util.List mDatas -> c
+    android.view.LayoutInflater mInflater -> d
+    int getCount() -> getCount
+    java.lang.Object getItem(int) -> getItem
+    long getItemId(int) -> getItemId
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    void setData(java.util.List) -> a
+com.drawguess.adapter.WifiapAdapter$ViewHolder -> com.drawguess.a.j:
+    android.widget.TextView desc -> a
+    android.widget.ImageView rssi -> b
+    android.widget.TextView ssid -> c
+com.drawguess.base.ActivitiesManager -> com.drawguess.base.a:
+    java.util.Stack queue -> a
+    void addActivity(com.drawguess.base.BaseActivity) -> a
+    void finishActivity(com.drawguess.base.BaseActivity) -> b
+    void finishAllActivities() -> a
+    void init$faab20d() -> b
+com.drawguess.base.BaseActivity -> com.drawguess.base.BaseActivity:
+    android.app.ActionBar mActionBar -> d
+    java.util.List mAsyncTasks -> e
+    android.content.Context mContext -> f
+    com.drawguess.net.NetManage netManage -> g
+    com.drawguess.interfaces.OnMsgRecListener clientListener -> h
+    com.drawguess.interfaces.OnMsgRecListener serverListener -> i
+    float mDensity -> j
+    com.drawguess.dialog.LoadingDialog mLoadingDialog -> k
+    int mScreenHeight -> l
+    int mScreenWidth -> m
+    void dismissLoadingDialog() -> e
+    void finish() -> finish
+    void onCreate(android.os.Bundle) -> onCreate
+    boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    void onDestroy() -> onDestroy
+    boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    void putAsyncTask(android.os.AsyncTask) -> a
+    void showCustomToast(java.lang.String) -> a
+    void showLoadingDialog(java.lang.String) -> b
+    void showShortToast(int) -> a
+    void startActivity(java.lang.Class) -> a
+    void startActivity(java.lang.Class,android.os.Bundle) -> a
+com.drawguess.base.BaseApplication -> com.drawguess.base.BaseApplication:
+    com.drawguess.base.BaseApplication instance -> b
+    boolean isDebugmode -> a
+    boolean isSlient -> c
+    boolean isVIBRATE -> d
+    android.media.SoundPool notiMediaplayer -> e
+    int notiSoundPoolID -> f
+    android.os.Vibrator notiVibrator -> g
+    boolean isPrintLog -> h
+    com.drawguess.base.BaseApplication getInstance() -> a
+    boolean getSoundFlag() -> b
+    boolean getVibrateFlag() -> c
+    void setSoundFlag(boolean) -> a
+    void setVibrateFlag(boolean) -> b
+    void onCreate() -> onCreate
+    void onLowMemory() -> onLowMemory
+    void onTerminate() -> onTerminate
+com.drawguess.base.BaseDialog -> com.drawguess.base.b:
+    com.drawguess.base.BaseDialog mBaseDialog -> b
+    android.widget.Button mBtnButton1 -> c
+    android.widget.Button mBtnButton2 -> d
+    android.widget.Button mBtnButton3 -> e
+    android.content.Context mContext -> a
+    android.widget.TextView mHtvMessage -> f
+    android.widget.TextView mHtvTitle -> g
+    android.widget.LinearLayout mLayoutBottom -> h
+    android.widget.LinearLayout mLayoutContent -> i
+    android.widget.LinearLayout mLayoutRoot -> j
+    android.widget.LinearLayout mLayoutTitle -> k
+    android.widget.LinearLayout mLayoutTop -> l
+    android.content.DialogInterface$OnClickListener mOnClickListener1 -> m
+    android.content.DialogInterface$OnClickListener mOnClickListener2 -> n
+    android.content.DialogInterface$OnClickListener mOnClickListener3 -> o
+    android.view.View mViewTitleLine -> p
+    com.drawguess.base.BaseDialog getDialog$78659208(android.content.Context,java.lang.CharSequence,java.lang.CharSequence,android.content.DialogInterface$OnClickListener,java.lang.CharSequence,android.content.DialogInterface$OnClickListener) -> a
+    void onClick(android.view.View) -> onClick
+    void setButton1(java.lang.CharSequence,android.content.DialogInterface$OnClickListener) -> a
+    void setButton1Clickable(boolean) -> a
+    void setButton1Text(java.lang.CharSequence) -> a
+    void setButton2(java.lang.CharSequence,android.content.DialogInterface$OnClickListener) -> b
+    void setButton2Clickable(boolean) -> b
+    void setButton3$7a51ddd4() -> a
+    void setDialogContentView$13462e() -> b
+    void setMessage(java.lang.CharSequence) -> b
+    void setTitle(java.lang.CharSequence) -> setTitle
+com.drawguess.base.BaseObjectListAdapter -> com.drawguess.base.c:
+    android.content.Context mContext -> a
+    java.util.List mDatas -> b
+    android.view.LayoutInflater mInflater -> c
+    int getCount() -> getCount
+    java.lang.Object getItem(int) -> getItem
+    long getItemId(int) -> getItemId
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    void setData(java.util.List) -> a
+com.drawguess.base.Constant -> com.drawguess.base.d:
+    boolean IS_FIRST -> a
+    float DENSITY -> b
+    int WIN_X -> c
+    int WIN_Y -> d
+com.drawguess.dialog.ColorDialog -> com.drawguess.b.a:
+    android.content.Context context -> a
+    java.lang.String title -> b
+    int mInitialColor -> c
+    com.drawguess.interfaces.OnColorChangedListener mListener -> d
+    void onCreate(android.os.Bundle) -> onCreate
+    int access$0(com.drawguess.dialog.ColorDialog) -> a
+    com.drawguess.interfaces.OnColorChangedListener access$1(com.drawguess.dialog.ColorDialog) -> b
+com.drawguess.dialog.ColorDialog$ColorPickerView -> com.drawguess.b.b:
+    android.graphics.Paint mPaint -> b
+    android.graphics.Paint mCenterPaint -> c
+    android.graphics.Paint mLinePaint -> d
+    android.graphics.Paint mRectPaint -> e
+    android.graphics.Shader rectShader -> f
+    float rectLeft -> g
+    float rectTop -> h
+    float rectRight -> i
+    float rectBottom -> j
+    int[] mCircleColors -> k
+    int[] mRectColors -> l
+    int mHeight -> m
+    int mWidth -> n
+    float r -> o
+    float centerRadius -> p
+    boolean downInCircle -> q
+    boolean downInRect -> r
+    boolean highlightCenter -> s
+    boolean highlightCenterLittle -> t
+    android.graphics.RectF rf1 -> u
+    android.graphics.RectF rf2 -> v
+    com.drawguess.dialog.ColorDialog this$0 -> a
+    void onDraw(android.graphics.Canvas) -> onDraw
+    boolean dispatchTouchEvent(android.view.MotionEvent) -> dispatchTouchEvent
+    void onMeasure(int,int) -> onMeasure
+    int ave(int,int,float) -> a
+com.drawguess.dialog.ConnWifiDialog -> com.drawguess.b.c:
+    android.widget.CheckBox mCkShowPwd -> b
+    android.widget.EditText mEtConnectPwd -> c
+    android.os.Handler mHandler -> d
+    android.net.wifi.ScanResult mScanResult -> e
+    java.lang.String getWifiPwd() -> c
+    void setScanResult(android.net.wifi.ScanResult) -> a
+    android.content.Context access$0(com.drawguess.dialog.ConnWifiDialog) -> a
+    android.net.wifi.ScanResult access$1(com.drawguess.dialog.ConnWifiDialog) -> b
+    void access$2(com.drawguess.dialog.ConnWifiDialog) -> c
+    android.os.Handler access$3(com.drawguess.dialog.ConnWifiDialog) -> d
+    android.widget.CheckBox access$4(com.drawguess.dialog.ConnWifiDialog) -> e
+    android.widget.EditText access$5(com.drawguess.dialog.ConnWifiDialog) -> f
+com.drawguess.dialog.ConnWifiDialog$1 -> com.drawguess.b.d:
+    com.drawguess.dialog.ConnWifiDialog this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.drawguess.dialog.ConnWifiDialog$2 -> com.drawguess.b.e:
+    com.drawguess.dialog.ConnWifiDialog this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.drawguess.dialog.ConnWifiDialog$3 -> com.drawguess.b.f:
+    com.drawguess.dialog.ConnWifiDialog this$0 -> a
+    void afterTextChanged(android.text.Editable) -> afterTextChanged
+    void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
+    void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
+com.drawguess.dialog.ConnWifiDialog$4 -> com.drawguess.b.g:
+    com.drawguess.dialog.ConnWifiDialog this$0 -> a
+    void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
+com.drawguess.dialog.LoadingDialog -> com.drawguess.b.h:
+    com.drawguess.view.FlippingImageView mFivIcon -> b
+    android.widget.TextView mHtvText -> c
+    java.lang.String mText -> d
+    void dismiss() -> dismiss
+    void setText(java.lang.String) -> a
+com.drawguess.dialog.PaintDialog -> com.drawguess.b.i:
+    com.drawguess.view.ShowPaintView showPaintView -> a
+    android.widget.SeekBar seekAlpha -> b
+    android.widget.SeekBar seekWidth -> c
+    android.widget.TextView textAlpha -> d
+    android.widget.TextView textWidth -> e
+    android.widget.RadioGroup paintStyleGroup -> f
+    android.widget.RadioButton mPencil -> g
+    android.widget.RadioButton mBrush -> h
+    android.widget.RadioButton mCrany -> i
+    android.widget.RadioButton mRelief -> j
+    int paintWidth -> k
+    int paintAlpha -> l
+    int paintStyle -> m
+    int paintColor -> n
+    com.drawguess.interfaces.OnPaintChangedListener mListener -> o
+    void onCreate(android.os.Bundle) -> onCreate
+    void access$0(com.drawguess.dialog.PaintDialog,int) -> a
+    com.drawguess.interfaces.OnPaintChangedListener access$1(com.drawguess.dialog.PaintDialog) -> a
+    int access$2(com.drawguess.dialog.PaintDialog) -> b
+    int access$3(com.drawguess.dialog.PaintDialog) -> c
+    int access$4(com.drawguess.dialog.PaintDialog) -> d
+    com.drawguess.view.ShowPaintView access$5(com.drawguess.dialog.PaintDialog) -> e
+    int access$6(com.drawguess.dialog.PaintDialog) -> f
+    android.widget.TextView access$7(com.drawguess.dialog.PaintDialog) -> g
+    void access$8(com.drawguess.dialog.PaintDialog,int) -> b
+    android.widget.TextView access$9(com.drawguess.dialog.PaintDialog) -> h
+    void access$10(com.drawguess.dialog.PaintDialog,int) -> c
+com.drawguess.dialog.PaintDialog$1 -> com.drawguess.b.j:
+    com.drawguess.dialog.PaintDialog this$0 -> a
+    void onCheckedChanged(android.widget.RadioGroup,int) -> onCheckedChanged
+com.drawguess.dialog.PaintDialog$2 -> com.drawguess.b.k:
+    com.drawguess.dialog.PaintDialog this$0 -> a
+    void onStopTrackingTouch(android.widget.SeekBar) -> onStopTrackingTouch
+    void onStartTrackingTouch(android.widget.SeekBar) -> onStartTrackingTouch
+    void onProgressChanged(android.widget.SeekBar,int,boolean) -> onProgressChanged
+com.drawguess.dialog.PaintDialog$3 -> com.drawguess.b.l:
+    com.drawguess.dialog.PaintDialog this$0 -> a
+    void onStopTrackingTouch(android.widget.SeekBar) -> onStopTrackingTouch
+    void onStartTrackingTouch(android.widget.SeekBar) -> onStartTrackingTouch
+    void onProgressChanged(android.widget.SeekBar,int,boolean) -> onProgressChanged
+com.drawguess.dialog.ShapeDialog -> com.drawguess.b.m:
+    int[] images -> a
+    com.drawguess.interfaces.OnShapeChangedListener mListener -> b
+    java.lang.String[] names -> c
+    com.drawguess.interfaces.OnShapeChangedListener access$0(com.drawguess.dialog.ShapeDialog) -> a
+com.drawguess.dialog.ShapeDialog$1 -> com.drawguess.b.n:
+    com.drawguess.dialog.ShapeDialog this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.drawguess.drawop.OpCopy -> com.drawguess.c.a:
+    com.drawguess.drawop.OpDraw opDraw -> e
+    void Redo() -> a
+    void Undo() -> b
+com.drawguess.drawop.OpDelete -> com.drawguess.c.b:
+    com.drawguess.drawop.OpDraw opDraw -> e
+    void Redo() -> a
+    void Undo() -> b
+com.drawguess.drawop.OpDraw -> com.drawguess.c.c:
+    boolean isDraw -> e
+    android.graphics.Paint paint -> f
+    android.graphics.Path path -> g
+    void draw() -> c
+    android.graphics.Paint getPaint() -> d
+    android.graphics.Path getPath() -> e
+    void Redo() -> a
+    void setIsDraw(boolean) -> a
+    void setPath(android.graphics.Path) -> a
+    void Undo() -> b
+com.drawguess.drawop.OpDraw$Shape -> com.drawguess.c.d:
+    com.drawguess.drawop.OpDraw$Shape FILL -> a
+    com.drawguess.drawop.OpDraw$Shape FREE -> b
+    com.drawguess.drawop.OpDraw$Shape LINE -> c
+    com.drawguess.drawop.OpDraw$Shape OVAL -> d
+    com.drawguess.drawop.OpDraw$Shape RECT -> e
+    com.drawguess.drawop.OpDraw$Shape[] ENUM$VALUES -> f
+    com.drawguess.drawop.OpDraw$Shape[] values() -> values
+    com.drawguess.drawop.OpDraw$Shape valueOf(java.lang.String) -> valueOf
+com.drawguess.drawop.OpFill -> com.drawguess.c.e:
+    int color -> e
+    java.util.LinkedList fillArea -> f
+    boolean isFill -> g
+    boolean isFirst -> h
+    int x -> i
+    int y -> j
+    void draw() -> c
+    void Redo() -> a
+    void redoFill() -> d
+    void Undo() -> b
+com.drawguess.drawop.OpTrans -> com.drawguess.c.f:
+    float angel -> e
+    boolean isRedo -> f
+    android.graphics.Matrix mM -> g
+    android.graphics.Matrix rM -> h
+    android.graphics.Matrix sM -> i
+    android.graphics.Path oldPath -> j
+    android.graphics.Path newPath -> k
+    com.drawguess.drawop.OpDraw opDraw -> l
+    float scale -> m
+    void doMove(float,float) -> a
+    void doRotate(float,float,float) -> a
+    void doScale(float,float,float) -> b
+    void Redo() -> a
+    void setIsRedo$1385ff() -> c
+    void Undo() -> b
+com.drawguess.drawop.Operation -> com.drawguess.c.g:
+    android.graphics.Bitmap bitmap -> a
+    android.graphics.Canvas canvas -> b
+    com.drawguess.drawop.OperationManage opManage -> c
+    com.drawguess.drawop.Operation$Op type -> d
+    void setPro(android.graphics.Canvas,android.graphics.Bitmap,com.drawguess.drawop.OperationManage) -> a
+    void Redo() -> a
+    void Undo() -> b
+com.drawguess.drawop.Operation$Op -> com.drawguess.c.h:
+    com.drawguess.drawop.Operation$Op COPY -> a
+    com.drawguess.drawop.Operation$Op DELETE -> b
+    com.drawguess.drawop.Operation$Op DRAW -> c
+    com.drawguess.drawop.Operation$Op FILL -> d
+    com.drawguess.drawop.Operation$Op TRANS -> e
+    com.drawguess.drawop.Operation$Op[] ENUM$VALUES -> f
+    com.drawguess.drawop.Operation$Op[] values() -> values
+    com.drawguess.drawop.Operation$Op valueOf(java.lang.String) -> valueOf
+com.drawguess.drawop.OperationManage -> com.drawguess.c.i:
+    java.util.LinkedList listDraw -> a
+    com.drawguess.drawop.OperationManage$DrawMode mode -> b
+    java.util.Stack stNowDraw -> c
+    java.util.Stack stOperation -> d
+    java.util.Stack stRecycle -> e
+    void clear() -> a
+    java.util.Iterator getDrawIterator() -> b
+    com.drawguess.drawop.Operation getDrawLast() -> c
+    com.drawguess.drawop.OperationManage$DrawMode getMode() -> d
+    com.drawguess.drawop.OpDraw getNowDraw() -> e
+    com.drawguess.drawop.Operation popDraw() -> f
+    com.drawguess.drawop.Operation popFill() -> g
+    com.drawguess.drawop.Operation popNowDraw() -> h
+    com.drawguess.drawop.Operation popOp() -> i
+    void pushDraw(com.drawguess.drawop.OpDraw) -> a
+    void pushFill(com.drawguess.drawop.OpFill) -> a
+    void pushNowDraw(com.drawguess.drawop.OpDraw) -> b
+    void pushOp(com.drawguess.drawop.Operation) -> a
+    void redo() -> j
+    void setMode(com.drawguess.drawop.OperationManage$DrawMode) -> a
+    void undo() -> k
+com.drawguess.drawop.OperationManage$DrawMode -> com.drawguess.c.j:
+    com.drawguess.drawop.OperationManage$DrawMode ADD -> a
+    com.drawguess.drawop.OperationManage$DrawMode RE -> b
+    com.drawguess.drawop.OperationManage$DrawMode[] ENUM$VALUES -> c
+    com.drawguess.drawop.OperationManage$DrawMode[] values() -> values
+    com.drawguess.drawop.OperationManage$DrawMode valueOf(java.lang.String) -> valueOf
+com.drawguess.interfaces.OnColorChangedListener -> com.drawguess.d.a:
+    void colorChanged(int) -> a
+com.drawguess.interfaces.OnMsgRecListener -> com.drawguess.d.b:
+    void processMessage(com.drawguess.net.MSGProtocol) -> a
+com.drawguess.interfaces.OnPaintChangedListener -> com.drawguess.d.c:
+    void paintChanged(int,int,int) -> a
+com.drawguess.interfaces.OnShapeChangedListener -> com.drawguess.d.d:
+    void shapeChanged(int) -> a
+com.drawguess.msgbean.Avatar -> com.drawguess.msgbean.a:
+    int imageId -> a
+    int getImageId() -> a
+com.drawguess.msgbean.DataDraw -> com.drawguess.msgbean.b:
+    com.drawguess.msgbean.DataDraw$OP_TYPE opType -> a
+    com.drawguess.msgbean.DataDraw$TOUCH_TYPE touchType -> b
+    float data1 -> c
+    float data2 -> d
+    float data3 -> e
+    float data4 -> f
+    com.drawguess.msgbean.DataDraw$OP_TYPE getOpType() -> a
+    com.drawguess.msgbean.DataDraw$TOUCH_TYPE getTouchType() -> b
+    float getData1() -> c
+    float getData2() -> d
+    float getData3() -> e
+    float getData4() -> f
+com.drawguess.msgbean.DataDraw$OP_TYPE -> com.drawguess.msgbean.c:
+    com.drawguess.msgbean.DataDraw$OP_TYPE DRAW -> a
+    com.drawguess.msgbean.DataDraw$OP_TYPE FILL -> b
+    com.drawguess.msgbean.DataDraw$OP_TYPE TRANS -> c
+    com.drawguess.msgbean.DataDraw$OP_TYPE ERASE -> d
+    com.drawguess.msgbean.DataDraw$OP_TYPE PAINT -> e
+    com.drawguess.msgbean.DataDraw$OP_TYPE SHAPE -> f
+    com.drawguess.msgbean.DataDraw$OP_TYPE PACK -> g
+    com.drawguess.msgbean.DataDraw$OP_TYPE UNDO -> h
+    com.drawguess.msgbean.DataDraw$OP_TYPE REDO -> i
+    com.drawguess.msgbean.DataDraw$OP_TYPE CLEAR -> j
+    com.drawguess.msgbean.DataDraw$OP_TYPE EDIT -> k
+    com.drawguess.msgbean.DataDraw$OP_TYPE COPY -> l
+    com.drawguess.msgbean.DataDraw$OP_TYPE DELETE -> m
+    com.drawguess.msgbean.DataDraw$OP_TYPE[] ENUM$VALUES -> n
+    com.drawguess.msgbean.DataDraw$OP_TYPE[] values() -> values
+    com.drawguess.msgbean.DataDraw$OP_TYPE valueOf(java.lang.String) -> valueOf
+com.drawguess.msgbean.DataDraw$TOUCH_TYPE -> com.drawguess.msgbean.d:
+    com.drawguess.msgbean.DataDraw$TOUCH_TYPE DEFAULT -> a
+    com.drawguess.msgbean.DataDraw$TOUCH_TYPE DOWN1 -> b
+    com.drawguess.msgbean.DataDraw$TOUCH_TYPE DOWN2 -> c
+    com.drawguess.msgbean.DataDraw$TOUCH_TYPE MOVE -> d
+    com.drawguess.msgbean.DataDraw$TOUCH_TYPE UP2 -> e
+    com.drawguess.msgbean.DataDraw$TOUCH_TYPE UP1 -> f
+    com.drawguess.msgbean.DataDraw$TOUCH_TYPE[] ENUM$VALUES -> g
+    com.drawguess.msgbean.DataDraw$TOUCH_TYPE[] values() -> values
+    com.drawguess.msgbean.DataDraw$TOUCH_TYPE valueOf(java.lang.String) -> valueOf
+com.drawguess.msgbean.DataGuess -> com.drawguess.msgbean.e:
+    java.lang.String senderIMEI -> a
+    java.lang.String sendTime -> b
+    java.lang.String MsgContent -> c
+    java.lang.String getSenderIMEI() -> a
+    java.lang.String getSendTime() -> b
+    java.lang.String getMsgContent() -> c
+    void setMsgContent(java.lang.String) -> a
+    com.drawguess.msgbean.DataGuess clone() -> d
+    java.lang.Object clone() -> clone
+com.drawguess.msgbean.Entity -> com.drawguess.msgbean.f:
+com.drawguess.msgbean.User -> com.drawguess.msgbean.User:
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    int mAvatar -> a
+    java.lang.String mDevice -> b
+    java.lang.String mGender -> c
+    int mGenderBgId -> d
+    int mGenderId -> e
+    java.lang.String mIMEI -> f
+    java.lang.String mIpaddress -> g
+    java.lang.String mLogintime -> h
+    java.lang.String mNickname -> i
+    int order -> j
+    int score -> k
+    int describeContents() -> describeContents
+    int getAvatar() -> a
+    java.lang.String getDevice() -> b
+    int getGenderBgId() -> c
+    int getGenderId() -> d
+    java.lang.String getIMEI() -> e
+    java.lang.String getLogintime() -> f
+    java.lang.String getNickname() -> g
+    int getOrder() -> h
+    int getScore() -> i
+    void setAvatar(int) -> a
+    void setDevice(java.lang.String) -> a
+    void setGender(java.lang.String) -> b
+    void setIMEI(java.lang.String) -> c
+    void setIpaddress(java.lang.String) -> d
+    void setLogintime(java.lang.String) -> e
+    void setNickname(java.lang.String) -> f
+    void setOrder(int) -> b
+    void setScore(int) -> c
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+com.drawguess.msgbean.User$1 -> com.drawguess.msgbean.g:
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+    java.lang.Object[] newArray(int) -> newArray
+com.drawguess.net.MSGProtocol -> com.drawguess.e.a:
+    com.drawguess.msgbean.Entity addObject -> a
+    java.lang.String addStr -> b
+    com.drawguess.net.MSGProtocol$ADDITION_TYPE addType -> c
+    int commandNo -> d
+    java.lang.String senderIMEI -> e
+    int id -> f
+    int[] $SWITCH_TABLE$com$drawguess$net$MSGProtocol$ADDITION_TYPE -> g
+    com.drawguess.msgbean.Entity getAddObject() -> a
+    java.lang.String getAddStr() -> b
+    com.drawguess.net.MSGProtocol$ADDITION_TYPE getAddType() -> c
+    int getCommandNo() -> d
+    java.lang.String getSenderIMEI() -> e
+    void setId(int) -> a
+    int[] $SWITCH_TABLE$com$drawguess$net$MSGProtocol$ADDITION_TYPE() -> f
+com.drawguess.net.MSGProtocol$ADDITION_TYPE -> com.drawguess.e.b:
+    com.drawguess.net.MSGProtocol$ADDITION_TYPE STRING -> a
+    com.drawguess.net.MSGProtocol$ADDITION_TYPE USER -> b
+    com.drawguess.net.MSGProtocol$ADDITION_TYPE DATADRAW -> c
+    com.drawguess.net.MSGProtocol$ADDITION_TYPE DATAGUESS -> d
+    com.drawguess.net.MSGProtocol$ADDITION_TYPE[] ENUM$VALUES -> e
+    com.drawguess.net.MSGProtocol$ADDITION_TYPE[] values() -> values
+    com.drawguess.net.MSGProtocol$ADDITION_TYPE valueOf(java.lang.String) -> valueOf
+com.drawguess.net.NetManage -> com.drawguess.e.c:
+    java.util.HashMap mServerUsersMap -> a
+    java.util.HashMap mLocalUsersMap -> b
+    com.drawguess.net.NetManage instance -> c
+    android.content.Context mContext -> d
+    int state -> e
+    com.drawguess.net.NetManage$SocketMode sm -> f
+    com.drawguess.net.UdpSocket mUDPListener -> g
+    com.drawguess.net.TcpClient mClient -> h
+    com.drawguess.net.TcpServer mServer -> i
+    java.lang.String serverIp -> j
+    int getState() -> a
+    void setState(int) -> a
+    com.drawguess.net.NetManage getInstance(android.content.Context) -> a
+    java.util.HashMap getLocalUserMap() -> b
+    java.util.HashMap getServerUserMap() -> c
+    void addClientListener(com.drawguess.interfaces.OnMsgRecListener) -> a
+    void addServerListener(com.drawguess.interfaces.OnMsgRecListener) -> b
+    void removeClientListener(com.drawguess.interfaces.OnMsgRecListener) -> c
+    void removeServerListener(com.drawguess.interfaces.OnMsgRecListener) -> d
+    void setSocketMode(com.drawguess.net.NetManage$SocketMode) -> a
+    void createUDP() -> d
+    void createClient() -> e
+    void connectServer(java.lang.String) -> a
+    void startServer() -> f
+    void startClient() -> g
+    void createServer() -> h
+    boolean findServer$1349f3() -> i
+    java.lang.String getServerIp() -> j
+    com.drawguess.net.MSGProtocol packageMsg(int,java.lang.Object) -> c
+    void sendToAllClient(int,java.lang.Object) -> a
+    void sendToAllExClient(int,java.lang.Object,java.lang.String) -> a
+    void sendToClient(int,java.lang.Object,java.lang.String) -> b
+    void sendToServer(int,java.lang.Object) -> b
+    void stopUdp() -> k
+com.drawguess.net.NetManage$SocketMode -> com.drawguess.e.d:
+    com.drawguess.net.NetManage$SocketMode TCP -> a
+    com.drawguess.net.NetManage$SocketMode UDP -> b
+    com.drawguess.net.NetManage$SocketMode[] ENUM$VALUES -> c
+    com.drawguess.net.NetManage$SocketMode[] values() -> values
+    com.drawguess.net.NetManage$SocketMode valueOf(java.lang.String) -> valueOf
+com.drawguess.net.TcpClient -> com.drawguess.e.e:
+    com.drawguess.net.TcpClient instance -> a
+    byte[] sendBuffer -> b
+    byte[] receiveBuffer -> c
+    java.io.OutputStream output -> d
+    java.io.InputStream input -> e
+    java.io.DataOutputStream dataOutput -> f
+    java.io.DataInputStream dataInput -> g
+    java.lang.Thread connectThread -> h
+    com.drawguess.net.TcpClient$recDataThread receiveThread -> i
+    com.drawguess.net.TcpClient$sendDataThread sendThread -> j
+    java.util.concurrent.ArrayBlockingQueue msgQueue -> k
+    java.net.Socket socket -> l
+    java.util.List mListenerList -> m
+    java.lang.String serverIp -> n
+    boolean isThreadRunning -> o
+    void addMsgListener(com.drawguess.interfaces.OnMsgRecListener) -> a
+    void removeMsgListener(com.drawguess.interfaces.OnMsgRecListener) -> b
+    com.drawguess.net.TcpClient getInstance$17db1834() -> a
+    void start() -> b
+    void connect(java.lang.String) -> a
+    void run() -> run
+    void sendToServer(com.drawguess.net.MSGProtocol) -> a
+    boolean access$0(com.drawguess.net.TcpClient) -> a
+    java.io.DataInputStream access$1(com.drawguess.net.TcpClient) -> b
+    byte[] access$2() -> c
+    void access$3$7d2403d8(com.drawguess.net.TcpClient) -> c
+    java.net.Socket access$4(com.drawguess.net.TcpClient) -> d
+    void access$5$7b1aeccd(com.drawguess.net.TcpClient) -> e
+    void access$6$6f7618b5(com.drawguess.net.TcpClient) -> f
+    void access$7(byte[]) -> a
+    java.util.List access$8(com.drawguess.net.TcpClient) -> g
+    java.util.concurrent.ArrayBlockingQueue access$9(com.drawguess.net.TcpClient) -> h
+    void access$10(byte[]) -> b
+    java.io.DataOutputStream access$11(com.drawguess.net.TcpClient) -> i
+    byte[] access$12() -> d
+    void access$13$27eccc05(com.drawguess.net.TcpClient) -> j
+com.drawguess.net.TcpClient$recDataThread -> com.drawguess.e.f:
+    java.lang.String saveStr -> a
+    com.drawguess.net.TcpClient this$0 -> b
+    void run() -> run
+com.drawguess.net.TcpClient$sendDataThread -> com.drawguess.e.g:
+    com.drawguess.net.TcpClient this$0 -> a
+    void run() -> run
+com.drawguess.net.TcpServer -> com.drawguess.e.h:
+    java.util.ArrayList msgCacheList -> a
+    int msgId -> b
+    com.drawguess.net.TcpServer instance -> c
+    java.util.List threadList -> d
+    java.lang.Thread receiveThread -> e
+    java.net.ServerSocket serverSocket -> f
+    java.util.List mListenerList -> g
+    boolean isThreadRunning -> h
+    void addMsgListener(com.drawguess.interfaces.OnMsgRecListener) -> a
+    void removeMsgListener(com.drawguess.interfaces.OnMsgRecListener) -> b
+    com.drawguess.net.TcpServer getInstance$5ad34bbc() -> a
+    void start() -> b
+    void run() -> run
+    void sendToAllClient(com.drawguess.net.MSGProtocol) -> a
+    void sendToAllExClient(com.drawguess.net.MSGProtocol,java.lang.String) -> a
+    void sendToClient(com.drawguess.net.MSGProtocol,java.lang.String) -> b
+    boolean access$0(com.drawguess.net.TcpServer) -> a
+    void access$1$31673cb0(com.drawguess.net.TcpServer) -> b
+    void access$2$45dcfbcb(com.drawguess.net.TcpServer) -> c
+    java.util.List access$3(com.drawguess.net.TcpServer) -> d
+    java.util.List access$4(com.drawguess.net.TcpServer) -> e
+com.drawguess.net.TcpServer$ServerThread -> com.drawguess.e.i:
+    java.net.Socket client -> b
+    java.io.DataOutputStream dataOutPut -> c
+    java.io.DataInputStream dataInPut -> d
+    byte[] receiveBuffer -> e
+    byte[] sendBuffer -> f
+    java.lang.String imei -> g
+    com.drawguess.net.TcpServer this$0 -> a
+    java.lang.String getIMEI() -> a
+    void sendData(com.drawguess.net.MSGProtocol) -> a
+    void run() -> run
+com.drawguess.net.UdpSocket -> com.drawguess.e.j:
+    com.drawguess.net.UdpSocket instance -> a
+    byte[] receiveBuffer -> b
+    byte[] sendBuffer -> c
+    java.net.DatagramPacket sendDatagramPacket -> d
+    java.net.DatagramSocket UDPSocket -> e
+    boolean isThreadRunning -> f
+    java.util.List mListenerList -> g
+    java.net.DatagramPacket receiveDatagramPacket -> h
+    java.lang.Thread receiveUDPThread -> i
+    java.lang.String serverIp -> j
+    java.lang.String getServerIp() -> a
+    void start() -> b
+    void stop() -> c
+    void connectUDPSocket() -> d
+    void run() -> run
+    void notifiBroad() -> e
+    com.drawguess.net.UdpSocket getInstance$c66be54() -> f
+    void sendUDPdata(int,java.lang.String,java.lang.Object) -> a
+    void sendUDPdata(com.drawguess.net.MSGProtocol,java.lang.String) -> a
+    byte[] access$0() -> g
+    void access$1(java.net.DatagramPacket) -> a
+    java.net.DatagramSocket access$2() -> h
+    java.net.DatagramPacket access$3() -> i
+com.drawguess.net.UdpSocket$SendThread -> com.drawguess.e.k:
+    boolean SEND_FLAG -> b
+    java.lang.String targetIP -> c
+    com.drawguess.net.UdpSocket this$0 -> a
+    void run() -> run
+com.drawguess.sql.DBHelper -> com.drawguess.f.a:
+    java.lang.String getTableName() -> a
+    void onCreate(android.database.sqlite.SQLiteDatabase) -> onCreate
+    void onUpgrade(android.database.sqlite.SQLiteDatabase,int,int) -> onUpgrade
+com.drawguess.sql.DBOperate -> com.drawguess.f.b:
+    com.drawguess.sql.DBHelper userSQLHelper -> a
+    android.database.sqlite.SQLiteDatabase userDataBase -> b
+    void close() -> a
+    void add(byte[],byte[]) -> a
+    void createTable() -> b
+    com.drawguess.sql.WordInfo getRandomWord(long) -> a
+com.drawguess.sql.WordInfo -> com.drawguess.f.c:
+    byte[] word -> a
+    byte[] kind -> b
+    byte[] getWord() -> a
+    byte[] getKind() -> b
+com.drawguess.util.DataUtils -> com.drawguess.g.a:
+    java.lang.String FORMATTIMESTR -> a
+    java.lang.String getBetweentime(java.lang.String) -> a
+    java.lang.String getNowtime() -> a
+com.drawguess.util.EncryptUtils -> com.drawguess.g.b:
+    byte[] encrypt(byte[],java.lang.String) -> a
+    byte[] decrypt(byte[],java.lang.String) -> b
+com.drawguess.util.ImageUtils -> com.drawguess.g.c:
+    int getImageID(java.lang.String) -> a
+com.drawguess.util.JsonUtils -> com.drawguess.g.d:
+    java.lang.Object getObject(java.lang.String,java.lang.Class) -> a
+com.drawguess.util.LogUtils -> com.drawguess.g.e:
+    boolean isShow -> a
+    void e(java.lang.String,java.lang.String) -> a
+    void i(java.lang.String,java.lang.String) -> b
+    void setLogStatus(boolean) -> a
+com.drawguess.util.SdDataUtils -> com.drawguess.g.f:
+    android.content.SharedPreferences$Editor mEditor -> a
+    android.content.SharedPreferences mSP -> b
+    int getAvatarId() -> a
+    android.content.SharedPreferences$Editor getEditor() -> b
+    java.lang.String getGender() -> c
+    boolean getIsFirst() -> d
+    java.lang.String getLogintime() -> e
+    java.lang.String getNickname() -> f
+com.drawguess.util.SessionUtils -> com.drawguess.g.g:
+    com.drawguess.msgbean.User localUserInfo -> a
+    java.util.HashMap mlocalUserSession -> b
+    void clearSession() -> a
+    int getAvatar() -> b
+    java.lang.String getIMEI() -> c
+    java.lang.String getLocalIPaddress() -> d
+    com.drawguess.msgbean.User getLocalUserInfo() -> e
+    java.lang.String getNickname() -> f
+    int getOrder() -> g
+    boolean isLocalUser(java.lang.String) -> a
+    void setAvatar(int) -> a
+    void setDevice(java.lang.String) -> b
+    void setGender(java.lang.String) -> c
+    void setIMEI(java.lang.String) -> d
+    void setIsClient(boolean) -> a
+    void setLocalIPaddress(java.lang.String) -> e
+    void setLoginTime(java.lang.String) -> f
+    void setNickname(java.lang.String) -> g
+    void setOrder(int) -> b
+    void setServerIPaddress(java.lang.String) -> h
+com.drawguess.util.TextUtils -> com.drawguess.g.h:
+    boolean isNull(android.widget.EditText) -> a
+com.drawguess.util.TimerUtils -> com.drawguess.g.i:
+    int mCount -> a
+    boolean mExitFlag -> b
+    int mSleepTime -> c
+    java.lang.Thread mThread -> d
+    int mTimeOutCount -> e
+    int getCount() -> c
+    void doTimeOutWork() -> a
+    void doTimerCheckWork() -> b
+    void exit() -> d
+    void start$255f295(int) -> a
+    boolean access$0(com.drawguess.util.TimerUtils) -> a
+    int access$1(com.drawguess.util.TimerUtils) -> b
+    void access$2(com.drawguess.util.TimerUtils,int) -> a
+    int access$3(com.drawguess.util.TimerUtils) -> c
+    int access$4(com.drawguess.util.TimerUtils) -> d
+com.drawguess.util.TimerUtils$1 -> com.drawguess.g.j:
+    com.drawguess.util.TimerUtils this$0 -> a
+    void run() -> run
+com.drawguess.util.TypeUtils -> com.drawguess.g.k:
+    java.lang.String cListToString(java.util.List) -> a
+    java.util.List cStringToList(java.lang.String) -> a
+com.drawguess.util.WifiUtils -> com.drawguess.g.l:
+    android.content.Context mContext -> a
+    android.net.wifi.WifiManager mWifiManager -> b
+    void closeWifiAp() -> a
+    boolean connectWifi(java.lang.String,java.lang.String,com.drawguess.util.WifiUtils$WifiCipherType) -> a
+    java.lang.String getApSSID() -> b
+    java.lang.String getBSSID() -> c
+    java.lang.String getLocalIPAddress() -> d
+    java.util.List getScanResults() -> e
+    java.lang.String getServerIPAddress() -> f
+    java.lang.String getSSID() -> g
+    int getWifiApStateInt() -> h
+    java.lang.String intToIp(int) -> a
+    android.net.wifi.WifiConfiguration isExsits(java.lang.String) -> a
+    boolean isWifiApEnabled() -> i
+    boolean isWifiConnect() -> j
+    boolean isWifiEnabled() -> k
+    void OpenWifi() -> l
+    void startScan() -> m
+    void startWifiAp(java.lang.String,java.lang.String,android.os.Handler) -> a
+com.drawguess.util.WifiUtils$1 -> com.drawguess.g.m:
+    android.os.Handler val$handler -> a
+    void doTimeOutWork() -> a
+    void doTimerCheckWork() -> b
+com.drawguess.util.WifiUtils$WifiCipherType -> com.drawguess.g.n:
+    com.drawguess.util.WifiUtils$WifiCipherType WIFICIPHER_INVALID -> a
+    com.drawguess.util.WifiUtils$WifiCipherType WIFICIPHER_NOPASS -> b
+    com.drawguess.util.WifiUtils$WifiCipherType WIFICIPHER_WEP -> c
+    com.drawguess.util.WifiUtils$WifiCipherType WIFICIPHER_WPA -> d
+    com.drawguess.util.WifiUtils$WifiCipherType[] ENUM$VALUES -> e
+    com.drawguess.util.WifiUtils$WifiCipherType[] values() -> values
+    com.drawguess.util.WifiUtils$WifiCipherType valueOf(java.lang.String) -> valueOf
+com.drawguess.view.DrawView -> com.drawguess.view.DrawView:
+    com.drawguess.net.NetManage netManage -> a
+    android.graphics.Paint bmpPaint -> b
+    android.graphics.Bitmap cacheBitmap -> c
+    android.graphics.Bitmap earlyBitmap -> d
+    android.graphics.Canvas cacheCanvas -> e
+    com.drawguess.view.DrawView$DrawState ds -> f
+    int EraseWidth -> g
+    boolean isMove -> h
+    boolean isFirstMove -> i
+    float l -> j
+    float ls -> k
+    float l1 -> l
+    float l2 -> m
+    int mode -> n
+    float moveX -> o
+    float moveY -> p
+    float mX -> q
+    float mY -> r
+    com.drawguess.drawop.OperationManage opManage -> s
+    com.drawguess.drawop.OpDraw opDraw -> t
+    com.drawguess.drawop.OpTrans opTrans -> u
+    android.graphics.Paint paint -> v
+    int paintColor -> w
+    int paintWidth -> x
+    int paintAlpha -> y
+    int paintStyle -> z
+    android.graphics.Path path -> A
+    android.graphics.PaintFlagsDrawFilter pfd -> B
+    float px -> C
+    float py -> D
+    float q1 -> E
+    float q2 -> F
+    com.drawguess.drawop.OpDraw$Shape shape -> G
+    long startTime -> H
+    float suol -> I
+    float suols -> J
+    int wx -> K
+    int hy -> L
+    int[] $SWITCH_TABLE$com$drawguess$view$DrawView$DrawState -> M
+    int[] $SWITCH_TABLE$com$drawguess$drawop$Operation$Op -> N
+    int[] $SWITCH_TABLE$com$drawguess$drawop$OpDraw$Shape -> O
+    int[] $SWITCH_TABLE$com$drawguess$msgbean$DataDraw$TOUCH_TYPE -> P
+    boolean dispatchTouchEvent(android.view.MotionEvent) -> dispatchTouchEvent
+    void drawOp(com.drawguess.drawop.Operation) -> a
+    void initBitmap() -> o
+    void saveCacheBitmap() -> p
+    void onDraw(android.graphics.Canvas) -> onDraw
+    int getWX() -> a
+    int getHY() -> b
+    int getPaintColor() -> c
+    int getPaintWidth() -> d
+    int getPaintStyle() -> e
+    int getPaintAlpha() -> f
+    void setNetManage(com.drawguess.net.NetManage) -> a
+    void setClear() -> g
+    void setPaintColor(int) -> a
+    void setCopy() -> h
+    void setDelete() -> i
+    void setEraser(boolean) -> a
+    void setPack() -> j
+    void setPaintAlpha(int) -> b
+    void setPaintWidth(int) -> c
+    void setPaintStyle(int) -> d
+    void setRedo() -> k
+    void setSave() -> l
+    void setShape(com.drawguess.drawop.OpDraw$Shape) -> a
+    boolean setTrans() -> m
+    void setUndo() -> n
+    void doOperation(com.drawguess.msgbean.DataDraw$TOUCH_TYPE,float,float,float,float) -> a
+    void doDraw$2ce17fc4(com.drawguess.msgbean.DataDraw$TOUCH_TYPE,float,float) -> a
+    void doTrans(com.drawguess.msgbean.DataDraw$TOUCH_TYPE,float,float,float,float) -> b
+    int[] $SWITCH_TABLE$com$drawguess$view$DrawView$DrawState() -> q
+    int[] $SWITCH_TABLE$com$drawguess$drawop$Operation$Op() -> r
+    int[] $SWITCH_TABLE$com$drawguess$drawop$OpDraw$Shape() -> s
+    int[] $SWITCH_TABLE$com$drawguess$msgbean$DataDraw$TOUCH_TYPE() -> t
+com.drawguess.view.DrawView$DrawState -> com.drawguess.view.a:
+    com.drawguess.view.DrawView$DrawState Draw -> a
+    com.drawguess.view.DrawView$DrawState Trans -> b
+    com.drawguess.view.DrawView$DrawState[] ENUM$VALUES -> c
+    com.drawguess.view.DrawView$DrawState[] values() -> values
+    com.drawguess.view.DrawView$DrawState valueOf(java.lang.String) -> valueOf
+com.drawguess.view.FlippingImageView -> com.drawguess.view.FlippingImageView:
+    com.drawguess.view.RotateAnimation mAnimation -> a
+    boolean mIsHasAnimation -> b
+    void clearRotateAnimation() -> b
+    void onAttachedToWindow() -> onAttachedToWindow
+    void onDetachedFromWindow() -> onDetachedFromWindow
+    void onSizeChanged(int,int,int,int) -> onSizeChanged
+    void onVisibilityChanged(android.view.View,int) -> onVisibilityChanged
+    void setRotateAnimation() -> c
+    void startAnimation() -> a
+com.drawguess.view.FrameAnimationController -> com.drawguess.view.b:
+    android.os.Handler mHandler -> a
+    void requestAnimationFrame(java.lang.Runnable) -> a
+com.drawguess.view.FrameAnimationController$AnimationHandler -> com.drawguess.view.c:
+    void handleMessage(android.os.Message) -> handleMessage
+com.drawguess.view.MultiListView -> com.drawguess.view.MultiListView:
+    android.view.animation.RotateAnimation mArrowAnim -> a
+    android.widget.ImageView mArrowImageView -> b
+    android.view.animation.RotateAnimation mArrowReverseAnim -> c
+    boolean mCanLoadMore -> d
+    boolean mCanRefresh -> e
+    int mCount -> f
+    android.widget.ProgressBar mEndLoadProgressBar -> g
+    android.widget.TextView mEndLoadTipsTextView -> h
+    android.view.View mEndRootView -> i
+    int mEndState -> j
+    int mFirstItemIndex -> k
+    int mHeadState -> l
+    android.widget.LinearLayout mHeadView -> m
+    int mHeadViewHeight -> n
+    android.view.LayoutInflater mInflater -> o
+    boolean mIsAutoLoadMore -> p
+    boolean mIsBack -> q
+    boolean mIsMoveToFirstItemAfterRefresh -> r
+    boolean mIsRecored -> s
+    int mLastItemIndex -> t
+    android.widget.TextView mLastUpdatedTextView -> u
+    com.drawguess.view.MultiListView$OnLoadMoreListener mLoadMoreListener -> v
+    android.widget.ProgressBar mProgressBar -> w
+    com.drawguess.view.MultiListView$OnRefreshListener mRefreshListener -> x
+    int mStartY -> y
+    android.widget.TextView mTipsTextView -> z
+    void changeEndViewByState() -> b
+    void changeHeaderViewByState() -> c
+    void init(android.content.Context) -> a
+    void onLoadMore() -> d
+    void onRefreshComplete() -> a
+    void onScroll(android.widget.AbsListView,int,int,int) -> onScroll
+    void onScrollStateChanged(android.widget.AbsListView,int) -> onScrollStateChanged
+    boolean onTouchEvent(android.view.MotionEvent) -> onTouchEvent
+    void setAdapter(android.widget.BaseAdapter) -> a
+    void setOnRefreshListener(com.drawguess.view.MultiListView$OnRefreshListener) -> a
+com.drawguess.view.MultiListView$OnLoadMoreListener -> com.drawguess.view.d:
+com.drawguess.view.MultiListView$OnRefreshListener -> com.drawguess.view.e:
+    void onRefresh() -> a
+com.drawguess.view.RotateAnimation -> com.drawguess.view.f:
+    android.graphics.Camera mCamera -> a
+    float mCenterX -> b
+    float mCenterY -> c
+    com.drawguess.view.RotateAnimation$Mode mMode -> d
+    void applyTransformation(float,android.view.animation.Transformation) -> applyTransformation
+    void initialize(int,int,int,int) -> initialize
+com.drawguess.view.RotateAnimation$Mode -> com.drawguess.view.g:
+    com.drawguess.view.RotateAnimation$Mode X -> a
+    com.drawguess.view.RotateAnimation$Mode Y -> b
+    com.drawguess.view.RotateAnimation$Mode Z -> c
+    com.drawguess.view.RotateAnimation$Mode[] ENUM$VALUES -> d
+    com.drawguess.view.RotateAnimation$Mode[] values() -> values
+    com.drawguess.view.RotateAnimation$Mode valueOf(java.lang.String) -> valueOf
+com.drawguess.view.SettingSwitchButton -> com.drawguess.view.SettingSwitchButton:
+    int MAX_ALPHA -> a
+    float EXTENDED_OFFSET_Y -> b
+    int mAlpha -> c
+    float mAnimatedVelocity -> d
+    boolean mAnimating -> e
+    float mAnimationPosition -> f
+    android.graphics.Bitmap mBottom -> g
+    boolean mBroadcasting -> h
+    float mBtnInitPos -> i
+    android.graphics.Bitmap mBtnNormal -> j
+    float mBtnOffPos -> k
+    float mBtnOnPos -> l
+    float mBtnPos -> m
+    android.graphics.Bitmap mBtnPressed -> n
+    float mBtnWidth -> o
+    boolean mChecked -> p
+    int mClickTimeout -> q
+    android.graphics.Bitmap mCurBtnPic -> r
+    float mExtendOffsetY -> s
+    float mFirstDownX -> t
+    float mFirstDownY -> u
+    android.graphics.Bitmap mFrame -> v
+    android.graphics.Bitmap mMask -> w
+    float mMaskHeight -> x
+    float mMaskWidth -> y
+    android.widget.CompoundButton$OnCheckedChangeListener mOnCheckedChangeListener -> z
+    android.widget.CompoundButton$OnCheckedChangeListener mOnCheckedChangeWidgetListener -> A
+    android.graphics.Paint mPaint -> B
+    android.view.ViewParent mParent -> C
+    com.drawguess.view.SettingSwitchButton$PerformClick mPerformClick -> D
+    float mRealPos -> E
+    android.graphics.RectF mSaveLayerRectF -> F
+    int mTouchSlop -> G
+    boolean mTurningOn -> H
+    float mVelocity -> I
+    android.graphics.PorterDuffXfermode mXfermode -> J
+    float VELOCITY -> K
+    float getRealPos(float) -> a
+    boolean isChecked() -> isChecked
+    void onDraw(android.graphics.Canvas) -> onDraw
+    void onMeasure(int,int) -> onMeasure
+    boolean onTouchEvent(android.view.MotionEvent) -> onTouchEvent
+    boolean performClick() -> performClick
+    void setChecked(boolean) -> setChecked
+    void setCheckedDelayed(boolean) -> a
+    void setEnabled(boolean) -> setEnabled
+    void setOnCheckedChangeListener(android.widget.CompoundButton$OnCheckedChangeListener) -> setOnCheckedChangeListener
+    void startAnimation(boolean) -> b
+    void toggle() -> toggle
+    boolean access$0(com.drawguess.view.SettingSwitchButton) -> a
+    void access$1(com.drawguess.view.SettingSwitchButton) -> b
+com.drawguess.view.SettingSwitchButton$1 -> com.drawguess.view.h:
+    com.drawguess.view.SettingSwitchButton this$0 -> a
+    boolean val$checked -> b
+    void run() -> run
+com.drawguess.view.SettingSwitchButton$PerformClick -> com.drawguess.view.i:
+    com.drawguess.view.SettingSwitchButton this$0 -> a
+    void run() -> run
+com.drawguess.view.SettingSwitchButton$SwitchAnimation -> com.drawguess.view.j:
+    com.drawguess.view.SettingSwitchButton this$0 -> a
+    void run() -> run
+com.drawguess.view.ShowPaintView -> com.drawguess.view.ShowPaintView:
+    int mHeight -> a
+    int mWidth -> b
+    int hX -> c
+    int hY -> d
+    android.graphics.Path mPath -> e
+    android.graphics.Paint mPaint -> f
+    android.graphics.Paint rectPaint -> g
+    android.graphics.Paint linePaint -> h
+    void init() -> a
+    void setPaint(int,int,int,int) -> a
+    void onDraw(android.graphics.Canvas) -> onDraw
+    void onMeasure(int,int) -> onMeasure
+com.drawguess.wifiap.WifiapBroadcast -> com.drawguess.wifiap.WifiapBroadcast:
+    com.drawguess.wifiap.WifiapBroadcast$NetWorkChangeListener mListener -> a
+    android.net.NetworkInfo mNetworkInfo -> b
+    void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.drawguess.wifiap.WifiapBroadcast$NetWorkChangeListener -> com.drawguess.wifiap.a:
+    void WifiConnected() -> b
+    void wifiStatusChange() -> c
+com.squareup.picasso.Action -> com.b.a.a:
+    com.squareup.picasso.Picasso picasso -> a
+    com.squareup.picasso.Request request -> b
+    java.lang.ref.WeakReference target -> c
+    boolean noFade -> d
+    int memoryPolicy -> e
+    int networkPolicy -> f
+    int errorResId -> g
+    android.graphics.drawable.Drawable errorDrawable -> h
+    java.lang.String key -> i
+    java.lang.Object tag -> j
+    boolean willReplay -> k
+    boolean cancelled -> l
+    void complete(android.graphics.Bitmap,com.squareup.picasso.Picasso$LoadedFrom) -> a
+    void error() -> a
+    void cancel() -> b
+    java.lang.Object getTarget() -> c
+com.squareup.picasso.Action$RequestWeakReference -> com.b.a.b:
+    com.squareup.picasso.Action action -> a
+com.squareup.picasso.AssetRequestHandler -> com.b.a.c:
+    int ASSET_PREFIX_LENGTH -> a
+    android.content.res.AssetManager assetManager -> b
+    boolean canHandleRequest(com.squareup.picasso.Request) -> a
+    com.squareup.picasso.RequestHandler$Result load$71fa0c91(com.squareup.picasso.Request) -> b
+com.squareup.picasso.BitmapHunter -> com.b.a.d:
+    java.lang.Object DECODE_LOCK -> t
+    java.lang.ThreadLocal NAME_BUILDER -> u
+    java.util.concurrent.atomic.AtomicInteger SEQUENCE_GENERATOR -> v
+    com.squareup.picasso.RequestHandler ERRORING_HANDLER -> w
+    int sequence -> a
+    com.squareup.picasso.Picasso picasso -> b
+    com.squareup.picasso.Dispatcher dispatcher -> c
+    com.squareup.picasso.Cache cache -> d
+    com.squareup.picasso.Stats stats -> e
+    java.lang.String key -> f
+    com.squareup.picasso.Request data -> g
+    int memoryPolicy -> h
+    int networkPolicy -> i
+    com.squareup.picasso.RequestHandler requestHandler -> j
+    com.squareup.picasso.Action action -> k
+    java.util.List actions -> l
+    android.graphics.Bitmap result -> m
+    java.util.concurrent.Future future -> n
+    com.squareup.picasso.Picasso$LoadedFrom loadedFrom -> o
+    java.lang.Exception exception -> p
+    int exifRotation -> q
+    int retryCount -> r
+    com.squareup.picasso.Picasso$Priority priority -> s
+    void run() -> run
+    android.graphics.Bitmap hunt() -> n
+    void attach(com.squareup.picasso.Action) -> a
+    void detach(com.squareup.picasso.Action) -> b
+    boolean cancel() -> a
+    boolean isCancelled() -> b
+    boolean shouldRetry$552f0f64(android.net.NetworkInfo) -> a
+    boolean supportsReplay() -> c
+    android.graphics.Bitmap getResult() -> d
+    java.lang.String getKey() -> e
+    int getMemoryPolicy() -> f
+    com.squareup.picasso.Request getData() -> g
+    com.squareup.picasso.Action getAction() -> h
+    com.squareup.picasso.Picasso getPicasso() -> i
+    java.util.List getActions() -> j
+    java.lang.Exception getException() -> k
+    com.squareup.picasso.Picasso$LoadedFrom getLoadedFrom() -> l
+    com.squareup.picasso.Picasso$Priority getPriority() -> m
+    com.squareup.picasso.BitmapHunter forRequest(com.squareup.picasso.Picasso,com.squareup.picasso.Dispatcher,com.squareup.picasso.Cache,com.squareup.picasso.Stats,com.squareup.picasso.Action) -> a
+    android.graphics.Bitmap applyCustomTransformations(java.util.List,android.graphics.Bitmap) -> a
+    boolean shouldResize(boolean,int,int,int,int) -> a
+com.squareup.picasso.BitmapHunter$1 -> com.b.a.e:
+    java.lang.Object initialValue() -> initialValue
+com.squareup.picasso.BitmapHunter$2 -> com.b.a.f:
+    boolean canHandleRequest(com.squareup.picasso.Request) -> a
+    com.squareup.picasso.RequestHandler$Result load$71fa0c91(com.squareup.picasso.Request) -> b
+com.squareup.picasso.BitmapHunter$3 -> com.b.a.g:
+    com.squareup.picasso.Transformation val$transformation -> a
+    java.lang.RuntimeException val$e -> b
+    void run() -> run
+com.squareup.picasso.BitmapHunter$4 -> com.b.a.h:
+    java.lang.StringBuilder val$builder -> a
+    void run() -> run
+com.squareup.picasso.BitmapHunter$5 -> com.b.a.i:
+    com.squareup.picasso.Transformation val$transformation -> a
+    void run() -> run
+com.squareup.picasso.BitmapHunter$6 -> com.b.a.j:
+    com.squareup.picasso.Transformation val$transformation -> a
+    void run() -> run
+com.squareup.picasso.Cache -> com.b.a.k:
+    com.squareup.picasso.Cache NONE -> a
+    android.graphics.Bitmap get(java.lang.String) -> a
+    void set(java.lang.String,android.graphics.Bitmap) -> a
+    int size() -> a
+    int maxSize() -> b
+com.squareup.picasso.Cache$1 -> com.b.a.l:
+    android.graphics.Bitmap get(java.lang.String) -> a
+    void set(java.lang.String,android.graphics.Bitmap) -> a
+    int size() -> a
+    int maxSize() -> b
+com.squareup.picasso.Callback -> com.b.a.m:
+com.squareup.picasso.ContactsPhotoRequestHandler -> com.b.a.n:
+    android.content.UriMatcher matcher -> b
+    android.content.Context context -> a
+    boolean canHandleRequest(com.squareup.picasso.Request) -> a
+    com.squareup.picasso.RequestHandler$Result load$71fa0c91(com.squareup.picasso.Request) -> b
+com.squareup.picasso.ContentStreamRequestHandler -> com.b.a.o:
+    android.content.Context context -> a
+    boolean canHandleRequest(com.squareup.picasso.Request) -> a
+    com.squareup.picasso.RequestHandler$Result load$71fa0c91(com.squareup.picasso.Request) -> b
+    java.io.InputStream getInputStream(com.squareup.picasso.Request) -> c
+com.squareup.picasso.DeferredRequestCreator -> com.b.a.p:
+    com.squareup.picasso.RequestCreator creator -> a
+    java.lang.ref.WeakReference target -> b
+    com.squareup.picasso.Callback callback -> c
+    boolean onPreDraw() -> onPreDraw
+    void cancel() -> a
+com.squareup.picasso.Dispatcher -> com.b.a.q:
+    com.squareup.picasso.Dispatcher$DispatcherThread dispatcherThread -> a
+    android.content.Context context -> b
+    java.util.concurrent.ExecutorService service -> c
+    com.squareup.picasso.Downloader downloader -> d
+    java.util.Map hunterMap -> e
+    java.util.Map failedActions -> f
+    java.util.Map pausedActions -> g
+    java.util.Set pausedTags -> h
+    android.os.Handler handler -> i
+    android.os.Handler mainThreadHandler -> j
+    com.squareup.picasso.Cache cache -> k
+    com.squareup.picasso.Stats stats -> l
+    java.util.List batch -> m
+    com.squareup.picasso.Dispatcher$NetworkBroadcastReceiver receiver -> n
+    boolean scansNetworkChanges -> o
+    boolean airplaneMode -> p
+    void dispatchRetry(com.squareup.picasso.BitmapHunter) -> a
+    void dispatchFailed(com.squareup.picasso.BitmapHunter) -> b
+    void performSubmit(com.squareup.picasso.Action,boolean) -> a
+    void performResumeTag(java.lang.Object) -> a
+    void performRetry(com.squareup.picasso.BitmapHunter) -> c
+    void performComplete(com.squareup.picasso.BitmapHunter) -> d
+    void performBatchComplete() -> a
+    void performError(com.squareup.picasso.BitmapHunter,boolean) -> a
+    void performNetworkStateChange(android.net.NetworkInfo) -> a
+    void markForReplay(com.squareup.picasso.BitmapHunter) -> e
+    void markForReplay(com.squareup.picasso.Action) -> a
+    void batch(com.squareup.picasso.BitmapHunter) -> f
+    void logBatch(java.util.List) -> a
+com.squareup.picasso.Dispatcher$DispatcherHandler -> com.b.a.r:
+    com.squareup.picasso.Dispatcher dispatcher -> a
+    void handleMessage(android.os.Message) -> handleMessage
+com.squareup.picasso.Dispatcher$DispatcherHandler$1 -> com.b.a.s:
+    android.os.Message val$msg -> a
+    com.squareup.picasso.Dispatcher$DispatcherHandler this$0 -> b
+    void run() -> run
+com.squareup.picasso.Dispatcher$DispatcherThread -> com.b.a.t:
+com.squareup.picasso.Dispatcher$NetworkBroadcastReceiver -> com.b.a.u:
+    com.squareup.picasso.Dispatcher dispatcher -> a
+    void register() -> a
+    void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.squareup.picasso.Downloader -> com.b.a.v:
+    com.squareup.picasso.Downloader$Response load(android.net.Uri,int) -> a
+com.squareup.picasso.Downloader$Response -> com.b.a.w:
+    java.io.InputStream stream -> a
+    android.graphics.Bitmap bitmap -> b
+    boolean cached -> c
+    long contentLength -> d
+com.squareup.picasso.Downloader$ResponseException -> com.b.a.x:
+    boolean localCacheOnly -> a
+    int responseCode -> b
+com.squareup.picasso.FileRequestHandler -> com.b.a.y:
+    boolean canHandleRequest(com.squareup.picasso.Request) -> a
+    com.squareup.picasso.RequestHandler$Result load$71fa0c91(com.squareup.picasso.Request) -> b
+com.squareup.picasso.ImageViewAction -> com.b.a.z:
+    com.squareup.picasso.Callback callback -> m
+    void complete(android.graphics.Bitmap,com.squareup.picasso.Picasso$LoadedFrom) -> a
+    void error() -> a
+    void cancel() -> b
+com.squareup.picasso.LruCache -> com.b.a.aa:
+    java.util.LinkedHashMap map -> b
+    int maxSize -> c
+    int size -> d
+    int putCount -> e
+    int evictionCount -> f
+    int hitCount -> g
+    int missCount -> h
+    android.graphics.Bitmap get(java.lang.String) -> a
+    void set(java.lang.String,android.graphics.Bitmap) -> a
+    void trimToSize(int) -> a
+    int size() -> a
+    int maxSize() -> b
+com.squareup.picasso.MarkableInputStream -> com.b.a.ab:
+    java.io.InputStream in -> a
+    long offset -> b
+    long reset -> c
+    long limit -> d
+    long defaultMark -> e
+    void mark(int) -> mark
+    long savePosition(int) -> a
+    void reset() -> reset
+    void reset(long) -> a
+    void skip(long,long) -> a
+    int read() -> read
+    int read(byte[]) -> read
+    int read(byte[],int,int) -> read
+    long skip(long) -> skip
+    int available() -> available
+    void close() -> close
+    boolean markSupported() -> markSupported
+com.squareup.picasso.MediaStoreRequestHandler -> com.b.a.ac:
+    java.lang.String[] CONTENT_ORIENTATION -> b
+    boolean canHandleRequest(com.squareup.picasso.Request) -> a
+    com.squareup.picasso.RequestHandler$Result load$71fa0c91(com.squareup.picasso.Request) -> b
+    int getExifOrientation(android.content.ContentResolver,android.net.Uri) -> a
+com.squareup.picasso.MediaStoreRequestHandler$PicassoKind -> com.b.a.ad:
+    com.squareup.picasso.MediaStoreRequestHandler$PicassoKind MICRO -> a
+    com.squareup.picasso.MediaStoreRequestHandler$PicassoKind MINI -> b
+    com.squareup.picasso.MediaStoreRequestHandler$PicassoKind FULL -> c
+    int androidKind -> d
+    int width -> e
+    int height -> f
+    com.squareup.picasso.MediaStoreRequestHandler$PicassoKind[] $VALUES -> g
+    com.squareup.picasso.MediaStoreRequestHandler$PicassoKind[] values() -> values
+    com.squareup.picasso.MediaStoreRequestHandler$PicassoKind valueOf(java.lang.String) -> valueOf
+com.squareup.picasso.MemoryPolicy -> com.b.a.ae:
+    com.squareup.picasso.MemoryPolicy NO_CACHE -> a
+    com.squareup.picasso.MemoryPolicy NO_STORE -> b
+    int index -> c
+    com.squareup.picasso.MemoryPolicy[] $VALUES -> d
+    com.squareup.picasso.MemoryPolicy[] values() -> values
+    com.squareup.picasso.MemoryPolicy valueOf(java.lang.String) -> valueOf
+    boolean shouldReadFromMemoryCache(int) -> a
+    boolean shouldWriteToMemoryCache(int) -> b
+com.squareup.picasso.NetworkPolicy -> com.b.a.af:
+    com.squareup.picasso.NetworkPolicy NO_CACHE -> a
+    com.squareup.picasso.NetworkPolicy NO_STORE -> b
+    com.squareup.picasso.NetworkPolicy OFFLINE -> c
+    int index -> d
+    com.squareup.picasso.NetworkPolicy[] $VALUES -> e
+    com.squareup.picasso.NetworkPolicy[] values() -> values
+    com.squareup.picasso.NetworkPolicy valueOf(java.lang.String) -> valueOf
+    boolean shouldReadFromDiskCache(int) -> a
+    boolean shouldWriteToDiskCache(int) -> b
+    boolean isOfflineOnly(int) -> c
+com.squareup.picasso.NetworkRequestHandler -> com.b.a.ag:
+    com.squareup.picasso.Downloader downloader -> a
+    com.squareup.picasso.Stats stats -> b
+    boolean canHandleRequest(com.squareup.picasso.Request) -> a
+    com.squareup.picasso.RequestHandler$Result load$71fa0c91(com.squareup.picasso.Request) -> b
+    int getRetryCount() -> a
+    boolean shouldRetry$552f0f64(android.net.NetworkInfo) -> a
+    boolean supportsReplay() -> b
+com.squareup.picasso.NetworkRequestHandler$ContentLengthException -> com.b.a.ah:
+com.squareup.picasso.OkHttpDownloader -> com.b.a.ai:
+    com.squareup.okhttp.OkHttpClient client -> a
+    com.squareup.picasso.Downloader$Response load(android.net.Uri,int) -> a
+com.squareup.picasso.Picasso -> com.b.a.aj:
+    android.os.Handler HANDLER -> a
+    com.squareup.picasso.Picasso singleton -> b
+    com.squareup.picasso.Picasso$Listener listener -> n
+    com.squareup.picasso.Picasso$RequestTransformer requestTransformer -> o
+    com.squareup.picasso.Picasso$CleanupThread cleanupThread -> p
+    java.util.List requestHandlers -> q
+    android.content.Context context -> c
+    com.squareup.picasso.Dispatcher dispatcher -> d
+    com.squareup.picasso.Cache cache -> e
+    com.squareup.picasso.Stats stats -> f
+    java.util.Map targetToAction -> g
+    java.util.Map targetToDeferredRequestCreator -> h
+    java.lang.ref.ReferenceQueue referenceQueue -> i
+    android.graphics.Bitmap$Config defaultBitmapConfig -> j
+    boolean indicatorsEnabled -> k
+    boolean loggingEnabled -> l
+    boolean shutdown -> m
+    void cancelRequest(android.widget.ImageView) -> a
+    com.squareup.picasso.RequestCreator load(int) -> a
+    java.util.List getRequestHandlers() -> a
+    com.squareup.picasso.Request transformRequest(com.squareup.picasso.Request) -> a
+    void defer(android.widget.ImageView,com.squareup.picasso.DeferredRequestCreator) -> a
+    void enqueueAndSubmit(com.squareup.picasso.Action) -> a
+    android.graphics.Bitmap quickMemoryCacheCheck(java.lang.String) -> a
+    void complete(com.squareup.picasso.BitmapHunter) -> a
+    void resumeAction(com.squareup.picasso.Action) -> b
+    void deliverAction(android.graphics.Bitmap,com.squareup.picasso.Picasso$LoadedFrom,com.squareup.picasso.Action) -> a
+    void cancelExistingRequest(java.lang.Object) -> a
+    com.squareup.picasso.Picasso with(android.content.Context) -> a
+    void access$000(com.squareup.picasso.Picasso,java.lang.Object) -> a
+com.squareup.picasso.Picasso$1 -> com.b.a.ak:
+    void handleMessage(android.os.Message) -> handleMessage
+com.squareup.picasso.Picasso$Builder -> com.b.a.al:
+    android.content.Context context -> a
+    com.squareup.picasso.Downloader downloader -> b
+    java.util.concurrent.ExecutorService service -> c
+    com.squareup.picasso.Cache cache -> d
+    com.squareup.picasso.Picasso$Listener listener -> e
+    com.squareup.picasso.Picasso$RequestTransformer transformer -> f
+    java.util.List requestHandlers -> g
+    android.graphics.Bitmap$Config defaultBitmapConfig -> h
+    boolean indicatorsEnabled -> i
+    boolean loggingEnabled -> j
+    com.squareup.picasso.Picasso build() -> a
+com.squareup.picasso.Picasso$CleanupThread -> com.b.a.am:
+    java.lang.ref.ReferenceQueue referenceQueue -> a
+    android.os.Handler handler -> b
+    void run() -> run
+com.squareup.picasso.Picasso$CleanupThread$1 -> com.b.a.an:
+    java.lang.Exception val$e -> a
+    com.squareup.picasso.Picasso$CleanupThread this$0 -> b
+    void run() -> run
+com.squareup.picasso.Picasso$Listener -> com.b.a.ao:
+com.squareup.picasso.Picasso$LoadedFrom -> com.b.a.ap:
+    com.squareup.picasso.Picasso$LoadedFrom MEMORY -> a
+    com.squareup.picasso.Picasso$LoadedFrom DISK -> b
+    com.squareup.picasso.Picasso$LoadedFrom NETWORK -> c
+    int debugColor -> d
+    com.squareup.picasso.Picasso$LoadedFrom[] $VALUES -> e
+    com.squareup.picasso.Picasso$LoadedFrom[] values() -> values
+    com.squareup.picasso.Picasso$LoadedFrom valueOf(java.lang.String) -> valueOf
+com.squareup.picasso.Picasso$Priority -> com.b.a.aq:
+    com.squareup.picasso.Picasso$Priority LOW -> a
+    com.squareup.picasso.Picasso$Priority NORMAL -> b
+    com.squareup.picasso.Picasso$Priority HIGH -> c
+    com.squareup.picasso.Picasso$Priority[] $VALUES -> d
+    com.squareup.picasso.Picasso$Priority[] values() -> values
+    com.squareup.picasso.Picasso$Priority valueOf(java.lang.String) -> valueOf
+com.squareup.picasso.Picasso$RequestTransformer -> com.b.a.ar:
+    com.squareup.picasso.Picasso$RequestTransformer IDENTITY -> a
+    com.squareup.picasso.Request transformRequest(com.squareup.picasso.Request) -> a
+com.squareup.picasso.Picasso$RequestTransformer$1 -> com.b.a.as:
+    com.squareup.picasso.Request transformRequest(com.squareup.picasso.Request) -> a
+com.squareup.picasso.PicassoDrawable -> com.b.a.at:
+    android.graphics.Paint DEBUG_PAINT -> e
+    boolean debugging -> f
+    float density -> g
+    com.squareup.picasso.Picasso$LoadedFrom loadedFrom -> h
+    android.graphics.drawable.Drawable placeholder -> a
+    long startTimeMillis -> b
+    boolean animating -> c
+    int alpha -> d
+    void setBitmap(android.widget.ImageView,android.content.Context,android.graphics.Bitmap,com.squareup.picasso.Picasso$LoadedFrom,boolean,boolean) -> a
+    void setPlaceholder(android.widget.ImageView,android.graphics.drawable.Drawable) -> a
+    void draw(android.graphics.Canvas) -> draw
+    void setAlpha(int) -> setAlpha
+    void setColorFilter(android.graphics.ColorFilter) -> setColorFilter
+    void onBoundsChange(android.graphics.Rect) -> onBoundsChange
+    android.graphics.Path getTrianglePath(android.graphics.Point,int) -> a
+com.squareup.picasso.PicassoExecutorService -> com.b.a.au:
+    void adjustThreadCount(android.net.NetworkInfo) -> a
+    void setThreadCount(int) -> a
+    java.util.concurrent.Future submit(java.lang.Runnable) -> submit
+com.squareup.picasso.PicassoExecutorService$PicassoFutureTask -> com.b.a.av:
+    com.squareup.picasso.BitmapHunter hunter -> a
+    int compareTo(java.lang.Object) -> compareTo
+com.squareup.picasso.Request -> com.b.a.aw:
+    long TOO_LONG_LOG -> s
+    int id -> a
+    long started -> b
+    int networkPolicy -> c
+    android.net.Uri uri -> d
+    int resourceId -> e
+    java.lang.String stableKey -> f
+    java.util.List transformations -> g
+    int targetWidth -> h
+    int targetHeight -> i
+    boolean centerCrop -> j
+    boolean centerInside -> k
+    boolean onlyScaleDown -> l
+    float rotationDegrees -> m
+    float rotationPivotX -> n
+    float rotationPivotY -> o
+    boolean hasRotationPivot -> p
+    android.graphics.Bitmap$Config config -> q
+    com.squareup.picasso.Picasso$Priority priority -> r
+    java.lang.String toString() -> toString
+    java.lang.String logId() -> a
+    java.lang.String plainId() -> b
+    java.lang.String getName() -> c
+    boolean hasSize() -> d
+    boolean needsTransformation() -> e
+    boolean needsMatrixTransform() -> f
+    boolean hasCustomTransformations() -> g
+com.squareup.picasso.Request$Builder -> com.b.a.ax:
+    android.net.Uri uri -> a
+    int resourceId -> b
+    java.lang.String stableKey -> c
+    int targetWidth -> d
+    int targetHeight -> e
+    boolean centerCrop -> f
+    boolean centerInside -> g
+    boolean onlyScaleDown -> h
+    float rotationDegrees -> i
+    float rotationPivotX -> j
+    float rotationPivotY -> k
+    boolean hasRotationPivot -> l
+    java.util.List transformations -> m
+    android.graphics.Bitmap$Config config -> n
+    com.squareup.picasso.Picasso$Priority priority -> o
+    boolean hasImage() -> a
+    boolean hasSize() -> b
+    com.squareup.picasso.Request$Builder resize(int,int) -> a
+    com.squareup.picasso.Request build() -> c
+com.squareup.picasso.RequestCreator -> com.b.a.ay:
+    java.util.concurrent.atomic.AtomicInteger nextId -> a
+    com.squareup.picasso.Picasso picasso -> b
+    com.squareup.picasso.Request$Builder data -> c
+    boolean noFade -> d
+    boolean deferred -> e
+    boolean setPlaceholder -> f
+    int placeholderResId -> g
+    int errorResId -> h
+    int memoryPolicy -> i
+    int networkPolicy -> j
+    android.graphics.drawable.Drawable placeholderDrawable -> k
+    android.graphics.drawable.Drawable errorDrawable -> l
+    java.lang.Object tag -> m
+    com.squareup.picasso.RequestCreator unfit() -> a
+    com.squareup.picasso.RequestCreator resize(int,int) -> a
+    void into(android.widget.ImageView) -> a
+    void into(android.widget.ImageView,com.squareup.picasso.Callback) -> a
+    android.graphics.drawable.Drawable getPlaceholderDrawable() -> b
+com.squareup.picasso.RequestHandler -> com.b.a.az:
+    boolean canHandleRequest(com.squareup.picasso.Request) -> a
+    com.squareup.picasso.RequestHandler$Result load$71fa0c91(com.squareup.picasso.Request) -> b
+    int getRetryCount() -> a
+    boolean shouldRetry$552f0f64(android.net.NetworkInfo) -> a
+    boolean supportsReplay() -> b
+    android.graphics.BitmapFactory$Options createBitmapOptions(com.squareup.picasso.Request) -> d
+    boolean requiresInSampleSize(android.graphics.BitmapFactory$Options) -> a
+    void calculateInSampleSize(int,int,android.graphics.BitmapFactory$Options,com.squareup.picasso.Request) -> a
+    void calculateInSampleSize(int,int,int,int,android.graphics.BitmapFactory$Options,com.squareup.picasso.Request) -> a
+com.squareup.picasso.RequestHandler$Result -> com.b.a.ba:
+    com.squareup.picasso.Picasso$LoadedFrom loadedFrom -> a
+    android.graphics.Bitmap bitmap -> b
+    java.io.InputStream stream -> c
+    int exifOrientation -> d
+    android.graphics.Bitmap getBitmap() -> a
+    java.io.InputStream getStream() -> b
+    com.squareup.picasso.Picasso$LoadedFrom getLoadedFrom() -> c
+    int getExifOrientation() -> d
+com.squareup.picasso.ResourceRequestHandler -> com.b.a.bb:
+    android.content.Context context -> a
+    boolean canHandleRequest(com.squareup.picasso.Request) -> a
+    com.squareup.picasso.RequestHandler$Result load$71fa0c91(com.squareup.picasso.Request) -> b
+com.squareup.picasso.Stats -> com.b.a.bc:
+    android.os.HandlerThread statsThread -> a
+    com.squareup.picasso.Cache cache -> b
+    android.os.Handler handler -> c
+    long cacheHits -> d
+    long cacheMisses -> e
+    long totalDownloadSize -> f
+    long totalOriginalBitmapSize -> g
+    long totalTransformedBitmapSize -> h
+    long averageDownloadSize -> i
+    long averageOriginalBitmapSize -> j
+    long averageTransformedBitmapSize -> k
+    int downloadCount -> l
+    int originalBitmapCount -> m
+    int transformedBitmapCount -> n
+    void dispatchBitmapDecoded(android.graphics.Bitmap) -> a
+    void dispatchBitmapTransformed(android.graphics.Bitmap) -> b
+    void dispatchCacheHit() -> a
+    void processBitmap(android.graphics.Bitmap,int) -> a
+com.squareup.picasso.Stats$StatsHandler -> com.b.a.bd:
+    com.squareup.picasso.Stats stats -> a
+    void handleMessage(android.os.Message) -> handleMessage
+com.squareup.picasso.Stats$StatsHandler$1 -> com.b.a.be:
+    android.os.Message val$msg -> a
+    com.squareup.picasso.Stats$StatsHandler this$0 -> b
+    void run() -> run
+com.squareup.picasso.StatsSnapshot -> com.b.a.bf:
+    int maxSize -> a
+    int size -> b
+    long cacheHits -> c
+    long cacheMisses -> d
+    long totalDownloadSize -> e
+    long totalOriginalBitmapSize -> f
+    long totalTransformedBitmapSize -> g
+    long averageDownloadSize -> h
+    long averageOriginalBitmapSize -> i
+    long averageTransformedBitmapSize -> j
+    int downloadCount -> k
+    int originalBitmapCount -> l
+    int transformedBitmapCount -> m
+    long timeStamp -> n
+    java.lang.String toString() -> toString
+com.squareup.picasso.Transformation -> com.b.a.bg:
+    android.graphics.Bitmap transform$34dbf037() -> a
+    java.lang.String key() -> b
+com.squareup.picasso.UrlConnectionDownloader -> com.b.a.bh:
+    java.lang.Object cache -> a
+    java.lang.Object lock -> b
+    java.lang.ThreadLocal CACHE_HEADER_BUILDER -> c
+    android.content.Context context -> d
+    com.squareup.picasso.Downloader$Response load(android.net.Uri,int) -> a
+com.squareup.picasso.UrlConnectionDownloader$1 -> com.b.a.bi:
+    java.lang.Object initialValue() -> initialValue
+com.squareup.picasso.Utils -> com.b.a.bj:
+    java.lang.StringBuilder MAIN_THREAD_KEY_BUILDER -> a
+    int getBitmapBytes(android.graphics.Bitmap) -> a
+    java.lang.Object checkNotNull(java.lang.Object,java.lang.String) -> a
+    void checkMain() -> a
+    java.lang.String getLogIdsForHunter(com.squareup.picasso.BitmapHunter) -> a
+    java.lang.String getLogIdsForHunter(com.squareup.picasso.BitmapHunter,java.lang.String) -> a
+    void log(java.lang.String,java.lang.String,java.lang.String) -> a
+    void log(java.lang.String,java.lang.String,java.lang.String,java.lang.String) -> a
+    java.lang.String createKey(com.squareup.picasso.Request) -> a
+    void closeQuietly(java.io.InputStream) -> a
+    boolean parseResponseSourceHeader(java.lang.String) -> a
+    com.squareup.picasso.Downloader createDefaultDownloader(android.content.Context) -> a
+    java.io.File createDefaultCacheDir(android.content.Context) -> b
+    long calculateDiskCacheSize(java.io.File) -> a
+    int calculateMemoryCacheSize(android.content.Context) -> c
+    boolean isAirplaneModeOn(android.content.Context) -> d
+    java.lang.Object getService(android.content.Context,java.lang.String) -> a
+    boolean hasPermission(android.content.Context,java.lang.String) -> b
+    byte[] toByteArray(java.io.InputStream) -> b
+    boolean isWebPFile(java.io.InputStream) -> c
+    int getResourceId(android.content.res.Resources,com.squareup.picasso.Request) -> a
+    android.content.res.Resources getResources(android.content.Context,com.squareup.picasso.Request) -> a
+com.squareup.picasso.Utils$PicassoThread -> com.b.a.bk:
+    void run() -> run
+com.squareup.picasso.Utils$PicassoThreadFactory -> com.b.a.bl:
+    java.lang.Thread newThread(java.lang.Runnable) -> newThread
