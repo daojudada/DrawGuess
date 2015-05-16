@@ -42,11 +42,9 @@ import com.drawguess.dialog.PaintDialog;
 import com.drawguess.dialog.ShapeDialog;
 import com.drawguess.drawop.OpDraw.Shape;
 import com.drawguess.interfaces.OnColorChangedListener;
-<<<<<<< HEAD
 import com.drawguess.interfaces.OnPaintChangedListener;
 import com.drawguess.interfaces.OnShapeChangedListener;
 import com.drawguess.util.SessionUtils;
-=======
 import com.drawguess.interfaces.OnMsgRecListener;
 import com.drawguess.interfaces.OnPaintChangedListener;
 import com.drawguess.interfaces.OnShapeChangedListener;
@@ -66,7 +64,6 @@ import com.drawguess.util.LogUtils;
 import com.drawguess.util.SessionUtils;
 import com.drawguess.util.TimerUtils;
 import com.drawguess.util.TypeUtils;
->>>>>>> origin/master
 import com.drawguess.view.DrawView;
 /**
  * 
@@ -523,29 +520,6 @@ public class BtDrawGuessActivity extends BaseActivity implements OnClickListener
 			break;
 		case R.id.shape:
 			//形状选择,点击后对话框
-<<<<<<< HEAD
-			new ShapeDialog(this, new OnShapeChangedListener() {
-				@Override
-				public void shapeChanged(int shape) {
-					switch(shape)
-					{
-					case 0:
-						mDrawView.setShape(Shape.FREE);
-						mIbShape.setBackgroundResource(R.drawable.btn_free);
-						break;
-					case 1:
-						mDrawView.setShape(Shape.LINE);
-						mIbShape.setBackgroundResource(R.drawable.btn_line1);
-						break;
-					case 2:
-						mDrawView.setShape(Shape.RECT);
-						mIbShape.setBackgroundResource(R.drawable.btn_rect1);
-						break;
-					case 3:
-						mDrawView.setShape(Shape.OVAL);
-						mIbShape.setBackgroundResource(R.drawable.btn_oval1);
-						break;
-=======
 			new ShapeDialog(this, 
 				new OnShapeChangedListener() {
 					@Override
@@ -553,7 +527,6 @@ public class BtDrawGuessActivity extends BaseActivity implements OnClickListener
 						doClickEvent(OP_TYPE.SHAPE, shape, -1, -1, -1);
 						DataDraw data  = new DataDraw(OP_TYPE.SHAPE, TOUCH_TYPE.DEFAULT, shape, -1, -1, -1);
 						mBtService.sendMessage(MSGConst.SEND_DRAW, data);
->>>>>>> origin/master
 					}
 				}
 			);
@@ -645,45 +618,81 @@ public class BtDrawGuessActivity extends BaseActivity implements OnClickListener
 		
 	}
 	
-	public void doClickEvent(OP_TYPE opType, float data1, float data2, float data3, float data4){
-    	switch (opType){
-    	case SHAPE:
-    		switch((int)data1)
-			{
-			case 0:
-				mDrawView.setShape(Shape.FREE);
-				mIbShape.setBackgroundResource(R.drawable.btn_free);
-				break;
-			case 1:
-				mDrawView.setShape(Shape.LINE);
-				mIbShape.setBackgroundResource(R.drawable.btn_line1);
-				break;
-			case 2:
-				mDrawView.setShape(Shape.RECT);
-				mIbShape.setBackgroundResource(R.drawable.btn_rect1);
-				break;
-			case 3:
-				mDrawView.setShape(Shape.OVAL);
-				mIbShape.setBackgroundResource(R.drawable.btn_oval1);
-				break;
-			}
-    		break;
-    	case PACK:
-			mDrawView.setPack();
-    		if(isPack){
-				isPack=false;
-				mIbFill.setBackgroundResource(R.drawable.btn_fill1);
-			}
-			else{
-				isPack=true;
-				mIbFill.setBackgroundResource(R.drawable.btn_fill2);
-				if(isEraser){
-					isEraser=false;
-					mDrawView.setEraser(isEraser);
-					mIbErase.setBackgroundResource(R.drawable.btn_erase1);
+	 public void doClickEvent(OP_TYPE opType, float data1, float data2, float data3, float data4){
+	    	switch (opType){
+	    	case SHAPE:
+	    		switch((int)data1)
+				{
+				case 0:
+					mDrawView.setShape(Shape.FREE);
+					mIbShape.setBackgroundResource(R.drawable.btn_free);
+					break;
+				case 1:
+					mDrawView.setShape(Shape.LINE);
+					mIbShape.setBackgroundResource(R.drawable.btn_line1);
+					break;
+				case 2:
+					mDrawView.setShape(Shape.RECT);
+					mIbShape.setBackgroundResource(R.drawable.btn_rect1);
+					break;
+				case 3:
+					mDrawView.setShape(Shape.OVAL);
+					mIbShape.setBackgroundResource(R.drawable.btn_oval1);
+					break;
 				}
+	    		break;
+	    	case PACK:
+				mDrawView.setPack();
+	    		if(isPack){
+					isPack=false;
+					mIbFill.setBackgroundResource(R.drawable.btn_fill1);
+				}
+				else{
+					isPack=true;
+					mIbFill.setBackgroundResource(R.drawable.btn_fill2);
+					if(isEraser){
+						isEraser=false;
+						mDrawView.setEraser(isEraser);
+						mIbErase.setBackgroundResource(R.drawable.btn_erase1);
+					}
+					if(isTrans){
+						isTrans=mDrawView.setTrans();
+						mIbEdit.setBackgroundResource(R.drawable.btn_edit1);
+						mIbDelete.setVisibility(View.GONE);
+						mIbCopy.setVisibility(View.GONE);
+						mIbErase.setVisibility(View.VISIBLE);
+						mIbColor.setVisibility(View.VISIBLE);
+						for(int i=0;i<7;i++){
+							mBtColors[i].setVisibility(View.VISIBLE);
+						}
+					}
+				}
+	    		break;
+	    	case EDIT:
+	    		//几何变换
+				isTrans=mDrawView.setTrans();
 				if(isTrans){
-					isTrans=mDrawView.setTrans();
+					mIbEdit.setBackgroundResource(R.drawable.btn_edit2);
+					if(isEraser){
+						isEraser=false;
+						mDrawView.setEraser(isEraser);
+						mIbErase.setBackgroundResource(R.drawable.btn_erase1);
+					}
+					if(isPack){
+						mDrawView.setPack();
+						isPack=false;
+						mIbFill.setBackgroundResource(R.drawable.btn_fill1);
+					}
+					
+					mIbErase.setVisibility(View.GONE);
+					mIbColor.setVisibility(View.GONE);
+					mIbDelete.setVisibility(View.VISIBLE);
+					mIbCopy.setVisibility(View.VISIBLE);
+					for(int i=0;i<7;i++){
+						mBtColors[i].setVisibility(View.INVISIBLE);
+					}
+				}
+				else{
 					mIbEdit.setBackgroundResource(R.drawable.btn_edit1);
 					mIbDelete.setVisibility(View.GONE);
 					mIbCopy.setVisibility(View.GONE);
@@ -693,122 +702,61 @@ public class BtDrawGuessActivity extends BaseActivity implements OnClickListener
 						mBtColors[i].setVisibility(View.VISIBLE);
 					}
 				}
-			}
-    		break;
-    	case EDIT:
-    		//几何变换
-			isTrans=mDrawView.setTrans();
-			if(isTrans){
-				mIbEdit.setBackgroundResource(R.drawable.btn_edit2);
-				if(isEraser){
+	    		break;
+	    	case ERASE:
+				//橡皮擦
+				if(isEraser){	
 					isEraser=false;
 					mDrawView.setEraser(isEraser);
 					mIbErase.setBackgroundResource(R.drawable.btn_erase1);
 				}
-				if(isPack){
-					mDrawView.setPack();
-					isPack=false;
-					mIbFill.setBackgroundResource(R.drawable.btn_fill1);
+				else{
+					isEraser=true;
+					mDrawView.setEraser(isEraser);
+					mIbErase.setBackgroundResource(R.drawable.btn_erase2);
+					
+					if(isPack){
+						mDrawView.setPack();
+						isPack=false;
+						mIbFill.setBackgroundResource(R.drawable.btn_fill1);
+					}
 				}
-				
-				mIbErase.setVisibility(View.GONE);
-				mIbColor.setVisibility(View.GONE);
-				mIbDelete.setVisibility(View.VISIBLE);
-				mIbCopy.setVisibility(View.VISIBLE);
-				for(int i=0;i<7;i++){
-					mBtColors[i].setVisibility(View.INVISIBLE);
-				}
-			}
-			else{
-				mIbEdit.setBackgroundResource(R.drawable.btn_edit1);
-				mIbDelete.setVisibility(View.GONE);
-				mIbCopy.setVisibility(View.GONE);
-				mIbErase.setVisibility(View.VISIBLE);
-				mIbColor.setVisibility(View.VISIBLE);
-				for(int i=0;i<7;i++){
-					mBtColors[i].setVisibility(View.VISIBLE);
-				}
-			}
-    		break;
-    	case ERASE:
-			//橡皮擦
-			if(isEraser){	
-				isEraser=false;
-				mDrawView.setEraser(isEraser);
-				mIbErase.setBackgroundResource(R.drawable.btn_erase1);
-			}
-			else{
-<<<<<<< HEAD
-				//颜色设置，对话框
-				new ColorDialog(this, mDrawView.getPaintColor(), "color", new OnColorChangedListener() {
-					@Override
-					public void colorChanged(int color) {
-						mDrawView.setPaintColor(color);
-						setColorBack(-1);
-					}}
-				).show();
-			}
-			break;
-			
-		case R.id.paint:
-			//画笔设置，对话框
-			new PaintDialog(this, mDrawView.getPaintWidth(), mDrawView.getPaintAlpha(), mDrawView.getPaintStyle(),mDrawView.getPaintColor(),
-					new OnPaintChangedListener(){
-						@Override
-						public void paintChanged(int width, int alpha, int style) {
-							mDrawView.setPaintWidth(width);
-							mDrawView.setPaintAlpha(alpha);
-							mDrawView.setPaintStyle(style);
-						}
-=======
-				isEraser=true;
-				mDrawView.setEraser(isEraser);
-				mIbErase.setBackgroundResource(R.drawable.btn_erase2);
-				
-				if(isPack){
-					mDrawView.setPack();
-					isPack=false;
-					mIbFill.setBackgroundResource(R.drawable.btn_fill1);
->>>>>>> origin/master
-				}
-			}
-    		break;
-    	case COPY:
-    		//复制
-			mDrawView.setCopy();
-    		break;
-    	case DELETE:
-    		//删除
-			mDrawView.setDelete();
-    		break;
-    	case CLEAR:
-    		//清空
-    		logNum = 0;
-			mDrawView.setClear();
-    		break;
-    	case REDO:
-			//取消撤销
-			mDrawView.setRedo();
-    		break;
-    	case UNDO:
-			//撤销
-			mDrawView.setUndo();
-    		break;
-    	case PAINT:
-    		if(data1>-1)
-    			mDrawView.setPaintWidth((int)data1);
-    		if(data2>-1)
-    			mDrawView.setPaintAlpha((int)data2);
-    		if(data3>-1)
-    			mDrawView.setPaintStyle((int)data3);
-    		if(data4!=Float.MAX_VALUE)
-    			mDrawView.setPaintColor((int)data4);
-    		break;
-        default:
-            break;
-    	}
-    }
-
+	    		break;
+	    	case COPY:
+	    		//复制
+				mDrawView.setCopy();
+	    		break;
+	    	case DELETE:
+	    		//删除
+				mDrawView.setDelete();
+	    		break;
+	    	case CLEAR:
+	    		//清空
+	    		logNum = 0;
+				mDrawView.setClear();
+	    		break;
+	    	case REDO:
+				//取消撤销
+				mDrawView.setRedo();
+	    		break;
+	    	case UNDO:
+				//撤销
+				mDrawView.setUndo();
+	    		break;
+	    	case PAINT:
+	    		if(data1>-1)
+	    			mDrawView.setPaintWidth((int)data1);
+	    		if(data2>-1)
+	    			mDrawView.setPaintAlpha((int)data2);
+	    		if(data3>-1)
+	    			mDrawView.setPaintStyle((int)data3);
+	    		if(data4!=Float.MAX_VALUE)
+	    			mDrawView.setPaintColor((int)data4);
+	    		break;
+	        default:
+	            break;
+	    	}
+	    }
     //创建菜单
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -1138,7 +1086,7 @@ public class BtDrawGuessActivity extends BaseActivity implements OnClickListener
                 scoresAdapter.notifyDataSetChanged();
             	break;
             }
-            case MSGConst.SEND_ONLINE:{
+            case MSGConst.SEND_ONLINE: {
             	sortScoresList();
             	refreshScoreAdapter();
             	break;

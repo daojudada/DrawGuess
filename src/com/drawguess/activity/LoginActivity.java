@@ -224,6 +224,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data_intent){
 		super.onActivityResult(requestCode, resultCode, data_intent);
+        mLlayoutMain.setVisibility(View.VISIBLE);
+        mLlayoutExMain.setVisibility(View.GONE);
 		if(resultCode == RESULT_CANCELED)
 			setTitle("cancel");
 		else if (resultCode == RESULT_OK){

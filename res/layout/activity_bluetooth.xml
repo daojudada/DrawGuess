@@ -107,6 +107,7 @@
 			android:layout_marginRight="9dip"
 			android:layout_weight="1"
 			android:background="@drawable/btn_bottombar"
+			android:visibility="gone"
 			android:gravity="center"
 			android:text="@string/btn_change_device_name"
 			android:textColor="@drawable/profile_bottom_text_color"

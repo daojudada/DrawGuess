@@ -1,4 +1,5 @@
 /bin
+/proguard
 # Compiled source #
 ###################
 *.com

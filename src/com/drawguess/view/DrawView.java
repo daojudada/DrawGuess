@@ -145,6 +145,12 @@ public class DrawView extends View {
 				switch (event.getAction() & MotionEvent.ACTION_MASK) 
 				{
 				case MotionEvent.ACTION_DOWN:
+					//当前设备绘制
+					x/=suol;
+					y/=suol;
+					doDraw(TOUCH_TYPE.DOWN1,x,y,-1,-1);
+					x-=moveX;
+					y-=moveY;
 					//发送给服务器
 					data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.DOWN1,x/wx,y/hy,-1,-1);
 					DrawGuessActivity.logNum++;
@@ -152,10 +158,6 @@ public class DrawView extends View {
 						netManage.sendToServer(MSGConst.SEND_DRAW, data);
 					else
 						btService.sendMessage(MSGConst.SEND_DRAW, data);
-					//当前设备绘制
-					x/=suol;
-					y/=suol;
-					doDraw(TOUCH_TYPE.DOWN1,x,y,-1,-1);
 					
 					startTime = System.nanoTime();  //開始時間
 					
@@ -163,6 +165,12 @@ public class DrawView extends View {
 	
 				case MotionEvent.ACTION_POINTER_DOWN:
 
+					//当前设备绘制
+					x/=suol;
+					y/=suol;
+					doDraw(TOUCH_TYPE.DOWN2,-1,-1,-1,-1);
+					x-=moveX;
+					y-=moveY;
 					//发送给服务器
 					data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.DOWN2,-1,-1,-1,-1);
 					DrawGuessActivity.logNum++;
@@ -170,10 +178,6 @@ public class DrawView extends View {
 						netManage.sendToServer(MSGConst.SEND_DRAW, data);
 					else
 						btService.sendMessage(MSGConst.SEND_DRAW, data);
-					//当前设备绘制
-					x/=suol;
-					y/=suol;
-					doDraw(TOUCH_TYPE.DOWN2,-1,-1,-1,-1);
 					
 					l=(float) Math.sqrt((event.getX(0)-event.getX(1))*(event.getX(0)-event.getX(1))+(event.getY(0)-event.getY(1))*(event.getY(0)-event.getY(1)));
 					mX=x;
@@ -182,7 +186,13 @@ public class DrawView extends View {
 					break;
 				case MotionEvent.ACTION_MOVE:
 					isMove = true;
+					//当前设备绘制
+					x/=suol;
+					y/=suol;
 					if(mode == 1){
+						doDraw(TOUCH_TYPE.MOVE,x,y,-1,-1);
+						x-=moveX;
+						y-=moveY;
 						//发送给服务器
 						data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.MOVE,x/wx,y/hy,-1,-1);
 						DrawGuessActivity.logNum++;
@@ -190,14 +200,8 @@ public class DrawView extends View {
 							netManage.sendToServer(MSGConst.SEND_DRAW, data);
 						else
 							btService.sendMessage(MSGConst.SEND_DRAW, data);
-						//当前设备绘制
-						x/=suol;
-						y/=suol;
-						doDraw(TOUCH_TYPE.MOVE,x,y,-1,-1);
 					}
 					else{
-						x/=suol;
-						y/=suol;
 						ls=(float) Math.sqrt(
 								(event.getX(0)-event.getX(1))*(event.getX(0)-event.getX(1))+
 								((event.getY(0)-event.getY(1)))*(event.getY(0)-event.getY(1)));
@@ -212,6 +216,12 @@ public class DrawView extends View {
 					
 					break;
 				case MotionEvent.ACTION_POINTER_UP:
+					//当前设备绘制
+					x/=suol;
+					y/=suol;
+					doDraw(TOUCH_TYPE.UP2,-1,-1,-1,-1);
+					x-=moveX;
+					y-=moveY;
 					//发送给服务器
 					data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.UP2,-1,-1,-1,-1);
 					DrawGuessActivity.logNum++;
@@ -219,15 +229,20 @@ public class DrawView extends View {
 						netManage.sendToServer(MSGConst.SEND_DRAW, data);
 					else
 						btService.sendMessage(MSGConst.SEND_DRAW, data);
-					//当前设备绘制
-					x/=suol;
-					y/=suol;
-					doDraw(TOUCH_TYPE.UP2,-1,-1,-1,-1);
 					
-					suols*=ls/l;
+					suols=suol;
+					
+					mX=0;
+					mY=0;
 					
 					break;
 				case MotionEvent.ACTION_UP:
+					//当前设备绘制
+					x/=suol;
+					y/=suol;
+					doDraw(TOUCH_TYPE.UP1,-1,-1,-1,-1);
+					x-=moveX;
+					y-=moveY;
 					//发送给服务器
 					data = new DataDraw(OP_TYPE.DRAW,TOUCH_TYPE.UP1,-1,-1,-1,-1);
 					DrawGuessActivity.logNum++;
@@ -235,10 +250,6 @@ public class DrawView extends View {
 						netManage.sendToServer(MSGConst.SEND_DRAW, data);
 					else
 						btService.sendMessage(MSGConst.SEND_DRAW, data);
-					//当前设备绘制
-					x/=suol;
-					y/=suol;
-					doDraw(TOUCH_TYPE.UP1,-1,-1,-1,-1);
 					
 					long endTime = System.nanoTime();
 					long diffsuTime = endTime - startTime; //消耗時間
@@ -262,70 +273,80 @@ public class DrawView extends View {
 				switch (event.getAction() & MotionEvent.ACTION_MASK) 
 				{
 				case MotionEvent.ACTION_DOWN:
+					x/=suol;
+					y/=suol;
+					doTrans(TOUCH_TYPE.DOWN1, x , y, -1, -1);
+					x-=moveX;
+					y-=moveY;
 					data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.DOWN1,x,y,-1,-1);
 					if(Constant.CONNECT_WAY)
 						netManage.sendToServer(MSGConst.SEND_DRAW, data);
 					else
 						btService.sendMessage(MSGConst.SEND_DRAW, data);
-					x/=suol;
-					y/=suol;
-					doTrans(TOUCH_TYPE.DOWN1, x , y, -1, -1);
 					break;
 				case MotionEvent.ACTION_POINTER_DOWN:
 					x2 = event.getX(1);
 					y2 = event.getY(1);
-					data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.DOWN2,x,y,x2,y2);
-					if(Constant.CONNECT_WAY)
-						netManage.sendToServer(MSGConst.SEND_DRAW, data);
-					else
-						btService.sendMessage(MSGConst.SEND_DRAW, data);
 					x/=suol;
 					y/=suol;
 					x2/=suol;
 					y2/=suol;
 					doTrans(TOUCH_TYPE.DOWN2, x, y, x2, y2);
+					x-=moveX;
+					y-=moveY;
+					data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.DOWN2,x,y,x2,y2);
+					if(Constant.CONNECT_WAY)
+						netManage.sendToServer(MSGConst.SEND_DRAW, data);
+					else
+						btService.sendMessage(MSGConst.SEND_DRAW, data);
 					break;
 				case MotionEvent.ACTION_MOVE:
+					x/=suol;
+					y/=suol;
 					if(mode ==1){
+						doTrans(TOUCH_TYPE.MOVE, x, y, -1 , -1);
+						x-=moveX;
+						y-=moveY;
 						data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.MOVE,x,y,-1,-1);
 						if(Constant.CONNECT_WAY)
 							netManage.sendToServer(MSGConst.SEND_DRAW, data);
 						else
 							btService.sendMessage(MSGConst.SEND_DRAW, data);
-						x/=suol;
-						y/=suol;
-						doTrans(TOUCH_TYPE.MOVE, x, y, -1 , -1);
 					}
 					else if(mode ==2){
 						x2 = event.getX(1);
 						y2 = event.getY(1);
+						doTrans(TOUCH_TYPE.MOVE, x, y, x2, y2);
+						x-=moveX;
+						y-=moveY;
 						data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.MOVE,x,y,x2,y2);
 						if(Constant.CONNECT_WAY)
 							netManage.sendToServer(MSGConst.SEND_DRAW, data);
 						else
 							btService.sendMessage(MSGConst.SEND_DRAW, data);
-						x/=suol;
-						y/=suol;
 						x2/=suol;
 						y2/=suol;
-						doTrans(TOUCH_TYPE.MOVE, x, y, x2, y2);
 					}
 					break;
 				case MotionEvent.ACTION_POINTER_UP:
+					doTrans(TOUCH_TYPE.UP2, -1,-1,-1,-1);
+					x-=moveX;
+					y-=moveY;
 					data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.UP2,-1,-1,-1,-1);
 					if(Constant.CONNECT_WAY)
 						netManage.sendToServer(MSGConst.SEND_DRAW, data);
 					else
 						btService.sendMessage(MSGConst.SEND_DRAW, data);
-					doTrans(TOUCH_TYPE.UP2, -1,-1,-1,-1);
 					break;
 				case MotionEvent.ACTION_UP:
+					doTrans(TOUCH_TYPE.UP1, -1,-1,-1,-1);
+					x-=moveX;
+					y-=moveY;
 					data = new DataDraw(OP_TYPE.TRANS,TOUCH_TYPE.UP1,-1,-1,-1,-1);
 					if(Constant.CONNECT_WAY)
 						netManage.sendToServer(MSGConst.SEND_DRAW, data);
 					else
 						btService.sendMessage(MSGConst.SEND_DRAW, data);
-					doTrans(TOUCH_TYPE.UP1, -1,-1,-1,-1);
 					break;
 				
 				}
